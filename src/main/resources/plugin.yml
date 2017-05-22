@@ -1,0 +1,6 @@
+name: BungeeChat
+main: dev.aura.bungeechat.BungeePluginLoader
+version: ${version}
+author: shawn_ian, BrainStone
+description: Bungee Chat Plugin.
+softDepends: [BungeePerms, PowerfulPerms, LuckPerms]

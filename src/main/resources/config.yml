@@ -1,0 +1,167 @@
+# Bungee Chat Configuration by shawn_ian (v8)
+# Placeholders can be found here: http://tiny.cc/bungeechatplaceholders
+# In the config file you can change the chat formats and disable and enable feautures.
+# If you found any bugs please report them (See plugin site for more information)
+
+Version: 8.0
+
+Settings:
+  Features:
+    Alert:
+      enabled: true
+      aliases:
+        - broadcast
+        - bc
+        - balert
+        - bbc
+    Socialspy:
+      enabled: true
+      aliases:
+        - sspy
+    GlobalChat:
+      enabled: true
+      aliases:
+        - g
+      default: false
+      Symbol:
+        enabled: false
+        symbol: "!"
+    Messanger:
+      enabled: true
+      aliases:
+        message:
+          - msg
+          - tell
+          - m
+          - w
+          - whisper
+        reply:
+          - r
+        msgtoggle:
+          - mtoggle
+    StaffChat:
+      enabled: true
+      aliases:
+        - sc
+        - s
+        - schat
+    Muting:
+      enabled: true
+      aliases:
+        mute:
+          - silence
+        tempmute:
+          - tempsilence
+        unmute:
+          - unsilence
+      blockedcommands:
+        - message
+        - msg
+        - whisper
+        - m
+        - tell
+        - t
+        - w
+        - global
+        - g
+        - reply
+        - r
+    JoinMessages:
+      enabled: true
+    LeaveMessages:
+      enabled: true
+    HelpOp:
+      enabled: true
+      aliases:
+        - ahelp
+        - helpme
+    Vanish:
+      enabled: true
+      aliases:
+        - bhide
+    ChatLock:
+      enabled: true
+      aliases: []
+    LocalChat:
+      enabled: true
+    ServerSwitchMessages:
+      enabled: true
+    AntiSwear:
+      enabled: true
+      words:
+        - fuck
+        - kut
+        - tyfus
+      replacement: "****"
+    AntiAdvertising:
+      enabled: true
+      whitelisted:
+        - www.google.com
+    Tabcompletion:
+      enabled: true
+    Ignoring:
+      enabled: true
+      aliases: []
+    AntiDuplication:
+      enabled: true
+  ChatLogging:
+    enabled: true
+  PermissionsManager:
+    Default-Prefix: "&7[Member]"
+    Default-Suffix: "&7[Member]"
+    External: 0
+  RedisFeatures:
+    enabled: false
+
+Messages:
+  not-player: "&cYou need to be a player to use this command!"
+  muted: "&cSorry but you can not talk because you are muted!"
+  unmute-not-muted: "&cThis player is not muted!"
+  mute-is-muted: "This player is already muted!"
+  no-reply: "&cYou have nobody to reply."
+  reply-offline: "&cThe player you were chatting with is no longer online."
+  player-not-found: "&cCould not find that player..."
+  enable-global: "&eYou are now talking in &bglobal chat&e!"
+  disable-global: "&eYou are no longer talking in &bglobal chat&e!"
+  message-yourself: "&cYou can not send a message to yourself..."
+  enable-socialspy: "&eSocialspy has been &aenbaled&e!"
+  disable-socialspy: "&eSocialspy has been &cdisabled&e!"
+  enable-staffchat: "&eYou are now talking in &astaffchat&e!"
+  disable-staffchat: "&eYou are no longer talking in &astaffchat&e!"
+  enable-messager: "&eYou have &aenbaled&e messaging!"
+  disable-messager: "&eYou have &cdisabled&e messaging"
+  enable-vanish: "&eYou have &aenbaled&e hide mode!"
+  disable-vanish: "&eYou have &cdisabled&e hide mode!"
+  enable-chatlock: "&eYou have disabled chatting!"
+  disable-chatlock: "&eYou have enabled chatting!"
+  chat-is-locked: "&cYou may not talk now, the chat has been locked!"
+  global-is-default: "&eGlobal chat is already the default chatmode!"
+  incorrect-usage: "&cIncorrect usage! Use this command like this: %command%"
+  unmute: "&eThe player &c%name% &cehas been unmuted!"
+  mute: "&eThe player &c%name% &ehas been muted!"
+  remove-prefix: "&eRemoved the prefix of &6%name%&e!"
+  has-messager-disabled: "&c%name% has messaging disabled!"
+  not-server: "&c%tserver is not a valid server."
+  anti-advertise: "&cPlease do not advertise!"
+  tempmute: "&eThe player &c%name% &ehas been muted till %mutetime% (UTC +1)"
+  add-ignore: "&eYou have ignored %name%!"
+  remove-ignore: "&eYou have un-ignored %name%!"
+  already-ignore: "&eYou have are already ignoring this player!"
+  ignore-yourself: "&cYou can not ignore yourself!"
+  unignore-yourself: "&cYou can not unignore yourself!"
+  not-ignored: "&cYou have not ignored this user!"
+  anti-duplication: "&cPlease do not spam messages!"
+  
+Formats:
+  alert: "&9ALERT > &c&l%sender: &r%message%"
+  socialspy: "&9SPY > &e%sender_name% &8-> &e%target_name% &8: &r%message%"
+  global: "&9GLOBAL > &e%sender_name%: &r%message%"
+  message-sender: "&6You &8-> &6%target_name% &8: &r%message%"
+  message-target: "&6%sender_name% &8-> &6You&8: &r%message%"
+  staffchat: "&9STAFF > &e%sender_name%: &r%message%"
+  muted: "&cSorry but you can not talk because you are muted!"
+  local-chat: "%sender_prefix% &7%sender_name%: %message%"
+  joinmessage: "&e%sender_name% has joined the network!"
+  leavemessage: "&e%sender_name% has left the network!"
+  helpop: "&2HELPOP > &e%sender_name%: &r%message%"
+  server-switch: "&e%sender_name% has moved to the &c%sender_server% &e server!"

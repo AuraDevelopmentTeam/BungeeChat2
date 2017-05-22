@@ -1,0 +1,5 @@
+name: BungeeChatLib
+main: dev.aura.bungeechat.BukkitPluginLoader
+version: ${version}
+authors: [shawn_ian, BrainStone]
+description: Bungee Chat Plugin Lib.
