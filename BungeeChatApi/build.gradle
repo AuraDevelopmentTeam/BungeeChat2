@@ -1,0 +1,20 @@
+description = """Bungee Chat API"""
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+jar {
+    version = full_version
+}
+
+task sourceJar (type: Jar) {
+    classifier = "sources"
+    version = jar.version
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+}

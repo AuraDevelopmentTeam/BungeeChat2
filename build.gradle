@@ -1,30 +1,39 @@
-import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    id "org.spongepowered.plugin" version "0.8.1"
-    id "io.franzbecker.gradle-lombok" version "1.8"
+        id "io.franzbecker.gradle-lombok" version "1.8" apply false
+    }
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "maven"
+    apply plugin: "maven-publish"
+    apply plugin: "signing"
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "io.franzbecker.gradle-lombok"
+
+    group = "dev.aura.bungeechat"
+    version = "2.0.0"
+    
+    ext {
+        build = "130"
+        full_version = "${version}_${build}"
+        shouldSign = project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")
+    }
+    
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
 }
-
-apply plugin: "java"
-apply plugin: "maven"
-apply plugin: "maven-publish"
-apply plugin: "signing"
-apply plugin: "eclipse"
-apply plugin: "idea"
-
-group = "dev.aura.bungeechat"
-version = "2.0.0"
-def build = "130"
 
 description = """Bungee Chat"""
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 repositories {
-    jcenter()
-    mavenCentral()
     maven {
         name "bungeecord-repo"
         url "https://oss.sonatype.org/content/repositories/snapshots"
@@ -41,44 +50,23 @@ repositories {
         name "luck-repo"
         url "https://repo.lucko.me/"
     }
-    maven {
-        name "spigot-repo"
-        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-    }
-    maven {
-        name = "sponge"
-        url = "https://repo.spongepowered.org/maven"
-    }
-}
-
-sourceSets {
-    api
-    lib {
-        compileClasspath += api.output
-    }
-    main {
-        compileClasspath += api.output
-    }
 }
 
 dependencies {
-    apiCompileOnly "org.projectlombok:lombok:${lombok_version}"
+    compile project(":BungeeChatApi")
     
     compile "net.md-5:bungeecord-api:${bungeecoord_version}"
     
     compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
-    
-    libCompile "org.spigotmc:spigot-api:${spigot_version}"
-    libCompile "org.spongepowered:spongeapi:${sponge_version}"
-    
-    libCompileOnly "org.projectlombok:lombok:${lombok_version}"
 }
 
-lombok {
-    version = lombok_version
-    sha256 = lombok_hash
+allprojects {
+    lombok {
+        version = lombok_version
+        sha256 = lombok_hash
+    }
 }
 
 processResources {
@@ -108,70 +96,33 @@ compileJava {
 
 jar {
     from sourceSets.main.output
-    from sourceSets.api.output
+    from project(":BungeeChatApi").sourceSets.main.output
     
-    version = "${version}_${build}"
-}
-
-task apiJar (type: Jar) {
-    from sourceSets.api.output
-    
-    baseName = "${baseName}Api"
-    version = jar.version
-    
-    shouldRunAfter classes
-}
-
-task apiSourceJar (type: Jar) {
-    from sourceSets.api.allSource
-    
-    baseName = apiJar.baseName
-    version = apiJar.version
-    classifier = "sources"
-    
-    shouldRunAfter apiJar
-}
-
-task libJar (type: Jar) {
-    from sourceSets.api.output
-    from sourceSets.lib.output
-    
-    baseName = "${baseName}Lib"
-    version = jar.version
-    
-    shouldRunAfter classes
-}
-
-task libSourceJar (type: Jar) {
-    from sourceSets.api.allSource
-    from sourceSets.lib.allSource
-    
-    baseName = libJar.baseName
-    version = libJar.version
-    classifier = "sources"
-    
-    shouldRunAfter libJar
+    version = full_version
 }
 
 artifacts {
     archives jar
-    archives apiJar
-    archives apiSourceJar
-    archives libJar
-    archives libSourceJar
 }
 
-signing {
-    required { project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile") }
-
-    sign configurations.archives
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            if (project.hasProperty("local_maven")) {
-                repository(url: "file://${local_maven}")
+allprojects {
+    signing {
+        required { shouldSign }
+    
+        sign configurations.archives
+    }
+    
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                if (shouldSign) {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                }
+                if (project.hasProperty("local_maven")) {
+                    repository(url: "file://${local_maven}")
+                } else {
+                    repository(url: "file://${rootProject.projectDir}/maven")
+                }
                 pom {
                     groupId = project.group
                     version = project.version
@@ -187,7 +138,7 @@ uploadArchives {
                             developerConnection "scm:git:gitlab.brainstonemod.com:shawn-ian/BungeeChat.git"
                         }
                         issueManagement {
-                            system "github"
+                            system "gitlab"
                             url "https://gitlab.brainstonemod.com/shawn-ian/BungeeChat/issues"
                         }
                         licenses {

@@ -1,0 +1,51 @@
+plugins {
+    id "org.spongepowered.plugin" version "0.8.1"
+}
+
+description = """Bungee Chat Lib"""
+
+repositories {
+    maven {
+        name "spigot-repo"
+        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        name = "sponge"
+        url = "https://repo.spongepowered.org/maven"
+    }
+}
+
+dependencies {
+    compile project(":BungeeChatApi")
+
+    compile "org.spigotmc:spigot-api:${spigot_version}"
+    compile "org.spongepowered:spongeapi:${sponge_version}"
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", version
+    inputs.property "build", build
+    
+    expand "version": version, "build": build
+}
+
+jar {
+    from sourceSets.main.output
+    from project(":BungeeChatApi").sourceSets.main.output
+    
+    version = full_version
+}
+
+task sourceJar (type: Jar) {
+    from sourceSets.main.allSource
+    from project(":BungeeChatApi").sourceSets.main.allSource
+
+    classifier = "sources"
+    version = jar.version
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+}
