@@ -1,0 +1,218 @@
+import io.franzbecker.gradle.lombok.task.DelombokTask
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id "org.spongepowered.plugin" version "0.8.1"
+    id "io.franzbecker.gradle-lombok" version "1.8"
+}
+
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin: "maven-publish"
+apply plugin: "signing"
+apply plugin: "eclipse"
+apply plugin: "idea"
+
+group = "dev.aura.bungeechat"
+version = "2.0.0"
+def build = "130"
+
+description = """Bungee Chat"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+        name "bungeecord-repo"
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    maven {
+        name "bungeeperms-repo"
+        url "http://repo.wea-ondara.net/repository/public/"
+    }
+    maven {
+        name "jitpack.io"
+        url "https://jitpack.io"
+    }
+    maven {
+        name "luck-repo"
+        url "https://repo.lucko.me/"
+    }
+    maven {
+        name "spigot-repo"
+        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        name = "sponge"
+        url = "https://repo.spongepowered.org/maven"
+    }
+}
+
+dependencies {
+    compile "net.md-5:bungeecord-api:${bungeecoord_version}"
+    
+    compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
+    compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
+    compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    
+    libCompile "org.spigotmc:spigot-api:${spigot_version}"
+    libCompile "org.spongepowered:spongeapi:${sponge_version}"
+}
+
+sourceSets {
+    api
+    lib {
+        compileClasspath += api.output
+    }
+    main {
+        compileClasspath += api.output
+    }
+}
+
+lombok {
+    version = "1.16.16"
+    sha256 = "fbf682c7ff113e5187a9c4b4cbd7a8ad782abd8ccff91b9fa7289a4a6aa8c19a"
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", version
+    inputs.property "build", build
+    
+    expand "version": version, "build": build
+}
+
+task processSources (type: Sync) {
+    inputs.property "version", version
+    inputs.property "build", build
+    
+    from sourceSets.main.allSource
+    into "$buildDir/generated-src/main"
+    filter (ReplaceTokens, tokens: [
+        "version": version,
+        "build": build
+    ])
+}
+
+compileJava {
+    source = processSources.outputs
+    dependsOn processSources 
+}
+
+jar {
+    from sourceSets.main.output
+    from sourceSets.api.output
+    
+    version = "${version}_${build}"
+}
+
+task apiJar (type: Jar) {
+    from sourceSets.api.output
+    
+    baseName = "${baseName}Api"
+    version = jar.version
+    
+    shouldRunAfter classes
+}
+
+task apiSourceJar (type: Jar) {
+    from sourceSets.api.allSource
+    
+    baseName = apiJar.baseName
+    version = apiJar.version
+    classifier = "sources"
+    
+    shouldRunAfter apiJar
+}
+
+task libJar (type: Jar) {
+    from sourceSets.api.output
+    from sourceSets.lib.output
+    
+    baseName = "${baseName}Lib"
+    version = jar.version
+    
+    shouldRunAfter classes
+}
+
+task libSourceJar (type: Jar) {
+    from sourceSets.api.allSource
+    from sourceSets.lib.allSource
+    
+    baseName = libJar.baseName
+    version = libJar.version
+    classifier = "sources"
+    
+    shouldRunAfter libJar
+}
+
+artifacts {
+    archives jar
+    archives apiJar
+    archives apiSourceJar
+    archives libJar
+    archives libSourceJar
+}
+
+signing {
+    required { project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile") }
+
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty("local_maven")) {
+                repository(url: "file://${local_maven}")
+                pom {
+                    groupId = project.group
+                    version = project.version
+                    artifactId = project.archivesBaseName
+                    project {
+                        name project.archivesBaseName
+                        packaging "jar"
+                        description project.description
+                        url "https://gitlab.brainstonemod.com/shawn-ian/BungeeChat"
+                        scm {
+                            url "https://gitlab.brainstonemod.com/shawn-ian/BungeeChat"
+                            connection "scm:git:git@gitlab.brainstonemod.com:shawn-ian/BungeeChat.git"
+                            developerConnection "scm:git:gitlab.brainstonemod.com:shawn-ian/BungeeChat.git"
+                        }
+                        issueManagement {
+                            system "github"
+                            url "https://gitlab.brainstonemod.com/shawn-ian/BungeeChat/issues"
+                        }
+                        licenses {
+                            license {
+                                name "License"
+                                url "???"
+                                distribution "repo"
+                            }
+                        }
+                        developers {
+                            developer {
+                                id "shawn_ian"
+                                name "shawn_ian"
+                                roles {
+                                    role "owner"
+                                    role "developer"
+                                }
+                            }
+                            developer {
+                                id "brainstone"
+                                name "The_BrainStone"
+                                roles {
+                                    role "developer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
