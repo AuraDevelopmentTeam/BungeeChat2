@@ -1,0 +1,40 @@
+variables:
+  ORIG_ARTIFACTS: "$CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
+  ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
+
+cache:
+ key: "$CI_JOB_NAME/$CI_COMMIT_REF_NAME"
+ untracked: true
+
+stages:
+- build
+- deploy
+- cleanup
+  
+build:
+  stage: build
+  script:
+  - ./gradlew --parallel assemble -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
+  - cp $ORIG_ARTIFACTS .
+  when: on_success
+  except:
+    - release
+  artifacts:
+    paths:
+    - $ARTIFACTS
+    
+deploy:
+  stage: deploy
+  script:
+  - ./gradlew --parallel uploadArchives -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
+  when: on_success
+  only:
+  - release
+
+cleanup:
+  stage: cleanup
+  script:
+  - ./gradlew --parallel clean
+  - rm -vf $ARTIFACTS
+  - mkdir -p $CACHE_DIR $CACHE_DIR2
+  when: always
