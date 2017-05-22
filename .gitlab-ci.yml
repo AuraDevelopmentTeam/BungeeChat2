@@ -36,5 +36,4 @@ cleanup:
   script:
   - ./gradlew --parallel clean
   - rm -vf $ARTIFACTS
-  - mkdir -p $CACHE_DIR $CACHE_DIR2
   when: always
