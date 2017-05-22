@@ -51,17 +51,6 @@ repositories {
     }
 }
 
-dependencies {
-    compile "net.md-5:bungeecord-api:${bungeecoord_version}"
-    
-    compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
-    compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
-    compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
-    
-    libCompile "org.spigotmc:spigot-api:${spigot_version}"
-    libCompile "org.spongepowered:spongeapi:${sponge_version}"
-}
-
 sourceSets {
     api
     lib {
@@ -72,9 +61,24 @@ sourceSets {
     }
 }
 
+dependencies {
+    apiCompileOnly "org.projectlombok:lombok:${lombok_version}"
+    
+    compile "net.md-5:bungeecord-api:${bungeecoord_version}"
+    
+    compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
+    compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
+    compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    
+    libCompile "org.spigotmc:spigot-api:${spigot_version}"
+    libCompile "org.spongepowered:spongeapi:${sponge_version}"
+    
+    libCompileOnly "org.projectlombok:lombok:${lombok_version}"
+}
+
 lombok {
-    version = "1.16.16"
-    sha256 = "fbf682c7ff113e5187a9c4b4cbd7a8ad782abd8ccff91b9fa7289a4a6aa8c19a"
+    version = lombok_version
+    sha256 = lombok_hash
 }
 
 processResources {
