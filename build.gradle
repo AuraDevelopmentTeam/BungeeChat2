@@ -8,7 +8,7 @@ buildscript {
     }
  
     dependencies {
-        classpath "net.sf.proguard:proguard-gradle:5.2.1"
+        classpath "net.sf.proguard:proguard-gradle:5.3.3"
     }
 }
 
@@ -45,6 +45,10 @@ allprojects {
 
 description = """Bungee Chat"""
 
+configurations {
+    reTrace
+}
+
 repositories {
     maven {
         name "bungeecord-repo"
@@ -72,6 +76,8 @@ dependencies {
     compileOnly "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compileOnly "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     compileOnly "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    
+    reTrace "net.sf.proguard:proguard-retrace:5.3.3"
 }
 
 allprojects {
@@ -104,6 +110,9 @@ allprojects {
     }
     
     task delombok(type: DelombokTask, dependsOn: processSources) {
+        group "build"
+        describe "Generates Lombok free Java code from code with Lombok"
+    
       	ext.outputDir = file("$buildDir/delombok")
         
       	outputs.dir(outputDir)
@@ -123,6 +132,8 @@ allprojects {
     }
     
     task sourceJar (type: Jar, dependsOn: delombok) {
+        group "build"
+    
         from delombok.outputDir
     
         classifier = "sources"
@@ -137,6 +148,8 @@ jar {
 }
 
 task proguard(type: ProGuardTask, dependsOn: jar) {
+    group "build"
+
     ext.outputJar = "${buildDir}/libs/${archivesBaseName}-${full_version}.jar"
     
     configuration "proguard.conf"
@@ -160,6 +173,20 @@ task proguard(type: ProGuardTask, dependsOn: jar) {
 artifacts {
     archives file(proguard.ext.outputJar)
 }
+
+/*// Remove default jar from artifacts (We don't want in the maven repo!)
+configurations.archives.artifacts.with { archives ->
+    def toRemove = new ArrayList()
+    
+    archives.each {
+        if (it.classifier == "deobf")
+            toRemove.add(it)
+    }
+    
+    toRemove.each {
+        remove(it)
+    }
+}*/
 
 allprojects {
     signing {
@@ -226,4 +253,34 @@ allprojects {
             }
         }
     }
+}
+
+task reTrace(type: JavaExec) {
+    group "help"
+    description """Deobfuscates an obfuscated stacktrace
+Specify "-Pmapping_file=<file>" (with quotes) to use a given mapping file. If not provided use (and generate if necessary) the mapping file of the current code.
+Specify "-Pstacktrace_file=<file>" (with quotes) to specify the stacktrace file. If not provided "stacktrace.txt" (in the project root) is used."""
+
+    classpath configurations.reTrace
+    main = "proguard.retrace.ReTrace"
+    
+    def mapping_file
+    def stacktrace_file
+    
+    if (project.hasProperty("mapping_file")) {
+        mapping_file = project.mapping_file
+    } else {
+        dependsOn proguard
+        
+        mapping_file = "${proguard.outputJar}.map"
+    }
+    
+    if (project.hasProperty("stacktrace_file")) {
+        stacktrace_file = project.stacktrace_file
+    } else {
+        stacktrace_file = "stacktrace.txt"
+    }
+    
+    args mapping_file
+    args stacktrace_file
 }
