@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     id "org.spongepowered.plugin" version "0.8.1"
 }
@@ -29,6 +31,24 @@ processResources {
     
     expand "version": version, "build": build
 }
+
+task processSources (type: Sync) {
+    inputs.property "version", version
+    inputs.property "build", build
+    
+    from sourceSets.main.allSource
+    into "$buildDir/generated-src/main"
+    filter (ReplaceTokens, tokens: [
+        "version": version,
+        "build": build
+    ])
+}
+
+compileJava {
+    source = processSources.outputs
+    dependsOn processSources 
+}
+
 
 jar {
     from sourceSets.main.output
