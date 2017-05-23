@@ -16,6 +16,7 @@ public interface BungeeChatApi {
 	public static final String AUTHOR_BRAINSTONE = "The_BrainStone";
 	public static final String[] AUTHORS = new String[] { AUTHOR_SHAWN, AUTHOR_BRAINSTONE };
 	public static final double CONFIG_VERSION = 9.0;
-	
+	public static final int PLUGIN_ID = 12592;
+
 	public ServerType getServerType();
 }
