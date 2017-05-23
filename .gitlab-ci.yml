@@ -1,5 +1,5 @@
 variables:
-  ORIG_ARTIFACTS: "$CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
+  ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/BungeeChat*.jar* $CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
 
 cache:
