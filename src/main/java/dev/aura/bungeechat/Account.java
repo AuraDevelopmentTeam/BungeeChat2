@@ -1,45 +1,99 @@
 package dev.aura.bungeechat;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@SuppressWarnings("unused")
-public class Account {
+import dev.aura.bungeechat.api.enums.ChannelType;
+import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import lombok.Getter;
+import lombok.Setter;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-    private UUID uuid;
-    private ChannelType channelType;
-    private boolean vanished, messanger, socialspy;
-    private CopyOnWriteArrayList<UUID> ignored;
+public class Account implements BungeeChatAccount {
+	private UUID uuid;
+	@Getter
+	@Setter
+	private ChannelType channelType;
+	private boolean vanished, messanger, socialspy;
+	private CopyOnWriteArrayList<UUID> ignored;
 
-    public Account(UUID uuid) {
-        this.uuid = uuid;
-        this.channelType = ChannelType.NONE;
-        this.vanished = false;
-        this.messanger = true;
-        this.socialspy = false;
-        this.ignored = new CopyOnWriteArrayList<>();
-    }
+	public Account(ProxiedPlayer player) {
+		this(player.getUniqueId());
+	}
 
-    public UUID getUniqueId() { return this.uuid; }
-    public ChannelType getChannelType() { return this.channelType; }
-    public boolean isVanished() { return this.vanished; }
-    public boolean hasMessangerEnabled() { return this.messanger; }
-    public boolean hasSocialSpyEnabled() { return this.socialspy; }
-    public CopyOnWriteArrayList<UUID> getIgnored() { return this.ignored; }
-    public boolean hasIgnored(UUID uuid) { return this.ignored.contains(uuid); }
-    public boolean hasIgnored(ProxiedPlayer player) { return this.ignored.contains(player.getUniqueId()); }
+	public Account(UUID uuid) {
+		this.uuid = uuid;
+		channelType = ChannelType.NONE;
+		vanished = false;
+		messanger = true;
+		socialspy = false;
+		ignored = new CopyOnWriteArrayList<>();
+	}
 
-    public void setChannelType(ChannelType channelType) { this.channelType = channelType; }
-    public void toggleVanished() { this.vanished = !this.vanished; }
-    public void toggleMessanger() { this.messanger = !this.messanger; }
-    public void toggleSocialSpy() { this.socialspy = !this.socialspy; }
-    public void addIgnore(UUID uuid) { this.ignored.add(uuid); }
-    public void addIgnore(ProxiedPlayer player) { this.ignored.add(player.getUniqueId()); }
-    public void removeIgnore(UUID uuid) { this.ignored.remove(uuid); }
-    public void removeIgnore(ProxiedPlayer player) { this.ignored.remove(player.getUniqueId()); }
+	@Override
+	public UUID getUniqueId() {
+		return uuid;
+	}
 
+	@Override
+	public boolean isVanished() {
+		return vanished;
+	}
 
+	@Override
+	public boolean hasMessangerEnabled() {
+		return messanger;
+	}
 
+	@Override
+	public boolean hasSocialSpyEnabled() {
+		return socialspy;
+	}
+
+	@Override
+	public CopyOnWriteArrayList<UUID> getIgnored() {
+		return ignored;
+	}
+
+	@Override
+	public boolean hasIgnored(UUID uuid) {
+		return ignored.contains(uuid);
+	}
+
+	public boolean hasIgnored(ProxiedPlayer player) {
+		return this.hasIgnored(player.getUniqueId());
+	}
+
+	@Override
+	public void toggleVanished() {
+		vanished = !vanished;
+	}
+
+	@Override
+	public void toggleMessanger() {
+		messanger = !messanger;
+	}
+
+	@Override
+	public void toggleSocialSpy() {
+		socialspy = !socialspy;
+	}
+
+	@Override
+	public void addIgnore(UUID uuid) {
+		ignored.add(uuid);
+	}
+
+	public void addIgnore(ProxiedPlayer player) {
+		this.addIgnore(player.getUniqueId());
+	}
+
+	@Override
+	public void removeIgnore(UUID uuid) {
+		ignored.remove(uuid);
+	}
+
+	public void removeIgnore(ProxiedPlayer player) {
+		this.removeIgnore(player.getUniqueId());
+	}
 }
