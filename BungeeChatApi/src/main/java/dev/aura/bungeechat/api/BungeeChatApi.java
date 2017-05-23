@@ -13,4 +13,5 @@ public interface BungeeChatApi {
 	public static final String AUTHOR_SHAWN = "shawn_ian";
 	public static final String AUTHOR_BRAINSTONE = "The_BrainStone";
 	public static final String[] AUTHORS = new String[] { AUTHOR_SHAWN, AUTHOR_BRAINSTONE };
+	public static final double CONFIG_VERSION = 9.0;
 }

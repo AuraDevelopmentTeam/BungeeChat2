@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.config;
 
+import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.Logger;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
@@ -42,5 +43,6 @@ public class Config {
     }
 
     public static Configuration get() { return configuration; }
+    public static double getVersion() { return BungeeChat.CONFIG_VERSION; }
 
 }
