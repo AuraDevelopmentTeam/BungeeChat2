@@ -2,6 +2,7 @@ package dev.aura.bungeechat;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
 import net.alpenblock.bungeeperms.ChatColor;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -33,6 +34,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public static void unregisterAccount(Account account) { userAccounts.remove(account); }
 
     public void onEnable() {
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         loadScreen();
     }
 
@@ -68,9 +70,10 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
             con.setRequestMethod("POST");
             con.getOutputStream().write(("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=12592").getBytes("UTF-8"));
             String version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            return version.equals("version");
+            return version.equals(VERSION);
         } catch (Exception ex) {
             return false;
         }
     }
+
 }

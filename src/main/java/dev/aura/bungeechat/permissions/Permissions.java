@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.permissions;
 
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Permissions {
@@ -9,6 +10,15 @@ public class Permissions {
         else {
             if ((permission.equals(Permission.BYPASS_ANTI_ADVERTISEMENT) || permission.equals(Permission.BYPASS_ANTI_SPAM) || permission.equals(Permission.BYPASS_ANTI_SWEAR))
                     && player.hasPermission(Permission.BYPASS_ALL.getStringedPermission())) return true;
+            else return false;
+        }
+    }
+
+    public static boolean hasPermission(CommandSender sender, Permission permission){
+        if (sender.hasPermission(permission.getStringedPermission())) return true;
+        else {
+            if ((permission.equals(Permission.BYPASS_ANTI_ADVERTISEMENT) || permission.equals(Permission.BYPASS_ANTI_SPAM) || permission.equals(Permission.BYPASS_ANTI_SWEAR))
+                    && sender.hasPermission(Permission.BYPASS_ALL.getStringedPermission())) return true;
             else return false;
         }
     }

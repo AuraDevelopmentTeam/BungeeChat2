@@ -2,6 +2,8 @@ package dev.aura.bungeechat.permissions;
 
 public enum Permission {
 
+    BUNGEECHAT_RELOAD("bungeechat.admin.reload"),
+
     USE_COLORED_CHAT("bungeechat.chat.colors"),
 
     BYPASS_ALL("bungeechat.chat.bypassall"),
