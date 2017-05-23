@@ -12,4 +12,8 @@ public class Logger {
         System.out.println(ChatColor.WHITE + "BungeeChat > " + text);
     }
 
+    public static void normal(String text) {
+        System.out.println(text);
+    }
+
 }
