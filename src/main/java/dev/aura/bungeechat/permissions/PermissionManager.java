@@ -3,7 +3,7 @@ package dev.aura.bungeechat.permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class Permissions {
+public class PermissionManager {
 
     public static boolean hasPermission(ProxiedPlayer player, Permission permission){
         if (player.hasPermission(permission.getStringedPermission())) return true;
