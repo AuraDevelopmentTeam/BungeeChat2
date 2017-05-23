@@ -8,10 +8,17 @@ public class PlaceHolderEvent extends Event {
     @Getter
     private final String message;
     @Getter
-    private final ProxiedPlayer player;
+    private final ProxiedPlayer sender;
+    @Getter
+    private final ProxiedPlayer target;
 
-    public PlaceHolderEvent(ProxiedPlayer player, String message){
+    public PlaceHolderEvent(ProxiedPlayer sender, ProxiedPlayer target, String message){
         this.message = message;
-        this.player = player;
+        this.sender = sender;
+        this.target = target;
+    }
+
+    public void registerPlaceHolder(String placeholder, String replacement) {
+        message.replace(placeholder, replacement);
     }
 }
