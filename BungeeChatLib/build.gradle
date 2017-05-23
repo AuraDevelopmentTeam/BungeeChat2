@@ -12,6 +12,10 @@ repositories {
         url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     }
     maven {
+        name "bungeecord-repo"
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    maven {
         name = "sponge"
         url = "https://repo.spongepowered.org/maven"
     }
