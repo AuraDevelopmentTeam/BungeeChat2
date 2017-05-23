@@ -65,13 +65,13 @@ repositories {
 }
 
 dependencies {
-    compile project(":BungeeChatApi")
+    compileOnly project(":BungeeChatApi")
     
-    compile "net.md-5:bungeecord-api:${bungeecoord_version}"
+    compileOnly "net.md-5:bungeecord-api:${bungeecoord_version}"
     
-    compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
-    compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
-    compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    compileOnly "net.alpenblock:BungeePerms:${bungeeperms_version}"
+    compileOnly "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
+    compileOnly "me.lucko.luckperms:luckperms-api:${luckperms_version}"
 }
 
 allprojects {
@@ -147,7 +147,6 @@ task proguard(type: ProGuardTask, dependsOn: jar) {
     printmapping "${outputJar}.map"
  
     // Libraries
-    libraryjars configurations.compile
     libraryjars configurations.compileOnly
     
     // Stuff that depends on the group name
