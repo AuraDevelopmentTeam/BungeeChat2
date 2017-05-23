@@ -15,12 +15,8 @@ public class Permissions {
     }
 
     public static boolean hasPermission(CommandSender sender, Permission permission){
-        if (sender.hasPermission(permission.getStringedPermission())) return true;
-        else {
-            if ((permission.equals(Permission.BYPASS_ANTI_ADVERTISEMENT) || permission.equals(Permission.BYPASS_ANTI_SPAM) || permission.equals(Permission.BYPASS_ANTI_SWEAR))
-                    && sender.hasPermission(Permission.BYPASS_ALL.getStringedPermission())) return true;
-            else return false;
-        }
+        if (sender instanceof ProxiedPlayer) return hasPermission((ProxiedPlayer) sender, permission);
+        else return true;
     }
 
 }
