@@ -12,6 +12,10 @@ public interface BungeeChatAccount {
 
 	public boolean isVanished();
 
+	public boolean isMessanger();
+
+	public boolean isSocialspy();
+
 	public boolean hasMessangerEnabled();
 
 	public boolean hasSocialSpyEnabled();
@@ -25,6 +29,12 @@ public interface BungeeChatAccount {
 	}
 
 	public void setChannelType(ChannelType channelType);
+
+	public void setVanished(boolean vanished);
+
+	public void setMessanger(boolean messanger);
+
+	public void setSocialspy(boolean socialspy);
 
 	public void toggleVanished();
 

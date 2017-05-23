@@ -15,8 +15,13 @@ public class Account implements BungeeChatAccount {
 	@Setter
 	private ChannelType channelType;
 	@Getter
+	@Setter
 	private boolean vanished;
+	@Getter
+	@Setter
 	private boolean messanger;
+	@Getter
+	@Setter
 	private boolean socialspy;
 	@Getter
 	private CopyOnWriteArrayList<UUID> ignored;
