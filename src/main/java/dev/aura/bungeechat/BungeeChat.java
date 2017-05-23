@@ -27,4 +27,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public static void registerAccount(Account account) { userAccounts.add(account); }
     public static void unregisterAccount(Account account) { userAccounts.remove(account); }
 
+    public void onEnable() {
+
+    }
 }
