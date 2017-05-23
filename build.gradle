@@ -111,12 +111,12 @@ allprojects {
     
     task delombok(type: DelombokTask, dependsOn: processSources) {
         group "build"
-        describe "Generates Lombok free Java code from code with Lombok"
+        description "Generates Lombok free Java code from code with Lombok"
     
       	ext.outputDir = file("$buildDir/delombok")
         
       	outputs.dir(outputDir)
-    		inputs.dir(processSources.outputDir)
+    		inputs.dir(project.processSources.outputDir)
     		args(it, "-d", outputDir)
     }
     
