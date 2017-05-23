@@ -1,3 +1,4 @@
+import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
@@ -69,36 +70,59 @@ allprojects {
     }
 }
 
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", version
-    inputs.property "build", build
-    
-    expand "version": version, "build": build
-}
+allprojects {
+    processResources {
+        // this will ensure that this task is redone when the versions change.
+        inputs.property "version", version
+        inputs.property "build", build
+        
+        expand "version": version, "build": build
+    }
 
-task processSources (type: Sync) {
-    inputs.property "version", version
-    inputs.property "build", build
+    task processSources (type: Sync) {
+        inputs.property "version", version
+        inputs.property "build", build
+        ext.outputDir = file("$buildDir/generated-src")
+        
+        from sourceSets.main.allSource
+        into outputDir
+        filter (ReplaceTokens, tokens: [
+            "version": version,
+            "build": build
+        ])
+    }
     
-    from sourceSets.main.allSource
-    into "$buildDir/generated-src/main"
-    filter (ReplaceTokens, tokens: [
-        "version": version,
-        "build": build
-    ])
-}
-
-compileJava {
-    source = processSources.outputs
-    dependsOn processSources 
+    task delombok(type: DelombokTask, dependsOn: processSources) {
+      	ext.outputDir = file("$buildDir/delombok")
+        
+      	outputs.dir(outputDir)
+    		inputs.dir(processSources.outputDir)
+    		args(it, "-d", outputDir)
+    }
+    
+    compileJava {
+        source = processSources.outputs
+        dependsOn processSources 
+    }
+    
+    jar {
+        from sourceSets.main.output
+        
+        version = full_version
+    }
+    
+    task sourceJar (type: Jar) {
+        from delombok.outputDir
+    
+        classifier = "sources"
+        version = jar.version
+        
+        dependsOn delombok
+    }
 }
 
 jar {
-    from sourceSets.main.output
     from project(":BungeeChatApi").sourceSets.main.output
-    
-    version = full_version
 }
 
 artifacts {

@@ -1,37 +1,4 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 description = """Bungee Chat API"""
-
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
-task processSources (type: Sync) {
-    inputs.property "version", version
-    inputs.property "build", build
-    
-    from sourceSets.main.allSource
-    into "$buildDir/generated-src/main"
-    filter (ReplaceTokens, tokens: [
-        "version": version,
-        "build": build
-    ])
-}
-
-compileJava {
-    source = processSources.outputs
-    dependsOn processSources 
-}
-
-jar {
-    version = full_version
-}
-
-task sourceJar (type: Jar) {
-    classifier = "sources"
-    version = jar.version
-}
 
 artifacts {
     archives jar
