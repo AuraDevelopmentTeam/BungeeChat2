@@ -39,8 +39,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private void loadScreen() {
         Logger.normal(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD + " ----------------");
         Logger.normal(ChatColor.YELLOW + "Author: " + ChatColor.GREEN + "shawn_ian");
-        //Logger.normal(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + BungeeChat.getVersion());
-        //Logger.normal(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BungeeChat.getBuild());
+        Logger.normal(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION);
+        Logger.normal(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BungeeChatApi.BUILD);
         //TODO: Loaded Modules Displayed.
         if (isLatestVersion()) {
             Logger.normal(ChatColor.YELLOW + "There is an update avalible. You can download version " + ChatColor.GREEN
