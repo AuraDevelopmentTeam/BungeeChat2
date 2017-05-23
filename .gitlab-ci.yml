@@ -14,6 +14,7 @@ stages:
 build:
   stage: build
   script:
+  - ./gradlew --parallel clean
   - ./gradlew --parallel assemble -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   - cp $ORIG_ARTIFACTS .
   when: on_success
@@ -26,6 +27,7 @@ build:
 deploy:
   stage: deploy
   script:
+  - ./gradlew --parallel clean
   - ./gradlew --parallel uploadArchives -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   when: on_success
   only:
