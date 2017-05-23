@@ -14,7 +14,11 @@ public class Account implements BungeeChatAccount {
 	@Getter
 	@Setter
 	private ChannelType channelType;
-	private boolean vanished, messanger, socialspy;
+	@Getter
+	private boolean vanished;
+	private boolean messanger;
+	private boolean socialspy;
+	@Getter
 	private CopyOnWriteArrayList<UUID> ignored;
 
 	public Account(ProxiedPlayer player) {
@@ -36,11 +40,6 @@ public class Account implements BungeeChatAccount {
 	}
 
 	@Override
-	public boolean isVanished() {
-		return vanished;
-	}
-
-	@Override
 	public boolean hasMessangerEnabled() {
 		return messanger;
 	}
@@ -48,11 +47,6 @@ public class Account implements BungeeChatAccount {
 	@Override
 	public boolean hasSocialSpyEnabled() {
 		return socialspy;
-	}
-
-	@Override
-	public CopyOnWriteArrayList<UUID> getIgnored() {
-		return ignored;
 	}
 
 	@Override
