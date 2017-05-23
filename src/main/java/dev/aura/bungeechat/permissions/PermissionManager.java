@@ -8,8 +8,8 @@ public class PermissionManager {
     public static boolean hasPermission(ProxiedPlayer player, Permission permission){
         if (player.hasPermission(permission.getStringedPermission())) return true;
         else {
-            if ((permission.equals(Permission.BYPASS_ANTI_ADVERTISEMENT) || permission.equals(Permission.BYPASS_ANTI_SPAM) || permission.equals(Permission.BYPASS_ANTI_SWEAR))
-                    && player.hasPermission(Permission.BYPASS_ALL.getStringedPermission())) return true;
+            if (permission.getStringedPermission().startsWith("bungeechat.chat.") && player.hasPermission(Permission.BYPASS_ALL.getStringedPermission())) return true;
+            else if (permission.getStringedPermission().startsWith("bungeechat.command.") && player.hasPermission(Permission.COMMAND_ALL.getStringedPermission())) return true;
             else return false;
         }
     }

@@ -3,8 +3,10 @@ package dev.aura.bungeechat;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.permissions.Permission;
 import dev.aura.bungeechat.permissions.PermissionManager;
+import dev.aura.bungeechat.placeholders.PlaceHolderEvent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 
 import java.io.BufferedReader;
