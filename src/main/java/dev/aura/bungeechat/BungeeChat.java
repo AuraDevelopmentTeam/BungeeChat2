@@ -1,6 +1,7 @@
 package dev.aura.bungeechat;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.config.Config;
 import net.alpenblock.bungeeperms.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -31,6 +32,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public static void unregisterAccount(Account account) { userAccounts.remove(account); }
 
     public void onEnable() {
+        Config.load();
+        if (CONFIG_VERSION != Config.get().getDouble("Version")) {
+            Logger.info("You config is outdated and might cause errors when been used with this version of BungeeChat!");
+            Logger.info("Please update your config by either deleting your old one or downloading the new one on the plugin page.");
+            return;
+        }
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         loadScreen();
     }
