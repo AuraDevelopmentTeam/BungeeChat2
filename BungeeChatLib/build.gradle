@@ -30,7 +30,7 @@ jar {
     from project(":BungeeChatApi").sourceSets.main.output
 }
 
-sourceJar{
+sourceJar {
     from project(":BungeeChatApi").delombok.outputDir
 }
 

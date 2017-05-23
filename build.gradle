@@ -1,9 +1,20 @@
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.apache.tools.ant.filters.ReplaceTokens
+import proguard.gradle.ProGuardTask
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+ 
+    dependencies {
+        classpath "net.sf.proguard:proguard-gradle:5.2.1"
+    }
+}
 
 plugins {
-        id "io.franzbecker.gradle-lombok" version "1.8" apply false
-    }
+    id "io.franzbecker.gradle-lombok" version "1.8" apply false
+}
 
 allprojects {
     apply plugin: "java"
@@ -111,22 +122,44 @@ allprojects {
         version = full_version
     }
     
-    task sourceJar (type: Jar) {
+    task sourceJar (type: Jar, dependsOn: delombok) {
         from delombok.outputDir
     
         classifier = "sources"
         version = jar.version
-        
-        dependsOn delombok
     }
 }
 
 jar {
     from project(":BungeeChatApi").sourceSets.main.output
+    
+    classifier = "deobf"
+}
+
+task proguard(type: ProGuardTask, dependsOn: jar) {
+    ext.outputJar = "${buildDir}/libs/${archivesBaseName}-${full_version}.jar"
+    
+    configuration "proguard.conf"
+
+    // Inputs and outputs
+    injars jar.archivePath
+    outjars outputJar
+    printmapping "${outputJar}.map"
+ 
+    // Libraries
+    libraryjars configurations.compile
+    libraryjars configurations.compileOnly
+    
+    // Stuff that depends on the group name
+    keep "class ${project.group}.api.** { *; }"
+    keep "class ${project.group}.BungeeChat"
+    repackageclasses project.group
+    
+    jar.finalizedBy proguard
 }
 
 artifacts {
-    archives jar
+    archives file(proguard.ext.outputJar)
 }
 
 allprojects {
@@ -149,7 +182,7 @@ allprojects {
                 }
                 pom {
                     groupId = project.group
-                    version = project.version
+                    version = project.full_version
                     artifactId = project.archivesBaseName
                     project {
                         name project.archivesBaseName
