@@ -1,4 +1,4 @@
-package dev.aura.bungeechat;
+package dev.aura.bungeechat.api.enums;
 
 public enum ChannelType {
 
