@@ -1,6 +1,7 @@
 package dev.aura.bungeechat;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.config.Config;
 import net.alpenblock.bungeeperms.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -31,6 +32,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public static void registerAccount(Account account) { userAccounts.add(account); }
     public static void unregisterAccount(Account account) { userAccounts.remove(account); }
 
+    @Override
     public void onEnable() {
         Config.load();
         if (CONFIG_VERSION != Config.get().getDouble("Version")) {
@@ -41,6 +43,11 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         loadScreen();
     }
+    
+    @Override
+	public ServerType getServerType() {
+		return ServerType.BUNGEECORD;
+	}
 
     private void loadScreen() {
         Logger.normal(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD + " ----------------");
