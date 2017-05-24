@@ -43,7 +43,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         if (!checker.exists()) {
             checker.createNewFile();
         }
-        FileOutputStream saveFile= new FileOutputStream(account.getUniqueId().toString() + ".sav");
+        FileOutputStream saveFile= new FileOutputStream(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + account.getUniqueId().toString() + ".sav");
         ObjectOutputStream save = new ObjectOutputStream(saveFile);
         save.writeObject(account.getChannelType());
         save.writeObject(account.isMessanger());
@@ -65,7 +65,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
             registerAccount(new Account(uuid));
             return;
         }
-        FileInputStream saveFile = new FileInputStream(uuid + ".sav");
+        FileInputStream saveFile = new FileInputStream(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + uuid + ".sav");
         ObjectInputStream save = new ObjectInputStream(saveFile);
         Account account = new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(),
                 (CopyOnWriteArrayList<UUID>) save.readObject());

@@ -4,10 +4,12 @@ import dev.aura.bungeechat.api.utils.TimeUtils;
 import dev.aura.bungeechat.events.PlaceHolderEvent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 
 @SuppressWarnings("unused")
 public class PlaceHolderListener implements Listener {
 
+    @EventHandler
     public void onPlaceHolerEventCall(PlaceHolderEvent event) {
         event.registerPlaceHolder("%data_time%", TimeUtils.getCurrentTimeStamp());
         event.registerPlaceHolder("%data_day%", TimeUtils.getCurrentDay());
