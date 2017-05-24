@@ -6,7 +6,7 @@ import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.listeners.PlaceHolderListener;
 import dev.aura.bungeechat.listeners.PlayerConnectionListeners;
-import net.alpenblock.bungeeperms.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
