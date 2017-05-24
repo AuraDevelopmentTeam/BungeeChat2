@@ -53,4 +53,14 @@ public interface BungeeChatAccount {
 	default public void removeIgnore(BungeeChatAccount account) {
 		this.removeIgnore(getUniqueId());
 	}
+
+	public String getName();
+
+	public String getDisplayName();
+
+	public int getPing();
+
+	public String getServerName();
+
+	public String getServerIP();
 }

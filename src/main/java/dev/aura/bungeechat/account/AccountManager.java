@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.account;
 
 import dev.aura.bungeechat.api.enums.ChannelType;
+import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -14,40 +15,38 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AccountManager implements Listener {
 
-    private static CopyOnWriteArrayList<Account> userAccounts = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<BungeeChatAccount> userAccounts = new CopyOnWriteArrayList<>();
 
-    public static Account getUserAccount(UUID uuid) {
-        for (Account acc : userAccounts) {
+    public static BungeeChatAccount getUserAccount(UUID uuid) {
+        for (BungeeChatAccount acc : userAccounts) {
             if (acc.getUniqueId().equals(uuid))
                 return acc;
         }
         return null;
     }
 
-    public static Account getUserAccount(ProxiedPlayer player) {
+    public static BungeeChatAccount getUserAccount(ProxiedPlayer player) {
         return getUserAccount(player.getUniqueId());
     }
 
-    public static void registerAccount(Account account) {
+    public static void registerAccount(BungeeChatAccount account) {
         userAccounts.add(account);
     }
 
-    public static void unregisterAccount(Account account) {
+    public static void unregisterAccount(BungeeChatAccount account) {
         userAccounts.remove(account);
     }
 
-    public static void saveAccount(Account account) throws IOException {
+    public static void saveAccount(BungeeChatAccount account) throws IOException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
         if (!folder.exists()) {
             folder.mkdir();
         }
-        File checker = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/"
-                + account.getUniqueId().toString() + ".sav");
+        File checker = new File(folder, account.getUniqueId().toString() + ".sav");
         if (!checker.exists()) {
             checker.createNewFile();
         }
-        FileOutputStream saveFile = new FileOutputStream(ProxyServer.getInstance().getPluginsFolder()
-                + "/BungeeChat/userdata/" + account.getUniqueId().toString() + ".sav");
+        FileOutputStream saveFile = new FileOutputStream(checker);
         ObjectOutputStream save = new ObjectOutputStream(saveFile);
         save.writeObject(account.getChannelType());
         save.writeObject(account.isMessanger());
