@@ -168,6 +168,10 @@ task proguard(type: ProGuardTask, dependsOn: jar) {
     keep "class ${project.group}.api.** { *; }"
     repackageclasses project.group
     
+    // No notes or warnings from classes that aren't ours!
+    dontwarn "!class ${project.group}.**"
+    dontnote "!class ${project.group}.**"
+    
     jar.finalizedBy proguard
 }
 
