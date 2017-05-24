@@ -1,6 +1,6 @@
 package dev.aura.bungeechat.listeners;
 
-import dev.aura.bungeechat.BungeeChat;
+import dev.aura.bungeechat.accounts.AccountManager;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -12,12 +12,12 @@ public class PlayerConnectionListeners implements Listener {
 
     @EventHandler
     public void onPlayerConnect(PostLoginEvent event) throws IOException, ClassNotFoundException {
-        BungeeChat.loadAccount(event.getPlayer().getUniqueId());
+        AccountManager.loadAccount(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
     public void onPlayerDisconnect(PlayerDisconnectEvent event) throws IOException, ClassNotFoundException {
-        BungeeChat.saveAccount(BungeeChat.getUserAccount(event.getPlayer().getUniqueId()));
+        AccountManager.saveAccount(AccountManager.getUserAccount(event.getPlayer().getUniqueId()));
     }
 
 }

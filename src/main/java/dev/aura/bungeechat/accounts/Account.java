@@ -1,4 +1,4 @@
-package dev.aura.bungeechat;
+package dev.aura.bungeechat.accounts;
 
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
