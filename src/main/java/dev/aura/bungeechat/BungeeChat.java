@@ -12,12 +12,12 @@ import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.bungeechat.util.Version;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
-
     @Override
     public void onEnable() {
         Config.load();
@@ -73,7 +73,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     private boolean isLatestVersion() {
-        return getLatestVersion().equals(VERSION);
+        return (new Version(getLatestVersion())).compareTo(new Version(VERSION)) > 0;
     }
 
 }
