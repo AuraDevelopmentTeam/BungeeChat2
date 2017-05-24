@@ -1,19 +1,17 @@
 package dev.aura.bungeechat.listeners;
 
+import dev.aura.bungeechat.api.utils.TimeUtils;
 import dev.aura.bungeechat.events.PlaceHolderEvent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class PlaceHolderListener implements Listener {
 
     public void onPlaceHolerEventCall(PlaceHolderEvent event) {
-        event.registerPlaceHolder("%data_time%", getCurrentTimeStamp());
-        event.registerPlaceHolder("%data_day%", getCurrentDay());
-        event.registerPlaceHolder("%data_month%", getCurrentMonth());
-        event.registerPlaceHolder("%data_year%", getCurrentYear());
+        event.registerPlaceHolder("%data_time%", TimeUtils.getCurrentTimeStamp());
+        event.registerPlaceHolder("%data_day%", TimeUtils.getCurrentDay());
+        event.registerPlaceHolder("%data_month%", TimeUtils.getCurrentMonth());
+        event.registerPlaceHolder("%data_year%", TimeUtils.getCurrentYear());
         if (event.getTarget() == null) {
             ProxiedPlayer player = event.getSender();
             event.registerPlaceHolder("%player_name%", player.getName());
@@ -40,28 +38,6 @@ public class PlaceHolderListener implements Listener {
         }
     }
 
-    private static String getCurrentTimeStamp() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");
-        Date now = new Date();
-        return sdfDate.format(now);
-    }
 
-    private static String getCurrentDay() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd");
-        Date now = new Date();
-        return sdfDate.format(now);
-    }
-
-    private static String getCurrentMonth() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("MMM");
-        Date now = new Date();
-        return sdfDate.format(now);
-    }
-
-    private static String getCurrentYear() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy");
-        Date now = new Date();
-        return sdfDate.format(now);
-    }
 
 }
