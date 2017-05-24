@@ -1,6 +1,6 @@
 package dev.aura.bungeechat;
 
-import net.alpenblock.bungeeperms.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 public class Logger {
 
