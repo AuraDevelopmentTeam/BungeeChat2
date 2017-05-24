@@ -1,6 +1,6 @@
 name: BungeeChat
 id: bungeechat
-main: dev.aura.bungeechat.BungeChat
+main: dev.aura.bungeechat.BungeeChat
 version: ${version}
 author: shawn_ian, BrainStone
 description: Bungee Chat Plugin
