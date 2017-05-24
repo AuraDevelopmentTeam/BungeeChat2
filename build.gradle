@@ -109,7 +109,7 @@ allprojects {
         ])
     }
     
-    task delombok(type: DelombokTask, dependsOn: processSources) {
+    task delombok(type: DelombokTask, dependsOn: compileJava) {
         group "build"
         description "Generates Lombok free Java code from code with Lombok"
     
