@@ -5,6 +5,7 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.listeners.PlaceHolderListener;
+import dev.aura.bungeechat.listeners.PlayerConnectionListeners;
 import net.alpenblock.bungeeperms.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -56,10 +57,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public static void loadAccount(UUID uuid) throws IOException, ClassNotFoundException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
         if (!folder.exists()){
+            registerAccount(new Account(uuid));
             return;
         }
         File checker = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + uuid.toString() + ".sav");
         if (!checker.exists()) {
+            registerAccount(new Account(uuid));
             return;
         }
         FileInputStream saveFile = new FileInputStream(uuid + ".sav");
@@ -80,6 +83,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new PlaceHolderListener());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new PlayerConnectionListeners());
         loadScreen();
     }
     
