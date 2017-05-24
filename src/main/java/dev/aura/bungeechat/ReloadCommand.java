@@ -1,7 +1,7 @@
 package dev.aura.bungeechat;
 
+import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.config.Config;
-import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;

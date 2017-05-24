@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.permission;
+package dev.aura.bungeechat.api.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
