@@ -3,6 +3,9 @@ package dev.aura.bungeechat.api.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class TimeUtils {
 
     public static String getCurrentTimeStamp() {
