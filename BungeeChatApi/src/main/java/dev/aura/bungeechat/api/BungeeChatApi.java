@@ -1,6 +1,8 @@
 package dev.aura.bungeechat.api;
 
+import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
+import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 
 public interface BungeeChatApi {
 	public static final String ID = "bungeechat";
@@ -19,4 +21,6 @@ public interface BungeeChatApi {
 	public static final int PLUGIN_ID = 12592;
 
 	public ServerType getServerType();
+
+	public boolean hasPermission(BungeeChatAccount account, Permission permission);
 }

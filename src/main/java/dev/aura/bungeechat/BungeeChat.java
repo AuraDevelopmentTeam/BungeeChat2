@@ -2,9 +2,12 @@ package dev.aura.bungeechat;
 
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
+import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.listener.PlaceHolderListener;
+import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -33,6 +36,11 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 	public ServerType getServerType() {
 		return ServerType.BUNGEECORD;
 	}
+    
+    @Override
+    public boolean hasPermission(BungeeChatAccount account, Permission permission) {
+    	return PermissionManager.hasPermission(account, permission);
+    }
 
     private void loadScreen() {
         Logger.normal(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD + " ----------------");
