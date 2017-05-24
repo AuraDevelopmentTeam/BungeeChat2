@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.placeholders;
+package dev.aura.bungeechat.events;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
