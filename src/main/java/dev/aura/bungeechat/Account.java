@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+@SuppressWarnings("unused")
 public class Account implements BungeeChatAccount {
 	private UUID uuid;
 	@Getter

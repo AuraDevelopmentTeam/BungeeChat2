@@ -5,6 +5,7 @@ import dev.aura.bungeechat.events.PlaceHolderEvent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 
+@SuppressWarnings("unused")
 public class PlaceHolderListener implements Listener {
 
     public void onPlaceHolerEventCall(PlaceHolderEvent event) {
@@ -37,7 +38,5 @@ public class PlaceHolderListener implements Listener {
             event.registerPlaceHolder("%target_serverip%", String.valueOf(target.getServer().getInfo().getAddress()));
         }
     }
-
-
 
 }

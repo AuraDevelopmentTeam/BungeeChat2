@@ -10,9 +10,9 @@ import net.md_5.bungee.api.plugin.Event;
 public class PlaceHolderEvent extends Event {
     private final ProxiedPlayer sender;
     private final ProxiedPlayer target;
-    private final String message;
+    private String message;
 
     public void registerPlaceHolder(String placeholder, String replacement) {
-        message.replace(placeholder, replacement);
+        message = message.replace(placeholder, replacement);
     }
 }
