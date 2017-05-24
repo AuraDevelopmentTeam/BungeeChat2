@@ -40,6 +40,15 @@ public class Account implements BungeeChatAccount {
 		ignored = new CopyOnWriteArrayList<>();
 	}
 
+	public Account(UUID uuid, ChannelType channelType, boolean vanished, boolean messanger, boolean socialspy, CopyOnWriteArrayList<UUID> ignored) {
+		this.uuid = uuid;
+		this.channelType = channelType;
+		this.vanished = vanished;
+		this.messanger = messanger;
+		this.socialspy = socialspy;
+		this.ignored = ignored;
+	}
+
 	@Override
 	public UUID getUniqueId() {
 		return uuid;

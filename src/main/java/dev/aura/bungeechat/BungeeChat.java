@@ -1,6 +1,7 @@
 package dev.aura.bungeechat;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.listeners.PlaceHolderListener;
@@ -9,8 +10,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
@@ -32,6 +32,43 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     public static void registerAccount(Account account) { userAccounts.add(account); }
     public static void unregisterAccount(Account account) { userAccounts.remove(account); }
+
+    public static void saveAccount(Account account) throws IOException {
+        File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
+        if (!folder.exists()){
+            folder.mkdir();
+        }
+        File checker = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + account.getUniqueId().toString() + ".sav");
+        if (!checker.exists()) {
+            checker.createNewFile();
+        }
+        FileOutputStream saveFile= new FileOutputStream(account.getUniqueId().toString() + ".sav");
+        ObjectOutputStream save = new ObjectOutputStream(saveFile);
+        save.writeObject(account.getChannelType());
+        save.writeObject(account.isMessanger());
+        save.writeObject(account.isVanished());
+        save.writeObject(account.isSocialspy());
+        save.writeObject(account.getIgnored());
+        save.close();
+        unregisterAccount(account);
+    }
+
+    public static void loadAccount(UUID uuid) throws IOException, ClassNotFoundException {
+        File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
+        if (!folder.exists()){
+            return;
+        }
+        File checker = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + uuid.toString() + ".sav");
+        if (!checker.exists()) {
+            return;
+        }
+        FileInputStream saveFile = new FileInputStream(uuid + ".sav");
+        ObjectInputStream save = new ObjectInputStream(saveFile);
+        Account account = new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(),
+                (CopyOnWriteArrayList<UUID>) save.readObject());
+        save.close();
+        registerAccount(account);
+    }
 
     @Override
     public void onEnable() {
