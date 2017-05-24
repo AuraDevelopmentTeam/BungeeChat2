@@ -1,5 +1,14 @@
 package dev.aura.bungeechat.account;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import net.md_5.bungee.api.ProxyServer;
@@ -8,10 +17,6 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-
-import java.io.*;
-import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AccountManager implements Listener {
 

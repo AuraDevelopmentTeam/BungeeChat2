@@ -15,19 +15,19 @@ public class Context extends BungeeChatContext {
     public Context(BungeeChatAccount sender, BungeeChatAccount target) {
         super(sender, target);
     }
-    
+
     public Context(ProxiedPlayer player) {
         super(new Account(player));
     }
-    
+
     public Context(UUID player) {
         super(new Account(player));
     }
-    
+
     public Context(ProxiedPlayer sender, ProxiedPlayer target) {
         super(new Account(sender), new Account(target));
     }
-    
+
     public Context(UUID sender, UUID target) {
         super(new Account(sender), new Account(target));
     }

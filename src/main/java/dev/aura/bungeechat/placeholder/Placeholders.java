@@ -1,8 +1,8 @@
 package dev.aura.bungeechat.placeholder;
 
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.placeholder.PlaceHolder;
+import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.TimeUtils;
 import lombok.experimental.UtilityClass;
 

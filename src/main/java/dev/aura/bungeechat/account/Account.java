@@ -51,7 +51,7 @@ public class Account implements BungeeChatAccount {
     public Account(UUID uuid, ChannelType channelType, boolean vanished, boolean messanger, boolean socialspy,
             CopyOnWriteArrayList<UUID> ignored) {
         this.uuid = uuid;
-        this.proxiedPlayer = ProxyServer.getInstance().getPlayer(uuid);
+        proxiedPlayer = ProxyServer.getInstance().getPlayer(uuid);
         this.channelType = channelType;
         this.vanished = vanished;
         this.messanger = messanger;
