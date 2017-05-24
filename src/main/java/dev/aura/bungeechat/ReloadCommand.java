@@ -3,10 +3,8 @@ package dev.aura.bungeechat;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.permissions.Permission;
 import dev.aura.bungeechat.permissions.PermissionManager;
-import dev.aura.bungeechat.placeholders.PlaceHolderEvent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 
 import java.io.BufferedReader;
@@ -14,13 +12,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@SuppressWarnings("deprecation")
 public class ReloadCommand extends Command {
 
     private final String prefix = ChatColor.BLUE + "Bungee Chat " + ChatColor.DARK_GRAY + "// ";
 
     public ReloadCommand(){ super("bungeechat", ""); }
 
-    @SuppressWarnings("deprecation")
+    @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length != 0) {
             if (args[0].equalsIgnoreCase("reload") && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_RELOAD)) {
@@ -33,7 +32,6 @@ public class ReloadCommand extends Command {
         sender.sendMessage(prefix + ChatColor.GRAY + "Coded by " + ChatColor.GOLD + BungeeChat.AUTHOR_SHAWN + ChatColor.GRAY + " and " + ChatColor.GOLD + BungeeChat.AUTHOR_BRAINSTONE + ChatColor.GRAY +  " with help from " + ChatColor.GOLD + "paulpkyou" + ChatColor.GRAY + ".");
     }
 
-    @SuppressWarnings("deprecation")
     private boolean checkForUpdates(CommandSender sender) {
         try {
             HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php").openConnection();
