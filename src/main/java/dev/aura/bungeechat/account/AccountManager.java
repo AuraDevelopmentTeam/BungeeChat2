@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.accounts;
+package dev.aura.bungeechat.account;
 
 import dev.aura.bungeechat.api.enums.ChannelType;
 import net.md_5.bungee.api.ProxyServer;
