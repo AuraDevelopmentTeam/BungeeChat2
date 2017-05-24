@@ -2,6 +2,7 @@ package dev.aura.bungeechat.util;
 
 import net.md_5.bungee.api.ChatColor;
 
+// TODO: USe actual logger
 public class Logger {
     public static void error(String text) {
         System.out.println(ChatColor.RED + "Error > " + text);
