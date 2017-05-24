@@ -7,56 +7,63 @@ import java.util.function.Predicate;
 
 import lombok.Getter;
 
-public class Placeholder {
-	@Getter
-	private final String placeholder;
-	private final ReplacementSupplier replacementSupplier;
-	private final List<Predicate<? super BungeeChatContext>> requirements = new LinkedList<>();
+public class PlaceHolder implements BungeeChatPlaceHolder {
+    @Getter
+    private final String placeholder;
+    private final ReplacementSupplier replacementSupplier;
+    private final List<Predicate<? super BungeeChatContext>> requirements = new LinkedList<>();
 
-	@SafeVarargs
-	public Placeholder(String placeholder, ReplacementSupplier replacementSupplier,
-			Predicate<? super BungeeChatContext>... requirements) {
-		if (placeholder.charAt(0) != '%') {
-			placeholder = '%' + placeholder;
-		}
-		if (placeholder.charAt(placeholder.length() - 1) != '%') {
-			placeholder = placeholder + '%';
-		}
+    @SafeVarargs
+    public PlaceHolder(String placeholder, ReplacementSupplier replacementSupplier,
+            Predicate<? super BungeeChatContext>... requirements) {
+        if (placeholder.charAt(0) != '%') {
+            placeholder = '%' + placeholder;
+        }
+        if (placeholder.charAt(placeholder.length() - 1) != '%') {
+            placeholder = placeholder + '%';
+        }
 
-		this.placeholder = placeholder;
-		this.replacementSupplier = replacementSupplier;
-		this.requirements.addAll(Arrays.asList(requirements));
-	}
+        this.placeholder = placeholder;
+        this.replacementSupplier = replacementSupplier;
+        this.requirements.addAll(Arrays.asList(requirements));
+    }
 
-	public boolean isContextApplicable(BungeeChatContext context) {
-		for (Predicate<? super BungeeChatContext> requirement : requirements) {
-			if (requirement.test(context))
-				return false;
-		}
+    @Override
+    public boolean isContextApplicable(BungeeChatContext context) {
+        for (Predicate<? super BungeeChatContext> requirement : requirements) {
+            if (requirement.test(context))
+                return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public String apply(String message, BungeeChatContext context) {
-		while (message.contains(placeholder)) {
-			message = message.replace(placeholder, replacementSupplier.get(context));
-		}
+    @Override
+    public String apply(String message, BungeeChatContext context) {
+        while (message.contains(placeholder)) {
+            message = message.replace(placeholder, replacementSupplier.get(context));
+        }
 
-		return message;
-	}
+        return message;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Placeholder))
-			return false;
+    public void addRequirement(Predicate<? super BungeeChatContext> requirement) {
+        if (requirements.contains(requirement))
+            return;
 
-		return placeholder.equals(((Placeholder) obj).placeholder);
-	}
+        requirements.add(requirement);
+    }
 
-	public void addRequirement(Predicate<? super BungeeChatContext> requirement) {
-		if (requirements.contains(requirement))
-			return;
+    @Override
+    public String getName() {
+        return getPlaceholder();
+    }
 
-		requirements.add(requirement);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PlaceHolder))
+            return false;
+
+        return placeholder.equals(((PlaceHolder) obj).placeholder);
+    }
 }

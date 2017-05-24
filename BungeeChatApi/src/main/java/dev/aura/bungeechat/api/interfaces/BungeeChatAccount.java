@@ -6,61 +6,61 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import dev.aura.bungeechat.api.enums.ChannelType;
 
 public interface BungeeChatAccount {
-	public UUID getUniqueId();
+    public UUID getUniqueId();
 
-	public ChannelType getChannelType();
+    public ChannelType getChannelType();
 
-	public boolean isVanished();
+    public boolean isVanished();
 
-	public boolean isMessanger();
+    public boolean isMessanger();
 
-	public boolean isSocialspy();
+    public boolean isSocialspy();
 
-	public boolean hasMessangerEnabled();
+    public boolean hasMessangerEnabled();
 
-	public boolean hasSocialSpyEnabled();
+    public boolean hasSocialSpyEnabled();
 
-	public CopyOnWriteArrayList<UUID> getIgnored();
+    public CopyOnWriteArrayList<UUID> getIgnored();
 
-	public boolean hasIgnored(UUID uuid);
+    public boolean hasIgnored(UUID uuid);
 
-	default public boolean hasIgnored(BungeeChatAccount account) {
-		return this.hasIgnored(getUniqueId());
-	}
+    default public boolean hasIgnored(BungeeChatAccount account) {
+        return this.hasIgnored(getUniqueId());
+    }
 
-	public void setChannelType(ChannelType channelType);
+    public void setChannelType(ChannelType channelType);
 
-	public void setVanished(boolean vanished);
+    public void setVanished(boolean vanished);
 
-	public void setMessanger(boolean messanger);
+    public void setMessanger(boolean messanger);
 
-	public void setSocialspy(boolean socialspy);
+    public void setSocialspy(boolean socialspy);
 
-	public void toggleVanished();
+    public void toggleVanished();
 
-	public void toggleMessanger();
+    public void toggleMessanger();
 
-	public void toggleSocialSpy();
+    public void toggleSocialSpy();
 
-	public void addIgnore(UUID uuid);
+    public void addIgnore(UUID uuid);
 
-	default public void addIgnore(BungeeChatAccount account) {
-		this.addIgnore(getUniqueId());
-	}
+    default public void addIgnore(BungeeChatAccount account) {
+        this.addIgnore(getUniqueId());
+    }
 
-	public void removeIgnore(UUID uuid);
+    public void removeIgnore(UUID uuid);
 
-	default public void removeIgnore(BungeeChatAccount account) {
-		this.removeIgnore(getUniqueId());
-	}
+    default public void removeIgnore(BungeeChatAccount account) {
+        this.removeIgnore(getUniqueId());
+    }
 
-	public String getName();
+    public String getName();
 
-	public String getDisplayName();
+    public String getDisplayName();
 
-	public int getPing();
+    public int getPing();
 
-	public String getServerName();
+    public String getServerName();
 
-	public String getServerIP();
+    public String getServerIP();
 }
