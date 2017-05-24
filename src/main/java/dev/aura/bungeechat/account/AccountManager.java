@@ -18,27 +18,36 @@ public class AccountManager implements Listener {
 
     public static Account getUserAccount(UUID uuid) {
         for (Account acc : userAccounts) {
-            if (acc.getUniqueId().equals(uuid)) return acc;
+            if (acc.getUniqueId().equals(uuid))
+                return acc;
         }
         return null;
     }
+
     public static Account getUserAccount(ProxiedPlayer player) {
         return getUserAccount(player.getUniqueId());
     }
 
-    public static void registerAccount(Account account) { userAccounts.add(account); }
-    public static void unregisterAccount(Account account) { userAccounts.remove(account); }
+    public static void registerAccount(Account account) {
+        userAccounts.add(account);
+    }
+
+    public static void unregisterAccount(Account account) {
+        userAccounts.remove(account);
+    }
 
     public static void saveAccount(Account account) throws IOException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
-        if (!folder.exists()){
+        if (!folder.exists()) {
             folder.mkdir();
         }
-        File checker = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + account.getUniqueId().toString() + ".sav");
+        File checker = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/"
+                + account.getUniqueId().toString() + ".sav");
         if (!checker.exists()) {
             checker.createNewFile();
         }
-        FileOutputStream saveFile= new FileOutputStream(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + account.getUniqueId().toString() + ".sav");
+        FileOutputStream saveFile = new FileOutputStream(ProxyServer.getInstance().getPluginsFolder()
+                + "/BungeeChat/userdata/" + account.getUniqueId().toString() + ".sav");
         ObjectOutputStream save = new ObjectOutputStream(saveFile);
         save.writeObject(account.getChannelType());
         save.writeObject(account.isMessanger());
@@ -51,18 +60,20 @@ public class AccountManager implements Listener {
 
     public static void loadAccount(UUID uuid) throws IOException, ClassNotFoundException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
-        if (!folder.exists()){
+        if (!folder.exists()) {
             registerAccount(new Account(uuid));
             return;
         }
-        File checker = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + uuid.toString() + ".sav");
+        File checker = new File(folder, uuid.toString() + ".sav");
         if (!checker.exists()) {
             registerAccount(new Account(uuid));
             return;
         }
-        FileInputStream saveFile = new FileInputStream(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata/" + uuid + ".sav");
+        FileInputStream saveFile = new FileInputStream(checker);
         ObjectInputStream save = new ObjectInputStream(saveFile);
-        Account account = new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(),
+        @SuppressWarnings("unchecked")
+        Account account = new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
+                (boolean) save.readObject(), (boolean) save.readObject(),
                 (CopyOnWriteArrayList<UUID>) save.readObject());
         save.close();
         registerAccount(account);
