@@ -12,6 +12,7 @@ import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.bungeechat.util.Logger;
 import dev.aura.bungeechat.util.Version;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;

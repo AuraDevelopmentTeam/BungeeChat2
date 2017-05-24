@@ -4,26 +4,26 @@ public class Version implements Comparable<Version> {
     private static final String separator = "(?:\\.|_|-)";
 
     private String version;
-    
+
     public Version(String version) {
         if (version == null)
             throw new IllegalArgumentException("Version can not be null");
         if (!version.matches("[0-9]+(?:" + separator + "[0-9]+)*"))
             throw new IllegalArgumentException("Invalid version format");
-        
+
         this.version = version;
     }
 
     public final String get() {
-        return this.version;
+        return version;
     }
 
     @Override
     public int compareTo(Version that) {
         if (that == null)
             return 1;
-        
-        String[] thisParts = this.get().split(separator);
+
+        String[] thisParts = get().split(separator);
         String[] thatParts = that.get().split(separator);
         int length = Math.max(thisParts.length, thatParts.length);
 
@@ -51,9 +51,9 @@ public class Version implements Comparable<Version> {
         if (this.getClass() != that.getClass())
             return false;
 
-        return this.compareTo((Version) that) == 0;
+        return compareTo((Version) that) == 0;
     }
-    
+
     private static int parseInt(String str) {
         try {
             return Integer.parseInt(str);

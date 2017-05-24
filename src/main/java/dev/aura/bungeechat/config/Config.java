@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import dev.aura.bungeechat.Logger;
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.util.Logger;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;

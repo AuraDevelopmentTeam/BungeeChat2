@@ -1,9 +1,8 @@
-package dev.aura.bungeechat;
+package dev.aura.bungeechat.util;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class Logger {
-
     public static void error(String text) {
         System.out.println(ChatColor.RED + "Error > " + text);
     }
@@ -15,5 +14,4 @@ public class Logger {
     public static void normal(String text) {
         System.out.println(text);
     }
-
 }
