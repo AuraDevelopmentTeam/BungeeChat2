@@ -7,7 +7,7 @@ import dev.aura.bungeechat.api.utils.TimeUtils;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class Placeholders {
+public class PlaceHolders {
     public static void registerPlaceholders() {
         PlaceHolderManager
                 .registerPlaceholder(new PlaceHolder("%data_time%", context -> TimeUtils.getCurrentTimeStamp()));
