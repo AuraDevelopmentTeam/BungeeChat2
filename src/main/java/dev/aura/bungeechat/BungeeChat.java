@@ -3,6 +3,7 @@ package dev.aura.bungeechat;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.listeners.PlaceHolderListener;
 import net.alpenblock.bungeeperms.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -41,6 +42,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
             return;
         }
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new PlaceHolderListener());
         loadScreen();
     }
     
@@ -55,7 +57,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         Logger.normal(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION);
         Logger.normal(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BUILD);
         //TODO: Loaded Modules Displayed.
-        if (isLatestVersion()) {
+        if (!isLatestVersion()) {
             Logger.normal(ChatColor.YELLOW + "There is an update avalible. You can download version " + ChatColor.GREEN
                     + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at SpigotMC.org!");
         }
@@ -75,16 +77,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     private boolean isLatestVersion() {
-        try {
-            HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php").openConnection();
-            con.setDoOutput(true);
-            con.setRequestMethod("POST");
-            con.getOutputStream().write(("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=" + PLUGIN_ID).getBytes("UTF-8"));
-            String version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            return version.equals(VERSION);
-        } catch (Exception ex) {
-            return false;
-        }
+        return getLatestVersion().equals(VERSION);
     }
 
 }
