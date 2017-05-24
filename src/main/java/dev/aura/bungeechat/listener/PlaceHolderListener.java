@@ -1,7 +1,7 @@
-package dev.aura.bungeechat.listeners;
+package dev.aura.bungeechat.listener;
 
 import dev.aura.bungeechat.api.utils.TimeUtils;
-import dev.aura.bungeechat.events.PlaceHolderEvent;
+import dev.aura.bungeechat.event.PlaceHolderEvent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;

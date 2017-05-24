@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.permissions;
+package dev.aura.bungeechat.permission;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.listeners;
+package dev.aura.bungeechat.listener;
 
 import dev.aura.bungeechat.accounts.AccountManager;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;

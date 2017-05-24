@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.permissions;
+package dev.aura.bungeechat.permission;
 
 public enum Permission {
 
