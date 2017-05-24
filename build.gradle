@@ -164,7 +164,6 @@ task proguard(type: ProGuardTask, dependsOn: jar) {
     
     // Stuff that depends on the group name
     keep "class ${project.group}.api.** { *; }"
-    keep "class ${project.group}.BungeeChat"
     repackageclasses project.group
     
     jar.finalizedBy proguard
