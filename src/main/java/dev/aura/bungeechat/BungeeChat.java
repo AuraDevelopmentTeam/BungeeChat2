@@ -1,10 +1,10 @@
 package dev.aura.bungeechat;
 
+import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.listener.PlaceHolderListener;
-import dev.aura.bungeechat.listener.PlayerConnectionListeners;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -25,7 +25,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new PlaceHolderListener());
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new PlayerConnectionListeners());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new AccountManager());
         loadScreen();
     }
     

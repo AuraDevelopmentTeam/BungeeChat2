@@ -3,12 +3,16 @@ package dev.aura.bungeechat.account;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.PlayerDisconnectEvent;
+import net.md_5.bungee.api.event.PostLoginEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 
 import java.io.*;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class AccountManager {
+public class AccountManager implements Listener {
 
     private static CopyOnWriteArrayList<Account> userAccounts = new CopyOnWriteArrayList<>();
 
@@ -62,6 +66,16 @@ public class AccountManager {
                 (CopyOnWriteArrayList<UUID>) save.readObject());
         save.close();
         registerAccount(account);
+    }
+
+    @EventHandler
+    public void onPlayerConnect(PostLoginEvent event) throws IOException, ClassNotFoundException {
+        loadAccount(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    public void onPlayerDisconnect(PlayerDisconnectEvent event) throws IOException, ClassNotFoundException {
+        saveAccount(AccountManager.getUserAccount(event.getPlayer().getUniqueId()));
     }
 
 }
