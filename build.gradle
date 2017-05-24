@@ -116,8 +116,10 @@ allprojects {
       	ext.outputDir = file("$buildDir/delombok")
         
       	outputs.dir(outputDir)
-    		inputs.dir(project.processSources.outputDir)
-    		args(it, "-d", outputDir)
+    		inputs.dir(processSources.outputDir)
+    		args(processSources.outputDir, "-d", outputDir)
+        
+        compileConfigurationName = configurations.compileOnly.name
     }
     
     compileJava {
