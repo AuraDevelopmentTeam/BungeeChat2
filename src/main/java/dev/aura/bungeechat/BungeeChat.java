@@ -11,6 +11,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.module.Modules;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.Logger;
 import dev.aura.bungeechat.util.Version;
@@ -32,6 +33,13 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new AccountManager());
         loadScreen();
+
+        Modules.enableModules();
+    }
+
+    @Override
+    public void onDisable() {
+        Modules.disableModules();
     }
 
     @Override
@@ -50,7 +58,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         Logger.normal(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + " & " + AUTHOR_BRAINSTONE);
         Logger.normal(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION);
         Logger.normal(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BUILD);
-        // TODO: Loaded Modules Displayed.
+        Logger.normal(ChatColor.YELLOW + "Enabled Modules: " + ChatColor.GREEN + Modules.getActiveModuleString());
         if (!isLatestVersion()) {
             Logger.normal(ChatColor.YELLOW + "There is an update avalible. You can download version " + ChatColor.GREEN
                     + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at SpigotMC.org!");
