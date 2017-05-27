@@ -16,7 +16,7 @@ public class ToggleCommand extends BaseCommand {
     @Override
     @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
-        if (PermissionManager.hasPermission(sender, Permission.COMMAND_MESSAGE)) {
+        if (PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE)) {
             if(!(sender instanceof ProxiedPlayer)) {
                 sender.sendMessage(Message.NOT_A_PLAYER.get());
             } else {
