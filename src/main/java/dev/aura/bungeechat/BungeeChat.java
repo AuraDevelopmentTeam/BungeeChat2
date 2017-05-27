@@ -32,9 +32,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new AccountManager());
-        loadScreen();
-
         ModuleManager.enableModules();
+        loadScreen();
     }
 
     @Override
