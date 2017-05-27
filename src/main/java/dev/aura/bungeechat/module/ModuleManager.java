@@ -11,6 +11,7 @@ import net.md_5.bungee.api.ChatColor;
 @UtilityClass
 public class ModuleManager {
     private static List<Module> activeModules = null;
+    private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
 
     public static List<Module> getModules() {
         List<Module> modules = new LinkedList<>();
@@ -42,7 +43,6 @@ public class ModuleManager {
     }
 
     public static String getActiveModuleString() {
-        return getActiveModulesStream().map(Module::getName)
-                .collect(Collectors.joining(ChatColor.WHITE + ", " + ChatColor.GREEN));
+        return getActiveModulesStream().map(Module::getName).collect(Collectors.joining(MODULE_CONCATENATOR));
     }
 }
