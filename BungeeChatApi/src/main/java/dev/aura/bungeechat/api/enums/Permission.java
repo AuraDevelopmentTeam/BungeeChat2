@@ -20,8 +20,12 @@ public enum Permission {
     COMMAND_STAFFCHAT("bungeechat.command.staffchat"),
     COMMAND_HELPOP("bungeechat.command.helpop"),
     COMMAND_IGNORE("bungeechat.command.ignore"),
+    COMMAND_IGNORE_BYPASS("bungeechat.command.ignore.bypass"),
     COMMAND_MESSAGE("bungeechat.command.msg"),
-    COMMAND_TOGGLE_MESSAGE("bungeechat.command.toggle");
+    COMMAND_TOGGLE_MESSAGE("bungeechat.command.toggle"),
+    COMMAND_TOGGLE_MESSAGE_BYPASS("bungeechat.command.toggle.bypass"),
+    COMMAND_VANISH("bungeechat.command.vanish"),
+    COMMAND_VANISH_SEE("bungeechat.command.vanish.see");
 
     @Getter
     private final String stringedPermission;
