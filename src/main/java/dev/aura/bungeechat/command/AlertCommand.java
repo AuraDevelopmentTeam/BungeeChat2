@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.command;
 
+import dev.aura.bungeechat.Message;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
@@ -21,7 +22,7 @@ public class AlertCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_ALERT)) {
             if (args.length < 1) {
-                // TODO: Command Usage Message.
+                sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/alert <message>"));
             } else {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (String arg : args) {
