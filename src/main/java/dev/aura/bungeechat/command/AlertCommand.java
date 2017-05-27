@@ -8,6 +8,8 @@ import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class AlertCommand extends BaseCommand {
     public AlertCommand(AlertModule alertModule) {
@@ -15,6 +17,7 @@ public class AlertCommand extends BaseCommand {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_ALERT)) {
             if (args.length < 1) {
@@ -30,9 +33,14 @@ public class AlertCommand extends BaseCommand {
                 } else {
                     finalMessage = stringBuilder.toString().trim();
                 }
-                String rawFormat = Config.get().getString("Formats.alert");
-                String Format = PlaceHolderManager.processMessage(rawFormat, new Context(sender));
-
+                String Format = Config.get().getString("Formats.alert");
+                if (sender instanceof ProxiedPlayer) {
+                    Format = PlaceHolderManager.processMessage(Format, new Context((ProxiedPlayer) sender));
+                } else {
+                    Format = PlaceHolderManager.processMessage(Format, new Context());
+                }
+                Format = Format.replace("%message%", finalMessage);
+                ProxyServer.getInstance().broadcast(Format);
             }
         }
     }
