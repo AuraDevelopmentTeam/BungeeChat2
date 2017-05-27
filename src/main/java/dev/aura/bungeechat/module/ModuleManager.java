@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class Modules {
+public class ModuleManager {
     private static List<Module> activeModules = null;
 
     public static List<Module> getModules() {
