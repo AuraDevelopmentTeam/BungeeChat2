@@ -22,6 +22,12 @@ public class BungeeChatContext {
     @Getter
     protected final Optional<BungeeChatAccount> target;
 
+    public BungeeChatContext() {
+        player = Optional.empty();
+        sender = Optional.empty();
+        target = Optional.empty();
+    }
+    
     public BungeeChatContext(BungeeChatAccount player) {
         this.player = Optional.of(player);
         sender = Optional.empty();

@@ -8,6 +8,10 @@ import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Context extends BungeeChatContext {
+    public Context() {
+        super();
+    }
+
     public Context(BungeeChatAccount player) {
         super(player);
     }
@@ -20,12 +24,12 @@ public class Context extends BungeeChatContext {
         super(new Account(player));
     }
 
-    public Context(UUID player) {
-        super(new Account(player));
-    }
-
     public Context(ProxiedPlayer sender, ProxiedPlayer target) {
         super(new Account(sender), new Account(target));
+    }
+
+    public Context(UUID player) {
+        super(new Account(player));
     }
 
     public Context(UUID sender, UUID target) {
