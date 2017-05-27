@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import lombok.experimental.UtilityClass;
+import net.md_5.bungee.api.ChatColor;
 
 @UtilityClass
 public class ModuleManager {
@@ -40,6 +41,7 @@ public class ModuleManager {
     }
 
     public static String getActiveModuleString() {
-        return getActiveModulesStream().map(Module::getName).collect(Collectors.joining(", "));
+        return getActiveModulesStream().map(Module::getName)
+                .collect(Collectors.joining(ChatColor.WHITE + ", " + ChatColor.GREEN));
     }
 }
