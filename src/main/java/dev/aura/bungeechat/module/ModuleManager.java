@@ -16,6 +16,7 @@ public class ModuleManager {
         List<Module> modules = new LinkedList<>();
 
         // Add all modules here!
+        modules.add(new MessengerModule());
 
         return modules;
     }
