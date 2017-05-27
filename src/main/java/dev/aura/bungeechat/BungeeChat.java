@@ -20,6 +20,11 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
+
+    public static Plugin getInstance() {
+        return ProxyServer.getInstance().getPluginManager().getPlugin("BungeeChat");
+    }
+
     @Override
     public void onEnable() {
         Config.load();

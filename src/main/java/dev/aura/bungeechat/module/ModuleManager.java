@@ -18,6 +18,7 @@ public class ModuleManager {
 
         // Add all modules here!
         modules.add(new MessengerModule());
+        modules.add(new AlertModule());
 
         return modules;
     }
