@@ -1,8 +1,11 @@
 package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
+import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.module.AlertModule;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.bungeechat.placeholder.Context;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 
@@ -27,7 +30,9 @@ public class AlertCommand extends BaseCommand {
                 } else {
                     finalMessage = stringBuilder.toString().trim();
                 }
-                // TODO
+                String rawFormat = Config.get().getString("Formats.alert");
+                String Format = PlaceHolderManager.processMessage(rawFormat, new Context(sender));
+
             }
         }
     }
