@@ -73,6 +73,8 @@ public class MessageCommand extends BaseCommand {
                 sender.sendMessage(FormatTarget);
 
                 //TODO: SocialSpy
+
+                if (sender instanceof ProxiedPlayer) ReplyCommand.setReply((ProxiedPlayer) sender, target);
             }
         }
     }
