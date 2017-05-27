@@ -1,4 +1,4 @@
-package dev.aura.bungeechat;
+package dev.aura.bungeechat.command;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -10,6 +10,7 @@ import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.command.ReloadCommand;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
