@@ -1,11 +1,14 @@
 package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.Message;
+import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.module.MessengerModule;
+import dev.aura.bungeechat.module.ModuleManager;
+import dev.aura.bungeechat.module.SocialSpyModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
 import net.md_5.bungee.api.ChatColor;
@@ -72,9 +75,21 @@ public class MessageCommand extends BaseCommand {
                 FormatTarget = FormatTarget.replace("%message%", finalMessage);
                 sender.sendMessage(FormatTarget);
 
-                //TODO: SocialSpy
+                if (ModuleManager.getActiveModules().contains(new SocialSpyModule())) {
+                    String rawSocialSpyFormat = config.getString("Formats.socialspy");
+                    String SocialSpyFormat;
+                    if (sender instanceof ProxiedPlayer) SocialSpyFormat = PlaceHolderManager.processMessage(rawSocialSpyFormat, new Context((ProxiedPlayer) sender, target));
+                    else SocialSpyFormat = PlaceHolderManager.processMessage(rawSocialSpyFormat, new Context(target));
+                    SocialSpyFormat = SocialSpyFormat.replace("%message%", finalMessage);
+                    String finalSocialSpyFormat = SocialSpyFormat;
+                    ProxyServer.getInstance().getPlayers().stream().filter(pp -> !(pp == target) && !(pp == sender) && AccountManager.getUserAccount(pp).hasSocialSpyEnabled()).forEach(pp -> {
+                        pp.sendMessage(finalSocialSpyFormat);
+                    });
+                }
 
                 if (sender instanceof ProxiedPlayer) ReplyCommand.setReply((ProxiedPlayer) sender, target);
+
+                //TODO: Logger..
             }
         }
     }

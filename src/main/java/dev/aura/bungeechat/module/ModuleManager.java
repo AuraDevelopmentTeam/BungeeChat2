@@ -19,6 +19,8 @@ public class ModuleManager {
         // Add all modules here!
         modules.add(new MessengerModule());
         modules.add(new AlertModule());
+        modules.add(new VanisherModule());
+        modules.add(new SocialSpyModule());
 
         return modules;
     }

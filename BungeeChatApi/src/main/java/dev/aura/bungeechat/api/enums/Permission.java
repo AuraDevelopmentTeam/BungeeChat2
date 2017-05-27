@@ -25,7 +25,8 @@ public enum Permission {
     COMMAND_TOGGLE_MESSAGE("bungeechat.command.toggle"),
     COMMAND_TOGGLE_MESSAGE_BYPASS("bungeechat.command.toggle.bypass"),
     COMMAND_VANISH("bungeechat.command.vanish"),
-    COMMAND_VANISH_SEE("bungeechat.command.vanish.see");
+    COMMAND_VANISH_SEE("bungeechat.command.vanish.see"),
+    COMMAND_SOCIALSPY("bungeechat.command.socialspy");
 
     @Getter
     private final String stringedPermission;
