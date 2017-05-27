@@ -23,7 +23,8 @@ public class PermissionManager {
                 return true;
             else {
                 if (!permission.equals(Permission.USE_COLORED_CHAT)) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Config.get().getString("Messages.no-permission")));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            Config.get().getString("Messages.no-permission")));
                 }
                 return false;
             }
