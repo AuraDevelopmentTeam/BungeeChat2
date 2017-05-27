@@ -32,24 +32,22 @@ public class AlertModule extends Command implements Module {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!PermissionManager.hasPermission(sender, Permission.COMMAND_ALERT)) {
-            //TODO: No Perms Message.
-            return;
-        }
-        if (args.length < 1) {
-            //TODO: Command Usage Message.
-        } else {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (String arg : args) {
-                stringBuilder.append(arg).append(" ");
-            }
-            String finalMessage;
-            if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
-                finalMessage = ChatColor.translateAlternateColorCodes('&', stringBuilder.toString().trim());
+        if (PermissionManager.hasPermission(sender, Permission.COMMAND_ALERT)) {
+            if (args.length < 1) {
+                //TODO: Command Usage Message.
             } else {
-                finalMessage = stringBuilder.toString().trim();
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String arg : args) {
+                    stringBuilder.append(arg).append(" ");
+                }
+                String finalMessage;
+                if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
+                    finalMessage = ChatColor.translateAlternateColorCodes('&', stringBuilder.toString().trim());
+                } else {
+                    finalMessage = stringBuilder.toString().trim();
+                }
+                //TODO
             }
-            //TODO
         }
     }
 

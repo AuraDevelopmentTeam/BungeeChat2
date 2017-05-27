@@ -151,6 +151,7 @@ Messages:
   unignore-yourself: "&cYou can not unignore yourself!"
   not-ignored: "&cYou have not ignored this user!"
   anti-duplication: "&cPlease do not spam messages!"
+  no-permission: "&cYou do not have the permissions to perform this action!"
   
 Formats:
   alert: "&9ALERT > &c&l%sender: &r%message%"
