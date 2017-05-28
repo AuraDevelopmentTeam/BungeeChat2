@@ -10,25 +10,29 @@ import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.ReloadCommand;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.Logger;
 import dev.aura.bungeechat.util.Version;
+import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
-
-    public static Plugin getInstance() {
-        return ProxyServer.getInstance().getPluginManager().getPlugin("BungeeChat");
-    }
+    @Getter
+    private static BungeeChat instance;
 
     @Override
     public void onEnable() {
+        instance = this;
+        BungeeChatInstaceHolder.setInstace(instance);
+
         Config.load();
+
         if (CONFIG_VERSION != Config.get().getDouble("Version")) {
             Logger.info(
                     "You config is outdated and might cause errors when been used with this version of BungeeChat!");
@@ -36,6 +40,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
                     "Please update your config by either deleting your old one or downloading the new one on the plugin page.");
             return;
         }
+
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new AccountManager());
         ModuleManager.enableModules();
@@ -89,5 +94,4 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private boolean isLatestVersion() {
         return (new Version(getLatestVersion())).compareTo(new Version(VERSION)) > 0;
     }
-
 }
