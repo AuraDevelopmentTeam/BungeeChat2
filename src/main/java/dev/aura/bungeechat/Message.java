@@ -44,7 +44,8 @@ public enum Message {
     TEMPMUTE("Messages.tempmute"),
     IGNORE("Messages.add-ignore"),
     UNIGORE("Messages.remove-ignore"),
-    HAS_MESSAGER_DISABLED("Messages.has-messager-disabled");
+    HAS_MESSAGER_DISABLED("Messages.has-messager-disabled"),
+    HAS_INGORED("Messages.has-ignored");
 
     private final String stringPath;
 

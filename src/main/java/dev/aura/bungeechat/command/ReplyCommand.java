@@ -63,10 +63,11 @@ public class ReplyCommand extends BaseCommand {
                     }
                     if ((sender instanceof ProxiedPlayer)
                             && AccountManager.getUserAccount(target).getIgnored()
-                                    .contains(((ProxiedPlayer) sender).getUniqueId())
-                            && !PermissionManager.hasPermission(sender, Permission.COMMAND_IGNORE_BYPASS))
-                        // TODO: ignore message.
+                            .contains(((ProxiedPlayer) sender).getUniqueId())
+                            && !PermissionManager.hasPermission(sender, Permission.COMMAND_IGNORE_BYPASS)) {
+                        sender.sendMessage(Message.HAS_INGORED.get());
                         return;
+                    }
 
                     StringBuilder stringBuilder = new StringBuilder();
 
