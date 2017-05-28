@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import lombok.Cleanup;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -44,14 +45,20 @@ public class AccountManager implements Listener {
 
     public static void saveAccount(BungeeChatAccount account) throws IOException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
+        
         if (!folder.exists()) {
             folder.mkdir();
         }
+        
         File checker = new File(folder, account.getUniqueId().toString() + ".sav");
+        
         if (!checker.exists()) {
             checker.createNewFile();
         }
+        
+        @Cleanup
         FileOutputStream saveFile = new FileOutputStream(checker);
+        @Cleanup
         ObjectOutputStream save = new ObjectOutputStream(saveFile);
         save.writeObject(account.getChannelType());
         save.writeObject(account.isMessanger());
@@ -64,16 +71,22 @@ public class AccountManager implements Listener {
 
     public static void loadAccount(UUID uuid) throws IOException, ClassNotFoundException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
+        
         if (!folder.exists()) {
             registerAccount(new Account(uuid));
             return;
         }
+        
         File checker = new File(folder, uuid.toString() + ".sav");
+        
         if (!checker.exists()) {
             registerAccount(new Account(uuid));
             return;
         }
+        
+        @Cleanup
         FileInputStream saveFile = new FileInputStream(checker);
+        @Cleanup
         ObjectInputStream save = new ObjectInputStream(saveFile);
         @SuppressWarnings("unchecked")
         Account account = new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
