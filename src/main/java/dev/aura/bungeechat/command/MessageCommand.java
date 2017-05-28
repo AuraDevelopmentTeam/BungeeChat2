@@ -65,8 +65,9 @@ public class MessageCommand extends BaseCommand {
                 }
 
                 if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
-                        && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR))
+                        && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
+                }
 
                 String FormatSender = PlaceHolderUtil.getFullMessage("message-sender",
                         new Context(sender, target, finalMessage));

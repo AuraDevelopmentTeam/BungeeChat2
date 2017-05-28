@@ -41,8 +41,9 @@ public class GlobalChatListener implements Listener {
             }
 
             if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
-                    && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR))
+                    && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                 message = SwearWordsFilter.replaceSwearWords(message);
+            }
 
             String Format = PlaceHolderUtil.getFullMessage("global", new Context(sender, message));
 
@@ -64,8 +65,9 @@ public class GlobalChatListener implements Listener {
                 }
 
                 if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
-                        && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR))
+                        && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     message = SwearWordsFilter.replaceSwearWords(message);
+                }
 
                 String Format = PlaceHolderUtil.getFullMessage("global", new Context(sender, message));
 

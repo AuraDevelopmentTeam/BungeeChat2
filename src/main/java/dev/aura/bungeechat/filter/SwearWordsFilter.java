@@ -1,17 +1,17 @@
 package dev.aura.bungeechat.filter;
 
-import dev.aura.bungeechat.config.Config;
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import dev.aura.bungeechat.config.Config;
+import lombok.Getter;
 
 public class SwearWordsFilter {
     @Getter
     private static List<String> swearWords;
 
     public static void loadSwearWords() {
-        swearWords =  new ArrayList<>();
+        swearWords = new ArrayList<>();
         swearWords = Config.get().getStringList("Settings.Features.AntiSwear.words");
     }
 

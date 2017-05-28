@@ -35,7 +35,7 @@ public class GlobalChatCommand extends BaseCommand {
                 return;
             }
             if (args.length < 1) {
-                if(PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL_TOGGLE)) {
+                if (PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL_TOGGLE)) {
                     ProxiedPlayer p = (ProxiedPlayer) sender;
                     if (AccountManager.getUserAccount(p).getChannelType().equals(ChannelType.GLOBAL)) {
                         AccountManager.getUserAccount(p).setChannelType(ChannelType.NONE);
@@ -60,9 +60,10 @@ public class GlobalChatCommand extends BaseCommand {
                     finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                 }
 
-                if (ModuleManager.getActiveModules().contains(new AntiSwearModule()) &&
-                        !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR))
+                if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
+                        && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
+                }
 
                 String Format = PlaceHolderUtil.getFullMessage("global", new Context(sender, finalMessage));
 
