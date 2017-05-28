@@ -145,21 +145,25 @@ allprojects {
 
 jar {
     from project(":BungeeChatApi").sourceSets.main.output
-    
-    classifier = "deobf"
 }
 
-task proguard(type: ProGuardTask, dependsOn: jar) {
-    group "build"
+task deobfJar (type: Jar, dependsOn: jar) {
+    from sourceSets.main.output
+    from project(":BungeeChatApi").sourceSets.main.output
 
-    ext.outputJar = "${buildDir}/libs/${archivesBaseName}-${full_version}.jar"
+    classifier = "deobf"
+    version = jar.version
+}
+
+task proguard(type: ProGuardTask, dependsOn: deobfJar) {
+    group "build"
     
     configuration "proguard.conf"
 
     // Inputs and outputs
-    injars jar.archivePath
-    outjars outputJar
-    printmapping "${outputJar}.map"
+    injars deobfJar.archivePath
+    outjars jar.archivePath
+    printmapping "${jar.archivePath}.map"
  
     // Libraries
     libraryjars configurations.compileOnly
@@ -176,22 +180,8 @@ task proguard(type: ProGuardTask, dependsOn: jar) {
 }
 
 artifacts {
-    archives file(proguard.ext.outputJar)
+    archives jar
 }
-
-/*// Remove default jar from artifacts (We don't want in the maven repo!)
-configurations.archives.artifacts.with { archives ->
-    def toRemove = new ArrayList()
-    
-    archives.each {
-        if (it.classifier == "deobf")
-            toRemove.add(it)
-    }
-    
-    toRemove.each {
-        remove(it)
-    }
-}*/
 
 allprojects {
     signing {
@@ -277,7 +267,7 @@ Specify "-Pstacktrace_file=<file>" (with quotes) to specify the stacktrace file.
     } else {
         dependsOn proguard
         
-        mapping_file = "${proguard.outputJar}.map"
+        mapping_file = "${jar.archivePath}.map"
     }
     
     if (project.hasProperty("stacktrace_file")) {
