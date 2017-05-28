@@ -20,6 +20,7 @@ import net.md_5.bungee.event.EventHandler;
 
 public class GlobalChatListener implements Listener {
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled()) return;

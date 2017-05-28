@@ -1,7 +1,6 @@
 package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.Message;
-import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
