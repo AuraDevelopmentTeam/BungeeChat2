@@ -9,5 +9,5 @@ import lombok.experimental.UtilityClass;
 public class BungeeChatInstaceHolder {
     @Getter
     @Setter
-    private static BungeeChatApi instace;
+    private static BungeeChatApi instance;
 }

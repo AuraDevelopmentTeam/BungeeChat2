@@ -22,7 +22,7 @@ public interface BungeeChatApi {
     public static final int PLUGIN_ID = 12592;
     
     public static BungeeChatApi getInstance() {
-        return BungeeChatInstaceHolder.getInstace();
+        return BungeeChatInstaceHolder.getInstance();
     }
 
     public ServerType getServerType();

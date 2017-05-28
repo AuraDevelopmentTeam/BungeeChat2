@@ -29,7 +29,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     @Override
     public void onEnable() {
         instance = this;
-        BungeeChatInstaceHolder.setInstace(instance);
+        BungeeChatInstaceHolder.setInstance(instance);
 
         Config.load();
 
