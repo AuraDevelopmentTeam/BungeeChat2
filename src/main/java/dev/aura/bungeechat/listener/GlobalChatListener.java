@@ -38,7 +38,7 @@ public class GlobalChatListener implements Listener {
                 message = ChatColor.translateAlternateColorCodes('&', message);
             }
 
-            if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
+            if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
                     && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                 message = SwearWordsFilter.replaceSwearWords(message);
             }
@@ -61,7 +61,7 @@ public class GlobalChatListener implements Listener {
                     message = ChatColor.translateAlternateColorCodes('&', message);
                 }
 
-                if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
+                if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
                         && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     message = SwearWordsFilter.replaceSwearWords(message);
                 }

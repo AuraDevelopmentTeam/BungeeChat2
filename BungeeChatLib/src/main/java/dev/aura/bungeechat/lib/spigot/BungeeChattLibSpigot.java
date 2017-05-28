@@ -12,7 +12,7 @@ import lombok.Getter;
 public class BungeeChattLibSpigot extends JavaPlugin implements BungeeChatApi {
     @Getter
     private static BungeeChattLibSpigot instance;
-    
+
     @Override
     public ServerType getServerType() {
         return ServerType.BUKKIT;
@@ -23,7 +23,7 @@ public class BungeeChattLibSpigot extends JavaPlugin implements BungeeChatApi {
         // TODO: Get via channel messages!
         throw new UnsupportedOperationException("Not implemented!");
     }
-    
+
     @Override
     public void onEnable() {
         instance = this;

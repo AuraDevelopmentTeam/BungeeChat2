@@ -62,7 +62,7 @@ public class MessageCommand extends BaseCommand {
                     finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                 }
 
-                if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
+                if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
                         && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
                 }
@@ -75,7 +75,7 @@ public class MessageCommand extends BaseCommand {
                         new Context(sender, target, finalMessage));
                 target.sendMessage(FormatTarget);
 
-                if (ModuleManager.getActiveModules().contains(ModuleManager.SOCIAL_SPY_MODULE)) {
+                if (ModuleManager.isModuleActive(ModuleManager.SOCIAL_SPY_MODULE)) {
                     String SocialSpyFormat = PlaceHolderUtil.getFullMessage("socialspy",
                             new Context(sender, target, finalMessage));
                     ProxyServer.getInstance().getPlayers().stream().filter(pp -> !(pp == target) && !(pp == sender)

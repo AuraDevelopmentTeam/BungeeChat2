@@ -22,7 +22,7 @@ public class SwearWordsFilter {
             rawMessage = rawMessage.replace(s,
                     ModuleManager.ANTI_SWEAR_MODULE.getModuleSection().getString("replacement"));
         }
-        
+
         return rawMessage;
     }
 

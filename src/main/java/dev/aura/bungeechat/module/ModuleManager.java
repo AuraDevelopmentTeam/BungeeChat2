@@ -46,6 +46,10 @@ public class ModuleManager {
         return activeModules;
     }
 
+    public static boolean isModuleActive(Module module) {
+        return getActiveModules().contains(module);
+    }
+
     public static Stream<Module> getActiveModulesStream() {
         return getActiveModules().stream();
     }

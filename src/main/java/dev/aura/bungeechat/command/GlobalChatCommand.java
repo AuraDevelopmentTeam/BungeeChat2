@@ -58,7 +58,7 @@ public class GlobalChatCommand extends BaseCommand {
                     finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                 }
 
-                if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
+                if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
                         && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
                 }
