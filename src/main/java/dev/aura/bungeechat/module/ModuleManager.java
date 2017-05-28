@@ -1,6 +1,5 @@
 package dev.aura.bungeechat.module;
 
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,14 +20,12 @@ public class ModuleManager {
 
     private static List<Module> activeModules = null;
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
-    private static final int MODIFIER_PUBLIC_STATIC_FINAL = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
 
     public static Stream<Module> getModules() {
-        return Arrays.stream(ModuleManager.class.getDeclaredFields()).filter(field -> {
-            return ((field.getModifiers() & MODIFIER_PUBLIC_STATIC_FINAL) == MODIFIER_PUBLIC_STATIC_FINAL)
-                    && Module.class.isAssignableFrom(field.getType());
-        }).map(field -> {
+        return Arrays.stream(ModuleManager.class.getDeclaredFields()).filter(field -> Module.class.isAssignableFrom(field.getType())).map(field -> {
             try {
+                field.setAccessible(true);
+                
                 return (Module) field.get(null);
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 e.printStackTrace();
