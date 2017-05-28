@@ -5,7 +5,6 @@ import java.util.HashMap;
 import dev.aura.bungeechat.Message;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
 import dev.aura.bungeechat.module.AntiSwearModule;
 import dev.aura.bungeechat.module.MessengerModule;
@@ -18,7 +17,6 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.config.Configuration;
 
 public class ReplyCommand extends BaseCommand {
     private static HashMap<ProxiedPlayer, ProxiedPlayer> replies;

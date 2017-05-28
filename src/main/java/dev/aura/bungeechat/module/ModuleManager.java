@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.module;
 
-import java.util.LinkedList;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,27 +11,36 @@ import net.md_5.bungee.api.ChatColor;
 
 @UtilityClass
 public class ModuleManager {
+    public static final AlertModule ALERT_MODULE = new AlertModule();
+    public static final AntiSwearModule ANTI_SWEAR_MODULE = new AntiSwearModule();
+    public static final GlobalChatModule GLOBAL_CHAT_MODULE = new GlobalChatModule();
+    public static final HelpOpModule HELP_OP_MODULE = new HelpOpModule();
+    public static final MessengerModule MESSENGER_MODULE = new MessengerModule();
+    public static final SocialSpyModule SOCIAL_SPY_MODULE = new SocialSpyModule();
+    public static final VanisherModule VANISHER_MODULE = new VanisherModule();
+
     private static List<Module> activeModules = null;
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
+    private static final int MODIFIER_PUBLIC_STATIC_FINAL = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
 
-    public static List<Module> getModules() {
-        List<Module> modules = new LinkedList<>();
+    public static Stream<Module> getModules() {
+        return Arrays.stream(ModuleManager.class.getDeclaredFields()).filter(field -> {
+            return ((field.getModifiers() & MODIFIER_PUBLIC_STATIC_FINAL) == MODIFIER_PUBLIC_STATIC_FINAL)
+                    && Module.class.isAssignableFrom(field.getType());
+        }).map(field -> {
+            try {
+                return (Module) field.get(null);
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
 
-        // Add all modules here!
-        modules.add(new MessengerModule());
-        modules.add(new AlertModule());
-        modules.add(new VanisherModule());
-        modules.add(new SocialSpyModule());
-        modules.add(new AntiSwearModule());
-        modules.add(new HelpOpModule());
-        modules.add(new GlobalChatModule());
-
-        return modules;
+                return null;
+            }
+        });
     }
 
     public static List<Module> getActiveModules() {
         if (activeModules == null) {
-            activeModules = getModules().stream().filter(Module::isEnabled).collect(Collectors.toList());
+            activeModules = getModules().filter(Module::isEnabled).collect(Collectors.toList());
         }
 
         return activeModules;
