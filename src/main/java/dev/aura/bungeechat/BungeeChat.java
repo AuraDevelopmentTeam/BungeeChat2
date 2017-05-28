@@ -92,6 +92,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public boolean isLatestVersion() {
-        return (new Version(getLatestVersion())).compareTo(new Version(VERSION)) > 0;
+        return (new Version(getLatestVersion())).compareTo(new Version(VERSION)) < 0;
     }
 }
