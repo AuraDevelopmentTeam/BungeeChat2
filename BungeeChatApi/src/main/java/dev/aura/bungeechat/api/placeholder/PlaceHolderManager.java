@@ -20,7 +20,7 @@ public class PlaceHolderManager {
     }
 
     public static String processMessage(String message, BungeeChatContext context) {
-        for (BungeeChatPlaceHolder placeholder : getApplicableStream(context).collect(Collectors.toSet())) {
+        for (BungeeChatPlaceHolder placeholder : getApplicableStream(context).collect(Collectors.toList())) {
             message = placeholder.apply(message, context);
         }
 
