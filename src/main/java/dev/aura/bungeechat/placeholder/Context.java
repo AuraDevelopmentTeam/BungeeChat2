@@ -1,10 +1,12 @@
 package dev.aura.bungeechat.placeholder;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Context extends BungeeChatContext {
@@ -34,5 +36,24 @@ public class Context extends BungeeChatContext {
 
     public Context(UUID sender, UUID target) {
         super(new Account(sender), new Account(target));
+    }
+
+    public Context(CommandSender player) {
+        super();
+
+        if (player instanceof ProxiedPlayer) {
+            this.player = Optional.of(new Account((ProxiedPlayer) player));
+        }
+    }
+
+    public Context(CommandSender sender, CommandSender target) {
+        super();
+
+        if (sender instanceof ProxiedPlayer) {
+            this.sender = Optional.of(new Account((ProxiedPlayer) sender));
+        }
+        if (target instanceof ProxiedPlayer) {
+            this.target = Optional.of(new Account((ProxiedPlayer) target));
+        }
     }
 }

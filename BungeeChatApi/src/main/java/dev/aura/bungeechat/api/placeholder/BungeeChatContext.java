@@ -16,11 +16,11 @@ public class BungeeChatContext {
     public static final Predicate<BungeeChatContext> HAS_NO_TARGET = HAS_TARGET.negate();
 
     @Getter
-    protected final Optional<BungeeChatAccount> player;
+    protected Optional<BungeeChatAccount> player;
     @Getter
-    protected final Optional<BungeeChatAccount> sender;
+    protected Optional<BungeeChatAccount> sender;
     @Getter
-    protected final Optional<BungeeChatAccount> target;
+    protected Optional<BungeeChatAccount> target;
 
     public BungeeChatContext() {
         player = Optional.empty();
