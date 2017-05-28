@@ -11,6 +11,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class PermissionManager {
+    @SuppressWarnings("deprecation")
     public static boolean hasPermission(ProxiedPlayer player, Permission permission) {
         if (player.hasPermission(permission.getStringedPermission()))
             return true;

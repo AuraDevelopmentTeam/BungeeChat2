@@ -9,9 +9,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @RequiredArgsConstructor
-@SuppressWarnings("unused")
 public enum Message {
-
     NOT_A_PLAYER("Messages.not-player"),
     MUTED("Messages.muted"),
     UNMUTE_NOT_MUTED("Messages.unmute-not-muted"),
