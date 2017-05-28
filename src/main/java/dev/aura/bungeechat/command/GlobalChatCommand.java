@@ -4,7 +4,6 @@ import dev.aura.bungeechat.Message;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
 import dev.aura.bungeechat.module.AntiSwearModule;
@@ -12,6 +11,7 @@ import dev.aura.bungeechat.module.GlobalChatModule;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
+import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -64,8 +64,7 @@ public class GlobalChatCommand extends BaseCommand {
                         !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR))
                     finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
 
-                String Format = Config.get().getString("Formats.global");
-                Format = PlaceHolderManager.processMessage(Format, new Context(sender, finalMessage));
+                String Format = PlaceHolderUtil.getFullMessage("global", new Context(sender, finalMessage));
 
                 ProxyServer.getInstance().broadcast(Format);
             }
