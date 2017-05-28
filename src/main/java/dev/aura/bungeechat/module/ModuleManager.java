@@ -21,6 +21,7 @@ public class ModuleManager {
         modules.add(new AlertModule());
         modules.add(new VanisherModule());
         modules.add(new SocialSpyModule());
+        modules.add(new AntiSwearModule());
 
         return modules;
     }

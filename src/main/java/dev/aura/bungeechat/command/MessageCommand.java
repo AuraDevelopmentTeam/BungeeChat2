@@ -5,6 +5,8 @@ import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.filter.SwearWordsFilter;
+import dev.aura.bungeechat.module.AntiSwearModule;
 import dev.aura.bungeechat.module.MessengerModule;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.module.SocialSpyModule;
@@ -62,7 +64,10 @@ public class MessageCommand extends BaseCommand {
                 if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
                     finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                 }
-                // TODO: AntiSwear.
+
+                if (ModuleManager.getActiveModules().contains(new AntiSwearModule()) &&
+                        !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR))
+                    finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
 
                 Configuration config = Config.get();
 
