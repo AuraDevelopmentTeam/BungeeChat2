@@ -4,9 +4,7 @@ import dev.aura.bungeechat.Message;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
-import dev.aura.bungeechat.module.AntiSwearModule;
 import dev.aura.bungeechat.module.GlobalChatModule;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -30,7 +28,7 @@ public class GlobalChatCommand extends BaseCommand {
                 sender.sendMessage(Message.NOT_A_PLAYER.get());
                 return;
             }
-            if (Config.get().getBoolean("Settings.Features.GlobalChat.default")) {
+            if (ModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
                 sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
                 return;
             }
@@ -60,7 +58,7 @@ public class GlobalChatCommand extends BaseCommand {
                     finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                 }
 
-                if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
+                if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
                         && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
                 }

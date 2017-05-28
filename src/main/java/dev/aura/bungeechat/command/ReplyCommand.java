@@ -6,10 +6,8 @@ import dev.aura.bungeechat.Message;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
-import dev.aura.bungeechat.module.AntiSwearModule;
 import dev.aura.bungeechat.module.MessengerModule;
 import dev.aura.bungeechat.module.ModuleManager;
-import dev.aura.bungeechat.module.SocialSpyModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
@@ -78,7 +76,7 @@ public class ReplyCommand extends BaseCommand {
                         finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                     }
 
-                    if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
+                    if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
                             && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                         finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
                     }
@@ -91,7 +89,7 @@ public class ReplyCommand extends BaseCommand {
                             new Context(sender, target, finalMessage));
                     sender.sendMessage(FormatTarget);
 
-                    if (ModuleManager.getActiveModules().contains(new SocialSpyModule())) {
+                    if (ModuleManager.getActiveModules().contains(ModuleManager.SOCIAL_SPY_MODULE)) {
                         String SocialSpyFormat = PlaceHolderUtil.getFullMessage("socialspy",
                                 new Context(sender, target, finalMessage));
                         ProxyServer.getInstance().getPlayers().stream().filter(pp -> !(pp == target) && !(pp == sender)

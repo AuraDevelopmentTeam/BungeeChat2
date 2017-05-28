@@ -1,9 +1,8 @@
 package dev.aura.bungeechat.filter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.module.ModuleManager;
 import lombok.Getter;
 
 public class SwearWordsFilter {
@@ -11,8 +10,7 @@ public class SwearWordsFilter {
     private static List<String> swearWords;
 
     public static void loadSwearWords() {
-        swearWords = new ArrayList<>();
-        swearWords = Config.get().getStringList("Settings.Features.AntiSwear.words");
+        swearWords = ModuleManager.ANTI_SWEAR_MODULE.getModuleSection().getStringList("words");
     }
 
     public static void unloadSwearWords() {
@@ -21,8 +19,10 @@ public class SwearWordsFilter {
 
     public static String replaceSwearWords(String rawMessage) {
         for (String s : swearWords) {
-            rawMessage = rawMessage.replace(s, Config.get().getString("Settings.Features.AntiSwear.replacement"));
+            rawMessage = rawMessage.replace(s,
+                    ModuleManager.ANTI_SWEAR_MODULE.getModuleSection().getString("replacement"));
         }
+        
         return rawMessage;
     }
 

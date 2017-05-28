@@ -4,9 +4,7 @@ import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.utils.ChatUtils;
-import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
-import dev.aura.bungeechat.module.AntiSwearModule;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
@@ -40,7 +38,7 @@ public class GlobalChatListener implements Listener {
                 message = ChatColor.translateAlternateColorCodes('&', message);
             }
 
-            if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
+            if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
                     && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                 message = SwearWordsFilter.replaceSwearWords(message);
             }
@@ -52,19 +50,18 @@ public class GlobalChatListener implements Listener {
             return;
         }
 
-        if (Config.get().getBoolean("Settings.Features.GlobalChat.Symbol.enabled")) {
-            if (message.startsWith(Config.get().getString("Settings.Features.GlobalChat.Symbol.symbol"))
-                    && Config.get().getString("Settings.Features.GlobalChat.Symbol.symbol").equals("/")) {
+        if (ModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Symbol.enabled")) {
+            String symbol = ModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getString("Symbol.symbol");
 
+            if (message.startsWith(symbol) && symbol.equals("/")) {
                 e.setCancelled(true);
-                message = message.replaceFirst(Config.get().getString("Settings.Features.GlobalChat.Symbol.symbol"),
-                        "");
+                message = message.replaceFirst(symbol, "");
 
                 if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
                     message = ChatColor.translateAlternateColorCodes('&', message);
                 }
 
-                if (ModuleManager.getActiveModules().contains(new AntiSwearModule())
+                if (ModuleManager.getActiveModules().contains(ModuleManager.ANTI_SWEAR_MODULE)
                         && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
                     message = SwearWordsFilter.replaceSwearWords(message);
                 }
