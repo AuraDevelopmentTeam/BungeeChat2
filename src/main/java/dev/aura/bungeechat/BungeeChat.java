@@ -76,7 +76,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         Logger.normal(ChatColor.GOLD + "---------------------------------------------");
     }
 
-    private String getLatestVersion() {
+    public String getLatestVersion() {
         try {
             HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php")
                     .openConnection();
@@ -91,7 +91,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
     }
 
-    private boolean isLatestVersion() {
+    public boolean isLatestVersion() {
         return (new Version(getLatestVersion())).compareTo(new Version(VERSION)) > 0;
     }
 }

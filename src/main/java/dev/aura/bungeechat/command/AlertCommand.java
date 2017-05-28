@@ -10,7 +10,6 @@ import dev.aura.bungeechat.placeholder.Context;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class AlertCommand extends BaseCommand {
     public AlertCommand(AlertModule alertModule) {
@@ -25,22 +24,21 @@ public class AlertCommand extends BaseCommand {
                 sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/alert <message>"));
             } else {
                 StringBuilder stringBuilder = new StringBuilder();
+
                 for (String arg : args) {
                     stringBuilder.append(arg).append(" ");
                 }
-                String finalMessage;
+
+                String finalMessage = stringBuilder.toString().trim();
+
                 if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
-                    finalMessage = ChatColor.translateAlternateColorCodes('&', stringBuilder.toString().trim());
-                } else {
-                    finalMessage = stringBuilder.toString().trim();
+                    finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                 }
+
                 String Format = Config.get().getString("Formats.alert");
-                if (sender instanceof ProxiedPlayer) {
-                    Format = PlaceHolderManager.processMessage(Format, new Context((ProxiedPlayer) sender));
-                } else {
-                    Format = PlaceHolderManager.processMessage(Format, new Context());
-                }
-                Format = Format.replace("%message%", finalMessage);
+                Format = PlaceHolderManager.processMessage(Format, new Context(sender)).replace("%message%",
+                        finalMessage);
+
                 ProxyServer.getInstance().broadcast(Format);
             }
         }

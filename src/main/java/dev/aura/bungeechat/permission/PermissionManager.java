@@ -22,7 +22,8 @@ public class PermissionManager {
                     && player.hasPermission(Permission.COMMAND_ALL.getStringedPermission()))
                 return true;
             else {
-                if (!permission.equals(Permission.USE_COLORED_CHAT) && !permission.equals(Permission.COMMAND_VANISH_SEE)) {
+                if (!permission.equals(Permission.USE_COLORED_CHAT)
+                        && !permission.equals(Permission.COMMAND_VANISH_SEE)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             Config.get().getString("Messages.no-permission")));
                 }

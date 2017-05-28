@@ -1,25 +1,19 @@
 package dev.aura.bungeechat.command;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
+import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Command;
 
 @SuppressWarnings("deprecation")
-public class ReloadCommand extends Command {
-
+public class ReloadCommand extends BaseCommand {
     private final String prefix = ChatColor.BLUE + "Bungee Chat " + ChatColor.DARK_GRAY + "// ";
 
     public ReloadCommand() {
-        super("bungeechat", "");
+        super("bungeechat");
     }
 
     @Override
@@ -29,9 +23,11 @@ public class ReloadCommand extends Command {
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_RELOAD)) {
                 Config.reload();
                 sender.sendMessage(prefix + ChatColor.GREEN + "Your configuration has been reloaded!");
+
                 return;
             }
         }
+
         checkForUpdates(sender);
         sender.sendMessage(prefix + ChatColor.GRAY + "Coded by " + ChatColor.GOLD + BungeeChatApi.AUTHOR_SHAWN
                 + ChatColor.GRAY + " and " + ChatColor.GOLD + BungeeChatApi.AUTHOR_BRAINSTONE + ChatColor.GRAY
@@ -39,27 +35,19 @@ public class ReloadCommand extends Command {
     }
 
     private boolean checkForUpdates(CommandSender sender) {
-        try {
-            HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php")
-                    .openConnection();
-            con.setDoOutput(true);
-            con.setRequestMethod("POST");
-            con.getOutputStream()
-                    .write(("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource="
-                            + BungeeChatApi.PLUGIN_ID).getBytes("UTF-8"));
-            String version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            if (!version.equalsIgnoreCase(BungeeChatApi.VERSION)) {
-                sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION
-                        + " (Build #" + BungeeChatApi.BUILD + ")");
-                sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + version);
-                return true;
-            } else {
-                sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION
-                        + " [test] (Build #" + BungeeChatApi.BUILD + ")");
-                return false;
-            }
-        } catch (Exception ex) {
+        String version = BungeeChat.getInstance().getLatestVersion();
+
+        if (BungeeChat.getInstance().isLatestVersion()) {
+            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION
+                    + " [test] (Build #" + BungeeChatApi.BUILD + ")");
+
             return false;
+        } else {
+            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION
+                    + " (Build #" + BungeeChatApi.BUILD + ")");
+            sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + version);
+
+            return true;
         }
     }
 

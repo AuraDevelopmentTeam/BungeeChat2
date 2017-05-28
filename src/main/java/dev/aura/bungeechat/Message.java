@@ -51,22 +51,25 @@ public enum Message {
     private final String stringPath;
 
     public String get() {
-        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(this.stringPath));
+        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
         return PlaceHolderManager.processMessage(rawMessage, new Context());
     }
 
     public String get(CommandSender sender) {
-        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(this.stringPath));
-        if (sender instanceof ProxiedPlayer) return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
-        else return PlaceHolderManager.processMessage(rawMessage, new Context());
+        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
+        if (sender instanceof ProxiedPlayer)
+            return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
+        else
+            return PlaceHolderManager.processMessage(rawMessage, new Context());
     }
 
     public String get(CommandSender sender, String command) {
-        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(this.stringPath));
+        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
         rawMessage = rawMessage.replace("%command%", command);
-        if (sender instanceof ProxiedPlayer) return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
-        else return PlaceHolderManager.processMessage(rawMessage, new Context());
+        if (sender instanceof ProxiedPlayer)
+            return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
+        else
+            return PlaceHolderManager.processMessage(rawMessage, new Context());
     }
 
 }
-
