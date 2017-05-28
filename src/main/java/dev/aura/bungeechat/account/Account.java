@@ -36,6 +36,7 @@ public class Account implements BungeeChatAccount {
 
     public Account(UUID uuid) {
         this.uuid = uuid;
+        proxiedPlayer = ProxyServer.getInstance().getPlayer(uuid);
         channelType = ChannelType.NONE;
         vanished = false;
         messanger = true;
