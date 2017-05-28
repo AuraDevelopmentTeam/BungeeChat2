@@ -23,6 +23,7 @@ public class ModuleManager {
         modules.add(new SocialSpyModule());
         modules.add(new AntiSwearModule());
         modules.add(new HelpOpModule());
+        modules.add(new GlobalChatModule());
 
         return modules;
     }
