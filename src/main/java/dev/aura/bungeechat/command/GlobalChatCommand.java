@@ -38,10 +38,11 @@ public class GlobalChatCommand extends BaseCommand {
             if (args.length < 1) {
                 if(PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL_TOGGLE)) {
                     ProxiedPlayer p = (ProxiedPlayer) sender;
-                    AccountManager.getUserAccount(p).setChannelType(ChannelType.GLOBAL);
-                    if (!AccountManager.getUserAccount(p).getChannelType().equals(ChannelType.GLOBAL)) {
+                    if (AccountManager.getUserAccount(p).getChannelType().equals(ChannelType.GLOBAL)) {
+                        AccountManager.getUserAccount(p).setChannelType(ChannelType.NONE);
                         p.sendMessage(Message.DISABLE_GLOBAL.get());
                     } else {
+                        AccountManager.getUserAccount(p).setChannelType(ChannelType.GLOBAL);
                         p.sendMessage(Message.ENABLE_GLOBAL.get());
                     }
                 } else {
