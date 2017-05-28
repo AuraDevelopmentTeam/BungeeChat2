@@ -15,6 +15,7 @@ import dev.aura.bungeechat.command.ReloadCommand;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.bungeechat.placeholder.PlaceHolders;
 import dev.aura.bungeechat.util.Logger;
 import dev.aura.bungeechat.util.Version;
 import lombok.Getter;
@@ -32,6 +33,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         BungeeChatInstaceHolder.setInstance(instance);
 
         Config.load();
+        PlaceHolders.registerPlaceholders();
 
         if (CONFIG_VERSION != Config.get().getDouble("Version")) {
             Logger.info(

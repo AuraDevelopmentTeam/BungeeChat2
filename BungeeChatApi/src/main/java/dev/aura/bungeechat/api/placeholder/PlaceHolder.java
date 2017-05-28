@@ -31,7 +31,7 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
     @Override
     public boolean isContextApplicable(BungeeChatContext context) {
         for (Predicate<? super BungeeChatContext> requirement : requirements) {
-            if (requirement.test(context))
+            if (!requirement.test(context))
                 return false;
         }
 
