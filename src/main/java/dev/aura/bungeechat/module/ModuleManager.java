@@ -22,17 +22,16 @@ public class ModuleManager {
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
 
     public static Stream<Module> getModules() {
-        return Arrays.stream(ModuleManager.class.getDeclaredFields()).filter(field -> Module.class.isAssignableFrom(field.getType())).map(field -> {
-            try {
-                field.setAccessible(true);
-                
-                return (Module) field.get(null);
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
+        return Arrays.stream(ModuleManager.class.getDeclaredFields())
+                .filter(field -> Module.class.isAssignableFrom(field.getType())).map(field -> {
+                    try {
+                        return (Module) field.get(null);
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
+                        e.printStackTrace();
 
-                return null;
-            }
-        });
+                        return null;
+                    }
+                });
     }
 
     public static List<Module> getActiveModules() {
