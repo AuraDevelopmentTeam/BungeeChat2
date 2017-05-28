@@ -36,8 +36,7 @@ public class AlertCommand extends BaseCommand {
                 }
 
                 String Format = Config.get().getString("Formats.alert");
-                Format = PlaceHolderManager.processMessage(Format, new Context(sender)).replace("%message%",
-                        finalMessage);
+                Format = PlaceHolderManager.processMessage(Format, new Context(sender, finalMessage));
 
                 ProxyServer.getInstance().broadcast(Format);
             }

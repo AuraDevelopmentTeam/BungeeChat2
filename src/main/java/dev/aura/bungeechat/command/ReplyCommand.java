@@ -81,22 +81,19 @@ public class ReplyCommand extends BaseCommand {
                     Configuration config = Config.get();
 
                     String rawFormatSender = config.getString("Formats.message-sender");
-                    String FormatSender = PlaceHolderManager
-                            .processMessage(rawFormatSender, new Context(sender, target))
-                            .replace("%message%", finalMessage);
+                    String FormatSender = PlaceHolderManager.processMessage(rawFormatSender,
+                            new Context(sender, target, finalMessage));
                     sender.sendMessage(FormatSender);
 
                     String rawFormatTarget = config.getString("Formats.message-target");
-                    String FormatTarget = PlaceHolderManager
-                            .processMessage(rawFormatTarget, new Context(sender, target))
-                            .replace("%message%", finalMessage);
+                    String FormatTarget = PlaceHolderManager.processMessage(rawFormatTarget,
+                            new Context(sender, target, finalMessage));
                     sender.sendMessage(FormatTarget);
 
                     if (ModuleManager.getActiveModules().contains(new SocialSpyModule())) {
                         String rawSocialSpyFormat = config.getString("Formats.socialspy");
-                        String SocialSpyFormat = PlaceHolderManager
-                                .processMessage(rawSocialSpyFormat, new Context(sender, target))
-                                .replace("%message%", finalMessage);
+                        String SocialSpyFormat = PlaceHolderManager.processMessage(rawSocialSpyFormat,
+                                new Context(sender, target, finalMessage));
                         ProxyServer.getInstance().getPlayers().stream().filter(pp -> !(pp == target) && !(pp == sender)
                                 && AccountManager.getUserAccount(pp).hasSocialSpyEnabled()).forEach(pp -> {
                                     pp.sendMessage(SocialSpyFormat);
