@@ -53,7 +53,6 @@ public class GlobalChatListener implements Listener {
                     Config.get().getString("Settings.Features.GlobalChat.Symbol.symbol").equals("/")) {
 
                 e.setCancelled(true);
-
                 message = message.replaceFirst(Config.get().getString("Settings.Features.GlobalChat.Symbol.symbol"), "");
 
                 if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
