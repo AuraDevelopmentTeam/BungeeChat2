@@ -1,8 +1,10 @@
 package dev.aura.bungeechat.api;
 
+import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 
 public interface BungeeChatApi {
@@ -28,4 +30,16 @@ public interface BungeeChatApi {
     public ServerType getServerType();
 
     public boolean hasPermission(BungeeChatAccount account, Permission permission);
+
+    public void sendPrivateMessage(BungeeChatContext context);
+
+    public void sendChannelMessage(BungeeChatContext context, ChannelType channel);
+
+    default public void sendChannelMessage(BungeeChatContext context) {
+        if (context.hasPlayer()) {
+            sendChannelMessage(context, context.getPlayer().get().getChannelType());
+        } else {
+            sendChannelMessage(context, ChannelType.NONE);
+        }
+    }
 }
