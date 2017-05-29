@@ -35,7 +35,7 @@ public class BungeeChatLibSponge implements BungeeChatApi {
         instance = this;
         BungeeChatInstaceHolder.setInstance(instance);
     }
-    
+
     @Override
     public void sendPrivateMessage(BungeeChatContext context) {
         // TODO: Send via channel messages!

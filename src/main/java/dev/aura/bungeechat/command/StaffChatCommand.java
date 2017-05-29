@@ -55,8 +55,9 @@ public class StaffChatCommand extends BaseCommand {
 
                 String Format = PlaceHolderUtil.getFullMessage("staffchat", new Context(sender, finalMessage));
 
-                ProxyServer.getInstance().getPlayers().stream().filter(pp -> PermissionManager.hasPermission(pp,
-                        Permission.COMMAND_STAFFCHAT_VIEW)).forEach(pp -> pp.sendMessage(Format));
+                ProxyServer.getInstance().getPlayers().stream()
+                        .filter(pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW))
+                        .forEach(pp -> pp.sendMessage(Format));
             }
         }
     }

@@ -24,7 +24,6 @@ import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
-
 public class AccountManager implements Listener {
 
     private static CopyOnWriteArrayList<BungeeChatAccount> userAccounts = new CopyOnWriteArrayList<>();
@@ -51,17 +50,17 @@ public class AccountManager implements Listener {
 
     public static void saveAccount(BungeeChatAccount account) throws IOException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
-        
+
         if (!folder.exists()) {
             folder.mkdir();
         }
-        
+
         File checker = new File(folder, account.getUniqueId().toString() + ".sav");
-        
+
         if (!checker.exists()) {
             checker.createNewFile();
         }
-        
+
         @Cleanup
         FileOutputStream saveFile = new FileOutputStream(checker);
         @Cleanup
@@ -87,35 +86,37 @@ public class AccountManager implements Listener {
         if (!resultSet.next()) {
             acc = new Account(uuid);
         } else {
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 ChannelType channelType = ChannelType.valueOf(resultSet.getString("channeltype").toUpperCase());
                 boolean vanished = resultSet.getBoolean("vanished");
                 boolean messenger = resultSet.getBoolean("messenger");
                 boolean socialspy = resultSet.getBoolean("socialspy");
                 String ignored = resultSet.getString("ignored");
-                CopyOnWriteArrayList<UUID> uuidList = UUIDUtils.convertStringCopyOnWriteArrayList(Arrays.asList(ignored.split("\\s*,\\s*")));
+                CopyOnWriteArrayList<UUID> uuidList = UUIDUtils
+                        .convertStringCopyOnWriteArrayList(Arrays.asList(ignored.split("\\s*,\\s*")));
                 acc = new Account(uuid, channelType, vanished, messenger, socialspy, uuidList);
             }
         }
-        if (acc != null)
+        if (acc != null) {
             registerAccount(acc);
+        }
     }
 
     public static void loadAccount(UUID uuid) throws IOException, ClassNotFoundException {
         File folder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/userdata");
-        
+
         if (!folder.exists()) {
             registerAccount(new Account(uuid));
             return;
         }
-        
+
         File checker = new File(folder, uuid.toString() + ".sav");
-        
+
         if (!checker.exists()) {
             registerAccount(new Account(uuid));
             return;
         }
-        
+
         @Cleanup
         FileInputStream saveFile = new FileInputStream(checker);
         @Cleanup

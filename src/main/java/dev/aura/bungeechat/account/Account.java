@@ -29,7 +29,7 @@ public class Account implements BungeeChatAccount {
     private boolean socialspy;
     @Getter
     private CopyOnWriteArrayList<UUID> ignored;
-    
+
     public static ProxiedPlayer toProxiedPlayer(BungeeChatAccount account) {
         return ProxyServer.getInstance().getPlayer(account.getUniqueId());
     }

@@ -46,20 +46,20 @@ public enum Message {
     HAS_INGORED("has-ignored");
 
     private final String stringPath;
-    
-    private Message (String stringPath) {
+
+    private Message(String stringPath) {
         this.stringPath = "Messages." + stringPath;
     }
 
     public String get() {
         String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
-        
+
         return PlaceHolderManager.processMessage(rawMessage, new Context());
     }
 
     public String get(CommandSender sender) {
         String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
-        
+
         if (sender instanceof ProxiedPlayer)
             return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
         else
@@ -69,7 +69,7 @@ public enum Message {
     public String get(CommandSender sender, String command) {
         String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
         rawMessage = rawMessage.replace("%command%", command);
-        
+
         if (sender instanceof ProxiedPlayer)
             return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
         else

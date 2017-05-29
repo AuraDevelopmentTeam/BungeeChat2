@@ -38,8 +38,9 @@ public class StaffChatListener implements Listener {
 
             String Format = PlaceHolderUtil.getFullMessage("staffchat", new Context(sender, message));
 
-            ProxyServer.getInstance().getPlayers().stream().filter(pp -> PermissionManager.hasPermission(pp,
-                    Permission.COMMAND_STAFFCHAT_VIEW)).forEach(pp -> pp.sendMessage(Format));
+            ProxyServer.getInstance().getPlayers().stream()
+                    .filter(pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW))
+                    .forEach(pp -> pp.sendMessage(Format));
 
         }
     }

@@ -78,8 +78,10 @@ public class MessageCommand extends BaseCommand {
                 if (ModuleManager.isModuleActive(ModuleManager.SOCIAL_SPY_MODULE)) {
                     String SocialSpyFormat = PlaceHolderUtil.getFullMessage("socialspy",
                             new Context(sender, target, finalMessage));
-                    ProxyServer.getInstance().getPlayers().stream().filter(pp -> !(pp == target) && !(pp == sender)
-                            && AccountManager.getUserAccount(pp).hasSocialSpyEnabled()).forEach(pp -> pp.sendMessage(SocialSpyFormat));
+                    ProxyServer.getInstance().getPlayers().stream()
+                            .filter(pp -> !(pp == target) && !(pp == sender)
+                                    && AccountManager.getUserAccount(pp).hasSocialSpyEnabled())
+                            .forEach(pp -> pp.sendMessage(SocialSpyFormat));
                 }
 
                 if (sender instanceof ProxiedPlayer) {
