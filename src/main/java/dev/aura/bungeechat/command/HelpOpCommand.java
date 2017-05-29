@@ -1,7 +1,7 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.Message;
 import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.module.HelpOpModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;

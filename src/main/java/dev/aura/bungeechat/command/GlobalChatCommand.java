@@ -1,10 +1,10 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.Message;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
+import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.module.GlobalChatModule;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
