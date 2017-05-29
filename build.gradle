@@ -29,7 +29,7 @@ allprojects {
     version = "2.0.0"
     
     ext {
-        build = "130"
+        build = "134"
         full_version = "${version}_${build}"
         shouldSign = project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")
     }
