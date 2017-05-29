@@ -52,7 +52,7 @@ public class MessagesService {
             // TODO
             break;
         case HELP:
-            // TODO
+            sendHelpMessage(context);
             break;
         case GROUP:
             // TODO
@@ -82,5 +82,28 @@ public class MessagesService {
         String finalMessage = PlaceHolderUtil.getFullMessage("global", new Context(player, message));
 
         ProxyServer.getInstance().broadcast(finalMessage);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static void sendHelpMessage(BungeeChatContext contex) {
+        ProxiedPlayer player = Account.toProxiedPlayer(contex.getPlayer().get());
+        String message = contex.getMessage().get();
+
+        if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
+            message = ChatColor.translateAlternateColorCodes('&', message);
+        }
+
+        // TODO: new filter logic
+        if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
+                && !PermissionManager.hasPermission(player, Permission.BYPASS_ANTI_SWEAR)) {
+            message = SwearWordsFilter.replaceSwearWords(message);
+        }
+
+        String finalMessage = PlaceHolderUtil.getFullMessage("helpop", new Context(player, message));
+
+        // TODO: New permission for recieving help messages
+        ProxyServer.getInstance().getPlayers().stream()
+                .filter(pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP))
+                .forEach(pp -> pp.sendMessage(finalMessage));
     }
 }
