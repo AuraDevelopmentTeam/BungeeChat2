@@ -7,12 +7,15 @@ import java.net.URL;
 
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.ReloadCommand;
 import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.PlaceHolders;
@@ -62,6 +65,16 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     @Override
     public boolean hasPermission(BungeeChatAccount account, Permission permission) {
         return PermissionManager.hasPermission(account, permission);
+    }
+
+    @Override
+    public void sendPrivateMessage(BungeeChatContext context) {
+        MessagesService.sendPrivateMessage(context);
+    }
+
+    @Override
+    public void sendChannelMessage(BungeeChatContext context, ChannelType channel) {
+        MessagesService.sendChannelMessage(context, channel);
     }
 
     private void loadScreen() {
