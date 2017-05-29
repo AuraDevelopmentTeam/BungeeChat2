@@ -17,6 +17,7 @@ public class ModuleManager {
     public static final MessengerModule MESSENGER_MODULE = new MessengerModule();
     public static final SocialSpyModule SOCIAL_SPY_MODULE = new SocialSpyModule();
     public static final VanisherModule VANISHER_MODULE = new VanisherModule();
+    public static final StaffChatModule STAFF_CHAT_MODULE = new StaffChatModule();
 
     private static List<Module> activeModules = null;
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;

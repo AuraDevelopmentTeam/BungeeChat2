@@ -93,9 +93,7 @@ public class ReplyCommand extends BaseCommand {
                         String SocialSpyFormat = PlaceHolderUtil.getFullMessage("socialspy",
                                 new Context(sender, target, finalMessage));
                         ProxyServer.getInstance().getPlayers().stream().filter(pp -> !(pp == target) && !(pp == sender)
-                                && AccountManager.getUserAccount(pp).hasSocialSpyEnabled()).forEach(pp -> {
-                                    pp.sendMessage(SocialSpyFormat);
-                                });
+                                && AccountManager.getUserAccount(pp).hasSocialSpyEnabled()).forEach(pp -> pp.sendMessage(SocialSpyFormat));
                     }
 
                     if (sender instanceof ProxiedPlayer) {

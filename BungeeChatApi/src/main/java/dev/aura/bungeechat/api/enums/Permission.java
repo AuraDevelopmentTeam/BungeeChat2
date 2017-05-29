@@ -19,6 +19,7 @@ public enum Permission {
     COMMAND_GLOBAL("bungeechat.command.global"),
     COMMAND_GLOBAL_TOGGLE("bungeechat.command.global.toggle"),
     COMMAND_STAFFCHAT("bungeechat.command.staffchat"),
+    COMMAND_STAFFCHAT_VIEW("bungeechat.command.staffchat.view"),
     COMMAND_HELPOP("bungeechat.command.helpop"),
     COMMAND_IGNORE("bungeechat.command.ignore"),
     COMMAND_IGNORE_BYPASS("bungeechat.command.ignore.bypass"),

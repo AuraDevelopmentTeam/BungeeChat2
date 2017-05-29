@@ -22,6 +22,9 @@ public class PermissionManager {
             else if (permission.getStringedPermission().startsWith("bungeechat.command.")
                     && player.hasPermission(Permission.COMMAND_ALL.getStringedPermission()))
                 return true;
+            else if (permission.getStringedPermission().startsWith("bungeechat.command.staffchat.")
+                    && player.hasPermission(Permission.COMMAND_STAFFCHAT.getStringedPermission()))
+                return true;
             else {
                 if (!permission.equals(Permission.USE_COLORED_CHAT)
                         && !permission.equals(Permission.COMMAND_VANISH_SEE)) {

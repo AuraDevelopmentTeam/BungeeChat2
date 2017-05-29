@@ -36,10 +36,9 @@ public class HelpOpCommand extends BaseCommand {
 
                 String Format = PlaceHolderUtil.getFullMessage("helpop", new Context(sender, finalMessage));
 
-                String finalFormat = Format;
                 ProxyServer.getInstance().getPlayers().stream()
                         .filter(pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP))
-                        .forEach(pp -> pp.sendMessage(finalFormat));
+                        .forEach(pp -> pp.sendMessage(Format));
             }
         }
     }

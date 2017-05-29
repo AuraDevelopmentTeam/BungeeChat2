@@ -26,7 +26,7 @@ Settings:
       Symbol:
         enabled: false
         symbol: "!"
-    Messanger:
+    Messenger:
       enabled: true
       aliases:
         message:
