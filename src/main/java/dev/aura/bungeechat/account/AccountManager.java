@@ -6,11 +6,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.utils.UUIDUtils;
 import lombok.Cleanup;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -18,6 +24,7 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+
 
 public class AccountManager implements Listener {
 
@@ -67,6 +74,32 @@ public class AccountManager implements Listener {
         save.writeObject(account.getIgnored());
         save.close();
         unregisterAccount(account);
+    }
+
+    private static void getAccountSQL(UUID uuid) throws SQLException {
+        if (AccountSQL.getConnection().isClosed()) {
+            AccountSQL.openConnection();
+        }
+
+        Statement statement = AccountSQL.getConnection().createStatement();
+        String sql = "SELECT * FROM BungeeChatAccounts WHERE uuid='" + uuid + "'";
+        ResultSet resultSet = statement.executeQuery(sql);
+        Account acc = null;
+        if (!resultSet.next()) {
+            acc = new Account(uuid);
+        } else {
+            while(resultSet.next()) {
+                ChannelType channelType = ChannelType.valueOf(resultSet.getString("channeltype").toUpperCase());
+                boolean vanished = resultSet.getBoolean("vanished");
+                boolean messenger = resultSet.getBoolean("messenger");
+                boolean socialspy = resultSet.getBoolean("socialspy");
+                String ignored = resultSet.getString("ignored");
+                CopyOnWriteArrayList<UUID> uuidList = UUIDUtils.convertStringCopyOnWriteArrayList(Arrays.asList(ignored.split("\\s*,\\s*")));
+                acc = new Account(uuid, channelType, vanished, messenger, socialspy, uuidList);
+            }
+        }
+        if (acc != null)
+            registerAccount(acc);
     }
 
     public static void loadAccount(UUID uuid) throws IOException, ClassNotFoundException {

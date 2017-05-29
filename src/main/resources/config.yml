@@ -167,3 +167,11 @@ Formats:
   leavemessage: "&e%player_name% has left the network!"
   helpop: "&2HELPOP > &e%player_name%: &r%message%"
   server-switch: "&e%player_name% has moved to the &c%sender_server% &e server!"
+
+AccountDataBase:
+  enabled: false
+  ip: 0.0.0.0
+  port: 20
+  database: BungeeChatAccounts
+  user: User
+  password: Password
