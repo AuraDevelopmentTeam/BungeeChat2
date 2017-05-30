@@ -2,14 +2,10 @@ package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.filter.SwearWordsFilter;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MessengerModule;
-import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
-import dev.aura.bungeechat.placeholder.Context;
-import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -56,33 +52,7 @@ public class MessageCommand extends BaseCommand {
                     stringBuilder.append(args[i]).append(" ");
                 }
 
-                String finalMessage = stringBuilder.toString().trim();
-
-                if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
-                    finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
-                }
-
-                if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
-                        && !PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_SWEAR)) {
-                    finalMessage = SwearWordsFilter.replaceSwearWords(finalMessage);
-                }
-
-                String FormatSender = PlaceHolderUtil.getFullMessage("message-sender",
-                        new Context(sender, target, finalMessage));
-                sender.sendMessage(FormatSender);
-
-                String FormatTarget = PlaceHolderUtil.getFullMessage("message-target",
-                        new Context(sender, target, finalMessage));
-                target.sendMessage(FormatTarget);
-
-                if (ModuleManager.isModuleActive(ModuleManager.SOCIAL_SPY_MODULE)) {
-                    String SocialSpyFormat = PlaceHolderUtil.getFullMessage("socialspy",
-                            new Context(sender, target, finalMessage));
-                    ProxyServer.getInstance().getPlayers().stream()
-                            .filter(pp -> !(pp == target) && !(pp == sender)
-                                    && AccountManager.getUserAccount(pp).hasSocialSpyEnabled())
-                            .forEach(pp -> pp.sendMessage(SocialSpyFormat));
-                }
+                MessagesService.sendPrivateMessage(sender, target, stringBuilder.toString().trim());
 
                 if (sender instanceof ProxiedPlayer) {
                     ReplyCommand.setReply((ProxiedPlayer) sender, target);

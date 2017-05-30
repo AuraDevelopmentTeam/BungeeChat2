@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import dev.aura.bungeechat.account.Account;
+import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
@@ -26,8 +27,26 @@ public class MessagesService {
         sendPrivateMessage(new Context(sender, target, message));
     }
 
+    @SuppressWarnings("deprecation")
     public static void sendPrivateMessage(BungeeChatContext context) {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_TARGET, BungeeChatContext.HAS_MESSAGE);
+
+        Optional<BungeeChatAccount> account = context.getSender();
+        ProxiedPlayer sender = Account.toProxiedPlayer(context.getSender().get());
+        ProxiedPlayer target = Account.toProxiedPlayer(context.getTarget().get());
+
+        String messageSender = preProcessMessage(context, account, "message-sender");
+        sender.sendMessage(messageSender);
+
+        String messageTarget = preProcessMessage(context, account, "message-target");
+        target.sendMessage(messageTarget);
+
+        if (ModuleManager.isModuleActive(ModuleManager.SOCIAL_SPY_MODULE)) {
+            String socialSpyMessage = preProcessMessage(context, account, "socialspy");
+
+            sendToMatchingPlayers(socialSpyMessage,
+                    pp -> (pp != target) && (pp != sender) && AccountManager.getUserAccount(pp).hasSocialSpyEnabled());
+        }
     }
 
     public static void sendChannelMessage(CommandSender sender, ChannelType channel, String message) {
