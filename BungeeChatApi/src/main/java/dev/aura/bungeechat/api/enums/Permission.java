@@ -21,6 +21,7 @@ public enum Permission {
     COMMAND_STAFFCHAT("bungeechat.command.staffchat"),
     COMMAND_STAFFCHAT_VIEW("bungeechat.command.staffchat.view"),
     COMMAND_HELPOP("bungeechat.command.helpop"),
+    COMMAND_HELPOP_VIEW("bungeechat.command.helpop.view"),
     COMMAND_IGNORE("bungeechat.command.ignore"),
     COMMAND_IGNORE_BYPASS("bungeechat.command.ignore.bypass"),
     COMMAND_MESSAGE("bungeechat.command.msg"),

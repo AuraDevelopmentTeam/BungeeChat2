@@ -4,13 +4,12 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Tolerate;
 
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@Setter
 public class BungeeChatContext {
     public static final Predicate<BungeeChatContext> HAS_PLAYER = context -> context.hasPlayer();
     public static final Predicate<BungeeChatContext> HAS_SENDER = context -> context.hasSender();
@@ -70,22 +69,22 @@ public class BungeeChatContext {
     }
 
     @Tolerate
-    protected void setPlayer(BungeeChatAccount player) {
+    public void setPlayer(BungeeChatAccount player) {
         setPlayer(Optional.ofNullable(player));
     }
 
     @Tolerate
-    protected void setSender(BungeeChatAccount sender) {
+    public void setSender(BungeeChatAccount sender) {
         setSender(Optional.ofNullable(sender));
     }
 
     @Tolerate
-    protected void setTarget(BungeeChatAccount target) {
+    public void setTarget(BungeeChatAccount target) {
         setTarget(Optional.ofNullable(target));
     }
 
     @Tolerate
-    protected void setMessage(String message) {
+    public void setMessage(String message) {
         setMessage(Optional.ofNullable(message));
     }
 }

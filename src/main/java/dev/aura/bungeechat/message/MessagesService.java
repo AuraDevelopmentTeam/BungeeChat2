@@ -1,9 +1,14 @@
 package dev.aura.bungeechat.message;
 
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
 import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.exception.InvalidContextException;
+import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
 import dev.aura.bungeechat.module.ModuleManager;
@@ -49,7 +54,7 @@ public class MessagesService {
             // TODO
             break;
         case STAFF:
-            // TODO
+            sendStaffMessage(context);
             break;
         case HELP:
             sendHelpMessage(context);
@@ -64,9 +69,9 @@ public class MessagesService {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private static void sendGlobalMessage(BungeeChatContext contex) {
-        ProxiedPlayer player = Account.toProxiedPlayer(contex.getPlayer().get());
+    public static String preProcessMessage(BungeeChatContext contex, Optional<BungeeChatAccount> account,
+            String format) {
+        ProxiedPlayer player = Account.toProxiedPlayer(account.get());
         String message = contex.getMessage().get();
 
         if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
@@ -79,31 +84,39 @@ public class MessagesService {
             message = SwearWordsFilter.replaceSwearWords(message);
         }
 
-        String finalMessage = PlaceHolderUtil.getFullMessage("global", new Context(player, message));
+        contex.setMessage(message);
 
-        ProxyServer.getInstance().broadcast(finalMessage);
+        return PlaceHolderUtil.getFullMessage(format, contex);
     }
 
+    @SafeVarargs
     @SuppressWarnings("deprecation")
+    public static void sendToMatchingPlayers(String finalMessage, Predicate<? super ProxiedPlayer>... filters) {
+        Stream<ProxiedPlayer> stream = ProxyServer.getInstance().getPlayers().stream();
+
+        for (Predicate<? super ProxiedPlayer> filter : filters) {
+            stream = stream.filter(filter);
+        }
+
+        stream.forEach(pp -> pp.sendMessage(finalMessage));
+    }
+
+    private static void sendGlobalMessage(BungeeChatContext contex) {
+        String finalMessage = preProcessMessage(contex, contex.getPlayer(), "global");
+
+        sendToMatchingPlayers(finalMessage);
+    }
+
+    private static void sendStaffMessage(BungeeChatContext contex) {
+        String finalMessage = preProcessMessage(contex, contex.getPlayer(), "staff");
+
+        sendToMatchingPlayers(finalMessage,
+                pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
+    }
+
     private static void sendHelpMessage(BungeeChatContext contex) {
-        ProxiedPlayer player = Account.toProxiedPlayer(contex.getPlayer().get());
-        String message = contex.getMessage().get();
+        String finalMessage = preProcessMessage(contex, contex.getPlayer(), "helpop");
 
-        if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
-            message = ChatColor.translateAlternateColorCodes('&', message);
-        }
-
-        // TODO: new filter logic
-        if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
-                && !PermissionManager.hasPermission(player, Permission.BYPASS_ANTI_SWEAR)) {
-            message = SwearWordsFilter.replaceSwearWords(message);
-        }
-
-        String finalMessage = PlaceHolderUtil.getFullMessage("helpop", new Context(player, message));
-
-        // TODO: New permission for recieving help messages
-        ProxyServer.getInstance().getPlayers().stream()
-                .filter(pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP))
-                .forEach(pp -> pp.sendMessage(finalMessage));
+        sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
     }
 }
