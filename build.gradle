@@ -1,4 +1,5 @@
 import io.franzbecker.gradle.lombok.task.DelombokTask
+import java.security.SecureRandom
 import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
 
@@ -158,6 +159,8 @@ task deobfJar (type: Jar, dependsOn: jar) {
 task proguard(type: ProGuardTask, dependsOn: deobfJar) {
     group "build"
     
+    def dictonary = file("dictionary.txt")
+    
     configuration "proguard.conf"
 
     // Inputs and outputs
@@ -176,7 +179,35 @@ task proguard(type: ProGuardTask, dependsOn: deobfJar) {
     dontwarn "!class ${project.group}.**"
     dontnote "!class ${project.group}.**"
     
+    // Obfuscation names. They'll be different for each version
+    classobfuscationdictionary dictonary
+    obfuscationdictionary dictonary
+    
     jar.finalizedBy proguard
+    
+    doFirst {
+        def firstChars = ('A'..'Z') + ('a'..'z')
+        def allChars = firstChars + ('0'..'9')
+        def rand = new SecureRandom(full_version.getBytes())
+        def str
+        def out = ""
+    
+        (1..10000).each {
+            str = firstChars[rand.nextInt(firstChars.size())]
+            
+            (2..3).each {
+                str += allChars[rand.nextInt(allChars.size())]
+            }
+        
+            out += "${str}\n"
+        }
+        
+        dictonary.text = out;
+    }
+    
+    doLast {
+       dictonary.delete() 
+    }
 }
 
 artifacts {
