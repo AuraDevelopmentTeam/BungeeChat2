@@ -48,7 +48,7 @@ public class GlobalChatCommand extends BaseCommand {
                     stringBuilder.append(arg).append(" ");
                 }
 
-                MessagesService.sendChannelMessage(sender, ChannelType.GLOBAL, stringBuilder.toString().trim());
+                MessagesService.sendGlobalMessage(sender, stringBuilder.toString().trim());
             }
         }
     }

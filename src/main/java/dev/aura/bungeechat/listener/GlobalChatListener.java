@@ -24,7 +24,7 @@ public class GlobalChatListener implements Listener {
         if (AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.GLOBAL)
                 && !ChatUtils.isCommand(message)) {
             e.setCancelled(true);
-            MessagesService.sendChannelMessage(sender, ChannelType.GLOBAL, message);
+            MessagesService.sendGlobalMessage(sender, message);
 
             return;
         }
@@ -34,7 +34,7 @@ public class GlobalChatListener implements Listener {
 
             if (message.startsWith(symbol) && symbol.equals("/")) {
                 e.setCancelled(true);
-                MessagesService.sendChannelMessage(sender, ChannelType.GLOBAL, message.replaceFirst(symbol, ""));
+                MessagesService.sendGlobalMessage(sender, message.replaceFirst(symbol, ""));
             }
         }
     }

@@ -4,14 +4,11 @@ import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.module.StaffChatModule;
 import dev.aura.bungeechat.permission.PermissionManager;
-import dev.aura.bungeechat.placeholder.Context;
-import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class StaffChatCommand extends BaseCommand {
@@ -47,17 +44,7 @@ public class StaffChatCommand extends BaseCommand {
                     stringBuilder.append(arg).append(" ");
                 }
 
-                String finalMessage = stringBuilder.toString().trim();
-
-                if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
-                    finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
-                }
-
-                String Format = PlaceHolderUtil.getFullMessage("staffchat", new Context(sender, finalMessage));
-
-                ProxyServer.getInstance().getPlayers().stream()
-                        .filter(pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW))
-                        .forEach(pp -> pp.sendMessage(Format));
+                MessagesService.sendStaffMessage(sender, stringBuilder.toString().trim());
             }
         }
     }

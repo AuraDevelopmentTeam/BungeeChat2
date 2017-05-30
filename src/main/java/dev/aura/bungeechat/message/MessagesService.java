@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.exception.InvalidContextException;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
@@ -28,12 +27,7 @@ public class MessagesService {
     }
 
     public static void sendPrivateMessage(BungeeChatContext context) {
-        if (!context.hasSender())
-            throw new InvalidContextException("Context requires a sender!");
-        if (!context.hasTarget())
-            throw new InvalidContextException("Context requires a target!");
-        if (!context.hasMessage())
-            throw new InvalidContextException("Context requires a message!");
+        context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_TARGET, BungeeChatContext.HAS_MESSAGE);
     }
 
     public static void sendChannelMessage(CommandSender sender, ChannelType channel, String message) {
@@ -41,10 +35,7 @@ public class MessagesService {
     }
 
     public static void sendChannelMessage(BungeeChatContext context, ChannelType channel) {
-        if (!context.hasPlayer())
-            throw new InvalidContextException("Context requires a player!");
-        if (!context.hasMessage())
-            throw new InvalidContextException("Context requires a message!");
+        context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
         switch (channel) {
         case GLOBAL:
@@ -69,10 +60,49 @@ public class MessagesService {
         }
     }
 
-    public static String preProcessMessage(BungeeChatContext contex, Optional<BungeeChatAccount> account,
+    public static void sendGlobalMessage(CommandSender sender, String message) {
+        sendGlobalMessage(new Context(sender, message));
+    }
+
+    public static void sendGlobalMessage(BungeeChatContext context) {
+        context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
+
+        String finalMessage = preProcessMessage(context, context.getPlayer(), "global");
+
+        sendToMatchingPlayers(finalMessage);
+    }
+
+    public static void sendStaffMessage(CommandSender sender, String message) {
+        sendStaffMessage(new Context(sender, message));
+    }
+
+    public static void sendStaffMessage(BungeeChatContext context) {
+        context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
+
+        String finalMessage = preProcessMessage(context, context.getPlayer(), "staff");
+
+        sendToMatchingPlayers(finalMessage,
+                pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
+    }
+
+    public static void sendHelpMessage(CommandSender sender, String message) {
+        sendHelpMessage(new Context(sender, message));
+    }
+
+    public static void sendHelpMessage(BungeeChatContext context) {
+        context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
+
+        String finalMessage = preProcessMessage(context, context.getPlayer(), "helpop");
+
+        sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
+    }
+
+    public static String preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
             String format) {
+        context.require(BungeeChatContext.HAS_MESSAGE);
+
         ProxiedPlayer player = Account.toProxiedPlayer(account.get());
-        String message = contex.getMessage().get();
+        String message = context.getMessage().get();
 
         if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
             message = ChatColor.translateAlternateColorCodes('&', message);
@@ -84,9 +114,9 @@ public class MessagesService {
             message = SwearWordsFilter.replaceSwearWords(message);
         }
 
-        contex.setMessage(message);
+        context.setMessage(message);
 
-        return PlaceHolderUtil.getFullMessage(format, contex);
+        return PlaceHolderUtil.getFullMessage(format, context);
     }
 
     @SafeVarargs
@@ -99,24 +129,5 @@ public class MessagesService {
         }
 
         stream.forEach(pp -> pp.sendMessage(finalMessage));
-    }
-
-    private static void sendGlobalMessage(BungeeChatContext contex) {
-        String finalMessage = preProcessMessage(contex, contex.getPlayer(), "global");
-
-        sendToMatchingPlayers(finalMessage);
-    }
-
-    private static void sendStaffMessage(BungeeChatContext contex) {
-        String finalMessage = preProcessMessage(contex, contex.getPlayer(), "staff");
-
-        sendToMatchingPlayers(finalMessage,
-                pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
-    }
-
-    private static void sendHelpMessage(BungeeChatContext contex) {
-        String finalMessage = preProcessMessage(contex, contex.getPlayer(), "helpop");
-
-        sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
     }
 }

@@ -1,6 +1,5 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
@@ -26,7 +25,7 @@ public class HelpOpCommand extends BaseCommand {
                     stringBuilder.append(arg).append(" ");
                 }
 
-                MessagesService.sendChannelMessage(sender, ChannelType.HELP, stringBuilder.toString().trim());
+                MessagesService.sendHelpMessage(sender, stringBuilder.toString().trim());
             }
         }
     }

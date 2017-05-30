@@ -1,8 +1,13 @@
 package dev.aura.bungeechat.api.placeholder;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import dev.aura.bungeechat.api.exception.InvalidContextException;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +25,8 @@ public class BungeeChatContext {
     public static final Predicate<BungeeChatContext> HAS_NO_SENDER = HAS_SENDER.negate();
     public static final Predicate<BungeeChatContext> HAS_NO_TARGET = HAS_TARGET.negate();
     public static final Predicate<BungeeChatContext> HAS_NO_MESSAGE = HAS_MESSAGE.negate();
+
+    private static final Map<Predicate<BungeeChatContext>, String> requirementsNameCache = new HashMap<>(8);
 
     private Optional<BungeeChatAccount> player;
     private Optional<BungeeChatAccount> sender;
@@ -50,6 +57,18 @@ public class BungeeChatContext {
         this(sender, target);
 
         this.message = Optional.of(message);
+    }
+
+    @SafeVarargs
+    public final void require(Predicate<? super BungeeChatContext>... requirements) throws InvalidContextException {
+        for (Predicate<? super BungeeChatContext> requirement : requirements) {
+            if (!requirement.test(this)) {
+                if (requirementsNameCache.containsKey(requirement))
+                    throw new InvalidContextException(requirementsNameCache.get(requirement));
+
+                throw new InvalidContextException("Context does not meet all requirements!");
+            }
+        }
     }
 
     public boolean hasPlayer() {
@@ -86,5 +105,24 @@ public class BungeeChatContext {
     @Tolerate
     public void setMessage(String message) {
         setMessage(Optional.ofNullable(message));
+    }
+
+    static {
+        final int modifers = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
+
+        for (Field field : BungeeChatContext.class.getDeclaredFields()) {
+            try {
+                if ((field.getModifiers() & modifers) == modifers) {
+                    @SuppressWarnings("unchecked")
+                    Predicate<BungeeChatContext> filter = (Predicate<BungeeChatContext>) field.get(null);
+
+                    requirementsNameCache.put(filter, "Context does not meet requirement " + field.getName() + "!");
+                }
+
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 }
