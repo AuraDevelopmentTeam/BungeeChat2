@@ -2,10 +2,6 @@ variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/BungeeChat*.jar* $CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
 
-after_script:
-  - ./gradlew --parallel clean
-  - rm -vf $ARTIFACTS
-
 cache:
   untracked: false
 
