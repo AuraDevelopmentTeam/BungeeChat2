@@ -27,7 +27,10 @@ public enum Permission {
     COMMAND_TOGGLE_MESSAGE_BYPASS("command.toggle.bypass"),
     COMMAND_VANISH("command.vanish"),
     COMMAND_VANISH_SEE("command.vanish.see"),
-    COMMAND_SOCIALSPY("command.socialspy");
+    COMMAND_SOCIALSPY("command.socialspy"),
+
+    MESSAGE_JOIN("message.join"),
+    MESSAGE_LEAVE("message.leave");
 
     @Getter
     private final String stringedPermission;
