@@ -97,7 +97,7 @@ Settings:
       enabled: true
       whitelisted:
         - www.google.com
-    Tabcompletion:
+    TabCompletion:
       enabled: true
     Ignoring:
       enabled: true
