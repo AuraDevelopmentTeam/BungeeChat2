@@ -2,13 +2,9 @@ variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/BungeeChat*.jar* $CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
 
-before_script:
-  - ls $ARTIFACTS || true
-  - git status --porcelain
-
 after_script:
-  - ls $ARTIFACTS || true
-  - git status --porcelain
+  - ./gradlew --parallel clean
+  - rm -vf $ARTIFACTS
 
 cache:
   untracked: false
@@ -20,7 +16,6 @@ stages:
 build:
   stage: build
   script:
-  - ./gradlew --parallel clean
   - ./gradlew --parallel assemble -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   - cp $ORIG_ARTIFACTS .
   when: on_success
@@ -33,7 +28,6 @@ build:
 deploy:
   stage: deploy
   script:
-  - ./gradlew --parallel clean
   - ./gradlew --parallel uploadArchives -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   when: on_success
   only:
