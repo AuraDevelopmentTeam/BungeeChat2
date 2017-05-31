@@ -21,6 +21,7 @@ public class ModuleManager {
     public static final LocalChatModule LOCAL_CHAT_MODULE = new LocalChatModule();
     public static final LeaveMessageModule LEAVE_MESSAGE_MODULE = new LeaveMessageModule();
     public static final JoinMessageModule JOIN_MESSAGE_MODULE = new JoinMessageModule();
+    public static final TabCompletionModule TAB_COMPLETION_MODULE = new TabCompletionModule();
 
     private static List<Module> activeModules = null;
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
