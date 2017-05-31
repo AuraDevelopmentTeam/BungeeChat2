@@ -3,22 +3,19 @@ variables:
   ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
 
 before_script:
-  - echo "$CI_JOB_NAME/$CI_COMMIT_REF_NAME"
-  - ls $ARTIFACTS
+  - ls $ARTIFACTS || true
   - git status --porcelain
 
 after_script:
-  - ls $ARTIFACTS
+  - ls $ARTIFACTS || true
   - git status --porcelain
 
 cache:
- key: "$CI_JOB_NAME/$CI_COMMIT_REF_NAME"
- untracked: true
+  untracked: false
 
 stages:
 - build
 - deploy
-- cleanup
   
 build:
   stage: build
@@ -41,10 +38,3 @@ deploy:
   when: on_success
   only:
   - release
-
-cleanup:
-  stage: cleanup
-  script:
-  - ./gradlew --parallel clean
-  - rm -vf $ARTIFACTS
-  when: always
