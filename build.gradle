@@ -17,6 +17,19 @@ plugins {
     id "io.franzbecker.gradle-lombok" version "1.8" apply false
 }
 
+def getBuild() {
+    def build = 150
+    def commits = "git rev-list --count HEAD".execute().text.trim()
+    
+    return (build + commits.toInteger()).toString()
+}
+def getFullVersion() {
+    if("git diff-index --quiet --cached HEAD".execute().waitFor())
+        return "${version}_${build}"
+    else
+        return "${version}_${build}_SNAPSHOT"
+}
+
 allprojects {
     apply plugin: "java"
     apply plugin: "maven"
@@ -29,18 +42,26 @@ allprojects {
     group = "dev.aura.bungeechat"
     version = "2.0.0"
     
-    ext {
-        build = "134"
-        full_version = "${version}_${build}"
-        shouldSign = project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")
-    }
-    
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
     
     repositories {
         jcenter()
         mavenCentral()
+    }
+}
+
+ext {
+    build = getBuild()
+    full_version = getFullVersion()
+    shouldSign = project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")
+}
+
+subprojects {
+    ext {
+        build = rootProject.build
+        full_version = rootProject.full_version
+        shouldSign = rootProject.shouldSign
     }
 }
 
