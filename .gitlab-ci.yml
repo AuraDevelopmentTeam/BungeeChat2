@@ -2,6 +2,14 @@ variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/BungeeChat*.jar* $CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
 
+before_script:
+  - ls $ARTIFACTS
+  - git status --porcelain
+
+after_script:
+  - ls $ARTIFACTS
+  - git status --porcelain
+
 cache:
  key: "$CI_JOB_NAME/$CI_COMMIT_REF_NAME"
  untracked: true
