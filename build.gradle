@@ -24,7 +24,7 @@ def getBuild() {
     return (build + commits.toInteger()).toString()
 }
 def getFullVersion() {
-    if("git diff-index --quiet --cached HEAD".execute().waitFor())
+    if("git status --porcelain".execute().text == "")
         return "${version}_${build}"
     else
         return "${version}_${build}_SNAPSHOT"
