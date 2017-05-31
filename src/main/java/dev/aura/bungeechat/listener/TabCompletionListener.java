@@ -14,22 +14,19 @@ public class TabCompletionListener implements Listener {
     public void onTabComplete(TabCompleteEvent e) {
         if (e.isCancelled())
             return;
+
         String partialPlayerName = e.getCursor().toLowerCase();
         int lastSpaceIndex = partialPlayerName.lastIndexOf(' ');
+
         if (lastSpaceIndex >= 0) {
             partialPlayerName = partialPlayerName.substring(lastSpaceIndex + 1);
         }
+
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-            if (ModuleManager.isModuleActive(ModuleManager.VANISHER_MODULE)) {
-                if(!AccountManager.getUserAccount(p).isVanished()) {
-                    if (p.getName().toLowerCase().startsWith(partialPlayerName)) {
-                        e.getSuggestions().add(p.getName());
-                    }
-                }
-            } else {
-                if (p.getName().toLowerCase().startsWith(partialPlayerName)) {
-                    e.getSuggestions().add(p.getName());
-                }
+            if ((!ModuleManager.isModuleActive(ModuleManager.VANISHER_MODULE)
+                    || !AccountManager.getUserAccount(p).isVanished())
+                    && p.getName().toLowerCase().startsWith(partialPlayerName)) {
+                e.getSuggestions().add(p.getName());
             }
         }
     }
