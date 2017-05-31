@@ -20,14 +20,16 @@ plugins {
 def getBuild() {
     def build = 150
     def commits = "git rev-list --count HEAD".execute().text.trim()
-    
+
     return (build + commits.toInteger()).toString()
 }
 def getFullVersion() {
-    if("git status --porcelain".execute().text == "")
-        return "${version}_${build}"
-    else
-        return "${version}_${build}_SNAPSHOT"
+    def baseVersion = "${version}_${build}"
+
+    if("git status --porcelain".execute().text != "")
+        baseVersion += "_SNAPSHOT"
+
+    return baseVersion
 }
 
 allprojects {
