@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import dev.aura.bungeechat.listener.LocalChatListener;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 
@@ -18,6 +19,7 @@ public class ModuleManager {
     public static final SocialSpyModule SOCIAL_SPY_MODULE = new SocialSpyModule();
     public static final VanisherModule VANISHER_MODULE = new VanisherModule();
     public static final StaffChatModule STAFF_CHAT_MODULE = new StaffChatModule();
+    public static final LocalChatModule LOCAL_CHAT_MODULE = new LocalChatModule();
 
     private static List<Module> activeModules = null;
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
