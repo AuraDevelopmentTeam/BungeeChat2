@@ -9,7 +9,7 @@ public class LeaveMessageModule implements Module {
 
     @Override
     public String getName() {
-        return "JoinMessage";
+        return "LeaveMessage";
     }
 
     @Override
