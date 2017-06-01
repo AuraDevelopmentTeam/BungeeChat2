@@ -8,6 +8,7 @@ import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
@@ -35,14 +36,14 @@ public class MessagesService {
         ProxiedPlayer sender = Account.toProxiedPlayer(context.getSender().get());
         ProxiedPlayer target = Account.toProxiedPlayer(context.getTarget().get());
 
-        String messageSender = preProcessMessage(context, account, "message-sender");
+        String messageSender = preProcessMessage(context, account, "message-sender", false).get();
         sender.sendMessage(messageSender);
 
-        String messageTarget = preProcessMessage(context, account, "message-target");
+        String messageTarget = preProcessMessage(context, account, "message-target", false).get();
         target.sendMessage(messageTarget);
 
         if (ModuleManager.isModuleActive(ModuleManager.SOCIAL_SPY_MODULE)) {
-            String socialSpyMessage = preProcessMessage(context, account, "socialspy");
+            String socialSpyMessage = preProcessMessage(context, account, "socialspy", false).get();
 
             sendToMatchingPlayers(socialSpyMessage,
                     pp -> (pp != target) && (pp != sender) && AccountManager.getUserAccount(pp).hasSocialSpyEnabled());
@@ -86,7 +87,7 @@ public class MessagesService {
     public static void sendGlobalMessage(BungeeChatContext context) {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
-        String finalMessage = preProcessMessage(context, context.getPlayer(), "global");
+        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "global");
 
         sendToMatchingPlayers(finalMessage);
     }
@@ -98,7 +99,7 @@ public class MessagesService {
     public static void sendStaffMessage(BungeeChatContext context) {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
-        String finalMessage = preProcessMessage(context, context.getPlayer(), "staff");
+        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "staff");
 
         sendToMatchingPlayers(finalMessage,
                 pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
@@ -111,13 +112,19 @@ public class MessagesService {
     public static void sendHelpMessage(BungeeChatContext context) {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
-        String finalMessage = preProcessMessage(context, context.getPlayer(), "helpop");
+        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "helpop");
 
         sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
     }
 
-    public static String preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
+    public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
             String format) {
+        return preProcessMessage(context, account, format, true);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
+            String format, boolean runFilters) {
         context.require(BungeeChatContext.HAS_MESSAGE);
 
         BungeeChatAccount playerAccount = account.get();
@@ -128,20 +135,36 @@ public class MessagesService {
             message = ChatColor.translateAlternateColorCodes('&', message);
         }
 
-        message = FilterManager.applyFilters(playerAccount, message);
+        if (runFilters) {
+            try {
+                message = FilterManager.applyFilters(playerAccount, message);
+            } catch (BlockMessageException e) {
+                player.sendMessage(e.getMessage());
+
+                return Optional.empty();
+            }
+        }
 
         context.setMessage(message);
 
-        return PlaceHolderUtil.getFullMessage(format, context);
+        return Optional.of(PlaceHolderUtil.getFullMessage(format, context));
+    }
+
+    @SafeVarargs
+    public static void sendToMatchingPlayers(Optional<String> finalMessage,
+            Predicate<? super ProxiedPlayer>... playerFilters) {
+        if (finalMessage.isPresent()) {
+            sendToMatchingPlayers(finalMessage.get(), playerFilters);
+        }
     }
 
     @SafeVarargs
     @SuppressWarnings("deprecation")
-    public static void sendToMatchingPlayers(String finalMessage, Predicate<? super ProxiedPlayer>... filters) {
+    public static void sendToMatchingPlayers(String finalMessage, Predicate<? super ProxiedPlayer>... playerFilters) {
         Stream<ProxiedPlayer> stream = ProxyServer.getInstance().getPlayers().stream();
 
-        for (Predicate<? super ProxiedPlayer> filter : filters) {
-            stream = stream.filter(filter);
+        for (Predicate<? super ProxiedPlayer> playerFilter : playerFilters) {
+            stream = stream.filter(playerFilter);
         }
 
         stream.forEach(pp -> pp.sendMessage(finalMessage));

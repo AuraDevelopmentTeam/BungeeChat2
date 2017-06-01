@@ -25,7 +25,7 @@ public class FilterManager {
         return filters.remove(name);
     }
 
-    public static String applyFilters(BungeeChatAccount sender, String message) throws UnsupportedOperationException {
+    public static String applyFilters(BungeeChatAccount sender, String message) throws UnsupportedOperationException, BlockMessageException {
         checkSide();
 
         for (BungeeChatFilter filter : filters.values()) {
