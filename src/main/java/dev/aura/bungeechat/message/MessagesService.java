@@ -75,7 +75,7 @@ public class MessagesService {
             break;
         case NONE:
         default:
-            // TODO
+            // TODO? Maybe do nothing? Throw an Exception?
             break;
         }
     }

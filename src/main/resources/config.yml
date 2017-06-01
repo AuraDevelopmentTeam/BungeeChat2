@@ -14,7 +14,7 @@ Settings:
         - bc
         - balert
         - bbc
-    Socialspy:
+    SocialSpy:
       enabled: true
       aliases:
         - sspy
@@ -66,9 +66,9 @@ Settings:
         - g
         - reply
         - r
-    JoinMessages:
+    JoinMessage:
       enabled: true
-    LeaveMessages:
+    LeaveMessage:
       enabled: true
     HelpOp:
       enabled: true

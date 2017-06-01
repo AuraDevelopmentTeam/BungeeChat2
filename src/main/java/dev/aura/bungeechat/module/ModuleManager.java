@@ -21,7 +21,7 @@ public class ModuleManager {
     public static final SocialSpyModule SOCIAL_SPY_MODULE = new SocialSpyModule();
     public static final StaffChatModule STAFF_CHAT_MODULE = new StaffChatModule();
     public static final TabCompletionModule TAB_COMPLETION_MODULE = new TabCompletionModule();
-    public static final VanisherModule VANISHER_MODULE = new VanisherModule();
+    public static final VanishModule VANISHER_MODULE = new VanishModule();
 
     private static List<Module> activeModules = null;
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;

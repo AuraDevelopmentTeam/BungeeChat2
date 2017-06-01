@@ -3,13 +3,13 @@ package dev.aura.bungeechat.command;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
-import dev.aura.bungeechat.module.VanisherModule;
+import dev.aura.bungeechat.module.VanishModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class VanishCommand extends BaseCommand {
-    public VanishCommand(VanisherModule vanisherModule) {
+    public VanishCommand(VanishModule vanisherModule) {
         super("bvanish", vanisherModule.getModuleSection().getStringList("aliases"));
     }
 

@@ -4,12 +4,12 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.command.VanishCommand;
 import net.md_5.bungee.api.ProxyServer;
 
-public class VanisherModule implements Module {
+public class VanishModule implements Module {
     private VanishCommand vanishCommand;
 
     @Override
     public String getName() {
-        return "Vanisher";
+        return "Vanish";
     }
 
     @Override
