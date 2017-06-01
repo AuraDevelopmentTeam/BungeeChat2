@@ -62,7 +62,7 @@ public class MessagesService {
             sendGlobalMessage(context);
             break;
         case LOCAL:
-            // TODO
+            sendLocalMessage(context);
             break;
         case STAFF:
             sendStaffMessage(context);
@@ -99,7 +99,7 @@ public class MessagesService {
     public static void sendLocalMessage(BungeeChatContext context) {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
-        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "local");
+        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "local-chat");
 
         sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName()
                 .equals(ProxyServer.getInstance().getPlayer(context.getPlayer().get().getUniqueId()).getServer().getInfo().getName()));
@@ -128,6 +128,30 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "helpop");
 
         sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
+    }
+
+    public static void sendJoinMessage(CommandSender sender) {
+        sendJoinMessage(new Context(sender));
+    }
+
+    public static void sendJoinMessage(BungeeChatContext context) {
+        context.require(BungeeChatContext.HAS_PLAYER);
+
+        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "joinmessage");
+
+        sendToMatchingPlayers(finalMessage);
+    }
+
+    public static void sendLeaveMessage(CommandSender sender) {
+        sendLeaveMessage(new Context(sender));
+    }
+
+    public static void sendLeaveMessage(BungeeChatContext context) {
+        context.require(BungeeChatContext.HAS_PLAYER);
+
+        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "leavemessage");
+
+        sendToMatchingPlayers(finalMessage);
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
