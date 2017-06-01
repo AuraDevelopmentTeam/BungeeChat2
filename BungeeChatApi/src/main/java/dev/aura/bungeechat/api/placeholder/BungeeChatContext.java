@@ -8,8 +8,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Tolerate;
 
 /**
@@ -18,15 +17,44 @@ import lombok.experimental.Tolerate;
  * It may contain the acting player (sender), the receiver (target), the message
  * and possibly more in the future.
  */
-@Getter
-@Setter
+@Data
 public class BungeeChatContext {
+    /**
+     * Predefined Predicate to check if a context has a sender.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
     public static final Predicate<BungeeChatContext> HAS_SENDER = BungeeChatContext::hasSender;
+    /**
+     * Predefined Predicate to check if a context has a target.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
     public static final Predicate<BungeeChatContext> HAS_TARGET = BungeeChatContext::hasTarget;
+    /**
+     * Predefined Predicate to check if a context has a message.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
     public static final Predicate<BungeeChatContext> HAS_MESSAGE = BungeeChatContext::hasMessage;
 
+    /**
+     * Predefined Predicate to check if a context does not have a sender.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
     public static final Predicate<BungeeChatContext> HAS_NO_SENDER = HAS_SENDER.negate();
+    /**
+     * Predefined Predicate to check if a context does not have a target.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
     public static final Predicate<BungeeChatContext> HAS_NO_TARGET = HAS_TARGET.negate();
+    /**
+     * Predefined Predicate to check if a context does not have a message.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
     public static final Predicate<BungeeChatContext> HAS_NO_MESSAGE = HAS_MESSAGE.negate();
 
     private static final Map<Predicate<BungeeChatContext>, String> requirementsNameCache = new HashMap<>(6);
@@ -47,10 +75,15 @@ public class BungeeChatContext {
         this.sender = Optional.of(sender);
     }
 
-    public BungeeChatContext(BungeeChatAccount sender, BungeeChatAccount target) {
-        this();
+    public BungeeChatContext(BungeeChatAccount sender, String message) {
+        this(sender);
 
-        this.sender = Optional.of(sender);
+        this.message = Optional.of(message);
+    }
+
+    public BungeeChatContext(BungeeChatAccount sender, BungeeChatAccount target) {
+        this(sender);
+
         this.target = Optional.of(target);
     }
 
