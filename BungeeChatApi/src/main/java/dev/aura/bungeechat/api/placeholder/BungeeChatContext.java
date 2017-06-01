@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import dev.aura.bungeechat.api.exception.InvalidContextException;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import lombok.Getter;
 import lombok.Setter;

@@ -3,11 +3,15 @@ package dev.aura.bungeechat.api;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
-import dev.aura.bungeechat.api.exception.InvalidContextException;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
+import dev.aura.bungeechat.api.placeholder.InvalidContextException;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 
+/**
+ * This is the base Interface for the BungeChatApi. The central methods will be
+ * found here
+ */
 public interface BungeeChatApi {
     public static final String ID = "bungeechat";
     public static final String NAME = "Bungee Chat";
@@ -27,7 +31,7 @@ public interface BungeeChatApi {
     /**
      * Method to retrieve the instance of the API
      *
-     * @return The API instance
+     * @return The BungeeChatApi instance
      */
     public static BungeeChatApi getInstance() {
         return BungeeChatInstaceHolder.getInstance();
