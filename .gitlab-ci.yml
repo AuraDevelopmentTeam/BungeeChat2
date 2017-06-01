@@ -12,7 +12,7 @@ stages:
 build:
   stage: build
   script:
-  - ./gradlew --parallel assemble -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
+  - ./gradlew assemble -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   - cp $ORIG_ARTIFACTS .
   when: on_success
   except:
@@ -24,7 +24,7 @@ build:
 deploy:
   stage: deploy
   script:
-  - ./gradlew --parallel uploadArchives -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
+  - ./gradlew uploadArchives -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   when: on_success
   only:
   - release
