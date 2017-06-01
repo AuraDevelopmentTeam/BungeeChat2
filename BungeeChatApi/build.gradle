@@ -3,4 +3,5 @@ description = """Bungee Chat API"""
 artifacts {
     archives jar
     archives sourceJar
+    archives javadocJar
 }

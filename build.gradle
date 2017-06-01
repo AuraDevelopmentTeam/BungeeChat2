@@ -144,6 +144,10 @@ allprojects {
     		args(processSources.outputDir, "-d", outputDir)
         
         compileConfigurationName = configurations.compileOnly.name
+        
+        doLast {
+            fileTree(dir: outputDir, exclude: "**/*.java").forEach{file -> file.delete()}
+        }
     }
     
     compileJava {
@@ -157,18 +161,41 @@ allprojects {
         version = full_version
     }
     
-    task sourceJar (type: Jar, dependsOn: delombok) {
+    task sourceJar (type: Jar, dependsOn: processSources) {
         group "build"
     
-        from delombok.outputDir
+        from sourceSets.main.allSource
     
         classifier = "sources"
+        version = jar.version
+    }
+    
+    javadoc {
+        dependsOn delombok
+    
+        source = delombok.outputDir
+    }
+    
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        group "build"
+    
+        from javadoc.destinationDir
+        
+        classifier = "javadoc"
         version = jar.version
     }
 }
 
 jar {
     from project(":BungeeChatApi").sourceSets.main.output
+}
+
+sourceJar {
+    from project(":BungeeChatApi").sourceSets.main.allSource
+}
+
+javadoc {
+    source += project(":BungeeChatApi").delombok.outputDir
 }
 
 task deobfJar (type: Jar, dependsOn: jar) {

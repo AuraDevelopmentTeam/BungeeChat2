@@ -31,10 +31,15 @@ jar {
 }
 
 sourceJar {
-    from project(":BungeeChatApi").delombok.outputDir
+    from project(":BungeeChatApi").sourceSets.main.allSource
+}
+
+javadoc {
+    source += project(":BungeeChatApi").delombok.outputDir
 }
 
 artifacts {
     archives jar
     archives sourceJar
+    archives javadocJar
 }
