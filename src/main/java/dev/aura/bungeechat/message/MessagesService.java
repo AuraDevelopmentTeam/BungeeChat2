@@ -8,9 +8,9 @@ import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.filter.SwearWordsFilter;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
@@ -120,18 +120,15 @@ public class MessagesService {
             String format) {
         context.require(BungeeChatContext.HAS_MESSAGE);
 
-        ProxiedPlayer player = Account.toProxiedPlayer(account.get());
+        BungeeChatAccount playerAccount = account.get();
+        ProxiedPlayer player = Account.toProxiedPlayer(playerAccount);
         String message = context.getMessage().get();
 
         if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
             message = ChatColor.translateAlternateColorCodes('&', message);
         }
-
-        // TODO: new filter logic
-        if (ModuleManager.isModuleActive(ModuleManager.ANTI_SWEAR_MODULE)
-                && !PermissionManager.hasPermission(player, Permission.BYPASS_ANTI_SWEAR)) {
-            message = SwearWordsFilter.replaceSwearWords(message);
-        }
+        
+        message = FilterManager.applyFilters(playerAccount, message);
 
         context.setMessage(message);
 
