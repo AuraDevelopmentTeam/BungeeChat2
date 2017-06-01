@@ -7,12 +7,10 @@ public enum Permission {
 
     USE_COLORED_CHAT("chat.colors"),
 
-    BYPASS_ALL("chat.*"),
     BYPASS_ANTI_ADVERTISEMENT("chat.bypassantiadvertisement"),
     BYPASS_ANTI_SPAM("chat.bypassantispam"),
     BYPASS_ANTI_SWEAR("chat.bypassantiswear"),
 
-    COMMAND_ALL("command.*"),
     COMMAND_ALERT("command.alert"),
     COMMAND_GLOBAL("command.global"),
     COMMAND_GLOBAL_TOGGLE("command.global.toggle"),
@@ -34,8 +32,15 @@ public enum Permission {
 
     @Getter
     private final String stringedPermission;
+    @Getter
+    private final boolean warnOnLackingPermission;
+
+    private Permission(String stringedPermission, boolean warnOnLackingPermission) {
+        this.stringedPermission = "bungeechat." + stringedPermission;
+        this.warnOnLackingPermission = warnOnLackingPermission;
+    }
 
     private Permission(String stringedPermission) {
-        this.stringedPermission = "bungeechat." + stringedPermission;
+        this(stringedPermission, stringedPermission.startsWith("command."));
     }
 }
