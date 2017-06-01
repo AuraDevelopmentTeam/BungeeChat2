@@ -8,6 +8,7 @@ import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.api.exception.InvalidContextException;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
@@ -24,12 +25,13 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class MessagesService {
-    public static void sendPrivateMessage(CommandSender sender, ProxiedPlayer target, String message) {
+    public static void sendPrivateMessage(CommandSender sender, ProxiedPlayer target, String message)
+            throws InvalidContextException {
         sendPrivateMessage(new Context(sender, target, message));
     }
 
     @SuppressWarnings("deprecation")
-    public static void sendPrivateMessage(BungeeChatContext context) {
+    public static void sendPrivateMessage(BungeeChatContext context) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_TARGET, BungeeChatContext.HAS_MESSAGE);
 
         Optional<BungeeChatAccount> account = context.getSender();
@@ -50,11 +52,13 @@ public class MessagesService {
         }
     }
 
-    public static void sendChannelMessage(CommandSender sender, ChannelType channel, String message) {
+    public static void sendChannelMessage(CommandSender sender, ChannelType channel, String message)
+            throws InvalidContextException {
         sendChannelMessage(new Context(sender, message), channel);
     }
 
-    public static void sendChannelMessage(BungeeChatContext context, ChannelType channel) {
+    public static void sendChannelMessage(BungeeChatContext context, ChannelType channel)
+            throws InvalidContextException {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
         switch (channel) {
@@ -80,11 +84,11 @@ public class MessagesService {
         }
     }
 
-    public static void sendGlobalMessage(CommandSender sender, String message) {
+    public static void sendGlobalMessage(CommandSender sender, String message) throws InvalidContextException {
         sendGlobalMessage(new Context(sender, message));
     }
 
-    public static void sendGlobalMessage(BungeeChatContext context) {
+    public static void sendGlobalMessage(BungeeChatContext context) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
         Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "global");
@@ -92,11 +96,11 @@ public class MessagesService {
         sendToMatchingPlayers(finalMessage);
     }
 
-    public static void sendLocalMessage(CommandSender sender, String message) {
+    public static void sendLocalMessage(CommandSender sender, String message) throws InvalidContextException {
         sendLocalMessage(new Context(sender, message));
     }
 
-    public static void sendLocalMessage(BungeeChatContext context) {
+    public static void sendLocalMessage(BungeeChatContext context) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
         Optional<BungeeChatAccount> player = context.getPlayer();
@@ -106,11 +110,11 @@ public class MessagesService {
         sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName().equals(localServerName));
     }
 
-    public static void sendStaffMessage(CommandSender sender, String message) {
+    public static void sendStaffMessage(CommandSender sender, String message) throws InvalidContextException {
         sendStaffMessage(new Context(sender, message));
     }
 
-    public static void sendStaffMessage(BungeeChatContext context) {
+    public static void sendStaffMessage(BungeeChatContext context) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
         Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "staff");
@@ -119,11 +123,11 @@ public class MessagesService {
                 pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
     }
 
-    public static void sendHelpMessage(CommandSender sender, String message) {
+    public static void sendHelpMessage(CommandSender sender, String message) throws InvalidContextException {
         sendHelpMessage(new Context(sender, message));
     }
 
-    public static void sendHelpMessage(BungeeChatContext context) {
+    public static void sendHelpMessage(BungeeChatContext context) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
         Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "helpop");
@@ -131,11 +135,11 @@ public class MessagesService {
         sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
     }
 
-    public static void sendJoinMessage(CommandSender sender) {
+    public static void sendJoinMessage(CommandSender sender) throws InvalidContextException {
         sendJoinMessage(new Context(sender));
     }
 
-    public static void sendJoinMessage(BungeeChatContext context) {
+    public static void sendJoinMessage(BungeeChatContext context) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_PLAYER);
 
         Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "joinmessage");
@@ -143,11 +147,11 @@ public class MessagesService {
         sendToMatchingPlayers(finalMessage);
     }
 
-    public static void sendLeaveMessage(CommandSender sender) {
+    public static void sendLeaveMessage(CommandSender sender) throws InvalidContextException {
         sendLeaveMessage(new Context(sender));
     }
 
-    public static void sendLeaveMessage(BungeeChatContext context) {
+    public static void sendLeaveMessage(BungeeChatContext context) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_PLAYER);
 
         Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "leavemessage");
@@ -156,13 +160,13 @@ public class MessagesService {
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
-            String format) {
+            String format) throws InvalidContextException {
         return preProcessMessage(context, account, format, true);
     }
 
     @SuppressWarnings("deprecation")
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
-            String format, boolean runFilters) {
+            String format, boolean runFilters) throws InvalidContextException {
         context.require(BungeeChatContext.HAS_MESSAGE);
 
         BungeeChatAccount playerAccount = account.get();

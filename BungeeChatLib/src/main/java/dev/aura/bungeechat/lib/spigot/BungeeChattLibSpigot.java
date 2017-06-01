@@ -6,6 +6,7 @@ import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
+import dev.aura.bungeechat.api.exception.InvalidContextException;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
@@ -33,13 +34,13 @@ public class BungeeChattLibSpigot extends JavaPlugin implements BungeeChatApi {
     }
 
     @Override
-    public void sendPrivateMessage(BungeeChatContext context) {
+    public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextException {
         // TODO: Send via channel messages!
         throw new UnsupportedOperationException("Not implemented!");
     }
 
     @Override
-    public void sendChannelMessage(BungeeChatContext context, ChannelType chanel) {
+    public void sendChannelMessage(BungeeChatContext context, ChannelType chanel) throws InvalidContextException {
         // TODO: Send via channel messages!
         throw new UnsupportedOperationException("Not implemented!");
     }
