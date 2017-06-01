@@ -12,13 +12,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Tolerate;
 
+/**
+ * This class represents a context for a message or other chat related
+ * action.<br>
+ * It may contain the acting player (sender), the receiver (target), the message
+ * and possibly more in the future.
+ */
 @Getter
 @Setter
 public class BungeeChatContext {
-    public static final Predicate<BungeeChatContext> HAS_PLAYER = context -> context.hasPlayer();
-    public static final Predicate<BungeeChatContext> HAS_SENDER = context -> context.hasSender();
-    public static final Predicate<BungeeChatContext> HAS_TARGET = context -> context.hasTarget();
-    public static final Predicate<BungeeChatContext> HAS_MESSAGE = context -> context.hasMessage();
+    public static final Predicate<BungeeChatContext> HAS_PLAYER = BungeeChatContext::hasPlayer;
+    public static final Predicate<BungeeChatContext> HAS_SENDER = BungeeChatContext::hasSender;
+    public static final Predicate<BungeeChatContext> HAS_TARGET = BungeeChatContext::hasTarget;
+    public static final Predicate<BungeeChatContext> HAS_MESSAGE = BungeeChatContext::hasMessage;
 
     public static final Predicate<BungeeChatContext> HAS_NO_PLAYER = HAS_PLAYER.negate();
     public static final Predicate<BungeeChatContext> HAS_NO_SENDER = HAS_SENDER.negate();
@@ -58,14 +64,37 @@ public class BungeeChatContext {
         this.message = Optional.of(message);
     }
 
+    /**
+     * This method is used to verify if a context is valid. All passed
+     * requirements must be true in order for this test to pass. If it fails an
+     * {@link InvalidContextError} is thrown.<br>
+     * It is recommended to use the static predefined {@link Predicate}s like
+     * {@link BungeeChatContext#HAS_SENDER}.
+     * 
+     * @param requirements
+     *            An array of requirements which all must be true for this
+     *            context to be valid.
+     * @throws InvalidContextError
+     *             This assertion error gets thrown when one (or more)
+     *             requirements are not met. If it is a predefined
+     *             {@link Predicate} from {@link BungeeChatContext} the name
+     *             will be included in the error message. If not a generic
+     *             message will be put.
+     * @see BungeeChatContext#HAS_SENDER
+     * @see BungeeChatContext#HAS_TARGET
+     * @see BungeeChatContext#HAS_MESSAGE
+     * @see BungeeChatContext#HAS_NO_SENDER
+     * @see BungeeChatContext#HAS_NO_TARGET
+     * @see BungeeChatContext#HAS_NO_MESSAGE
+     */
     @SafeVarargs
-    public final void require(Predicate<? super BungeeChatContext>... requirements) throws InvalidContextException {
+    public final void require(Predicate<? super BungeeChatContext>... requirements) throws InvalidContextError {
         for (Predicate<? super BungeeChatContext> requirement : requirements) {
             if (!requirement.test(this)) {
                 if (requirementsNameCache.containsKey(requirement))
-                    throw new InvalidContextException(requirementsNameCache.get(requirement));
+                    throw new InvalidContextError(requirementsNameCache.get(requirement));
 
-                throw new InvalidContextException("Context does not meet all requirements!");
+                throw new InvalidContextError("Context does not meet all requirements!");
             }
         }
     }
@@ -106,6 +135,7 @@ public class BungeeChatContext {
         setMessage(Optional.ofNullable(message));
     }
 
+    // Fill the requirementsNameCache
     static {
         final int modifers = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
 
@@ -119,7 +149,6 @@ public class BungeeChatContext {
                 }
 
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
