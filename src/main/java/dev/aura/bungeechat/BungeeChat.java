@@ -12,7 +12,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.api.placeholder.InvalidContextException;
+import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.ReloadCommand;
 import dev.aura.bungeechat.config.Config;
@@ -72,12 +72,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     @Override
-    public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextException {
+    public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextError {
         MessagesService.sendPrivateMessage(context);
     }
 
     @Override
-    public void sendChannelMessage(BungeeChatContext context, ChannelType channel) throws InvalidContextException {
+    public void sendChannelMessage(BungeeChatContext context, ChannelType channel) throws InvalidContextError {
         MessagesService.sendChannelMessage(context, channel);
     }
 

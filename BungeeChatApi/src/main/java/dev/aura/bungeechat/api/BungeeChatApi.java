@@ -5,7 +5,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.api.placeholder.InvalidContextException;
+import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 
 /**
@@ -66,11 +66,11 @@ public interface BungeeChatApi {
      *
      * @param context
      *            Containing sender, target and message.
-     * @throws InvalidContextException
-     *             Throws and {@link InvalidContextException} if either a
+     * @throws InvalidContextError
+     *             Throws and {@link InvalidContextError} if either a
      *             sender, target or message is missing in this context.
      */
-    public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextException;
+    public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextError;
 
     /**
      * Sends a message from the sender in the context to the specified channel.
@@ -79,11 +79,11 @@ public interface BungeeChatApi {
      * @param context
      *            Containing sender and message.
      * @param channel
-     * @throws InvalidContextException
-     *             Throws and {@link InvalidContextException} if either a sender
+     * @throws InvalidContextError
+     *             Throws and {@link InvalidContextError} if either a sender
      *             or message is missing in this context.
      */
-    public void sendChannelMessage(BungeeChatContext context, ChannelType channel) throws InvalidContextException;
+    public void sendChannelMessage(BungeeChatContext context, ChannelType channel) throws InvalidContextError;
 
     /**
      * The same as
@@ -92,11 +92,11 @@ public interface BungeeChatApi {
      *
      * @param context
      *            Containing sender and message.
-     * @throws InvalidContextException
-     *             Throws and {@link InvalidContextException} if either a sender
+     * @throws InvalidContextError
+     *             Throws and {@link InvalidContextError} if either a sender
      *             or message is missing in this context.
      */
-    default public void sendChannelMessage(BungeeChatContext context) throws InvalidContextException {
+    default public void sendChannelMessage(BungeeChatContext context) throws InvalidContextError {
         if (context.hasPlayer()) {
             sendChannelMessage(context, context.getPlayer().get().getChannelType());
         } else {
