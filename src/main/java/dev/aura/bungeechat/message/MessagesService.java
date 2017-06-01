@@ -147,7 +147,7 @@ public class MessagesService {
 
         context.setMessage(message);
 
-        return Optional.of(PlaceHolderUtil.getFullMessage(format, context));
+        return Optional.of(PlaceHolderUtil.getFullFormatMessage(format, context));
     }
 
     @SafeVarargs

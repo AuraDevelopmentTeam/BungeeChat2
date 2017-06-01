@@ -34,7 +34,7 @@ public class AlertCommand extends BaseCommand {
                     finalMessage = ChatColor.translateAlternateColorCodes('&', finalMessage);
                 }
 
-                String Format = PlaceHolderUtil.getFullMessage("alert", new Context(sender, finalMessage));
+                String Format = PlaceHolderUtil.getFullFormatMessage("alert", new Context(sender, finalMessage));
 
                 ProxyServer.getInstance().broadcast(Format);
             }
