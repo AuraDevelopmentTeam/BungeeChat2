@@ -21,6 +21,7 @@ import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.PlaceHolders;
 import dev.aura.bungeechat.util.LoggerHelper;
 import dev.aura.bungeechat.util.Version;
+import lombok.Cleanup;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -29,6 +30,8 @@ import net.md_5.bungee.api.plugin.Plugin;
 public class BungeeChat extends Plugin implements BungeeChatApi {
     @Getter
     private static BungeeChat instance;
+    @Getter(lazy = true)
+    private final String latestVersion = queryLatestVersion();
 
     @Override
     public void onEnable() {
@@ -91,8 +94,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         LoggerHelper.info(ChatColor.GOLD + "---------------------------------------------");
     }
 
-    public String getLatestVersion() {
+    private String queryLatestVersion() {
         try {
+            @Cleanup("disconnect")
             HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php")
                     .openConnection();
             con.setDoOutput(true);
@@ -100,9 +104,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
             con.getOutputStream().write(
                     ("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=" + PLUGIN_ID)
                             .getBytes("UTF-8"));
+
             return new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
         } catch (Exception ex) {
-            return null;
+            LoggerHelper.warning("Could not fetch the latest version!", ex);
+
+            return "";
         }
     }
 
