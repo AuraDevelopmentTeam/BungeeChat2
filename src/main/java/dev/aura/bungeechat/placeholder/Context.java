@@ -41,7 +41,7 @@ public class Context extends BungeeChatContext {
         super();
 
         if (player instanceof ProxiedPlayer) {
-            setPlayer(new Account((ProxiedPlayer) player));
+            setSender(new Account((ProxiedPlayer) player));
         }
     }
 

@@ -21,34 +21,30 @@ import lombok.experimental.Tolerate;
 @Getter
 @Setter
 public class BungeeChatContext {
-    public static final Predicate<BungeeChatContext> HAS_PLAYER = BungeeChatContext::hasPlayer;
     public static final Predicate<BungeeChatContext> HAS_SENDER = BungeeChatContext::hasSender;
     public static final Predicate<BungeeChatContext> HAS_TARGET = BungeeChatContext::hasTarget;
     public static final Predicate<BungeeChatContext> HAS_MESSAGE = BungeeChatContext::hasMessage;
 
-    public static final Predicate<BungeeChatContext> HAS_NO_PLAYER = HAS_PLAYER.negate();
     public static final Predicate<BungeeChatContext> HAS_NO_SENDER = HAS_SENDER.negate();
     public static final Predicate<BungeeChatContext> HAS_NO_TARGET = HAS_TARGET.negate();
     public static final Predicate<BungeeChatContext> HAS_NO_MESSAGE = HAS_MESSAGE.negate();
 
-    private static final Map<Predicate<BungeeChatContext>, String> requirementsNameCache = new HashMap<>(8);
+    private static final Map<Predicate<BungeeChatContext>, String> requirementsNameCache = new HashMap<>(6);
 
-    private Optional<BungeeChatAccount> player;
     private Optional<BungeeChatAccount> sender;
     private Optional<BungeeChatAccount> target;
     private Optional<String> message;
 
     public BungeeChatContext() {
-        player = Optional.empty();
         sender = Optional.empty();
         target = Optional.empty();
         message = Optional.empty();
     }
 
-    public BungeeChatContext(BungeeChatAccount player) {
+    public BungeeChatContext(BungeeChatAccount sender) {
         this();
 
-        this.player = Optional.of(player);
+        this.sender = Optional.of(sender);
     }
 
     public BungeeChatContext(BungeeChatAccount sender, BungeeChatAccount target) {
@@ -70,7 +66,7 @@ public class BungeeChatContext {
      * {@link InvalidContextError} is thrown.<br>
      * It is recommended to use the static predefined {@link Predicate}s like
      * {@link BungeeChatContext#HAS_SENDER}.
-     * 
+     *
      * @param requirements
      *            An array of requirements which all must be true for this
      *            context to be valid.
@@ -99,10 +95,6 @@ public class BungeeChatContext {
         }
     }
 
-    public boolean hasPlayer() {
-        return player.isPresent();
-    }
-
     public boolean hasSender() {
         return sender.isPresent();
     }
@@ -113,11 +105,6 @@ public class BungeeChatContext {
 
     public boolean hasMessage() {
         return message.isPresent();
-    }
-
-    @Tolerate
-    public void setPlayer(BungeeChatAccount player) {
-        setPlayer(Optional.ofNullable(player));
     }
 
     @Tolerate

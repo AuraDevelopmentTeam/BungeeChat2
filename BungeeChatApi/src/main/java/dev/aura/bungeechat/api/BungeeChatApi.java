@@ -67,8 +67,8 @@ public interface BungeeChatApi {
      * @param context
      *            Containing sender, target and message.
      * @throws InvalidContextError
-     *             Throws and {@link InvalidContextError} if either a
-     *             sender, target or message is missing in this context.
+     *             Throws and {@link InvalidContextError} if either a sender,
+     *             target or message is missing in this context.
      */
     public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextError;
 
@@ -80,8 +80,8 @@ public interface BungeeChatApi {
      *            Containing sender and message.
      * @param channel
      * @throws InvalidContextError
-     *             Throws and {@link InvalidContextError} if either a sender
-     *             or message is missing in this context.
+     *             Throws and {@link InvalidContextError} if either a sender or
+     *             message is missing in this context.
      */
     public void sendChannelMessage(BungeeChatContext context, ChannelType channel) throws InvalidContextError;
 
@@ -93,12 +93,12 @@ public interface BungeeChatApi {
      * @param context
      *            Containing sender and message.
      * @throws InvalidContextError
-     *             Throws and {@link InvalidContextError} if either a sender
-     *             or message is missing in this context.
+     *             Throws and {@link InvalidContextError} if either a sender or
+     *             message is missing in this context.
      */
     default public void sendChannelMessage(BungeeChatContext context) throws InvalidContextError {
-        if (context.hasPlayer()) {
-            sendChannelMessage(context, context.getPlayer().get().getChannelType());
+        if (context.hasSender()) {
+            sendChannelMessage(context, context.getSender().get().getChannelType());
         } else {
             sendChannelMessage(context, ChannelType.NONE);
         }

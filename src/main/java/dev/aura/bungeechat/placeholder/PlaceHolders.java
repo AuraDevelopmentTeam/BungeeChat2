@@ -15,18 +15,18 @@ public class PlaceHolders {
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_month%", context -> TimeUtils.getCurrentMonth()));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_year%", context -> TimeUtils.getCurrentYear()));
 
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%player_name%",
-                context -> context.getPlayer().get().getName(), BungeeChatContext.HAS_PLAYER));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%player_displayname%",
-                context -> context.getPlayer().get().getDisplayName(), BungeeChatContext.HAS_PLAYER));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%player_ping%",
-                context -> String.valueOf(context.getPlayer().get().getPing()), BungeeChatContext.HAS_PLAYER));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%player_uuid%",
-                context -> context.getPlayer().get().getUniqueId().toString(), BungeeChatContext.HAS_PLAYER));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%player_servername%",
-                context -> context.getPlayer().get().getServerName(), BungeeChatContext.HAS_PLAYER));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%player_serverip%",
-                context -> context.getPlayer().get().getServerIP(), BungeeChatContext.HAS_PLAYER));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%name%", context -> context.getSender().get().getName(),
+                BungeeChatContext.HAS_SENDER));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%displayname%",
+                context -> context.getSender().get().getDisplayName(), BungeeChatContext.HAS_SENDER));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%ping%",
+                context -> String.valueOf(context.getSender().get().getPing()), BungeeChatContext.HAS_SENDER));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%uuid%",
+                context -> context.getSender().get().getUniqueId().toString(), BungeeChatContext.HAS_SENDER));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%servername%",
+                context -> context.getSender().get().getServerName(), BungeeChatContext.HAS_SENDER));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%serverip%",
+                context -> context.getSender().get().getServerIP(), BungeeChatContext.HAS_SENDER));
 
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%sender_name%",
                 context -> context.getSender().get().getName(), BungeeChatContext.HAS_SENDER));
