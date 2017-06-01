@@ -26,7 +26,7 @@ public class BungeeChatInstaceHolder {
      * Returns the BungeeChatApi instance. Don't use this though. Use
      * {@link BungeeChatApi#getInstance()} instead!
      *
-     * @returns BungeeChatApi instance
+     * @return BungeeChatApi instance
      */
     // @formatter:on
     @Getter

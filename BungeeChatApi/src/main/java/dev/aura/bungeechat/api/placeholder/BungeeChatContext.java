@@ -123,7 +123,7 @@ public class BungeeChatContext {
                 if (requirementsNameCache.containsKey(requirement))
                     throw new InvalidContextError(requirementsNameCache.get(requirement));
 
-                throw new InvalidContextError("Context does not meet all requirements!");
+                throw new InvalidContextError();
             }
         }
     }

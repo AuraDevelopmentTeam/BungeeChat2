@@ -79,6 +79,7 @@ public interface BungeeChatApi {
      * @param context
      *            Containing sender and message.
      * @param channel
+     *            What channel to send the message in.
      * @throws InvalidContextError
      *             Throws and {@link InvalidContextError} if either a sender or
      *             message is missing in this context.
@@ -88,7 +89,7 @@ public interface BungeeChatApi {
     /**
      * The same as
      * {@link BungeeChatApi#sendChannelMessage(BungeeChatContext, ChannelType)}.
-     * But uses the senders channel.
+     * But uses the channel the sender is currently in.
      *
      * @param context
      *            Containing sender and message.
