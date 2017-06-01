@@ -17,7 +17,7 @@ public class BungeeChattLibSpigot extends JavaPlugin implements BungeeChatApi {
 
     @Override
     public ServerType getServerType() {
-        return ServerType.BUKKIT;
+        return ServerType.SPIGOT;
     }
 
     @Override
