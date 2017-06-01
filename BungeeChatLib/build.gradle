@@ -36,6 +36,7 @@ sourceJar {
 
 javadoc {
     source += project(":BungeeChatApi").delombok.outputDir
+    classpath += project(":BungeeChatApi").sourceSets.main.compileClasspath
 }
 
 artifacts {
