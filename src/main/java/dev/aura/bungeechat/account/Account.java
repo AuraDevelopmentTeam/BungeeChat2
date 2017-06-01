@@ -5,30 +5,25 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+@Data
 public class Account implements BungeeChatAccount {
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private UUID uuid;
-    @Getter
-    @Setter
-    private ProxiedPlayer proxiedPlayer;
-    @Getter
-    @Setter
+    @Getter(lazy = true)
+    private final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uuid);
     private ChannelType channelType;
-    @Getter
-    @Setter
     private boolean vanished;
-    @Getter
-    @Setter
     private boolean messanger;
-    @Getter
-    @Setter
     private boolean socialspy;
-    @Getter
-    private CopyOnWriteArrayList<UUID> ignored;
+    private final CopyOnWriteArrayList<UUID> ignored;
 
     public static ProxiedPlayer toProxiedPlayer(BungeeChatAccount account) {
         return ProxyServer.getInstance().getPlayer(account.getUniqueId());
@@ -40,7 +35,6 @@ public class Account implements BungeeChatAccount {
 
     public Account(UUID uuid) {
         this.uuid = uuid;
-        proxiedPlayer = ProxyServer.getInstance().getPlayer(uuid);
         channelType = ChannelType.NONE;
         vanished = false;
         messanger = true;
@@ -56,7 +50,6 @@ public class Account implements BungeeChatAccount {
     public Account(UUID uuid, ChannelType channelType, boolean vanished, boolean messanger, boolean socialspy,
             CopyOnWriteArrayList<UUID> ignored) {
         this.uuid = uuid;
-        proxiedPlayer = ProxyServer.getInstance().getPlayer(uuid);
         this.channelType = channelType;
         this.vanished = vanished;
         this.messanger = messanger;
@@ -123,26 +116,26 @@ public class Account implements BungeeChatAccount {
 
     @Override
     public String getName() {
-        return proxiedPlayer.getName();
+        return getProxiedPlayer().getName();
     }
 
     @Override
     public String getDisplayName() {
-        return proxiedPlayer.getDisplayName();
+        return getProxiedPlayer().getDisplayName();
     }
 
     @Override
     public int getPing() {
-        return proxiedPlayer.getPing();
+        return getProxiedPlayer().getPing();
     }
 
     @Override
     public String getServerName() {
-        return proxiedPlayer.getServer().getInfo().getName();
+        return getProxiedPlayer().getServer().getInfo().getName();
     }
 
     @Override
     public String getServerIP() {
-        return proxiedPlayer.getServer().getInfo().getAddress().toString();
+        return getProxiedPlayer().getServer().getInfo().getAddress().toString();
     }
 }
