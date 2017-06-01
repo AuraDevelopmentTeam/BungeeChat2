@@ -99,10 +99,11 @@ public class MessagesService {
     public static void sendLocalMessage(BungeeChatContext context) {
         context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
 
-        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "local-chat");
+        Optional<BungeeChatAccount> player = context.getPlayer();
+        Optional<String> finalMessage = preProcessMessage(context, player, "local-chat");
+        String localServerName = Account.toProxiedPlayer(player.get()).getServer().getInfo().getName();
 
-        sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName()
-                .equals(ProxyServer.getInstance().getPlayer(context.getPlayer().get().getUniqueId()).getServer().getInfo().getName()));
+        sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName().equals(localServerName));
     }
 
     public static void sendStaffMessage(CommandSender sender, String message) {
