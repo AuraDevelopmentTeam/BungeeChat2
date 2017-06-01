@@ -10,7 +10,7 @@ public class LeaveMessageListener implements Listener {
     @EventHandler
     public void onPlayerChat(PlayerDisconnectEvent e) {
         if (PermissionManager.hasPermission(e.getPlayer(), Permission.MESSAGE_LEAVE)) {
-            //TODO: Join Message.
+            // TODO: Join Message.
         }
     }
 }

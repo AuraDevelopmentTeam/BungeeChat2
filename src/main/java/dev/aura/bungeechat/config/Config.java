@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
-import dev.aura.bungeechat.util.Logger;
+import dev.aura.bungeechat.util.LoggerHelper;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -28,8 +28,8 @@ public class Config {
             configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
         } catch (Exception e) {
             e.printStackTrace();
-            Logger.error("There is an error with creating or loading the conifg file!");
-            Logger.error("Please contact the author at spigotmc.org!");
+            LoggerHelper.error("There is an error with creating or loading the conifg file!");
+            LoggerHelper.error("Please contact the author at spigotmc.org!");
         }
     }
 

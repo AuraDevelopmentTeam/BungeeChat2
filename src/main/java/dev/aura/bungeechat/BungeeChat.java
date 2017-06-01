@@ -19,7 +19,7 @@ import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.PlaceHolders;
-import dev.aura.bungeechat.util.Logger;
+import dev.aura.bungeechat.util.LoggerHelper;
 import dev.aura.bungeechat.util.Version;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
@@ -39,9 +39,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         PlaceHolders.registerPlaceholders();
 
         if (CONFIG_VERSION != Config.get().getDouble("Version")) {
-            Logger.info(
+            LoggerHelper.info(
                     "You config is outdated and might cause errors when been used with this version of BungeeChat!");
-            Logger.info(
+            LoggerHelper.info(
                     "Please update your config by either deleting your old one or downloading the new one on the plugin page.");
             return;
         }
@@ -78,17 +78,17 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     private void loadScreen() {
-        Logger.normal(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD
+        LoggerHelper.info(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD
                 + " ----------------");
-        Logger.normal(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + " & " + AUTHOR_BRAINSTONE);
-        Logger.normal(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION);
-        Logger.normal(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BUILD);
-        Logger.normal(ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + ModuleManager.getActiveModuleString());
+        LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + " & " + AUTHOR_BRAINSTONE);
+        LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION);
+        LoggerHelper.info(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BUILD);
+        LoggerHelper.info(ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + ModuleManager.getActiveModuleString());
         if (!isLatestVersion()) {
-            Logger.normal(ChatColor.YELLOW + "There is an update avalible. You can download version " + ChatColor.GREEN
-                    + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at SpigotMC.org!");
+            LoggerHelper.info(ChatColor.YELLOW + "There is an update avalible. You can download version "
+                    + ChatColor.GREEN + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at SpigotMC.org!");
         }
-        Logger.normal(ChatColor.GOLD + "---------------------------------------------");
+        LoggerHelper.info(ChatColor.GOLD + "---------------------------------------------");
     }
 
     public String getLatestVersion() {

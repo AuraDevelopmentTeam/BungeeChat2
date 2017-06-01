@@ -10,7 +10,7 @@ public class JoinMessageListener implements Listener {
     @EventHandler
     public void onPlayerChat(PostLoginEvent e) {
         if (PermissionManager.hasPermission(e.getPlayer(), Permission.MESSAGE_JOIN)) {
-            //TODO: Join Message.
+            // TODO: Join Message.
         }
     }
 }

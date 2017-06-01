@@ -127,7 +127,7 @@ public class MessagesService {
         if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
             message = ChatColor.translateAlternateColorCodes('&', message);
         }
-        
+
         message = FilterManager.applyFilters(playerAccount, message);
 
         context.setMessage(message);

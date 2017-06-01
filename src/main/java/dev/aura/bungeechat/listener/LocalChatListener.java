@@ -18,10 +18,11 @@ public class LocalChatListener implements Listener {
 
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
         String message = e.getMessage();
-        if ((AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.LOCAL) || AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.LOCAL))
+        if ((AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.LOCAL)
+                || AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.LOCAL))
                 && !ChatUtils.isCommand(message)) {
             e.setCancelled(true);
-            //TODO: Send Local Message.
+            // TODO: Send Local Message.
         }
     }
 }
