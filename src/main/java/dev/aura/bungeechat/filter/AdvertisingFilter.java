@@ -43,15 +43,14 @@ public class AdvertisingFilter implements BungeeChatFilter {
          * match the whitelist.
          */
         whitelisted = section.getStringList("whitelisted").stream().map(whitelist -> {
-            if (whitelist.startsWith("R=")) {
+            if (whitelist.startsWith("R="))
                 // Interpret the string as regex and remove the first two
                 // characters (which are "R=")
                 return Pattern.compile(whitelist.substring(2));
-            } else {
+            else
                 // Turn string into literal Regex and replace all "\*" with ".*"
                 // (means all original "*" become wildcards)
                 return Pattern.compile(Pattern.quote(whitelist).replaceAll("\\\\\\*", ".*"));
-            }
         }).map(Pattern::asPredicate).reduce(Predicate::or).orElse(x -> false);
     }
 
