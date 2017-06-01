@@ -92,6 +92,19 @@ public class MessagesService {
         sendToMatchingPlayers(finalMessage);
     }
 
+    public static void sendLocalMessage(CommandSender sender, String message) {
+        sendLocalMessage(new Context(sender, message));
+    }
+
+    public static void sendLocalMessage(BungeeChatContext context) {
+        context.require(BungeeChatContext.HAS_PLAYER, BungeeChatContext.HAS_MESSAGE);
+
+        Optional<String> finalMessage = preProcessMessage(context, context.getPlayer(), "local");
+
+        sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName()
+                .equals(ProxyServer.getInstance().getPlayer(context.getPlayer().get().getUniqueId()).getServer().getInfo().getName()));
+    }
+
     public static void sendStaffMessage(CommandSender sender, String message) {
         sendStaffMessage(new Context(sender, message));
     }

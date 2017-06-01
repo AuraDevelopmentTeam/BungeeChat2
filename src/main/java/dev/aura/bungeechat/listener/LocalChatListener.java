@@ -3,6 +3,7 @@ package dev.aura.bungeechat.listener;
 import dev.aura.bungeechat.account.AccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
+import dev.aura.bungeechat.message.MessagesService;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -22,7 +23,7 @@ public class LocalChatListener implements Listener {
                 || AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.LOCAL))
                 && !ChatUtils.isCommand(message)) {
             e.setCancelled(true);
-            // TODO: Send Local Message.
+            MessagesService.sendLocalMessage(sender, message);
         }
     }
 }
