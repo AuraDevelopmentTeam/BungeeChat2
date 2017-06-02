@@ -148,13 +148,16 @@ Messages:
   tempmute: "&eThe player &c%name% &ehas been muted till %mutetime% (UTC +1)"
   add-ignore: "&eYou have ignored %name%!"
   remove-ignore: "&eYou have un-ignored %name%!"
-  already-ignore: "&eYou have are already ignoring this player!"
+  already-ignored: "&eYou have are already ignoring this player!"
   ignore-yourself: "&cYou can not ignore yourself!"
   unignore-yourself: "&cYou can not unignore yourself!"
   not-ignored: "&cYou have not ignored this user!"
   anti-duplication: "&cPlease do not spam messages!"
   no-permission: "&cYou do not have the permissions to perform this action!"
   has-ignored: "&cThis player is ignoring you..."
+  unmute: "..."
+  mute: "..."
+  has-messager-disabled: "..."
   
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"

@@ -1,15 +1,16 @@
 package dev.aura.bungeechat.message;
 
-import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
-import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-// TODO!!!! Use more PlaceHolderUtil and use this where PlaceHolderUtil is already used!
+@RequiredArgsConstructor
 public enum Message {
-    NOT_A_PLAYER("Mnot-player"),
+    NOT_A_PLAYER("not-player"),
     MUTED("muted"),
     UNMUTE_NOT_MUTED("unmute-not-muted"),
     MUTE_IS_MUTED("mute-is-muted"),
@@ -32,49 +33,41 @@ public enum Message {
     CHAT_IS_DISABLED("chat-is-locked"),
     GLOBAL_IS_DEFAULT("global-is-default"),
     ANTI_ADVERTISE("anti-advertise"),
+    TEMPMUTE("tempmute"),
+    ADD_IGNORE("add-ignore"),
+    REMOVE_IGNORE("remove-ignore"),
     ALREADY_IGNORED("already-ignored"),
     IGNORE_YOURSELF("ignore-yourself"),
     UNIGNORE_YOURSELF("unignore-yourself"),
     NOT_IGNORED("not-ignored"),
     ANTI_DUPLICATION("anti-duplication"),
+    NO_PERMISSION("no-permission"),
+    HAS_INGORED("has-ignored"),
     INCORRECT_USAGE("incorrect-usage"),
     UNMUTE("unmute"),
     MUTE("mute"),
-    TEMPMUTE("tempmute"),
-    IGNORE("add-ignore"),
-    UNIGORE("remove-ignore"),
-    HAS_MESSAGER_DISABLED("has-messager-disabled"),
-    HAS_INGORED("has-ignored");
+    HAS_MESSAGER_DISABLED("has-messager-disabled");
 
+    @Getter
     private final String stringPath;
 
-    private Message(String stringPath) {
-        this.stringPath = "Messages." + stringPath;
-    }
-
     public String get() {
-        String rawMessage = PlaceHolderUtil.transformAltColorCodes(Config.get().getString(stringPath));
-
-        return PlaceHolderManager.processMessage(rawMessage, new Context());
+        return PlaceHolderUtil.getFullMessage(this);
+    }
+    
+    public String get(BungeeChatAccount sender) {
+        return get(new BungeeChatContext(sender));
     }
 
     public String get(CommandSender sender) {
-        String rawMessage = PlaceHolderUtil.transformAltColorCodes(Config.get().getString(stringPath));
-
-        if (sender instanceof ProxiedPlayer)
-            return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
-        else
-            return PlaceHolderManager.processMessage(rawMessage, new Context());
+        return get(new Context(sender));
     }
 
     public String get(CommandSender sender, String command) {
-        String rawMessage = PlaceHolderUtil.transformAltColorCodes(Config.get().getString(stringPath));
-        rawMessage = rawMessage.replace("%command%", command);
-
-        if (sender instanceof ProxiedPlayer)
-            return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
-        else
-            return PlaceHolderManager.processMessage(rawMessage, new Context());
+        return get(new Context(sender, command));
     }
 
+    public String get(BungeeChatContext context) {
+        return PlaceHolderUtil.getFullMessage(this, context);
+    }
 }

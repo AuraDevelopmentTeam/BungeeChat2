@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.message.Message;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.config.Configuration;
@@ -30,23 +31,23 @@ public class PlaceHolderUtil {
         return formatsBase.getString(format);
     }
 
-    public static String getMessage(String message) {
+    public static String getMessage(Message message) {
         if (messageBase == null) {
             messageBase = Config.get().getSection(MESSAGES);
         }
 
-        return messageBase.getString(message);
+        return messageBase.getString(message.getStringPath());
     }
 
     public static String getFullFormatMessage(String format, BungeeChatContext context) {
         return formatMessage(getFormat(format), context);
     }
 
-    public static String getFullMessage(String message) {
+    public static String getFullMessage(Message message) {
         return formatMessage(getMessage(message), new BungeeChatContext());
     }
 
-    public static String getFullMessage(String message, BungeeChatContext context) {
+    public static String getFullMessage(Message message, BungeeChatContext context) {
         return formatMessage(getMessage(message), context);
     }
 
