@@ -41,7 +41,15 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
     @Override
     public String apply(String message, BungeeChatContext context) {
         while (message.contains(placeholder)) {
-            message = message.replace(placeholder, replacementSupplier.get(context));
+            String replacement;
+
+            try {
+                replacement = replacementSupplier.get(context);
+            } catch (RuntimeException e) {
+                replacement = "";
+            }
+
+            message = message.replace(placeholder, replacement);
         }
 
         return message;
