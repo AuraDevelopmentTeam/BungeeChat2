@@ -170,7 +170,7 @@ Formats:
   helpop: "&2HELPOP > &e%name%: &r%message%"
   server-switch: "&e%name% has moved to the &c%server% &e server!"
   chat-logging-console: "%channel% > %servername% > %name%: %message%"
-  chat-logging-file: "[%date%]: %channel% > %servername% > %name%(%uuid%): %message%"
+  chat-logging-file: "[%time%]: %channel% > %servername% > %name%(%uuid%): %message%"
 
 AccountDataBase:
   enabled: false
