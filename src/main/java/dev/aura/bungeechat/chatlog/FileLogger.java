@@ -45,7 +45,6 @@ public class FileLogger implements ChatLogger, AutoCloseable {
 
     @Override
     public void log(String message) {
-        pw.println(TimeUtils.getTimeStamp() + message);
         pw.flush();
     }
 
