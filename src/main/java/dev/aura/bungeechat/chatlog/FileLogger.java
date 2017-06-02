@@ -9,86 +9,76 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import dev.aura.bungeechat.api.utils.TimeUtils;
 import net.md_5.bungee.api.ProxyServer;
 
 public class FileLogger implements ChatLogger, AutoCloseable {
-    File dataFolder;
-    File saveTo;
-    FileWriter fw;
-    PrintWriter pw;
-	
-    private final static long fONCE_PER_DAY = 1000*60*60*24;
+    private File dataFolder;
+    private File saveTo;
+    private FileWriter fw;
+    private PrintWriter pw;
+    private Timer timer;
 
-    private final static int fONE_DAY = 1;
-	
-	public FileLogger() {
-        try {
-            dataFolder = new File(ProxyServer.getInstance().getPluginsFolder() + "/BungeeChat/LogFiles");
-        	if(!dataFolder.exists()) {
-                dataFolder.mkdir();
-            }
-        	String timestamp = TimeUtils.getCurrentYear() + "-" + TimeUtils.getCurrentMonth() + "-" + TimeUtils.getCurrentDay();
-	    	
-        	saveTo = new File(dataFolder, timestamp + "BungeeChat.log");
-            if (!saveTo.exists()) {
-                saveTo.createNewFile();
-            }
-            fw = new FileWriter(saveTo, true);
-            pw = new PrintWriter(fw);
-            
-            TimerTask newFile = newFile();
-            Timer timer = new Timer();
-            timer.scheduleAtFixedRate(newFile, getMidnight(), fONCE_PER_DAY);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private static Date getMidnight() {
+        Calendar now = new GregorianCalendar();
+        now.add(Calendar.DAY_OF_MONTH, 1);
+        Calendar midnight = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
+                now.get(Calendar.DATE), 0, 0);
+
+        return midnight.getTime();
     }
-	
-    private TimerTask newFile(){
-        try {
-            String timestamp = TimeUtils.getCurrentYear() + "-" + TimeUtils.getCurrentMonth() + "-" + TimeUtils.getCurrentDay();
-    	
-    	    saveTo = new File(dataFolder, timestamp + "BungeeChat.log");
-            if (!saveTo.exists()) {
-                saveTo.createNewFile();
-            }
-         
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    public FileLogger() {
+        dataFolder = new File(ProxyServer.getInstance().getPluginsFolder(), "BungeeChat/LogFiles");
+
+        if (!dataFolder.exists()) {
+            dataFolder.mkdirs();
         }
-        return null;
+
+        initLogFile();
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new LogFileChanger(), getMidnight(), TimeUnit.DAYS.toMillis(1));
     }
-	
-    private static Date getMidnight(){
-        Calendar midnight = new GregorianCalendar();
-        midnight.add(Calendar.DATE, fONE_DAY);
-        Calendar result = new GregorianCalendar(
-        	midnight.get(Calendar.YEAR),
-        	midnight.get(Calendar.MONTH),
-        	midnight.get(Calendar.DATE),
-            0,
-            0
-        );
-        return result.getTime();
-      }
 
     @Override
     public void log(String message) {
-        String logMessage = TimeUtils.getFullCurrentTimeStamp() + message;
-        logToFile(logMessage);
-    }
-    
-    public void logToFile(String message) {
-        pw.println(message);
+        pw.println(TimeUtils.getFullCurrentTimeStamp() + message);
         pw.flush();
     }
 
     @Override
     public void close() throws Exception {
-    	fw.close();
+        timer.cancel();
+
+        fw.close();
         pw.close();
+    }
+
+    private void initLogFile() {
+        try {
+            String timestamp = TimeUtils.getCurrentYear() + "-" + TimeUtils.getCurrentMonth() + "-"
+                    + TimeUtils.getCurrentDay();
+
+            saveTo = new File(dataFolder, timestamp + "BungeeChat.log");
+
+            if (!saveTo.exists()) {
+                saveTo.createNewFile();
+            }
+
+            fw = new FileWriter(saveTo, true);
+            pw = new PrintWriter(fw);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class LogFileChanger extends TimerTask {
+        @Override
+        public void run() {
+            initLogFile();
+        }
     }
 }
