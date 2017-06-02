@@ -11,10 +11,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.utils.TimeUtils;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
-import net.md_5.bungee.api.ProxyServer;
 
 public class FileLogger implements ChatLogger, AutoCloseable {
     private File dataFolder;
@@ -33,11 +33,8 @@ public class FileLogger implements ChatLogger, AutoCloseable {
     }
 
     public FileLogger() {
-        dataFolder = new File(ProxyServer.getInstance().getPluginsFolder(), "BungeeChat/logs");
-
-        if (!dataFolder.exists()) {
-            dataFolder.mkdirs();
-        }
+        dataFolder = new File(BungeeChat.getInstance().getConfigFolder(), "logs");
+        dataFolder.mkdirs();
 
         initLogFile();
 

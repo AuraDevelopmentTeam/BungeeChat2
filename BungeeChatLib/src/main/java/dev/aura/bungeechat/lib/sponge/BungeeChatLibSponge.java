@@ -1,5 +1,8 @@
 package dev.aura.bungeechat.lib.sponge;
 
+import java.io.File;
+
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
@@ -20,9 +23,21 @@ public class BungeeChatLibSponge implements BungeeChatApi {
     @Getter
     private static BungeeChatLibSponge instance;
 
+    private File configDir;
+
     @Override
     public ServerType getServerType() {
         return ServerType.SPONGE;
+    }
+
+    @Override
+    public File getConfigFolder() {
+        if (configDir == null) {
+            configDir = Sponge.getConfigManager().getSharedConfig(this).getDirectory().toFile();
+            configDir.mkdirs();
+        }
+
+        return configDir;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package dev.aura.bungeechat.api;
 
+import java.io.File;
+
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
@@ -45,6 +47,13 @@ public interface BungeeChatApi {
      * @return One member of the {@link ServerType}
      */
     public ServerType getServerType();
+
+    /**
+     * Retrieves (and creates if necessary) the config folder.
+     * 
+     * @return The existing config folder
+     */
+    public File getConfigFolder();
 
     /**
      * Method used to check if a user has a certain permission or not.

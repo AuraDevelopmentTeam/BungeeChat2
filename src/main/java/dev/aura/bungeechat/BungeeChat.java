@@ -1,6 +1,7 @@
 package dev.aura.bungeechat;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -33,6 +34,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private static BungeeChat instance;
     @Getter(lazy = true)
     private final String latestVersion = queryLatestVersion();
+    private File configDir;
 
     @Override
     public void onEnable() {
@@ -64,6 +66,16 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     @Override
     public ServerType getServerType() {
         return ServerType.BUNGEECORD;
+    }
+    
+    @Override
+    public File getConfigFolder() {
+        if(configDir == null) {
+            configDir = new File(getProxy().getPluginsFolder(), "BungeeCord");
+            configDir.mkdirs();
+        }
+        
+        return configDir;
     }
 
     @Override

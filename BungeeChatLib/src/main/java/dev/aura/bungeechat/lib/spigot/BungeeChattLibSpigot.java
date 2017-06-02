@@ -1,5 +1,7 @@
 package dev.aura.bungeechat.lib.spigot;
 
+import java.io.File;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
@@ -16,9 +18,21 @@ public class BungeeChattLibSpigot extends JavaPlugin implements BungeeChatApi {
     @Getter
     private static BungeeChattLibSpigot instance;
 
+    private File configDir;
+
     @Override
     public ServerType getServerType() {
         return ServerType.SPIGOT;
+    }
+
+    @Override
+    public File getConfigFolder() {
+        if (configDir == null) {
+            configDir = new File(getDataFolder().getParentFile(), "BungeeCord");
+            configDir.mkdirs();
+        }
+
+        return configDir;
     }
 
     @Override
