@@ -16,6 +16,11 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
     @SafeVarargs
     public PlaceHolder(String placeholder, ReplacementSupplier replacementSupplier,
             Predicate<? super BungeeChatContext>... requirements) {
+        this(placeholder, replacementSupplier, Arrays.asList(requirements));
+    }
+
+    public PlaceHolder(String placeholder, ReplacementSupplier replacementSupplier,
+            List<Predicate<? super BungeeChatContext>> requirements) {
         if (placeholder.charAt(0) != '%') {
             placeholder = '%' + placeholder;
         }
@@ -25,7 +30,7 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
 
         this.placeholder = placeholder;
         this.replacementSupplier = replacementSupplier;
-        this.requirements.addAll(Arrays.asList(requirements));
+        this.requirements.addAll(requirements);
     }
 
     @Override
@@ -73,5 +78,18 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
             return false;
 
         return placeholder.equals(((BungeeChatPlaceHolder) obj).getName());
+    }
+
+    public PlaceHolder[] createAliases(String... aliases) {
+        int size = aliases.length;
+        PlaceHolder[] placeHolders = new PlaceHolder[size + 1];
+
+        for (int i = 0; i < size; i++) {
+            placeHolders[i] = new PlaceHolder(aliases[i], replacementSupplier, requirements);
+        }
+
+        placeHolders[size] = this;
+
+        return placeHolders;
     }
 }

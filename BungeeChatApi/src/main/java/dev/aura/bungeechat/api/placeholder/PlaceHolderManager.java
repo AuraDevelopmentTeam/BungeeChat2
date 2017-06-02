@@ -27,6 +27,12 @@ public class PlaceHolderManager {
         return message;
     }
 
+    public static void registerPlaceholder(BungeeChatPlaceHolder... placeholder) {
+        for (BungeeChatPlaceHolder p : placeholder) {
+            registerPlaceholder(p);
+        }
+    }
+
     public static void registerPlaceholder(BungeeChatPlaceHolder placeholder) {
         if (placeholders.contains(placeholder))
             throw new IllegalStateException("Placeholder " + placeholder.getName() + " has already been registered!");
