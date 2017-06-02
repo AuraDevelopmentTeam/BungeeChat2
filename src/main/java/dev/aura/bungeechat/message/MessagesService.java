@@ -94,7 +94,7 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "global");
 
         sendToMatchingPlayers(finalMessage);
-        
+
         ChatLoggingManager.logMessage(context, ChannelType.GLOBAL);
     }
 
@@ -109,7 +109,7 @@ public class MessagesService {
         String localServerName = Account.toProxiedPlayer(context.getSender().get()).getServer().getInfo().getName();
 
         sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName().equals(localServerName));
-        
+
         ChatLoggingManager.logMessage(context, ChannelType.LOCAL);
     }
 
@@ -124,7 +124,7 @@ public class MessagesService {
 
         sendToMatchingPlayers(finalMessage,
                 pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
-        
+
         ChatLoggingManager.logMessage(context, ChannelType.STAFF);
     }
 
@@ -138,7 +138,7 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "helpop");
 
         sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
-        
+
         ChatLoggingManager.logMessage(context, ChannelType.HELP);
     }
 
@@ -149,11 +149,11 @@ public class MessagesService {
     public static void sendJoinMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER);
 
-        Optional<String> finalMessage = preProcessMessage(context, "joinmessage");
+        String finalMessage = PlaceHolderUtil.getFullFormatMessage("joinmessage", context);
 
         sendToMatchingPlayers(finalMessage);
-        
-        ChatLoggingManager.logMessage(finalMessage.orElse(""));
+
+        ChatLoggingManager.logMessage(finalMessage);
     }
 
     public static void sendLeaveMessage(CommandSender sender) throws InvalidContextError {
@@ -163,11 +163,11 @@ public class MessagesService {
     public static void sendLeaveMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER);
 
-        Optional<String> finalMessage = preProcessMessage(context, "leavemessage");
+        String finalMessage = PlaceHolderUtil.getFullFormatMessage("leavemessage", context);
 
         sendToMatchingPlayers(finalMessage);
-        
-        ChatLoggingManager.logMessage(finalMessage.orElse(""));
+
+        ChatLoggingManager.logMessage(finalMessage);
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, String format)
