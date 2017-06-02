@@ -31,7 +31,7 @@ public class ReloadCommand extends BaseCommand {
         checkForUpdates(sender);
         sender.sendMessage(prefix + ChatColor.GRAY + "Coded by " + ChatColor.GOLD + BungeeChatApi.AUTHOR_SHAWN
                 + ChatColor.GRAY + " and " + ChatColor.GOLD + BungeeChatApi.AUTHOR_BRAINSTONE + ChatColor.GRAY
-                + " with help from " + ChatColor.GOLD + "paulpkyou" + ChatColor.GRAY + ".");
+                + ", with help from " + ChatColor.GOLD + BungeeChat.AUTHOR_RYADA + ChatColor.GRAY + ".");
     }
 
     private boolean checkForUpdates(CommandSender sender) {
