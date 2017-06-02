@@ -21,28 +21,34 @@ public class ChatLoggingManager {
         loggers.remove(logger);
     }
 
-    public static void logMessage(BungeeChatContext context, ChannelType channel) {
-        context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
-
-        BungeeChatAccount sender = context.getSender().get();
-
-        logMessage(formatMessage(channel.name(), sender, context.getMessage().get()));
+    public static void logMessage(String channel, BungeeChatAccount sender, String message) {
+        BungeeChatContext context = new BungeeChatContext(sender, message);
+        context.setChannel(channel);
+        
+        logMessage(context);
     }
 
-    public static void logMessage(String simpleMessage) {
-        getStream().forEach(logger -> logger.log(simpleMessage));
+    public static void logMessage(ChannelType channel, BungeeChatContext context) {
+        logMessage(channel.name(), context);
+    }
+    
+    public static void logMessage(String channel, BungeeChatContext context) {
+        context.setChannel(channel);
+        
+        logMessage(context);
+    }
+
+    public static void logMessage(BungeeChatContext context) {
+        context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE, BungeeChatContext.HAS_CHANNEL);
+
+        getStream().forEach(logger -> logger.log(context));
     }
 
     public static void logCommand(BungeeChatAccount account, String command) {
-        logMessage(formatMessage("COMMAND", account, command));
+        logMessage("COMMAND", account, command);
     }
 
     private static Stream<ChatLogger> getStream() {
         return loggers.stream();
-    }
-
-    private static String formatMessage(String channel, BungeeChatAccount sender, String message) {
-        return channel + " > " + sender.getServerName() + " > " + sender.getName() + '(' + sender.getUniqueId() + "): "
-                + message;
     }
 }

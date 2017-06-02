@@ -37,6 +37,12 @@ public class BungeeChatContext {
      * @see BungeeChatContext#require(Predicate...)
      */
     public static final Predicate<BungeeChatContext> HAS_MESSAGE = BungeeChatContext::hasMessage;
+    /**
+     * Predefined Predicate to check if a context has a channel.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
+    public static final Predicate<BungeeChatContext> HAS_CHANNEL = BungeeChatContext::hasChannel;
 
     /**
      * Predefined Predicate to check if a context does not have a sender.
@@ -55,18 +61,26 @@ public class BungeeChatContext {
      * 
      * @see BungeeChatContext#require(Predicate...)
      */
-    public static final Predicate<BungeeChatContext> HAS_NO_MESSAGE = HAS_MESSAGE.negate();
+    public static final Predicate<BungeeChatContext> HAS_NO_MESSAGE = HAS_CHANNEL.negate();
+    /**
+     * Predefined Predicate to check if a context does not have a channel.
+     * 
+     * @see BungeeChatContext#require(Predicate...)
+     */
+    public static final Predicate<BungeeChatContext> HAS_NO_CHANNEL = HAS_MESSAGE.negate();
 
-    private static final Map<Predicate<BungeeChatContext>, String> requirementsNameCache = new HashMap<>(6);
+    private static final Map<Predicate<BungeeChatContext>, String> requirementsNameCache = new HashMap<>(8);
 
     private Optional<BungeeChatAccount> sender;
     private Optional<BungeeChatAccount> target;
     private Optional<String> message;
+    private Optional<String> channel;
 
     public BungeeChatContext() {
         sender = Optional.empty();
         target = Optional.empty();
         message = Optional.empty();
+        channel = Optional.empty();
     }
 
     public BungeeChatContext(BungeeChatAccount sender) {
@@ -118,9 +132,11 @@ public class BungeeChatContext {
      * @see BungeeChatContext#HAS_SENDER
      * @see BungeeChatContext#HAS_TARGET
      * @see BungeeChatContext#HAS_MESSAGE
+     * @see BungeeChatContext#HAS_CHANNEL
      * @see BungeeChatContext#HAS_NO_SENDER
      * @see BungeeChatContext#HAS_NO_TARGET
      * @see BungeeChatContext#HAS_NO_MESSAGE
+     * @see BungeeChatContext#HAS_NO_CHANNEL
      */
     @SafeVarargs
     public final void require(Predicate<? super BungeeChatContext>... requirements) throws InvalidContextError {
@@ -145,6 +161,10 @@ public class BungeeChatContext {
     public boolean hasMessage() {
         return message.isPresent();
     }
+    
+    public boolean hasChannel() {
+        return channel.isPresent();
+    }
 
     @Tolerate
     public void setSender(BungeeChatAccount sender) {
@@ -159,6 +179,11 @@ public class BungeeChatContext {
     @Tolerate
     public void setMessage(String message) {
         setMessage(Optional.ofNullable(message));
+    }
+    
+    @Tolerate
+    public void setChannel(String channel) {
+        setChannel(Optional.ofNullable(channel));
     }
 
     // Fill the requirementsNameCache

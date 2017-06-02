@@ -95,7 +95,7 @@ public class MessagesService {
 
         sendToMatchingPlayers(finalMessage);
 
-        ChatLoggingManager.logMessage(context, ChannelType.GLOBAL);
+        ChatLoggingManager.logMessage(ChannelType.GLOBAL, context);
     }
 
     public static void sendLocalMessage(CommandSender sender, String message) throws InvalidContextError {
@@ -110,7 +110,7 @@ public class MessagesService {
 
         sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName().equals(localServerName));
 
-        ChatLoggingManager.logMessage(context, ChannelType.LOCAL);
+        ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
     }
 
     public static void sendStaffMessage(CommandSender sender, String message) throws InvalidContextError {
@@ -125,7 +125,7 @@ public class MessagesService {
         sendToMatchingPlayers(finalMessage,
                 pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
 
-        ChatLoggingManager.logMessage(context, ChannelType.STAFF);
+        ChatLoggingManager.logMessage(ChannelType.STAFF, context);
     }
 
     public static void sendHelpMessage(CommandSender sender, String message) throws InvalidContextError {
@@ -139,7 +139,7 @@ public class MessagesService {
 
         sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
 
-        ChatLoggingManager.logMessage(context, ChannelType.HELP);
+        ChatLoggingManager.logMessage(ChannelType.HELP, context);
     }
 
     public static void sendJoinMessage(CommandSender sender) throws InvalidContextError {
@@ -153,7 +153,8 @@ public class MessagesService {
 
         sendToMatchingPlayers(finalMessage);
 
-        ChatLoggingManager.logMessage(finalMessage);
+        context.setMessage(finalMessage);
+        ChatLoggingManager.logMessage("JOIN", context);
     }
 
     public static void sendLeaveMessage(CommandSender sender) throws InvalidContextError {
@@ -167,7 +168,8 @@ public class MessagesService {
 
         sendToMatchingPlayers(finalMessage);
 
-        ChatLoggingManager.logMessage(finalMessage);
+        context.setMessage(finalMessage);
+        ChatLoggingManager.logMessage("LEAVE", context);
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, String format)

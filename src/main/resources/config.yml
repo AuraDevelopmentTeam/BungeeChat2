@@ -169,6 +169,8 @@ Formats:
   leavemessage: "&e%name% has left the network!"
   helpop: "&2HELPOP > &e%name%: &r%message%"
   server-switch: "&e%name% has moved to the &c%server% &e server!"
+  chat-log-console: "%channel% > %servername% > %name%: %message"
+  chat-log-file: "[%date%]: %channel% > %servername% > %name%(%uuid%): %message"
 
 AccountDataBase:
   enabled: false

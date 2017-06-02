@@ -11,7 +11,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.utils.TimeUtils;
+import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import net.md_5.bungee.api.ProxyServer;
 
 public class FileLogger implements ChatLogger, AutoCloseable {
@@ -42,10 +44,10 @@ public class FileLogger implements ChatLogger, AutoCloseable {
         timer = new Timer();
         timer.scheduleAtFixedRate(new LogFileChanger(), getMidnight(), TimeUnit.DAYS.toMillis(1));
     }
-
+    
     @Override
-    public void log(String message) {
-        pw.println('[' + TimeUtils.getTimeStamp() + "]: " + message);
+    public void log(BungeeChatContext context) {
+        pw.println(PlaceHolderUtil.getFullFormatMessage("chat-logger-file", context));
         pw.flush();
     }
 
