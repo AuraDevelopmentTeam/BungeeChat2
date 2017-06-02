@@ -23,9 +23,11 @@ public class ChatLoggingManager {
     }
 
     public static void logMessage(BungeeChatContext context, ChannelType channel) {
+        context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
+
         getStream().forEach(logger -> logger.logMessage(context, channel));
     }
-    
+
     public static void logMessage(String simpleMessage) {
         ProxyServer.getInstance().getLogger().info(simpleMessage);
     }
