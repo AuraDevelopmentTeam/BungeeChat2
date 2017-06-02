@@ -13,6 +13,7 @@ public class ModuleManager {
     public static final AlertModule ALERT_MODULE = new AlertModule();
     public static final AntiAdvertisingModule ANTI_ADVERTISING_MODULE = new AntiAdvertisingModule();
     public static final AntiSwearModule ANTI_SWEAR_MODULE = new AntiSwearModule();
+    public static final ChatLoggingModule CHAT_LOGGING_MODULE = new ChatLoggingModule();
     public static final GlobalChatModule GLOBAL_CHAT_MODULE = new GlobalChatModule();
     public static final HelpOpModule HELP_OP_MODULE = new HelpOpModule();
     public static final JoinMessageModule JOIN_MESSAGE_MODULE = new JoinMessageModule();
