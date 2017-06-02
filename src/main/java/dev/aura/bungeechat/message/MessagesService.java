@@ -170,8 +170,6 @@ public class MessagesService {
     @SuppressWarnings("deprecation")
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
             String format, boolean runFilters) throws InvalidContextError {
-        context.require(BungeeChatContext.HAS_MESSAGE);
-
         BungeeChatAccount playerAccount = account.get();
         ProxiedPlayer player = Account.toProxiedPlayer(playerAccount);
         String message = context.getMessage().get();
