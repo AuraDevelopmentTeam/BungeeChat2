@@ -104,12 +104,14 @@ Settings:
       aliases: []
     AntiDuplication:
       enabled: true
-  ChatLogging:
-    enabled: true
+    ChatLogging:
+      enabled: true
+      console: true
+      file: true
   PermissionsManager:
     Default-Prefix: "&7[Member]"
     Default-Suffix: "&7[Member]"
-    External: 0
+    External: NONE
   RedisFeatures:
     enabled: false
 
