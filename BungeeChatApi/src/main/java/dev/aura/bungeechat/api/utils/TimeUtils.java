@@ -12,6 +12,20 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TimeUtils {
     /**
+     * Gets the current timestamp in 24h format and double digits for both hour
+     * and minute, separated by a colon.
+     *
+     * @return The timestamp formatted like: <code>"HH:mm:ss"</code>
+     * @see SimpleDateFormat
+     */
+    public static String getFullCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
+        Date now = new Date();
+
+        return sdfDate.format(now);
+    }
+
+    /**
      * Gets the current timestamp in 24h format without seconds and double
      * digits for both hour and minute, separated by a colon.
      *
