@@ -15,6 +15,6 @@ public class ConsoleLogger implements ChatLogger {
 
     @Override
     public void log(BungeeChatContext context) {
-        logger.info(PlaceHolderUtil.getFullFormatMessage("chat-logger-console", context));
+        logger.info(PlaceHolderUtil.getFullFormatMessage("chat-logging-console", context));
     }
 }

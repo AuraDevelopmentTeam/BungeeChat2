@@ -47,7 +47,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
     
     @Override
     public void log(BungeeChatContext context) {
-        pw.println(PlaceHolderUtil.getFullFormatMessage("chat-logger-file", context));
+        pw.println(PlaceHolderUtil.getFullFormatMessage("chat-logging-file", context));
         pw.flush();
     }
 
