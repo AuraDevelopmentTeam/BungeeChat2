@@ -133,22 +133,29 @@ public class Account implements BungeeChatAccount {
 
     @Override
     public String getServerName() {
-        return getServerInfo().getName();
+        try {
+            return getServerInfo().getName();
+        } catch (NullPointerException e) {
+            return "unknown";
+        }
     }
 
     @Override
     public String getServerIP() {
-        return getServerInfo().getAddress().toString();
+        try {
+            return getServerInfo().getAddress().toString();
+        } catch (NullPointerException e) {
+            return "unknown";
+        }
     }
-    
+
     private ServerInfo getServerInfo() {
         ProxiedPlayer player = getProxiedPlayer();
         Server server = player.getServer();
-        
-        if(server == null) {
+
+        if (server == null)
             return player.getReconnectServer();
-        } else {
+        else
             return server.getInfo();
-        }
     }
 }
