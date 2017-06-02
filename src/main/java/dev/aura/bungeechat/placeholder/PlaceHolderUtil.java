@@ -43,6 +43,6 @@ public class PlaceHolderUtil {
     }
 
     public static String formatMessage(String message, BungeeChatContext context) {
-        return PlaceHolderManager.processMessage(ChatColor.translateAlternateColorCodes('&', message), context);
+        return ChatColor.translateAlternateColorCodes('&', PlaceHolderManager.processMessage(message, context));
     }
 }

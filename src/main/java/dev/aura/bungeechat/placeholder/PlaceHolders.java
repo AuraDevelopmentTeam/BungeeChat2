@@ -54,7 +54,7 @@ public class PlaceHolders {
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_serverip%",
                 context -> context.getTarget().get().getServerIP(), BungeeChatContext.HAS_TARGET));
 
-        PlaceHolderManager.registerPlaceholder(
-                new PlaceHolder("%message%", context -> context.getMessage().get(), BungeeChatContext.HAS_MESSAGE));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%message%",
+                context -> context.getMessage().get().replace("&", "&&"), BungeeChatContext.HAS_MESSAGE));
     }
 }
