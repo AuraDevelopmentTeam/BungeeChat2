@@ -59,7 +59,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
 
     private void initLogFile() {
         try {
-            saveTo = new File(dataFolder, TimeUtils.getDate().replace('/', '-') + "BungeeChat.log");
+            saveTo = new File(dataFolder, TimeUtils.getDate().replace('/', '-') + "-chat.log");
 
             if (!saveTo.exists()) {
                 saveTo.createNewFile();
