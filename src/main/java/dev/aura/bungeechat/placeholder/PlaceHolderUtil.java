@@ -31,8 +31,8 @@ public class PlaceHolderUtil {
     }
 
     public static String getFullFormatMessage(String format, BungeeChatContext context) {
-        return ChatColor.translateAlternateColorCodes('&',
-                PlaceHolderManager.processMessage(getFormat(format), context));
+        return PlaceHolderManager.processMessage(ChatColor.translateAlternateColorCodes('&', getFormat(format)),
+                context);
     }
 
     public static String getFullMessage(String message) {
