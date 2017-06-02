@@ -3,10 +3,11 @@ package dev.aura.bungeechat.message;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.placeholder.Context;
-import net.md_5.bungee.api.ChatColor;
+import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+// TODO!!!! Use more PlaceHolderUtil and use this where PlaceHolderUtil is already used!
 public enum Message {
     NOT_A_PLAYER("Mnot-player"),
     MUTED("muted"),
@@ -52,13 +53,13 @@ public enum Message {
     }
 
     public String get() {
-        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
+        String rawMessage = PlaceHolderUtil.transformAltColorCodes(Config.get().getString(stringPath));
 
         return PlaceHolderManager.processMessage(rawMessage, new Context());
     }
 
     public String get(CommandSender sender) {
-        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
+        String rawMessage = PlaceHolderUtil.transformAltColorCodes(Config.get().getString(stringPath));
 
         if (sender instanceof ProxiedPlayer)
             return PlaceHolderManager.processMessage(rawMessage, new Context((ProxiedPlayer) sender));
@@ -67,7 +68,7 @@ public enum Message {
     }
 
     public String get(CommandSender sender, String command) {
-        String rawMessage = ChatColor.translateAlternateColorCodes('&', Config.get().getString(stringPath));
+        String rawMessage = PlaceHolderUtil.transformAltColorCodes(Config.get().getString(stringPath));
         rawMessage = rawMessage.replace("%command%", command);
 
         if (sender instanceof ProxiedPlayer)

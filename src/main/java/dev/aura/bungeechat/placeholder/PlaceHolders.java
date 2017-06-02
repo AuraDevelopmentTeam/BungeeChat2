@@ -60,6 +60,6 @@ public class PlaceHolders {
         PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%channel%", context -> context.getChannel().get(), BungeeChatContext.HAS_CHANNEL));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%message%",
-                context -> context.getMessage().get().replace("&", "&&"), BungeeChatContext.HAS_MESSAGE));
+                context -> PlaceHolderUtil.escapeAltColorCodes(context.getMessage().get()), BungeeChatContext.HAS_MESSAGE));
     }
 }

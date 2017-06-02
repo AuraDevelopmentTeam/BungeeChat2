@@ -19,7 +19,6 @@ import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import lombok.experimental.UtilityClass;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -192,7 +191,7 @@ public class MessagesService {
         String message = context.getMessage().get();
 
         if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
-            message = ChatColor.translateAlternateColorCodes('&', message);
+            message = PlaceHolderUtil.transformAltColorCodes(message);
         }
 
         if (runFilters) {
