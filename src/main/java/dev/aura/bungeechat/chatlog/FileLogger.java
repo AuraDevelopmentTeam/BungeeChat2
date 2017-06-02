@@ -33,7 +33,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
     }
 
     public FileLogger() {
-        dataFolder = new File(ProxyServer.getInstance().getPluginsFolder(), "BungeeChat/LogFiles");
+        dataFolder = new File(ProxyServer.getInstance().getPluginsFolder(), "BungeeChat/logs");
 
         if (!dataFolder.exists()) {
             dataFolder.mkdirs();
