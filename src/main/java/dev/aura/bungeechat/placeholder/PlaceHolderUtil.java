@@ -18,7 +18,8 @@ public class PlaceHolderUtil {
 
     private static final char altColorChar = '&';
     private static final String altColorString = String.valueOf(altColorChar);
-    private static final Pattern colorCodeDetection = Pattern.compile("(?i)" + altColorChar + "([0-9A-FK-OR])");
+    private static final Pattern colorCodeDetection = Pattern
+            .compile("(?i)(?<!" + altColorChar + ')' + altColorChar + "([0-9A-FK-OR])");
     private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
 
     public static String getFormat(String format) {
@@ -54,7 +55,7 @@ public class PlaceHolderUtil {
     }
 
     public static String transformAltColorCodes(String message) {
-        message = colorCodeDetection.matcher(message).replaceAll(String.valueOf(ChatColor.COLOR_CHAR) + "$1");
+        message = colorCodeDetection.matcher(message).replaceAll(ChatColor.COLOR_CHAR + "$1");
         message = duplicateDection.matcher(message).replaceAll(altColorString);
 
         return message;
