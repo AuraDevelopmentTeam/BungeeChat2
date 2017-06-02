@@ -74,6 +74,12 @@ public class BungeeChatContext {
 
         this.sender = Optional.of(sender);
     }
+    
+    public BungeeChatContext(String message) {
+        this();
+        
+        this.message = Optional.of(message);
+    }
 
     public BungeeChatContext(BungeeChatAccount sender, String message) {
         this(sender);
