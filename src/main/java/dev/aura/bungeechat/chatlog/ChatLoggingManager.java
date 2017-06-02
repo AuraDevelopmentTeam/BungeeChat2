@@ -8,6 +8,7 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import lombok.experimental.UtilityClass;
+import net.md_5.bungee.api.ProxyServer;
 
 @UtilityClass
 public class ChatLoggingManager {
@@ -23,6 +24,10 @@ public class ChatLoggingManager {
 
     public static void logMessage(BungeeChatContext context, ChannelType channel) {
         getStream().forEach(logger -> logger.logMessage(context, channel));
+    }
+    
+    public static void logMessage(String simpleMessage) {
+        ProxyServer.getInstance().getLogger().info(simpleMessage);
     }
 
     public static void logCommand(BungeeChatAccount account, String command) {

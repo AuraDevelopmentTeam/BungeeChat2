@@ -13,6 +13,7 @@ import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
+import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
@@ -93,6 +94,8 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "global");
 
         sendToMatchingPlayers(finalMessage);
+        
+        ChatLoggingManager.logMessage(context, ChannelType.GLOBAL);
     }
 
     public static void sendLocalMessage(CommandSender sender, String message) throws InvalidContextError {
@@ -106,6 +109,8 @@ public class MessagesService {
         String localServerName = Account.toProxiedPlayer(context.getSender().get()).getServer().getInfo().getName();
 
         sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName().equals(localServerName));
+        
+        ChatLoggingManager.logMessage(context, ChannelType.LOCAL);
     }
 
     public static void sendStaffMessage(CommandSender sender, String message) throws InvalidContextError {
@@ -119,6 +124,8 @@ public class MessagesService {
 
         sendToMatchingPlayers(finalMessage,
                 pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
+        
+        ChatLoggingManager.logMessage(context, ChannelType.STAFF);
     }
 
     public static void sendHelpMessage(CommandSender sender, String message) throws InvalidContextError {
@@ -131,6 +138,8 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "helpop");
 
         sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
+        
+        ChatLoggingManager.logMessage(context, ChannelType.HELP);
     }
 
     public static void sendJoinMessage(CommandSender sender) throws InvalidContextError {
@@ -143,6 +152,8 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "joinmessage");
 
         sendToMatchingPlayers(finalMessage);
+        
+        ChatLoggingManager.logMessage(finalMessage.orElse(""));
     }
 
     public static void sendLeaveMessage(CommandSender sender) throws InvalidContextError {
@@ -155,6 +166,8 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "leavemessage");
 
         sendToMatchingPlayers(finalMessage);
+        
+        ChatLoggingManager.logMessage(finalMessage.orElse(""));
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, String format)
