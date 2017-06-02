@@ -10,7 +10,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 
 @Data
 public class Account implements BungeeChatAccount {
@@ -18,7 +20,7 @@ public class Account implements BungeeChatAccount {
     @Setter(AccessLevel.NONE)
     private UUID uuid;
     @Getter(lazy = true)
-    private final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uuid);
+    private final ProxiedPlayer proxiedPlayer = toProxiedPlayer(this);
     private ChannelType channelType;
     private boolean vanished;
     private boolean messanger;
@@ -131,11 +133,22 @@ public class Account implements BungeeChatAccount {
 
     @Override
     public String getServerName() {
-        return getProxiedPlayer().getServer().getInfo().getName();
+        return getServerInfo().getName();
     }
 
     @Override
     public String getServerIP() {
-        return getProxiedPlayer().getServer().getInfo().getAddress().toString();
+        return getServerInfo().getAddress().toString();
+    }
+    
+    private ServerInfo getServerInfo() {
+        ProxiedPlayer player = getProxiedPlayer();
+        Server server = player.getServer();
+        
+        if(server == null) {
+            return player.getReconnectServer();
+        } else {
+            return server.getInfo();
+        }
     }
 }
