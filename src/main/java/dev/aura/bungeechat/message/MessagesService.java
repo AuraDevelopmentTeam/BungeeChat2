@@ -91,7 +91,7 @@ public class MessagesService {
     public static void sendGlobalMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
-        Optional<String> finalMessage = preProcessMessage(context, "global");
+        Optional<String> finalMessage = preProcessMessage(context, "global-chat");
 
         sendToMatchingPlayers(finalMessage);
 
@@ -120,7 +120,7 @@ public class MessagesService {
     public static void sendStaffMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
-        Optional<String> finalMessage = preProcessMessage(context, "staff");
+        Optional<String> finalMessage = preProcessMessage(context, "staff-chat");
 
         sendToMatchingPlayers(finalMessage,
                 pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
