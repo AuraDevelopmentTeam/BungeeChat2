@@ -26,8 +26,7 @@ public class ChatLoggingManager {
 
         BungeeChatAccount sender = context.getSender().get();
 
-        logMessage(channel + " > " + sender.getServerName() + " > " + sender.getDisplayName() + '('
-                + sender.getUniqueId() + "): " + context.getMessage().get());
+        logMessage(formatMessage(channel.name(), sender, context.getMessage().get()));
     }
 
     public static void logMessage(String simpleMessage) {
@@ -35,11 +34,15 @@ public class ChatLoggingManager {
     }
 
     public static void logCommand(BungeeChatAccount account, String command) {
-        logMessage("COMMAND > " + account.getServerName() + " > " + account.getDisplayName() + '('
-                + account.getUniqueId() + "): " + command);
+        logMessage(formatMessage("COMMAND", account, command));
     }
 
     private static Stream<ChatLogger> getStream() {
         return loggers.stream();
+    }
+
+    private static String formatMessage(String channel, BungeeChatAccount sender, String message) {
+        return channel + " > " + sender.getServerName() + " > " + sender.getName() + '(' + sender.getUniqueId() + "): "
+                + message;
     }
 }
