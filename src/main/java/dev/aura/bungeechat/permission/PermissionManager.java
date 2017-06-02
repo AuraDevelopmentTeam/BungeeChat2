@@ -2,6 +2,7 @@ package dev.aura.bungeechat.permission;
 
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
@@ -16,7 +17,7 @@ public class PermissionManager {
             return true;
         else {
             if (permission.getWarnOnLackingPermission()) {
-                player.sendMessage(PlaceHolderUtil.getFullMessage("no-permission"));
+                player.sendMessage(PlaceHolderUtil.getFullMessage("no-permission", new Context(player)));
             }
 
             return false;

@@ -31,11 +31,18 @@ public class PlaceHolderUtil {
     }
 
     public static String getFullFormatMessage(String format, BungeeChatContext context) {
-        return PlaceHolderManager.processMessage(ChatColor.translateAlternateColorCodes('&', getFormat(format)),
-                context);
+        return formatMessage(getFormat(format), context);
     }
 
     public static String getFullMessage(String message) {
-        return ChatColor.translateAlternateColorCodes('&', getMessage(message));
+        return formatMessage(getMessage(message), new BungeeChatContext());
+    }
+
+    public static String getFullMessage(String message, BungeeChatContext context) {
+        return formatMessage(getMessage(message), context);
+    }
+
+    public static String formatMessage(String message, BungeeChatContext context) {
+        return PlaceHolderManager.processMessage(ChatColor.translateAlternateColorCodes('&', message), context);
     }
 }

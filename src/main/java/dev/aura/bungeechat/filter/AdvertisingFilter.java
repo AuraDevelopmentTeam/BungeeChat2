@@ -8,6 +8,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
@@ -66,13 +67,14 @@ public class AdvertisingFilter implements BungeeChatFilter {
         Matcher matches = url.matcher(message);
         boolean matchOk;
         String match;
+        BungeeChatContext context = new BungeeChatContext(sender);
 
         while (matches.find()) {
             match = matches.group();
             matchOk = whitelisted.test(match);
 
             if (!matchOk)
-                throw new BlockMessageException(PlaceHolderUtil.getFullMessage("anti-advertise"));
+                throw new BlockMessageException(PlaceHolderUtil.getFullMessage("anti-advertise", context));
         }
 
         return message;
