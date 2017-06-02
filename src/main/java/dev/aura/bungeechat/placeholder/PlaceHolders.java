@@ -9,15 +9,14 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PlaceHolders {
     public static void registerPlaceholders() {
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%timestamp%", context -> TimeUtils.getLongTimeStamp()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%time%", context -> TimeUtils.getTimeStamp()));
         PlaceHolderManager
-                .registerPlaceholder(new PlaceHolder("%data_long_time%", context -> TimeUtils.getLongTimeStamp()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_time%", context -> TimeUtils.getTimeStamp()));
-        PlaceHolderManager
-                .registerPlaceholder(new PlaceHolder("%data_short_time%", context -> TimeUtils.getShortTimeStamp()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_date%", context -> TimeUtils.getDate()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_day%", context -> TimeUtils.getDay()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_month%", context -> TimeUtils.getMonth()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_year%", context -> TimeUtils.getYear()));
+                .registerPlaceholder(new PlaceHolder("%short_time%", context -> TimeUtils.getShortTimeStamp()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%date%", context -> TimeUtils.getDate()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%day%", context -> TimeUtils.getDay()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%month%", context -> TimeUtils.getMonth()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%year%", context -> TimeUtils.getYear()));
 
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%name%", context -> context.getSender().get().getName(),
                 BungeeChatContext.HAS_SENDER));
