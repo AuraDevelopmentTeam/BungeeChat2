@@ -10,10 +10,14 @@ import lombok.experimental.UtilityClass;
 public class PlaceHolders {
     public static void registerPlaceholders() {
         PlaceHolderManager
-                .registerPlaceholder(new PlaceHolder("%data_time%", context -> TimeUtils.getCurrentTimeStamp()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_day%", context -> TimeUtils.getCurrentDay()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_month%", context -> TimeUtils.getCurrentMonth()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_year%", context -> TimeUtils.getCurrentYear()));
+                .registerPlaceholder(new PlaceHolder("%data_long_time%", context -> TimeUtils.getLongTimeStamp()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_time%", context -> TimeUtils.getTimeStamp()));
+        PlaceHolderManager
+                .registerPlaceholder(new PlaceHolder("%data_short_time%", context -> TimeUtils.getShortTimeStamp()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_date%", context -> TimeUtils.getDate()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_day%", context -> TimeUtils.getDay()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_month%", context -> TimeUtils.getMonth()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%data_year%", context -> TimeUtils.getYear()));
 
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%name%", context -> context.getSender().get().getName(),
                 BungeeChatContext.HAS_SENDER));

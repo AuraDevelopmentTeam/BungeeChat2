@@ -45,7 +45,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
 
     @Override
     public void log(String message) {
-        pw.println(TimeUtils.getFullCurrentTimeStamp() + message);
+        pw.println(TimeUtils.getTimeStamp() + message);
         pw.flush();
     }
 
@@ -59,10 +59,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
 
     private void initLogFile() {
         try {
-            String timestamp = TimeUtils.getCurrentYear() + "-" + TimeUtils.getCurrentMonth() + "-"
-                    + TimeUtils.getCurrentDay();
-
-            saveTo = new File(dataFolder, timestamp + "BungeeChat.log");
+            saveTo = new File(dataFolder, TimeUtils.getDate().replace('/', '-') + "BungeeChat.log");
 
             if (!saveTo.exists()) {
                 saveTo.createNewFile();

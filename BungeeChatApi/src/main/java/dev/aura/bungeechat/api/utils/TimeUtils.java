@@ -12,13 +12,27 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TimeUtils {
     /**
+     * Gets the current timestamp in 24h format with date and double digits for
+     * both hour and minute, separated by a colon.
+     *
+     * @return The timestamp formatted like: <code>"yyyy/MM/dd HH:mm:ss"</code>
+     * @see SimpleDateFormat
+     */
+    public static String getLongTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date now = new Date();
+
+        return sdfDate.format(now);
+    }
+
+    /**
      * Gets the current timestamp in 24h format and double digits for both hour
      * and minute, separated by a colon.
      *
      * @return The timestamp formatted like: <code>"HH:mm:ss"</code>
      * @see SimpleDateFormat
      */
-    public static String getFullCurrentTimeStamp() {
+    public static String getTimeStamp() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
         Date now = new Date();
 
@@ -32,7 +46,7 @@ public class TimeUtils {
      * @return The timestamp formatted like: <code>"HH:mm"</code>
      * @see SimpleDateFormat
      */
-    public static String getCurrentTimeStamp() {
+    public static String getShortTimeStamp() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");
         Date now = new Date();
 
@@ -40,12 +54,26 @@ public class TimeUtils {
     }
 
     /**
-     * Retuns the day in the month formatted to always have two digits.
+     * Gets the date in the month formatted to always have two digits. And the
+     * zear with four.
+     *
+     * @return The date formatted like: <code>"yyyy/MM/dd"</code>
+     * @see SimpleDateFormat
+     */
+    public static String getDate() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd");
+        Date now = new Date();
+
+        return sdfDate.format(now);
+    }
+
+    /**
+     * Gets the day in the month formatted to always have two digits.
      *
      * @return The date formatted like: <code>"dd"</code>
      * @see SimpleDateFormat
      */
-    public static String getCurrentDay() {
+    public static String getDay() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("dd");
         Date now = new Date();
 
@@ -53,12 +81,12 @@ public class TimeUtils {
     }
 
     /**
-     * Retuns the month in the year formatted to always have two digits.
+     * Gets the month in the year formatted to always have two digits.
      *
      * @return The date formatted like: <code>"MM"</code>
      * @see SimpleDateFormat
      */
-    public static String getCurrentMonth() {
+    public static String getMonth() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("MM");
         Date now = new Date();
 
@@ -66,12 +94,12 @@ public class TimeUtils {
     }
 
     /**
-     * Retuns the the year formatted to always have four digits.
+     * Gets the the year formatted to always have four digits.
      *
      * @return The date formatted like: <code>"yyyy"</code>
      * @see SimpleDateFormat
      */
-    public static String getCurrentYear() {
+    public static String getYear() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy");
         Date now = new Date();
 
