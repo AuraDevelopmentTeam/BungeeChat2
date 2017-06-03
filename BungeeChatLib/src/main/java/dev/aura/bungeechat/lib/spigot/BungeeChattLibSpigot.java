@@ -28,7 +28,7 @@ public class BungeeChattLibSpigot extends JavaPlugin implements BungeeChatApi {
     @Override
     public File getConfigFolder() {
         if (configDir == null) {
-            configDir = new File(getDataFolder().getParentFile(), "BungeeCord");
+            configDir = new File(getDataFolder().getParentFile(), "BungeeChat");
             configDir.mkdirs();
         }
 

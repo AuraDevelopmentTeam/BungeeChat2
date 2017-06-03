@@ -33,7 +33,7 @@ public class BungeeChatLibSponge implements BungeeChatApi {
     @Override
     public File getConfigFolder() {
         if (configDir == null) {
-            configDir = Sponge.getConfigManager().getSharedConfig(this).getDirectory().toFile();
+            configDir = new File(Sponge.getConfigManager().getSharedConfig(this).getDirectory().toFile(), "BungeeChat");
             configDir.mkdirs();
         }
 
