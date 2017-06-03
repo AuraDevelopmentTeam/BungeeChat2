@@ -8,6 +8,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.utils.StringUtil;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -29,29 +30,8 @@ public class AdvertisingFilter implements BungeeChatFilter {
     public void load() {
         Configuration section = ModuleManager.ANTI_ADVERTISING_MODULE.getModuleSection();
 
-        /*
-         * First turn the string list into a String Stream. That gets mapped to
-         * a Pattern Stream. Normal strings get turned into literal regexes and
-         * then get their "\*" replaced to ".*" so that the original "*"s in the
-         * string become actual wildcards. Strings starting with "R=" are
-         * interpreted as regexes. The "R=" gets stripped and then turned into
-         * an Pattern. Then the patterns get turned into predicates and finally
-         * they get combined into one predicate through an or, as an element is
-         * on the list when one or more regexes match. Reduce will return an
-         * optional that is empty if the original list was empty too. If that is
-         * the case it becomes an always false predicate since nothing will
-         * match the whitelist.
-         */
-        whitelisted = section.getStringList("whitelisted").stream().map(whitelist -> {
-            if (whitelist.startsWith("R="))
-                // Interpret the string as regex and remove the first two
-                // characters (which are "R=")
-                return Pattern.compile(whitelist.substring(2));
-            else
-                // Turn string into literal Regex and replace all "\*" with ".*"
-                // (means all original "*" become wildcards)
-                return Pattern.compile(Pattern.quote(whitelist).replaceAll("\\\\\\*", ".*"));
-        }).map(Pattern::asPredicate).reduce(Predicate::or).orElse(x -> false);
+        whitelisted = section.getStringList("whitelisted").stream().map(StringUtil::parseWildcardToPattern)
+                .map(Pattern::asPredicate).reduce(Predicate::or).orElse(x -> false);
     }
 
     public void unload() {
