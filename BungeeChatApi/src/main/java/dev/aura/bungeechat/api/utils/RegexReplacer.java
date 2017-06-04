@@ -10,8 +10,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Data
-@EqualsAndHashCode(exclude = { "defaultFlags", "patternCache" })
+@EqualsAndHashCode(exclude = { "pattern", "defaultFlags", "patternCache" })
 public class RegexReplacer {
+    private final String patternStr;
     private final Pattern pattern;
     private final String replacement;
     @Getter(AccessLevel.NONE)
@@ -20,6 +21,7 @@ public class RegexReplacer {
     private final Map<Integer, Pattern> patternCache;
 
     public RegexReplacer(Pattern pattern, String replacement) {
+        patternStr = pattern.pattern();
         this.pattern = pattern;
         this.replacement = replacement;
 
