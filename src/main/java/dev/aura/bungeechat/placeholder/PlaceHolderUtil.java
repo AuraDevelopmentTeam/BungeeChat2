@@ -28,7 +28,11 @@ public class PlaceHolderUtil {
             formatsBase = Config.get().getSection(FORMATS);
         }
 
-        return formatsBase.getString(format);
+        try {
+            return formatsBase.getString(format);
+        } catch (RuntimeException e) {
+            return format;
+        }
     }
 
     public static String getMessage(Message message) {
@@ -36,7 +40,11 @@ public class PlaceHolderUtil {
             messageBase = Config.get().getSection(MESSAGES);
         }
 
-        return messageBase.getString(message.getStringPath());
+        try {
+            return messageBase.getString(message.getStringPath());
+        } catch (RuntimeException e) {
+            return message.getStringPath();
+        }
     }
 
     public static String getFullFormatMessage(String format, BungeeChatContext context) {
