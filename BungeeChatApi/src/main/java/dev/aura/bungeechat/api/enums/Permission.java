@@ -7,10 +7,10 @@ public enum Permission {
 
     USE_COLORED_CHAT("chat.colors"),
 
-    BYPASS_ANTI_ADVERTISEMENT("chat.bypassantiadvertisement"),
-    BYPASS_ANTI_SPAM("chat.bypassantispam"),
-    BYPASS_ANTI_SWEAR("chat.bypassantiswear"),
-    BYPASS_CHAT_LOCK("chat.bypasschatlock"),
+    BYPASS_ANTI_ADVERTISEMENT("chat.bypass.antiadvertisement"),
+    BYPASS_ANTI_SPAM("chat.bypass.antispam"),
+    BYPASS_ANTI_SWEAR("chat.bypass.antiswear"),
+    BYPASS_CHAT_LOCK("chat.bypass.chatlock"),
 
     COMMAND_ALERT("command.alert"),
     COMMAND_GLOBAL("command.global"),
