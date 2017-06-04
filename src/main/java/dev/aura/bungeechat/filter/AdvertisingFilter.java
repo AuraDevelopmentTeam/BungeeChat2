@@ -58,4 +58,9 @@ public class AdvertisingFilter implements BungeeChatFilter {
         return message;
     }
 
+    @Override
+    public int getPriority() {
+        return 200;
+    }
+
 }

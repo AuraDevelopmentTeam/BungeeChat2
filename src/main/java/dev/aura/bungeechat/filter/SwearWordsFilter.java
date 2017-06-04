@@ -41,4 +41,8 @@ public class SwearWordsFilter implements BungeeChatFilter {
         return message;
     }
 
+    @Override
+    public int getPriority() {
+        return 100;
+    }
 }

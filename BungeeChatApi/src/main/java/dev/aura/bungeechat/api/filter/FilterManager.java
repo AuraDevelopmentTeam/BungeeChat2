@@ -1,7 +1,9 @@
 package dev.aura.bungeechat.api.filter;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.ServerType;
@@ -10,19 +12,25 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class FilterManager {
-    private static final Map<String, BungeeChatFilter> filters = new HashMap<>();
+    private static Map<String, BungeeChatFilter> filters = new LinkedHashMap<>();
     private static final boolean validSide = BungeeChatApi.getInstance().getServerType() == ServerType.BUNGEECORD;
 
     public static void addFilter(String name, BungeeChatFilter filter) throws UnsupportedOperationException {
         checkSide();
 
         filters.put(name, filter);
+        
+        sortFilters();
     }
 
     public static BungeeChatFilter removeFilter(String name) throws UnsupportedOperationException {
         checkSide();
+        
+        BungeeChatFilter out = filters.remove(name);
+        
+        sortFilters();
 
-        return filters.remove(name);
+        return out;
     }
 
     public static String applyFilters(BungeeChatAccount sender, String message)
@@ -39,5 +47,10 @@ public class FilterManager {
     private static void checkSide() throws UnsupportedOperationException {
         if (!validSide)
             throw new UnsupportedOperationException("This operation is only allowed on the BungeeCord!");
+    }
+
+    private static void sortFilters() {
+        filters = filters.entrySet().stream().sorted(Entry.comparingByValue())
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }
