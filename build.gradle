@@ -159,6 +159,10 @@ allprojects {
         dependsOn processSources 
     }
     
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+    
     jar {
         from sourceSets.main.output
         

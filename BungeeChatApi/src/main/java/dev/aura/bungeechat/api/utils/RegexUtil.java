@@ -82,7 +82,7 @@ public class RegexUtil {
                     new LeetSpeakPattern("R", "I2", "|`", "|~", "|?", "/2", "|^", "lz", "|9", "2", "12", "®", "[z", "Я",
                             ".-", "|2", "|-"),
                     new LeetSpeakPattern("S", "5", "$", "z", "§", "ehs", "es", "2"),
-                    new LeetSpeakPattern("T", "7 + -|- '][' † \"|\" ~|~"),
+                    new LeetSpeakPattern("T", "7", "+", "-|-", "']['", "†", "\"|\"", "~|~"),
                     new LeetSpeakPattern("U", "(_)", "|_|", "v", "L|", "µ", "บ"),
                     new LeetSpeakPattern("V", "\\/", "|/", "\\|"),
                     new LeetSpeakPattern("W", "\\/\\/", "VV", "\\N", "'//", "\\\\'", "\\^/", "(n)", "\\V/", "\\X/",
@@ -102,7 +102,17 @@ public class RegexUtil {
      * @return A regex string that matches the passed string literally.
      */
     public static String escapeRegex(String literal) {
-        return REGEX_ESCAPER.apply(literal);
+        StringBuilder b = new StringBuilder();
+
+        for (char c : REGEX_ESCAPER.apply(literal).toCharArray()) {
+            if (c >= 0x20 && c <= 0x7E) {
+                b.append(c);
+            } else {
+                b.append(String.format("\\x{%04X}", (int)c));
+            }
+        }
+
+        return b.toString();
     }
 
     /**
@@ -185,6 +195,7 @@ public class RegexUtil {
      * <li><u>leetSpeak</u>: Expands all letters to also match leet speak:
      * <a href="https://qntm.org/l33t">https://qntm.org/l33t</a>. So
      * <code>+3$t</code> is still a match. See {@link RegexUtil#LEET_PATTERNS}.
+     * This flags also implied case insensitive matching for wildcard strings!
      * <li><u>ignoreSpaces</u>: This allows infinitely many whitespaces between
      * the letters. So <code>t es       t</code> is still a match.
      * <li><u>ignoreDuplicateLetters</u>: This allows letters to be duplicated
@@ -219,6 +230,8 @@ public class RegexUtil {
         if (wildcard.startsWith("R="))
             return Pattern.compile(wildcard.substring(2), flags);
         else {
+            flags |= Pattern.CASE_INSENSITIVE;
+
             Stream<String> stream = TOKENIZER.splitAsStream(escapeRegex(wildcard));
 
             if (ignoreDuplicateLetters) {
@@ -276,7 +289,7 @@ public class RegexUtil {
             List<String> processingList = new LinkedList<>();
 
             processingList.add(letter);
-            processingList.addAll(processingList);
+            processingList.addAll(Arrays.asList(leetAlternatives));
 
             pattern = processingList.stream().map(RegexUtil::escapeRegex).collect(Collectors.joining("|", "(?:", ")"));
             escapedPattern = Matcher.quoteReplacement(pattern);
