@@ -58,6 +58,10 @@ public enum Message {
     public String get(BungeeChatAccount sender) {
         return get(new BungeeChatContext(sender));
     }
+    
+    public String get(BungeeChatAccount sender, String command) {
+        return get(new BungeeChatContext(sender, command));
+    }
 
     public String get(CommandSender sender) {
         return get(new Context(sender));
