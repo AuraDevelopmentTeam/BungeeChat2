@@ -15,6 +15,15 @@ public class RegexUtil {
     private static RegexReplacer WILDCARD_STAR = new RegexReplacer("^\\\\\\*$", ".*?");
     private static RegexReplacer WILDCARD_QUESTIONMARK = new RegexReplacer("^\\\\\\?$", ".?");
 
+    /**
+     * Escapes a string into a regex that matches this string literally.<br>
+     * <b>Note:</b> This method does not use the cheap <code>\Q...\E</code>
+     * variant that {@link Pattern#quote(String)} uses!
+     * 
+     * @param literal
+     *            The string to be escaped
+     * @return A regex string that matches the passed string literally.
+     */
     public static String escapeRegex(String literal) {
         return REGEX_ESCAPER.apply(literal);
     }
