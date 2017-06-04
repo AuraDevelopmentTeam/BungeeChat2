@@ -10,6 +10,7 @@ public enum Permission {
     BYPASS_ANTI_ADVERTISEMENT("chat.bypassantiadvertisement"),
     BYPASS_ANTI_SPAM("chat.bypassantispam"),
     BYPASS_ANTI_SWEAR("chat.bypassantiswear"),
+    BYPASS_CHAT_LOCK("chat.bypasschatlock"),
 
     COMMAND_ALERT("command.alert"),
     COMMAND_GLOBAL("command.global"),
@@ -27,7 +28,6 @@ public enum Permission {
     COMMAND_VANISH_SEE("command.vanish.see"),
     COMMAND_SOCIALSPY("command.socialspy"),
     COMMAND_CHAT_LOCK("command.chatlock"),
-    COMMAND_CHAT_LOCK_BYPASS("command.chatlock.bypass"),
 
     MESSAGE_JOIN("message.join"),
     MESSAGE_LEAVE("message.leave");
