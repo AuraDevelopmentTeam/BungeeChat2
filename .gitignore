@@ -4,6 +4,7 @@
 
 .gradle/
 build/
+gradle-app.setting
 
 # Test reports
 *-TestReport*

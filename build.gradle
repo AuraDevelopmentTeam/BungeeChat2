@@ -357,6 +357,8 @@ allprojects {
         
         test.finalizedBy generateTestReport
     }
+    
+    clean.dependsOn cleanGenerateTestReport
 }
 
 task reTrace(type: JavaExec) {
