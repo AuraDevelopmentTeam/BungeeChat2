@@ -20,10 +20,10 @@ repositories {
 }
 
 dependencies {
-    compileOnly project(":BungeeChatApi")
+    compile project(":BungeeChatApi")
 
-    compileOnly "org.spigotmc:spigot-api:${spigot_version}"
-    compileOnly "org.spongepowered:spongeapi:${sponge_version}"
+    compile "org.spigotmc:spigot-api:${spigot_version}"
+    compile "org.spongepowered:spongeapi:${sponge_version}"
 }
 
 jar {
