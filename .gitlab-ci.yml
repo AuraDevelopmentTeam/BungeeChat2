@@ -4,7 +4,8 @@ variables:
   TEST_REPORTS: "$CI_PROJECT_DIR/BungeeChat*-TestReport.zip"
 
 cache:
-  untracked: false
+  key: "$CI_COMMIT_REF_NAME/$CI_COMMIT_SHA"
+  untracked: true
 
 stages:
 - build
