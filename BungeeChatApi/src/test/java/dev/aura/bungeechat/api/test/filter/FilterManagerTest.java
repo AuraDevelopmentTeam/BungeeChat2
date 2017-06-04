@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.api.test.filter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 
@@ -132,7 +133,7 @@ public class FilterManagerTest {
     
     @RequiredArgsConstructor
     @Getter
-    private class TestFilter implements BungeeChatFilter {
+    private static class TestFilter implements BungeeChatFilter {
         private final String message;
         private final int priority;
 

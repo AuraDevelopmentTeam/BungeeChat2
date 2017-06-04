@@ -24,11 +24,11 @@ public class PlaceHolderUtil {
     private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
 
     public static String getFormat(String format) {
-        if (formatsBase == null) {
-            formatsBase = Config.get().getSection(FORMATS);
-        }
-
         try {
+            if (formatsBase == null) {
+                formatsBase = Config.get().getSection(FORMATS);
+            }
+
             return formatsBase.getString(format);
         } catch (RuntimeException e) {
             return format;
@@ -36,11 +36,11 @@ public class PlaceHolderUtil {
     }
 
     public static String getMessage(Message message) {
-        if (messageBase == null) {
-            messageBase = Config.get().getSection(MESSAGES);
-        }
-
         try {
+            if (messageBase == null) {
+                messageBase = Config.get().getSection(MESSAGES);
+            }
+
             return messageBase.getString(message.getStringPath());
         } catch (RuntimeException e) {
             return message.getStringPath();

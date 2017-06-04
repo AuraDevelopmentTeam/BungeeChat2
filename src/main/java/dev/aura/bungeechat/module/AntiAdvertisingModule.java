@@ -4,8 +4,6 @@ import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.filter.AdvertisingFilter;
 
 public class AntiAdvertisingModule implements Module {
-    private AdvertisingFilter filter;
-
     @Override
     public String getName() {
         return "AntiAdvertising";
@@ -13,15 +11,11 @@ public class AntiAdvertisingModule implements Module {
 
     @Override
     public void onEnable() {
-        filter = new AdvertisingFilter();
-
-        filter.load();
-        FilterManager.addFilter(getName(), filter);
+        FilterManager.addFilter(getName(), new AdvertisingFilter(getModuleSection().getStringList("whitelisted")));
     }
 
     @Override
     public void onDisable() {
         FilterManager.removeFilter(getName());
-        filter.unload();
     }
 }

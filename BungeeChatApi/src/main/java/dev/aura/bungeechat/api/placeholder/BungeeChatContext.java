@@ -86,31 +86,31 @@ public class BungeeChatContext {
     public BungeeChatContext(BungeeChatAccount sender) {
         this();
 
-        this.sender = Optional.of(sender);
+        this.sender = Optional.ofNullable(sender);
     }
     
     public BungeeChatContext(String message) {
         this();
         
-        this.message = Optional.of(message);
+        this.message = Optional.ofNullable(message);
     }
 
     public BungeeChatContext(BungeeChatAccount sender, String message) {
         this(sender);
 
-        this.message = Optional.of(message);
+        this.message = Optional.ofNullable(message);
     }
 
     public BungeeChatContext(BungeeChatAccount sender, BungeeChatAccount target) {
         this(sender);
 
-        this.target = Optional.of(target);
+        this.target = Optional.ofNullable(target);
     }
 
     public BungeeChatContext(BungeeChatAccount sender, BungeeChatAccount target, String message) {
         this(sender, target);
 
-        this.message = Optional.of(message);
+        this.message = Optional.ofNullable(message);
     }
 
     /**
