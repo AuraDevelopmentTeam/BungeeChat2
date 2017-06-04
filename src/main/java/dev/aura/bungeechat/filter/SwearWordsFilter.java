@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
-import dev.aura.bungeechat.api.utils.StringUtil;
+import dev.aura.bungeechat.api.utils.RegexUtil;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.config.Configuration;
@@ -19,7 +19,7 @@ public class SwearWordsFilter implements BungeeChatFilter {
     public void load() {
         Configuration section = ModuleManager.ANTI_SWEAR_MODULE.getModuleSection();
 
-        swearWords = section.getStringList("words").stream().map(StringUtil::parseWildcardToPattern)
+        swearWords = section.getStringList("words").stream().map(RegexUtil::parseWildcardToPattern)
                 .collect(Collectors.toList());
         replacement = section.getString("replacement");
     }

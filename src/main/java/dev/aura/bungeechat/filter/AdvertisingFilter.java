@@ -8,7 +8,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
-import dev.aura.bungeechat.api.utils.StringUtil;
+import dev.aura.bungeechat.api.utils.RegexUtil;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -30,7 +30,7 @@ public class AdvertisingFilter implements BungeeChatFilter {
     public void load() {
         Configuration section = ModuleManager.ANTI_ADVERTISING_MODULE.getModuleSection();
 
-        whitelisted = section.getStringList("whitelisted").stream().map(StringUtil::parseWildcardToPattern)
+        whitelisted = section.getStringList("whitelisted").stream().map(RegexUtil::parseWildcardToPattern)
                 .map(Pattern::asPredicate).reduce(Predicate::or).orElse(x -> false);
     }
 
