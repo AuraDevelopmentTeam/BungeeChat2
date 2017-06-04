@@ -1,10 +1,18 @@
 package dev.aura.bungeechat.api.utils;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -14,6 +22,75 @@ public class RegexUtil {
             "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0");
     private static RegexReplacer WILDCARD_STAR = new RegexReplacer("^\\\\\\*$", ".*?");
     private static RegexReplacer WILDCARD_QUESTIONMARK = new RegexReplacer("^\\\\\\?$", ".?");
+
+    /**
+     * A map containing all used leet speak alternatives. The key is a string of
+     * the uppercase letter.<br>
+     * Current Mapping:
+     * 
+     * <pre>
+     * A: 4 /\ @ /-\ ^ aye (L Д
+     * B: I3 8 13 |3 &szlig; !3 (3 /3 )3 |-] j3 6
+     * C: [ &cent; { &lt; ( &copy; 
+     * D: ) |) (| [) I&gt; |&gt; ? T) I7 cl |} &gt; |]
+     * E: 3 &amp; &pound; &euro; &euml; [- |=-
+     * F: |= &fnof; |# ph /= v
+     * G: &amp; 6 (_+ 9 C- gee (?, [, {, &lt;- (.
+     * H: # /-/ [-] ]-[ )-( (-) :-: |~| |-| ]~[ }{ !-! 1-1 \-/ I+I /-\
+     * I: 1 [] | ! eye 3y3 ][ 
+     * J: ,_| _| ._| ._] _] ,_] ] ; 1
+     * K: &gt;| |&lt; /&lt; 1&lt; |c |( |{
+     * L: 1 &pound; 7 |_ |
+     * M: /\/\ /V\ JVI [V] []V[] |\/| ^^ &lt;\/&gt; {V} (v) (V) |V| nn IVI |\|\ ]\/[ 1^1 ITI JTI 
+     * N: ^/ |\| /\/ [\] &lt;\&gt; {\} |V /V И ^ ท 
+     * O: 0 Q () oh [] 
+     * P: &lt;&gt; &Oslash; P |* |o |&ordm; ? |^ |&gt; |&quot; 9 []D |&deg; |7 
+     * Q: (_,) 9 ()_ 2 0_ &lt;| &amp;
+     * R: I2 |` |~ |? /2 |^ lz |9 2 12 &reg; [z Я .- |2 |- 
+     * S: 5 $ z &sect; ehs es 2
+     * T: 7 + -|- '][' &dagger; &quot;|&quot; ~|~ 
+     * U: (_) |_| v L| &micro; บ  
+     * V: \/ |/ \| 
+     * W: \/\/ VV \N '// \\' \^/ (n) \V/ \X/ \|/ \_|_/ \_:_/ Ш Щ uu 2u \\//\\// พ v&sup2;
+     * X: &gt;&lt; Ж }{ ecks &times; ? )( ][ 
+     * Y: j `/ Ч 7 \|/ &yen; \// 
+     * Z: 2 7_ -/_ % &gt;_ s ~/_ -\_ -|_
+     * </pre>
+     */
+    public static final Map<String, LeetSpeakPattern> LEET_PATTERNS = Arrays
+            .asList(new LeetSpeakPattern("A", "4", "/\\", "@", "/-\\", "^", "aye", "(L", "Д"),
+                    new LeetSpeakPattern("B", "I3", "8", "13", "|3", "ß", "!3", "(3", "/3", ")3", "|-]", "j3", "6"),
+                    new LeetSpeakPattern("C", "[", "¢", "{", "<", "(", "©"),
+                    new LeetSpeakPattern("D", ")", "|)", "(|", "[)", "I>", "|>", "?", "T)", "I7", "cl", "|}", ">",
+                            "|]"),
+                    new LeetSpeakPattern("E", "3", "&", "£", "€", "ë", "[-", "|=-"),
+                    new LeetSpeakPattern("F", "|=", "ƒ", "|#", "ph", "/=", "v"),
+                    new LeetSpeakPattern("G", "&", "6", "(_+", "9", "C-", "gee", "(?,", "[,", "{,", "<-", "(."),
+                    new LeetSpeakPattern("H", "#", "/-/", "[-]", "]-[", ")-(", "(-)", ":-:", "|~|", "|-|", "]~[", "}{",
+                            "!-!", "1-1", "\\-/", "I+I", "/-\\"),
+                    new LeetSpeakPattern("I", "1", "[]", "|", "!", "eye", "3y3", "]["),
+                    new LeetSpeakPattern("J", ",_|", "_|", "._|", "._]", "_]", ",_]", "]", ";", "1"),
+                    new LeetSpeakPattern("K", ">|", "|<", "/<", "1<", "|c", "|(", "|{"),
+                    new LeetSpeakPattern("L", "1", "£", "7", "|_", "|"),
+                    new LeetSpeakPattern("M", "/\\/\\", "/V\\", "JVI", "[V]", "[]V[]", "|\\/|", "^^", "<\\/>", "{V}",
+                            "(v)", "(V)", "|V|", "nn", "IVI", "|\\|\\", "]\\/[", "1^1", "ITI", "JTI"),
+                    new LeetSpeakPattern("N", "^/", "|\\|", "/\\/", "[\\]", "<\\>", "{\\}", "|V", "/V", "И", "^", "ท"),
+                    new LeetSpeakPattern("O", "0", "Q", "()", "oh", "[]"),
+                    new LeetSpeakPattern(
+                            "P", "<>", "Ø", "P", "|*", "|o", "|º", "?", "|^", "|>", "|\"", "9", "[]D", "|°", "|7"),
+                    new LeetSpeakPattern("Q", "(_,)", "9", "()_", "2", "0_", "<|", "&"),
+                    new LeetSpeakPattern("R", "I2", "|`", "|~", "|?", "/2", "|^", "lz", "|9", "2", "12", "®", "[z", "Я",
+                            ".-", "|2", "|-"),
+                    new LeetSpeakPattern("S", "5", "$", "z", "§", "ehs", "es", "2"),
+                    new LeetSpeakPattern("T", "7 + -|- '][' † \"|\" ~|~"),
+                    new LeetSpeakPattern("U", "(_)", "|_|", "v", "L|", "µ", "บ"),
+                    new LeetSpeakPattern("V", "\\/", "|/", "\\|"),
+                    new LeetSpeakPattern("W", "\\/\\/", "VV", "\\N", "'//", "\\\\'", "\\^/", "(n)", "\\V/", "\\X/",
+                            "\\|/", "\\_|_/", "\\_:_/", "Ш", "Щ", "uu", "2u", "\\\\//\\\\//", "พ", "v²"),
+                    new LeetSpeakPattern("X", "><", "Ж", "}{", "ecks", "×", "?", ")(", "]["),
+                    new LeetSpeakPattern("Y", "j", "`/", "Ч", "7", "\\|/", "¥", "\\//"),
+                    new LeetSpeakPattern("Z", "2", "7_", "-/_", "%", ">_", "s", "~/_", "-\\_", "-|_"))
+            .stream().collect(Collectors.toMap(pattern -> pattern.getLetter(), pattern -> pattern));
 
     /**
      * Escapes a string into a regex that matches this string literally.<br>
@@ -107,7 +184,7 @@ public class RegexUtil {
      * <code>test</code> itself will be matched though).
      * <li><u>leetSpeak</u>: Expands all letters to also match leet speak:
      * <a href="https://qntm.org/l33t">https://qntm.org/l33t</a>. So
-     * <code>+3$t</code> is still a match.
+     * <code>+3$t</code> is still a match. See {@link RegexUtil#LEET_PATTERNS}.
      * <li><u>ignoreSpaces</u>: This allows infinitely many whitespaces between
      * the letters. So <code>t es       t</code> is still a match.
      * <li><u>ignoreDuplicateLetters</u>: This allows letters to be duplicated
@@ -154,7 +231,15 @@ public class RegexUtil {
             }
 
             if (leetSpeak) {
-                // TODO: Find leet patterns and apply them.
+                stream = stream.map(token -> {
+                    String firstLetter = Character.toString(token.charAt(0)).toUpperCase();
+
+                    if (LEET_PATTERNS.containsKey(firstLetter)) {
+                        token = LEET_PATTERNS.get(firstLetter).apply(token);
+                    }
+
+                    return token;
+                });
             }
 
             stream = stream.map(WILDCARD_STAR::apply).map(WILDCARD_QUESTIONMARK::apply);
@@ -163,6 +248,42 @@ public class RegexUtil {
             String around = freeMatching ? "" : "\\b";
 
             return Pattern.compile(stream.collect(Collectors.joining(delimiter, around, around)), flags);
+        }
+    }
+
+    /**
+     * A Helper class for leet speak patterns.<br>
+     * It produces a regex that can be used for matching.
+     */
+    @EqualsAndHashCode(exclude = { "letterPattern" })
+    @ToString(exclude = { "letterPattern" })
+    public static class LeetSpeakPattern {
+        @Getter
+        private final String letter;
+        private final Pattern letterPattern;
+        @Getter
+        private final String[] leetAlternatives;
+        @Getter
+        private final String pattern;
+        @Getter
+        private final String escapedPattern;
+
+        public LeetSpeakPattern(String letter, String... leetAlternatives) {
+            this.letter = letter;
+            this.letterPattern = Pattern.compile(escapeRegex(letter), Pattern.CASE_INSENSITIVE);
+            this.leetAlternatives = leetAlternatives;
+
+            List<String> processingList = new LinkedList<>();
+
+            processingList.add(letter);
+            processingList.addAll(processingList);
+
+            pattern = processingList.stream().map(RegexUtil::escapeRegex).collect(Collectors.joining("|", "(?:", ")"));
+            escapedPattern = Matcher.quoteReplacement(pattern);
+        }
+
+        public String apply(String input) {
+            return letterPattern.matcher(input).replaceAll(escapedPattern);
         }
     }
 }
