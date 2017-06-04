@@ -1,12 +1,14 @@
 variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/BungeeChat*.jar* $CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
+  TEST_REPORTS: "$CI_PROJECT_DIR/BungeeChat*-TestReport.zip"
 
 cache:
   untracked: false
 
 stages:
 - build
+- test
 - deploy
   
 build:
@@ -20,6 +22,17 @@ build:
   artifacts:
     paths:
     - $ARTIFACTS
+
+test:
+  stage: test
+  script:
+  - ./gradlew --parallel generateTestReport
+  when: on_success
+  except:
+    - release
+  artifacts:
+    paths:
+    - $TEST_REPORTS
     
 deploy:
   stage: deploy

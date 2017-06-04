@@ -347,6 +347,12 @@ allprojects {
            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
         }
     }
+    
+    task generateTestReport(type: Zip, dependsOn: test) {
+        from file("${buildDir}/reports/tests/test")
+        archiveName "${project.name}-TestReport.zip"
+        destinationDir rootProject.projectDir
+    }
 }
 
 task reTrace(type: JavaExec) {
