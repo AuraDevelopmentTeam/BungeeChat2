@@ -88,6 +88,10 @@ Settings:
       enabled: true
     AntiSwear:
       enabled: true
+      freeMatching: false
+      leetSpeak: false
+      ignoreSpaces: false
+      ignoreDuplicateLetters: false
       words:
         - fuck
         - kut

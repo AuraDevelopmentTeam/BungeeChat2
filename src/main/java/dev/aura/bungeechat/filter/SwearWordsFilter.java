@@ -9,25 +9,18 @@ import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.utils.RegexUtil;
-import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
-import net.md_5.bungee.config.Configuration;
 
 public class SwearWordsFilter implements BungeeChatFilter {
-    private List<Pattern> swearWords;
-    private String replacement;
+    private final List<Pattern> swearWords;
+    private final String replacement;
 
-    public void load() {
-        Configuration section = ModuleManager.ANTI_SWEAR_MODULE.getModuleSection();
-
-        swearWords = section.getStringList("words").stream().map(RegexUtil::parseWildcardToPattern)
+    public SwearWordsFilter(List<String> swearWords, String replacement, boolean freeMatching, boolean leetSpeak,
+            boolean ignoreSpaces, boolean ignoreDuplicateLetters) {
+        this.swearWords = swearWords.stream().map(word -> RegexUtil.parseWildcardToPattern(word,
+                Pattern.CASE_INSENSITIVE, freeMatching, leetSpeak, ignoreSpaces, ignoreDuplicateLetters))
                 .collect(Collectors.toList());
-        replacement = section.getString("replacement");
-    }
-
-    public void unload() {
-        swearWords = null;
-        replacement = null;
+        this.replacement = replacement;
     }
 
     @Override
