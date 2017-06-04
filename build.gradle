@@ -147,8 +147,6 @@ allprojects {
     		inputs.dir(processSources.outputDir)
     		args(processSources.outputDir, "-d", outputDir)
         
-        compileConfigurationName = configurations.compileOnly.name
-        
         doLast {
             fileTree(dir: outputDir, exclude: "**/*.java").forEach{file -> file.delete()}
         }
@@ -356,6 +354,8 @@ allprojects {
         from file("${buildDir}/reports/tests/test")
         archiveName "${project.name}-TestReport.zip"
         destinationDir rootProject.projectDir
+        
+        test.finalizedBy generateTestReport
     }
 }
 

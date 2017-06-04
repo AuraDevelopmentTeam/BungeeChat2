@@ -19,7 +19,7 @@ build:
   - cp $ORIG_ARTIFACTS .
   when: on_success
   except:
-    - release
+    - tags
   artifacts:
     paths:
     - $ARTIFACTS
@@ -27,10 +27,10 @@ build:
 test:
   stage: test
   script:
-  - ./gradlew --parallel generateTestReport
+  - ./gradlew --parallel test
   when: on_success
   except:
-    - release
+    - tags
   artifacts:
     paths:
     - $TEST_REPORTS
@@ -41,4 +41,4 @@ deploy:
   - ./gradlew --parallel uploadArchives -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   when: on_success
   only:
-  - release
+  - tags
