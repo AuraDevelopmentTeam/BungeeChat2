@@ -45,7 +45,7 @@ public class RegexReplacer {
 
     public String apply(String input, int flags) {
         if (!patternCache.containsKey(flags)) {
-            patternCache.put(flags, Pattern.compile(pattern.pattern(), flags));
+            patternCache.put(flags, Pattern.compile(patternStr, flags));
         }
 
         return replaceAll(patternCache.get(flags), input);
