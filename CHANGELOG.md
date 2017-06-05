@@ -1,13 +1,17 @@
 Version 2.0.0
 -------------
 
-\* Improved Anti-Advertising  
-\* Improved Anti-Swear  
-\* Improved Anti-Duplicate (TODO)  
-\* Wildcards (\* and ?) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
-\* Regexs (start them with R=) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
-\* Anti-Swear can be made more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters"
-...  
+\+ Ability to configure which servers are included in the Global Chat.
+\+ Ability to give multiple permissions at once using parent permission.
+\+ Ability to save player data on a MySQL database.
+\+ Ability to register custom placeholders and filters via the API.
+
+\* Rewritten the whole plugin.
+\* Improved the Chat Filter System.
+\* Improved the Reloading feature.
+\* Improved the BungeeChat API.
+\* Improved the way of saving player data files.*
+\* Improved the Version Check System.
 
 
 Version 1.3.5
