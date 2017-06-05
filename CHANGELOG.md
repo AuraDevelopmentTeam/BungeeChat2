@@ -1,3 +1,15 @@
+Version 2.0.0
+-------------
+
+\* Improved Anti-Advertising  
+\* Improved Anti-Swear  
+\* Improved Anti-Duplicate (TODO)  
+\* Wildcards (\* and ?) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
+\* Regexs (start them with R=) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
+\* Anti-Swear can be made more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters"
+...  
+
+
 Version 1.3.5
 -------------
 
