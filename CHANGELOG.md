@@ -5,6 +5,7 @@ Version 2.0.0
 \+ Ability to give multiple permissions at once using parent permission.  
 \+ Ability to save player data on a MySQL database.  
 \+ Ability to register custom placeholders and filters via the API.  
+\+ Added /setprefix back to allow overwriting of the user prefix supplied by the Permission Plugin.  
   
 \* Rewritten the whole plugin.  
 \* Improved the Chat Filter Systems (Anti-Advertise, Anti-Duplicate, Anti-Swear).  
@@ -14,6 +15,8 @@ Version 2.0.0
 \* Improved the Version Check System.  
 \* Improved Permission Plugin system. The plugin will be detected automatically.  
 \* Improved ChatLock. It can be used either globally or locally.  
+
+\- Removed Redis support for now. (Will be added back in a later version)..
 
 **Technical details:**
 
