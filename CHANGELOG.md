@@ -7,11 +7,21 @@ Version 2.0.0
 \+ Ability to register custom placeholders and filters via the API.  
   
 \* Rewritten the whole plugin.  
-\* Improved the Chat Filter System.  
+\* Improved the Chat Filter Systems (Anti-Advertise, Anti-Duplicate, Anti-Swear).  
 \* Improved the Reloading feature.  
 \* Improved the BungeeChat API.  
 \* Improved the way of saving player data files.  
 \* Improved the Version Check System.  
+\* Improved Permission Plugin system. The plugin will be detected automatically.  
+\* Improved ChatLock. It can be used either globally or locally.  
+
+**Technical details:**
+
+\* Regexs (start them with R=) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
+\* Anti-Swear can be made more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters"  
+\* Anti-Duplicate can now be configurered to keep track of more than one message per user (TODO)  
+\* Filtering (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) can be enabled for private messages (TODO)  
+\* Improved chat logging! You can now save the log to a file and customize logging formats  
 
 
 Version 1.3.5
