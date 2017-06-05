@@ -8,6 +8,8 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatLockCommand extends BaseCommand {
+    private static final String USAGE = "/lockchat <local|global>";
+    
     public ChatLockCommand(ChatLockModule chatLockModule) {
         super("lockchat", chatLockModule.getModuleSection().getStringList("aliases"));
     }
@@ -21,7 +23,7 @@ public class ChatLockCommand extends BaseCommand {
             } else {
                 ProxiedPlayer player = (ProxiedPlayer) sender;
                 if (args.length < 1) {
-                    sender.sendMessage(Message.INCORRECT_USAGE.get(player, "/lockchat <local|global>"));
+                    sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
                 } else {
                     if (args[0].equalsIgnoreCase("global")) {
                         //TODO: ENABLE CHATLOCK OR DISABLE GLOBAL
@@ -29,7 +31,7 @@ public class ChatLockCommand extends BaseCommand {
                         String serverName = player.getServer().getInfo().getName();
                         //TODO: ADD SERVER TO LOCKED.
                     } else {
-                        sender.sendMessage(Message.INCORRECT_USAGE.get(player, "/lockchat <local|global>"));
+                        sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
                     }
                 }
             }
