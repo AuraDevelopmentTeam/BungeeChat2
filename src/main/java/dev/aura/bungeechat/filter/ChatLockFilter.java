@@ -11,7 +11,7 @@ import dev.aura.bungeechat.permission.PermissionManager;
 public class ChatLockFilter implements BungeeChatFilter {
     @Override
     public String applyFilter(BungeeChatAccount sender, String message) throws BlockMessageException {
-        if (PermissionManager.hasPermission(sender, Permission.BYPASS_CHAT_LOCK))
+        if (PermissionManager.hasPermission(sender, Permission.COMMAND_CHAT_LOCK_BYPASS))
             return message;
         else
             throw new BlockMessageException(Message.CHAT_IS_DISABLED.get(sender, message));
