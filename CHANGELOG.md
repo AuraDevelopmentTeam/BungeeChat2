@@ -17,7 +17,8 @@ Version 2.0.0
 
 **Technical details:**
 
-\* Regexs (start them with R=) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
+\* Wildcards (\* and ?) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
+\* Regexes (start them with R=) can be used in domain names for the Anti-Advertising and Anti-Swear filters  
 \* Anti-Swear can be made more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters"  
 \* Anti-Duplicate can now be configurered to keep track of more than one message per user (TODO)  
 \* Filtering (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) can be enabled for private messages (TODO)  
