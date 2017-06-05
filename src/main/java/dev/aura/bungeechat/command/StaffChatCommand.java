@@ -32,7 +32,7 @@ public class StaffChatCommand extends BaseCommand {
                 ProxiedPlayer p = (ProxiedPlayer) sender;
                 if (AccountManager.getUserAccount(p).getChannelType().equals(ChannelType.STAFF)) {
                     AccountManager.getUserAccount(p).setChannelType(ChannelType.NONE);
-                    p.sendMessage(Message.DISABLE_STAFFCHAT.get());
+                    p.sendMessage(Message.ENABLE_LOCAL.get());
                 } else {
                     AccountManager.getUserAccount(p).setChannelType(ChannelType.STAFF);
                     p.sendMessage(Message.ENABLE_STAFFCHAT.get());

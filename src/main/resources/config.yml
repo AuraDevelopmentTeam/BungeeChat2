@@ -126,46 +126,55 @@ Settings:
     enabled: false
 
 Messages:
-  not-player: "&cYou need to be a player to use this command!"
+  #Channel Type Messages
+  enable-global: "&eYou are now talking in &bglobal chat&e!"
+  enable-staffchat: "&eYou are now talking in &astaff chat&e!"
+  enable-local: "You are now talking in &clocal chat&e!"
+  global-is-default: "&eGlobal chat is already the default chatmode!"
+  #Messenger Messages
+  message-yourself: "&cYou can not send a private message to yourself..."
+  enable-messager: "&eYou have &aenbaled&e messaging!"
+  disable-messager: "&eYou have &cdisabled&e messaging"
+  no-reply: "&cYou have nobody to reply."
+  reply-offline: "&cThe player you were chatting with is no longer online."
+  has-messager-disabled: "&c%name% has messaging disabled!"
+  #Vanish Messages
+  enable-vanish: "&eYou have &aenbaled&e hide mode!"
+  disable-vanish: "&eYou have &cdisabled&e hide mode!"
+  #Mute Messages
   muted: "&cSorry but you can not talk because you are muted!"
   unmute-not-muted: "&cThis player is not muted!"
   mute-is-muted: "This player is already muted!"
-  no-reply: "&cYou have nobody to reply."
-  reply-offline: "&cThe player you were chatting with is no longer online."
-  player-not-found: "&cCould not find that player..."
-  enable-global: "&eYou are now talking in &bglobal chat&e!"
-  disable-global: "&eYou are no longer talking in &bglobal chat&e!"
-  message-yourself: "&cYou can not send a message to yourself..."
-  enable-socialspy: "&eSocialspy has been &aenbaled&e!"
-  disable-socialspy: "&eSocialspy has been &cdisabled&e!"
-  enable-staffchat: "&eYou are now talking in &astaffchat&e!"
-  disable-staffchat: "&eYou are no longer talking in &astaffchat&e!"
-  enable-messager: "&eYou have &aenbaled&e messaging!"
-  disable-messager: "&eYou have &cdisabled&e messaging"
-  enable-vanish: "&eYou have &aenbaled&e hide mode!"
-  disable-vanish: "&eYou have &cdisabled&e hide mode!"
-  enable-chatlock: "&eYou have disabled chatting!"
-  disable-chatlock: "&eYou have enabled chatting!"
-  chat-is-locked: "&cYou may not talk now, the chat has been locked!"
-  global-is-default: "&eGlobal chat is already the default chatmode!"
-  incorrect-usage: "&cIncorrect usage! Use this command like this: %command%"
   unmute: "&eThe player &c%name% &cehas been unmuted!"
   mute: "&eThe player &c%name% &ehas been muted!"
-  remove-prefix: "&eRemoved the prefix of &6%name%&e!"
-  has-messager-disabled: "&c%name% has messaging disabled!"
-  not-server: "&c%tserver is not a valid server."
-  anti-advertise: "&cPlease do not advertise!"
   tempmute: "&eThe player &c%name% &ehas been muted till %mutetime% (UTC +1)"
+  #SocialSpy Messages
+  enable-socialspy: "&eSocialspy has been &aenbaled&e!"
+  disable-socialspy: "&eSocialspy has been &cdisabled&e!"
+  #Error Messages
+  not-player: "&cYou need to be a player to use this command!"
+  player-not-found: "&cCould not find that player..."
+  incorrect-usage: "&cIncorrect usage! Use this command like this: %command%"
+  no-permission: "&cYou do not have the permissions to perform this action!"
+  not-server: "&c%tserver is not a valid server."
+  #Ignore Messages
+  has-ignored: "&cThis player is ignoring you..."
   add-ignore: "&eYou have ignored %name%!"
   remove-ignore: "&eYou have un-ignored %name%!"
   already-ignored: "&eYou have are already ignoring this player!"
   ignore-yourself: "&cYou can not ignore yourself!"
   unignore-yourself: "&cYou can not unignore yourself!"
   not-ignored: "&cYou have not ignored this user!"
+  #Filter Messages
+  anti-advertise: "&cPlease do not advertise!"
   anti-duplication: "&cPlease do not spam messages!"
-  no-permission: "&cYou do not have the permissions to perform this action!"
-  has-ignored: "&cThis player is ignoring you..."
-  
+  #ChatLock Messages
+  enable-chatlock: "&eYou have disabled chatting!"
+  disable-chatlock: "&eYou have enabled chatting!"
+  chat-is-locked: "&cYou may not talk now, the chat has been locked!"
+  #Other Messages
+  remove-prefix: "&eRemoved the prefix of &6%name%&e!"
+
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"
   socialspy: "&9SPY > &e%sender_name% &8-> &e%target_name% &8: &r%message%"

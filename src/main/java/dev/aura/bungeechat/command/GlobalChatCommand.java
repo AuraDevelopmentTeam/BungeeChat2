@@ -33,7 +33,7 @@ public class GlobalChatCommand extends BaseCommand {
                     ProxiedPlayer p = (ProxiedPlayer) sender;
                     if (AccountManager.getUserAccount(p).getChannelType().equals(ChannelType.GLOBAL)) {
                         AccountManager.getUserAccount(p).setChannelType(ChannelType.NONE);
-                        p.sendMessage(Message.DISABLE_GLOBAL.get());
+                        p.sendMessage(Message.ENABLE_LOCAL.get());
                     } else {
                         AccountManager.getUserAccount(p).setChannelType(ChannelType.GLOBAL);
                         p.sendMessage(Message.ENABLE_GLOBAL.get());
