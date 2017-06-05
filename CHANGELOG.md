@@ -7,8 +7,8 @@ Version 2.0.0
 \+ Ability to register custom placeholders and filters via the API.  
 \+ Added /setprefix back to allow overwriting of the user prefix supplied by the Permission Plugin.  
   
-\* Rewritten the whole plugin.
-\* Improved performance.    
+\* Rewritten the whole plugin.  
+\* Improved performance.  
 \* Improved the Chat Filter Systems (Anti-Advertise, Anti-Duplicate, Anti-Swear).  
 \* Improved the Reloading feature.  
 \* Improved the BungeeChat API.  
