@@ -61,7 +61,7 @@ ext {
     build = getBuild()
     full_version = getFullVersion()
     shouldSign = project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")
-    MainDirResources = fileTree(dir: file(projectDir), includes: ["LICENSE.md"])
+    MainDirResources = fileTree(dir: file(projectDir), includes: ["CHANGELOG.md", "LICENSE.md"])
 }
 
 subprojects {
