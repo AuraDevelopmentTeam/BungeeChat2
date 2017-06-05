@@ -14,6 +14,7 @@ import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
+import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
@@ -92,7 +93,10 @@ public class MessagesService {
 
         Optional<String> finalMessage = preProcessMessage(context, "global-chat");
 
-        sendToMatchingPlayers(finalMessage);
+        if (!Config.get().getBoolean("Settings.GlobalChat.Server-list.enabled"))
+            sendToMatchingPlayers(finalMessage);
+        else
+            sendToMatchingPlayers(finalMessage, pp -> Config.get().getStringList("Settings.GlobalChat.Server-list.list").contains(pp.getServer().getInfo().getName()));
 
         ChatLoggingManager.logMessage(ChannelType.GLOBAL, context);
     }

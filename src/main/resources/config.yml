@@ -1,4 +1,4 @@
-# Bungee Chat Configuration by shawn_ian (v8)
+# Bungee Chat Configuration by shawn_ian (v9)
 # Placeholders can be found here: http://tiny.cc/bungeechatplaceholders
 # In the config file you can change the chat formats and disable and enable feautures.
 # If you found any bugs please report them (See plugin site for more information)
@@ -26,6 +26,12 @@ Settings:
       Symbol:
         enabled: false
         symbol: "!"
+      Server-list:
+        enabled: false
+        list:
+          - Hub1
+          - Hub2
+          - Hub3
     Messenger:
       enabled: true
       aliases:
