@@ -1,17 +1,17 @@
 Version 2.0.0
 -------------
 
-\+ Ability to configure which servers are included in the Global Chat.
-\+ Ability to give multiple permissions at once using parent permission.
-\+ Ability to save player data on a MySQL database.
-\+ Ability to register custom placeholders and filters via the API.
-
-\* Rewritten the whole plugin.
-\* Improved the Chat Filter System.
-\* Improved the Reloading feature.
-\* Improved the BungeeChat API.
-\* Improved the way of saving player data files.*
-\* Improved the Version Check System.
+\+ Ability to configure which servers are included in the Global Chat.  
+\+ Ability to give multiple permissions at once using parent permission.  
+\+ Ability to save player data on a MySQL database.  
+\+ Ability to register custom placeholders and filters via the API.  
+  
+\* Rewritten the whole plugin.  
+\* Improved the Chat Filter System.  
+\* Improved the Reloading feature.  
+\* Improved the BungeeChat API.  
+\* Improved the way of saving player data files.  
+\* Improved the Version Check System.  
 
 
 Version 1.3.5
