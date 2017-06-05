@@ -16,7 +16,7 @@ Version 2.0.0
 \* Improved Permission Plugin system. The plugin will be detected automatically.  
 \* Improved ChatLock. It can be used either globally or locally.  
 
-\- Removed Redis support for now. (Will be added back in a later version)..
+\- Removed Redis support for now. (Will be added back in a later version).  
 
 **Technical details:**
 
