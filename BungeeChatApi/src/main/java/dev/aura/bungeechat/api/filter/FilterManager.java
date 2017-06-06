@@ -1,9 +1,9 @@
 package dev.aura.bungeechat.api.filter;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
@@ -18,7 +18,7 @@ public class FilterManager {
     public static final int DUPLICATION_FILTER_PRIORITY = 300;
     public static final int LOCK_CHAT_FILTER_PRIORITY = 400;
 
-    private static Map<String, BungeeChatFilter> filters = new LinkedHashMap<>();
+    private static ConcurrentMap<String, BungeeChatFilter> filters = new ConcurrentHashMap<>();
     private static final boolean validSide = BungeeChatApi.getInstance().getServerType() == ServerType.BUNGEECORD;
 
     public static void addFilter(String name, BungeeChatFilter filter) throws UnsupportedOperationException {
@@ -57,6 +57,6 @@ public class FilterManager {
 
     private static void sortFilters() {
         filters = filters.entrySet().stream().sorted(Collections.reverseOrder(Entry.comparingByValue()))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, ConcurrentHashMap::new));
     }
 }
