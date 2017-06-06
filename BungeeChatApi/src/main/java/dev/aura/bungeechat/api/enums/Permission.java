@@ -2,7 +2,7 @@ package dev.aura.bungeechat.api.enums;
 
 import lombok.Getter;
 
-/*
+/**
  * Enum which contains all the permissions used by BungeeChat.<br>
  * Used for easy access to all the permission nodes.
  */
