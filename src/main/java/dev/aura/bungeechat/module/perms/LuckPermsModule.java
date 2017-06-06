@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.module;
+package dev.aura.bungeechat.module.perms;
 
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.hook.LuckPermsHook;
