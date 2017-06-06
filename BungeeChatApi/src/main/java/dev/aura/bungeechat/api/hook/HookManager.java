@@ -1,10 +1,10 @@
 package dev.aura.bungeechat.api.hook;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
@@ -18,7 +18,7 @@ public class HookManager {
     public static final int PERMISSION_PLUGIN_PREFIX_PRIORITY = 200;
     public static final int ACCOUNT_PREFIX_PRIORITY = 300;
 
-    private static ConcurrentMap<String, BungeeChatHook> hooks = new ConcurrentHashMap<>();
+    private static Map<String, BungeeChatHook> hooks = new LinkedHashMap<>();
     private static final boolean validSide = BungeeChatApi.getInstance().getServerType() == ServerType.BUNGEECORD;
 
     public static void addHook(String name, BungeeChatHook hook) throws UnsupportedOperationException {
@@ -84,6 +84,6 @@ public class HookManager {
 
     private static void sortHooks() {
         hooks = hooks.entrySet().stream().sorted(Collections.reverseOrder(Entry.comparingByValue()))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, ConcurrentHashMap::new));
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }
