@@ -36,20 +36,15 @@ public class ReloadCommand extends BaseCommand {
                 + ", with help from " + ChatColor.GOLD + BungeeChatApi.AUTHOR_RYADA + ChatColor.GRAY + ".");
     }
 
-    private boolean checkForUpdates(CommandSender sender) {
-        String version = BungeeChat.getInstance().getLatestVersion();
-
+    private void checkForUpdates(CommandSender sender) {
         if (BungeeChat.getInstance().isLatestVersion()) {
             sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION
                     + " [test] (Build #" + BungeeChatApi.BUILD + ")");
-
-            return false;
         } else {
             sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION
-                    + " (Build #" + BungeeChatApi.BUILD + ")");
-            sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + version);
-
-            return true;
+                    + " [test] (Build #" + BungeeChatApi.BUILD + ")");
+            sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN
+                    + BungeeChat.getInstance().getLatestVersion());
         }
     }
 
