@@ -51,6 +51,8 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
             try {
                 replacement = replacementSupplier.get(context);
             } catch (RuntimeException e) {
+                e.printStackTrace();
+                
                 replacement = "";
             }
 

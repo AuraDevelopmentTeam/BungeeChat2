@@ -42,39 +42,31 @@ public class HookManager {
     public String getPrefix(BungeeChatAccount account) {
         checkSide();
 
-        String prefix = "";
         Optional<String> out;
 
         for (BungeeChatHook hook : hooks.values()) {
             out = hook.getPrefix(account);
 
-            if (out.isPresent()) {
-                prefix = out.get();
-
-                break;
-            }
+            if (out.isPresent())
+                return out.get();
         }
 
-        return prefix;
+        return "";
     }
-    
+
     public String getSuffix(BungeeChatAccount account) {
         checkSide();
 
-        String suffix = "";
         Optional<String> out;
 
         for (BungeeChatHook hook : hooks.values()) {
             out = hook.getSuffix(account);
 
-            if (out.isPresent()) {
-                suffix = out.get();
-
-                break;
-            }
+            if (out.isPresent())
+                return out.get();
         }
 
-        return suffix;
+        return "";
     }
 
     private static void checkSide() throws UnsupportedOperationException {

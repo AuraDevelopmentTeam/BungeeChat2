@@ -25,7 +25,7 @@ public class LuckPermsHook implements BungeeChatHook {
         if (!metaData.isPresent())
             return Optional.empty();
 
-        return Optional.of(metaData.get().getPrefix());
+        return Optional.ofNullable(metaData.get().getPrefix());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class LuckPermsHook implements BungeeChatHook {
         if (!metaData.isPresent())
             return Optional.empty();
 
-        return Optional.of(metaData.get().getSuffix());
+        return Optional.ofNullable(metaData.get().getSuffix());
     }
 
     private Optional<MetaData> getMetaData(BungeeChatAccount account) {
