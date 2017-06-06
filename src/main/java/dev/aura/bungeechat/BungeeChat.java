@@ -36,6 +36,8 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
+    private static final String storedDataHookName = "storedData";
+    private static final String defaultHookName = "default";
     @Getter
     private static BungeeChat instance;
     @Getter(lazy = true)
@@ -69,8 +71,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
 
         ModuleManager.enableModules();
-        HookManager.addHook("storedData", new StoredDataHook());
-        HookManager.addHook("default", new DefaultHook(permissionsManager.getString("Default-Prefix"),
+        HookManager.addHook(storedDataHookName, new StoredDataHook());
+        HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("Default-Prefix"),
                 permissionsManager.getString("Default-Suffix")));
 
         loadScreen();
@@ -78,6 +80,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     @Override
     public void onDisable() {
+        HookManager.removeHook(storedDataHookName);
+        HookManager.removeHook(defaultHookName);
         ModuleManager.disableModules();
     }
 
