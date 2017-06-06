@@ -71,10 +71,12 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             return new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
                     (boolean) save.readObject(), (boolean) save.readObject(), (BlockingQueue<UUID>) save.readObject(),
                     (Optional<String>) save.readObject(), (Optional<String>) save.readObject());
-        } catch (IOException | ClassNotFoundException e) {
-            LoggerHelper.error("Could not load player with UUID " + uuid, e);
+        } catch (IOException | ClassNotFoundException | ClassCastException e) {
+            BungeeChatAccount account = new Account(uuid);
+            
+            LoggerHelper.error("Could not load player " + account, e);
+            
+            return account;
         }
-
-        return new Account(uuid);
     }
 }

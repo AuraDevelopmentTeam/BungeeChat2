@@ -9,7 +9,7 @@ import dev.aura.bungeechat.config.Config;
 import lombok.Getter;
 import net.md_5.bungee.config.Configuration;
 
-public class AccountSQL {
+public class AccountSQLStorage {
     @Getter
     private static Connection connection;
 

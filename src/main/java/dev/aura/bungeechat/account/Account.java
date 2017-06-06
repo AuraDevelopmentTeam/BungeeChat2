@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -132,6 +133,11 @@ public class Account implements BungeeChatAccount {
         } catch (NullPointerException e) {
             return "unknown";
         }
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 
     private ServerInfo getServerInfo() {
