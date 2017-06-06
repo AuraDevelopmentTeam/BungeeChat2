@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.UUID;
 
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.config.Config;
 import lombok.Getter;
 import net.md_5.bungee.config.Configuration;
 
-public class AccountSQLStorage {
+public class AccountSQLStorage implements BungeeChatAccountStorage {
     @Getter
     private static Connection connection;
 
@@ -30,4 +33,14 @@ public class AccountSQLStorage {
         statement.executeUpdate(sql);
     }
 
+    @Override
+    public void save(BungeeChatAccount account) {
+        // TODO Implement
+    }
+
+    @Override
+    public BungeeChatAccount load(UUID uuid) {
+        // TODO Implement
+        return null;
+    }
 }
