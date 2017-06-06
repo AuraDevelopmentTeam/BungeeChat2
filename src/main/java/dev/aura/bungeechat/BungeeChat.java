@@ -39,12 +39,17 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private File configDir;
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         instance = this;
         BungeeChatInstaceHolder.setInstance(instance);
+    }
 
+    @Override
+    public void onEnable() {
         Config.load();
+
         PlaceHolders.registerPlaceholders();
+        AccountManager.setAccountStorage(new AccountFileStorage());
 
         if (CONFIG_VERSION != Config.get().getDouble("Version")) {
             LoggerHelper.info(
@@ -56,7 +61,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new BungeecordAccountManager());
-        AccountManager.setAccountStorage(new AccountFileStorage());
         ModuleManager.enableModules();
         loadScreen();
     }
