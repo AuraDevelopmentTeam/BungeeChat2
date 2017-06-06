@@ -46,9 +46,8 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             save.writeObject(account.isVanished());
             save.writeObject(account.hasSocialSpyEnabled());
             save.writeObject(account.getIgnored());
-            save.writeObject(account.getStoredPrefix());
-            save.writeObject(account.getStoredSuffix());
-            save.close();
+            save.writeObject(account.getStoredPrefix().orElse(null));
+            save.writeObject(account.getStoredSuffix().orElse(null));
         } catch (IOException e) {
             LoggerHelper.error("Could not save player " + account, e);
         }
@@ -58,24 +57,24 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
     @Override
     public BungeeChatAccount load(UUID uuid) {
         try {
-            File checker = new File(getUserDataDir(), uuid.toString() + FILE_EXTENSION);
+            File accountFile = new File(getUserDataDir(), uuid.toString() + FILE_EXTENSION);
 
-            if (!checker.exists())
+            if (!accountFile.exists())
                 return new Account(uuid);
 
             @Cleanup
-            FileInputStream saveFile = new FileInputStream(checker);
+            FileInputStream saveFile = new FileInputStream(accountFile);
             @Cleanup
             ObjectInputStream save = new ObjectInputStream(saveFile);
 
             return new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
                     (boolean) save.readObject(), (boolean) save.readObject(), (BlockingQueue<UUID>) save.readObject(),
-                    (Optional<String>) save.readObject(), (Optional<String>) save.readObject());
+                    Optional.ofNullable((String) save.readObject()), Optional.ofNullable((String) save.readObject()));
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             BungeeChatAccount account = new Account(uuid);
-            
+
             LoggerHelper.error("Could not load player " + account, e);
-            
+
             return account;
         }
     }
