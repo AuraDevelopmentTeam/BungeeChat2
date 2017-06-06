@@ -6,7 +6,7 @@ import dev.aura.bungeechat.command.ReplyCommand;
 import dev.aura.bungeechat.command.ToggleCommand;
 import net.md_5.bungee.api.ProxyServer;
 
-public class MessengerModule implements Module {
+public class MessengerModule extends Module {
     private MessageCommand messageCommand;
     private ReplyCommand replyCommand;
     private ToggleCommand toggleCommand;

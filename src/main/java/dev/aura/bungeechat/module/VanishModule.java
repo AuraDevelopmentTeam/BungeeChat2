@@ -4,7 +4,7 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.command.VanishCommand;
 import net.md_5.bungee.api.ProxyServer;
 
-public class VanishModule implements Module {
+public class VanishModule extends Module {
     private VanishCommand vanishCommand;
 
     @Override

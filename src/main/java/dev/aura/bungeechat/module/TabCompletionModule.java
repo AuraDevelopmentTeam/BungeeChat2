@@ -4,7 +4,7 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.listener.TabCompletionListener;
 import net.md_5.bungee.api.ProxyServer;
 
-public class TabCompletionModule implements Module {
+public class TabCompletionModule extends Module {
     private TabCompletionListener tabCompletionListener;
 
     @Override

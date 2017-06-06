@@ -15,6 +15,7 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.hook.HookManager;
+import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
@@ -24,7 +25,7 @@ import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
 import dev.aura.bungeechat.message.MessagesService;
-import dev.aura.bungeechat.module.ModuleManager;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.PlaceHolders;
 import dev.aura.bungeechat.util.LoggerHelper;
@@ -80,6 +81,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
 
+        BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();
         HookManager.addHook(storedDataHookName, new StoredDataHook());
         HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("Default-Prefix"),
@@ -98,7 +100,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         ProxyServer.getInstance().getPluginManager().unregisterListener(bungeecordAccountManager);
         ProxyServer.getInstance().getPluginManager().unregisterCommand(reloadCommand);
-        
+
         // Just to be sure
         ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
         ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
@@ -143,7 +145,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + " & " + AUTHOR_BRAINSTONE);
         LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION);
         LoggerHelper.info(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BUILD);
-        LoggerHelper.info(ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + ModuleManager.getActiveModuleString());
+        LoggerHelper.info(
+                ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
         if (!isLatestVersion()) {
             LoggerHelper.info(ChatColor.YELLOW + "There is an update avalible. You can download version "
                     + ChatColor.GREEN + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at SpigotMC.org!");

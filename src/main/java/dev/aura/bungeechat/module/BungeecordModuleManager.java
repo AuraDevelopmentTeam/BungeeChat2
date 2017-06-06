@@ -1,18 +1,16 @@
 package dev.aura.bungeechat.module;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import dev.aura.bungeechat.api.module.BungeeChatModule;
+import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.module.perms.BungeePermsModule;
 import dev.aura.bungeechat.module.perms.LuckPermsModule;
 import dev.aura.bungeechat.module.perms.PowerfulPermsModule;
-import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 
-@UtilityClass
-public class ModuleManager {
+public class BungeecordModuleManager extends ModuleManager {
     // PermissionHookModules
     public static final BungeePermsModule BUNGEE_PERMS_MODULE = new BungeePermsModule();
     public static final LuckPermsModule LUCK_PERMS_MODULE = new LuckPermsModule();
@@ -36,51 +34,27 @@ public class ModuleManager {
     public static final TabCompletionModule TAB_COMPLETION_MODULE = new TabCompletionModule();
     public static final VanishModule VANISHER_MODULE = new VanishModule();
 
-    private static List<Module> activeModules = null;
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
+    private static boolean modulesAdded = false;
 
-    public static Stream<Module> getModules() {
-        return Arrays.stream(ModuleManager.class.getDeclaredFields())
-                .filter(field -> Module.class.isAssignableFrom(field.getType())).map(field -> {
-                    try {
-                        return (Module) field.get(null);
-                    } catch (IllegalArgumentException | IllegalAccessException e) {
-                        e.printStackTrace();
+    public static void registerPluginModules() {
+        if (!modulesAdded) {
+            availableModules.addAll(0, Arrays.stream(BungeecordModuleManager.class.getDeclaredFields())
+                    .filter(field -> BungeeChatModule.class.isAssignableFrom(field.getType())).map(field -> {
+                        try {
+                            return (BungeeChatModule) field.get(null);
+                        } catch (IllegalArgumentException | IllegalAccessException e) {
+                            e.printStackTrace();
 
-                        return null;
-                    }
-                });
-    }
+                            return null;
+                        }
+                    }).collect(Collectors.toList()));
 
-    public static List<Module> getActiveModules() {
-        if (activeModules == null) {
-            activeModules = getModules().filter(Module::isEnabled).collect(Collectors.toList());
+            modulesAdded = true;
         }
-
-        return activeModules;
-    }
-
-    public static boolean isModuleActive(Module module) {
-        return getActiveModules().contains(module);
-    }
-
-    public static Stream<Module> getActiveModulesStream() {
-        return getActiveModules().stream();
-    }
-
-    public static void enableModules() {
-        getActiveModulesStream().forEach(Module::onEnable);
-    }
-
-    public static void disableModules() {
-        getActiveModulesStream().forEach(Module::onDisable);
-    }
-    
-    public static void clearActiveModules() {
-        activeModules = null;
     }
 
     public static String getActiveModuleString() {
-        return getActiveModulesStream().map(Module::getName).collect(Collectors.joining(MODULE_CONCATENATOR));
+        return getActiveModulesStream().map(BungeeChatModule::getName).collect(Collectors.joining(MODULE_CONCATENATOR));
     }
 }

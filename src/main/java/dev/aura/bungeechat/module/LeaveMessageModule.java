@@ -4,7 +4,7 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.listener.LeaveMessageListener;
 import net.md_5.bungee.api.ProxyServer;
 
-public class LeaveMessageModule implements Module {
+public class LeaveMessageModule extends Module {
     private LeaveMessageListener LeaveMessageListener;
 
     @Override

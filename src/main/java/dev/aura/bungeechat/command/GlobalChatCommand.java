@@ -7,7 +7,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.GlobalChatModule;
-import dev.aura.bungeechat.module.ModuleManager;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -21,7 +21,7 @@ public class GlobalChatCommand extends BaseCommand {
     @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL)) {
-            if (ModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
+            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
                 sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
                 return;
             }

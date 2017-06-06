@@ -3,7 +3,7 @@ package dev.aura.bungeechat.module;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.filter.DuplicationFilter;
 
-public class AntiDuplicationModule implements Module {
+public class AntiDuplicationModule extends Module {
     @Override
     public String getName() {
         return "AntiDuplication";

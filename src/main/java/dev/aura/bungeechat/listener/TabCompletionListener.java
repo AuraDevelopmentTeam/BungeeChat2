@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.module.ModuleManager;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -25,7 +25,7 @@ public class TabCompletionListener implements Listener {
         
         Stream<BungeeChatAccount> stream = AccountManager.getAccountsForPartialName(partialPlayerName).stream();
         
-        if(ModuleManager.isModuleActive(ModuleManager.VANISHER_MODULE)) {
+        if(BungeecordModuleManager.isModuleActive(BungeecordModuleManager.VANISHER_MODULE)) {
             stream = stream.filter(account -> !account.isVanished());
         }
         

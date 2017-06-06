@@ -16,7 +16,7 @@ import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import dev.aura.bungeechat.config.Config;
-import dev.aura.bungeechat.module.ModuleManager;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
@@ -45,7 +45,7 @@ public class MessagesService {
         String messageTarget = preProcessMessage(context, account, "message-target", false).get();
         target.sendMessage(messageTarget);
 
-        if (ModuleManager.isModuleActive(ModuleManager.SOCIAL_SPY_MODULE)) {
+        if (BungeecordModuleManager.isModuleActive(BungeecordModuleManager.SOCIAL_SPY_MODULE)) {
             String socialSpyMessage = preProcessMessage(context, account, "socialspy", false).get();
 
             sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(target.getUniqueId()))

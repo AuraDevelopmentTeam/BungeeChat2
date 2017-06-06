@@ -4,7 +4,7 @@ import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
 import net.md_5.bungee.config.Configuration;
 
-public class AntiSwearModule implements Module {
+public class AntiSwearModule extends Module {
     @Override
     public String getName() {
         return "AntiSwear";

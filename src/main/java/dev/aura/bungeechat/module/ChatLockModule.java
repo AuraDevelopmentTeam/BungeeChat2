@@ -6,7 +6,7 @@ import dev.aura.bungeechat.command.ChatLockCommand;
 import dev.aura.bungeechat.filter.ChatLockFilter;
 import net.md_5.bungee.api.ProxyServer;
 
-public class ChatLockModule implements Module {
+public class ChatLockModule extends Module {
     private ChatLockCommand chatLockCommand;
 
     @Override

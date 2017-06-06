@@ -3,7 +3,7 @@ package dev.aura.bungeechat.module;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.filter.AdvertisingFilter;
 
-public class AntiAdvertisingModule implements Module {
+public class AntiAdvertisingModule extends Module {
     @Override
     public String getName() {
         return "AntiAdvertising";

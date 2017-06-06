@@ -5,7 +5,7 @@ import dev.aura.bungeechat.command.GlobalChatCommand;
 import dev.aura.bungeechat.listener.GlobalChatListener;
 import net.md_5.bungee.api.ProxyServer;
 
-public class GlobalChatModule implements Module {
+public class GlobalChatModule extends Module {
     private GlobalChatCommand globalChatCommand;
     private GlobalChatListener globalChatListener;
 

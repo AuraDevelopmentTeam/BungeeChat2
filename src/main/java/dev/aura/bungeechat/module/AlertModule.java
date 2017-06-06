@@ -4,7 +4,7 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.command.AlertCommand;
 import net.md_5.bungee.api.ProxyServer;
 
-public class AlertModule implements Module {
+public class AlertModule extends Module {
     private AlertCommand alertCommand;
 
     @Override

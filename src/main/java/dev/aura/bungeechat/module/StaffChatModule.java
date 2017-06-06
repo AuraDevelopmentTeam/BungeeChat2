@@ -5,7 +5,7 @@ import dev.aura.bungeechat.command.StaffChatCommand;
 import dev.aura.bungeechat.listener.StaffChatListener;
 import net.md_5.bungee.api.ProxyServer;
 
-public class StaffChatModule implements Module {
+public class StaffChatModule extends Module {
     private StaffChatCommand staffChatCommand;
     private StaffChatListener staffChatListener;
 

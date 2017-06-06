@@ -4,7 +4,7 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.listener.JoinMessageListener;
 import net.md_5.bungee.api.ProxyServer;
 
-public class JoinMessageModule implements Module {
+public class JoinMessageModule extends Module {
     private JoinMessageListener joinMessageListener;
 
     @Override

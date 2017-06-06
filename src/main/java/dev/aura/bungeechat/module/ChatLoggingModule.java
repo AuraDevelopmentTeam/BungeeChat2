@@ -8,7 +8,7 @@ import dev.aura.bungeechat.listener.ChatLoggingListener;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 
-public class ChatLoggingModule implements Module {
+public class ChatLoggingModule extends Module {
     private ChatLoggingListener chatLoggingListener;
 
     private ConsoleLogger consoleLogger;

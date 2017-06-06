@@ -4,7 +4,7 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.MessagesService;
-import dev.aura.bungeechat.module.ModuleManager;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -29,8 +29,8 @@ public class GlobalChatListener implements Listener {
             return;
         }
 
-        if (ModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Symbol.enabled")) {
-            String symbol = ModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getString("Symbol.symbol");
+        if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Symbol.enabled")) {
+            String symbol = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getString("Symbol.symbol");
 
             if (message.startsWith(symbol) && symbol.equals("/")) {
                 e.setCancelled(true);

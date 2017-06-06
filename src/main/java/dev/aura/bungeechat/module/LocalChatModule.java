@@ -4,7 +4,7 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.listener.LocalChatListener;
 import net.md_5.bungee.api.ProxyServer;
 
-public class LocalChatModule implements Module {
+public class LocalChatModule extends Module {
     private LocalChatListener localChatListener;
 
     @Override
