@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.placeholder;
 
+import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolder;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
@@ -25,6 +26,12 @@ public class PlaceHolders {
                 new PlaceHolder("%displayname%", context -> context.getSender().get().getDisplayName(),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_displayname%"));
         PlaceHolderManager.registerPlaceholder(
+                new PlaceHolder("%prefix%", context -> HookManager.getPrefix(context.getSender().get()),
+                        BungeeChatContext.HAS_SENDER).createAliases("sender_prefix%"));
+        PlaceHolderManager.registerPlaceholder(
+                new PlaceHolder("%suffix%", context -> HookManager.getSuffix(context.getSender().get()),
+                        BungeeChatContext.HAS_SENDER).createAliases("sender_suffix%"));
+        PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%ping%", context -> String.valueOf(context.getSender().get().getPing()),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_ping%"));
         PlaceHolderManager.registerPlaceholder(
@@ -41,6 +48,10 @@ public class PlaceHolders {
                 context -> context.getTarget().get().getName(), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_displayname%",
                 context -> context.getTarget().get().getDisplayName(), BungeeChatContext.HAS_TARGET));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_prefix%",
+                context -> HookManager.getPrefix(context.getTarget().get()), BungeeChatContext.HAS_TARGET));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_suffix%",
+                context -> HookManager.getSuffix(context.getTarget().get()), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_ping%",
                 context -> String.valueOf(context.getTarget().get().getPing()), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_uuid%",
