@@ -10,6 +10,10 @@ import net.md_5.bungee.api.ChatColor;
 
 @UtilityClass
 public class ModuleManager {
+    // PermissionHookModules
+    public static final LuckPermsModule LUCK_PERMS_MODULE = new LuckPermsModule();
+
+    // Normal Modules
     public static final AlertModule ALERT_MODULE = new AlertModule();
     public static final AntiAdvertisingModule ANTI_ADVERTISING_MODULE = new AntiAdvertisingModule();
     public static final AntiDuplicationModule ANTI_DUPLICATION_MODULE = new AntiDuplicationModule();

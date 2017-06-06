@@ -121,10 +121,7 @@ Settings:
       file: true
   PermissionsManager:
     Default-Prefix: "&7[Member]"
-    Default-Suffix: "&7[Member]"
-    External: NONE
-  RedisFeatures:
-    enabled: false
+    Default-Suffix: "&r"
 
 Messages:
   #Channel Type Messages

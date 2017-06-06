@@ -14,11 +14,14 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
+import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.ReloadCommand;
 import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.hook.DefaultHook;
+import dev.aura.bungeechat.hook.StoredDataHook;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.ModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -30,6 +33,7 @@ import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
     @Getter
@@ -61,7 +65,14 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new BungeecordAccountManager());
+
+        Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
+
         ModuleManager.enableModules();
+        HookManager.addHook("storedData", new StoredDataHook());
+        HookManager.addHook("default", new DefaultHook(permissionsManager.getString("Default-Prefix"),
+                permissionsManager.getString("Default-Suffix")));
+
         loadScreen();
     }
 
