@@ -28,6 +28,10 @@ public interface BungeeChatAccount {
         return this.hasIgnored(getUniqueId());
     }
 
+    public String getStoredPrefix();
+
+    public String getStoredSuffix();
+
     public void setChannelType(ChannelType channelType);
 
     public void setVanished(boolean vanished);
@@ -53,6 +57,10 @@ public interface BungeeChatAccount {
     default public void removeIgnore(BungeeChatAccount account) {
         this.removeIgnore(getUniqueId());
     }
+
+    public void setStoredPrefix(String newPrefix);
+
+    public void setStoredSuffix(String newSuffix);
 
     public String getName();
 

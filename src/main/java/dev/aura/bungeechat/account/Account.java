@@ -5,6 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.config.Config;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Account implements BungeeChatAccount {
     private boolean messanger;
     private boolean socialspy;
     private final CopyOnWriteArrayList<UUID> ignored;
+    private String storedPrefix, storedSuffix;
 
     public static ProxiedPlayer toProxiedPlayer(BungeeChatAccount account) {
         return ProxyServer.getInstance().getPlayer(account.getUniqueId());
@@ -42,21 +44,25 @@ public class Account implements BungeeChatAccount {
         messanger = true;
         socialspy = false;
         ignored = new CopyOnWriteArrayList<>();
+        storedPrefix = Config.get().getString("Settings.PermissionsManager.Default-Prefix");
+        storedSuffix = Config.get().getString("Settings.PermissionsManager.Default-Suffix");
     }
 
     public Account(ProxiedPlayer player, ChannelType channelType, boolean vanished, boolean messanger,
-            boolean socialspy, CopyOnWriteArrayList<UUID> ignored) {
-        this(player.getUniqueId(), channelType, vanished, messanger, socialspy, ignored);
+            boolean socialspy, CopyOnWriteArrayList<UUID> ignored, String storedPrefix, String storedSuffix) {
+        this(player.getUniqueId(), channelType, vanished, messanger, socialspy, ignored, storedPrefix, storedSuffix);
     }
 
     public Account(UUID uuid, ChannelType channelType, boolean vanished, boolean messanger, boolean socialspy,
-            CopyOnWriteArrayList<UUID> ignored) {
+            CopyOnWriteArrayList<UUID> ignored, String storedPrefix, String storedSuffix) {
         this.uuid = uuid;
         this.channelType = channelType;
         this.vanished = vanished;
         this.messanger = messanger;
         this.socialspy = socialspy;
         this.ignored = ignored;
+        this.storedPrefix = storedPrefix;
+        this.storedSuffix = storedSuffix;
     }
 
     @Override
@@ -77,6 +83,16 @@ public class Account implements BungeeChatAccount {
     @Override
     public boolean hasIgnored(UUID uuid) {
         return ignored.contains(uuid);
+    }
+
+    @Override
+    public String getStoredPrefix() {
+        return storedPrefix;
+    }
+
+    @Override
+    public String getStoredSuffix() {
+        return storedSuffix;
     }
 
     public boolean hasIgnored(ProxiedPlayer player) {
@@ -110,6 +126,16 @@ public class Account implements BungeeChatAccount {
     @Override
     public void removeIgnore(UUID uuid) {
         ignored.remove(uuid);
+    }
+
+    @Override
+    public void setStoredPrefix(String newPrefix) {
+        storedPrefix = newPrefix;
+    }
+
+    @Override
+    public void setStoredSuffix(String newSuffix) {
+        storedSuffix = newSuffix;
     }
 
     public void removeIgnore(ProxiedPlayer player) {

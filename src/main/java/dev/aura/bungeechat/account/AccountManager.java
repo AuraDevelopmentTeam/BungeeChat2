@@ -66,6 +66,8 @@ public class AccountManager implements Listener {
         save.writeObject(account.isVanished());
         save.writeObject(account.isSocialspy());
         save.writeObject(account.getIgnored());
+        save.writeObject(account.getStoredPrefix());
+        save.writeObject(account.getStoredSuffix());
         save.close();
         
         unregisterAccount(account);
@@ -91,7 +93,9 @@ public class AccountManager implements Listener {
                 String ignored = resultSet.getString("ignored");
                 CopyOnWriteArrayList<UUID> uuidList = UUIDUtils
                         .convertStringCopyOnWriteArrayList(Arrays.asList(ignored.split("\\s*,\\s*")));
-                acc = new Account(uuid, channelType, vanished, messenger, socialspy, uuidList);
+                String prefix = resultSet.getString("prefix");
+                String suffix = resultSet.getString("suffix");
+                acc = new Account(uuid, channelType, vanished, messenger, socialspy, uuidList, prefix, suffix);
             }
         }
         if (acc != null) {
@@ -116,7 +120,7 @@ public class AccountManager implements Listener {
         @SuppressWarnings("unchecked")
         Account account = new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
                 (boolean) save.readObject(), (boolean) save.readObject(),
-                (CopyOnWriteArrayList<UUID>) save.readObject());
+                (CopyOnWriteArrayList<UUID>) save.readObject(), (String) save.readObject(), (String) save.readObject());
         save.close();
         
         registerAccount(account);
