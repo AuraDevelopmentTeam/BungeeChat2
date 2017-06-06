@@ -14,7 +14,8 @@ import lombok.experimental.UtilityClass;
 public class FilterManager {
     public static final int SWEAR_FILTER_PRIORITY = 100;
     public static final int ADVERTISING_FILTER_PRIORITY = 200;
-    public static final int LOCK_CHAT_FILTER_PRIORITY = 300;
+    public static final int DUPLICATION_FILTER_PRIORITY = 300;
+    public static final int LOCK_CHAT_FILTER_PRIORITY = 400;
 
     private static Map<String, BungeeChatFilter> filters = new LinkedHashMap<>();
     private static final boolean validSide = BungeeChatApi.getInstance().getServerType() == ServerType.BUNGEECORD;

@@ -12,6 +12,7 @@ import net.md_5.bungee.api.ChatColor;
 public class ModuleManager {
     public static final AlertModule ALERT_MODULE = new AlertModule();
     public static final AntiAdvertisingModule ANTI_ADVERTISING_MODULE = new AntiAdvertisingModule();
+    public static final AntiDuplicationModule ANTI_DUPLICATION_MODULE = new AntiDuplicationModule();
     public static final AntiSwearModule ANTI_SWEAR_MODULE = new AntiSwearModule();
     public static final ChatLockModule CHAT_LOCK_MODULE = new ChatLockModule();
     public static final ChatLoggingModule CHAT_LOGGING_MODULE = new ChatLoggingModule();

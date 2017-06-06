@@ -92,6 +92,13 @@ Settings:
       enabled: true
     ServerSwitchMessages:
       enabled: true
+    AntiAdvertising:
+      enabled: true
+      whitelisted:
+        - www.google.com
+    AntiDuplication:
+      enabled: true
+      checkPastMessages: 5
     AntiSwear:
       enabled: true
       freeMatching: false
@@ -103,17 +110,11 @@ Settings:
         - kut
         - tyfus
       replacement: "****"
-    AntiAdvertising:
-      enabled: true
-      whitelisted:
-        - www.google.com
     TabCompletion:
       enabled: true
     Ignoring:
       enabled: true
       aliases: []
-    AntiDuplication:
-      enabled: true
     ChatLogging:
       enabled: true
       console: true
