@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import dev.aura.bungeechat.module.perms.BungeePermsModule;
 import dev.aura.bungeechat.module.perms.LuckPermsModule;
+import dev.aura.bungeechat.module.perms.PowerfulPermsModule;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 
@@ -15,6 +16,7 @@ public class ModuleManager {
     // PermissionHookModules
     public static final BungeePermsModule BUNGEE_PERMS_MODULE = new BungeePermsModule();
     public static final LuckPermsModule LUCK_PERMS_MODULE = new LuckPermsModule();
+    public static final PowerfulPermsModule POWERFUL_PERMS_MODULE = new PowerfulPermsModule();
 
     // Normal Modules
     public static final AlertModule ALERT_MODULE = new AlertModule();
