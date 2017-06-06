@@ -49,7 +49,7 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             save.writeObject(account.getStoredPrefix().orElse(null));
             save.writeObject(account.getStoredSuffix().orElse(null));
         } catch (IOException e) {
-            LoggerHelper.error("Could not save player " + account, e);
+            LoggerHelper.warning("Could not save player " + account, e);
         }
     }
 
@@ -73,7 +73,7 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             BungeeChatAccount account = new Account(uuid);
 
-            LoggerHelper.error("Could not load player " + account, e);
+            LoggerHelper.warning("Could not load player " + account, e);
 
             return account;
         }
