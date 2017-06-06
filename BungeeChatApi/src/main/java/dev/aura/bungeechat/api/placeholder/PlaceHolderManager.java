@@ -32,15 +32,15 @@ public class PlaceHolderManager {
             registerPlaceholder(p);
         }
     }
-    
-    public static void clear() {
-        placeholders.clear();
-    }
 
     public static void registerPlaceholder(BungeeChatPlaceHolder placeholder) {
         if (placeholders.contains(placeholder))
             throw new IllegalStateException("Placeholder " + placeholder.getName() + " has already been registered!");
 
         placeholders.add(placeholder);
+    }
+
+    public static void clear() {
+        placeholders.clear();
     }
 }
