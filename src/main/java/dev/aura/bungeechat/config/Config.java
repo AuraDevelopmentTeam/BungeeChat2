@@ -1,7 +1,6 @@
 package dev.aura.bungeechat.config;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 
 import dev.aura.bungeechat.BungeeChat;
@@ -30,14 +29,6 @@ public class Config {
         } catch (Exception e) {
             LoggerHelper.error("There is an error with creating or loading the conifg file!", e);
             LoggerHelper.error("Please contact the author at spigotmc.org!");
-        }
-    }
-
-    public static void reload() {
-        try {
-            configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getConfigFile());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

@@ -3,7 +3,6 @@ package dev.aura.bungeechat.command;
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -21,8 +20,11 @@ public class ReloadCommand extends BaseCommand {
         if (args.length != 0) {
             if (args[0].equalsIgnoreCase("reload")
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_RELOAD)) {
-                Config.reload();
-                sender.sendMessage(prefix + ChatColor.GREEN + "Your configuration has been reloaded!");
+
+                BungeeChat.getInstance().onDisable();
+                BungeeChat.getInstance().onEnable(false);
+
+                sender.sendMessage(prefix + ChatColor.GREEN + "The plugin has been reloaded!");
 
                 return;
             }
