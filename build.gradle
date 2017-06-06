@@ -234,7 +234,7 @@ task proguard(type: ProGuardTask, dependsOn: deobfJar) {
     printmapping "${jar.archivePath}.map"
  
     // Libraries
-    libraryjars configurations.compileOnly
+    libraryjars configurations.compile
     
     // Stuff that depends on the group name
     keep "class ${project.group}.api.** { *; }"
