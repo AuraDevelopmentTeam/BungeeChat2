@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.api.utils.TimeUtils;
+import dev.aura.bungeechat.api.utils.TimeUtil;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 
 public class FileLogger implements ChatLogger, AutoCloseable {
@@ -58,7 +58,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
 
     private void initLogFile() {
         try {
-            saveTo = new File(dataFolder, TimeUtils.getDate().replace('/', '-') + "-chat.log");
+            saveTo = new File(dataFolder, TimeUtil.getDate().replace('/', '-') + "-chat.log");
 
             if (!saveTo.exists()) {
                 saveTo.createNewFile();

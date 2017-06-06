@@ -3,20 +3,20 @@ package dev.aura.bungeechat.placeholder;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolder;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
-import dev.aura.bungeechat.api.utils.TimeUtils;
+import dev.aura.bungeechat.api.utils.TimeUtil;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class PlaceHolders {
     public static void registerPlaceholders() {
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%timestamp%", context -> TimeUtils.getLongTimeStamp()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%time%", context -> TimeUtils.getTimeStamp()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%timestamp%", context -> TimeUtil.getLongTimeStamp()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%time%", context -> TimeUtil.getTimeStamp()));
         PlaceHolderManager
-                .registerPlaceholder(new PlaceHolder("%short_time%", context -> TimeUtils.getShortTimeStamp()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%date%", context -> TimeUtils.getDate()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%day%", context -> TimeUtils.getDay()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%month%", context -> TimeUtils.getMonth()));
-        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%year%", context -> TimeUtils.getYear()));
+                .registerPlaceholder(new PlaceHolder("%short_time%", context -> TimeUtil.getShortTimeStamp()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%date%", context -> TimeUtil.getDate()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%day%", context -> TimeUtil.getDay()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%month%", context -> TimeUtil.getMonth()));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%year%", context -> TimeUtil.getYear()));
 
         PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%name%", context -> context.getSender().get().getName(), BungeeChatContext.HAS_SENDER)

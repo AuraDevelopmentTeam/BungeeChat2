@@ -10,7 +10,7 @@ import lombok.experimental.UtilityClass;
  * the current timestamp.
  */
 @UtilityClass
-public class TimeUtils {
+public class TimeUtil {
     /**
      * Gets the current timestamp in 24h format with date and double digits for
      * both hour and minute, separated by a colon.
