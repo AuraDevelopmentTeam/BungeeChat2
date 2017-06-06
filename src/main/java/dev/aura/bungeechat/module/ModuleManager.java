@@ -75,6 +75,10 @@ public class ModuleManager {
     public static void disableModules() {
         getActiveModulesStream().forEach(Module::onDisable);
     }
+    
+    public static void clearActiveModules() {
+        activeModules = null;
+    }
 
     public static String getActiveModuleString() {
         return getActiveModulesStream().map(Module::getName).collect(Collectors.joining(MODULE_CONCATENATOR));

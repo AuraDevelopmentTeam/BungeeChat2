@@ -17,6 +17,7 @@ import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
+import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.ReloadCommand;
 import dev.aura.bungeechat.config.Config;
@@ -43,6 +44,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     @Getter(lazy = true)
     private final String latestVersion = queryLatestVersion();
     private File configDir;
+    private ReloadCommand reloadCommand;
+    private BungeecordAccountManager bungeecordAccountManager;
 
     @Override
     public void onLoad() {
@@ -52,6 +55,10 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     @Override
     public void onEnable() {
+        onEnable(true);
+    }
+
+    public void onEnable(boolean prinLoadScreen) {
         Config.load();
 
         PlaceHolders.registerPlaceholders();
@@ -65,8 +72,11 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
             return;
         }
 
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new BungeecordAccountManager());
+        reloadCommand = new ReloadCommand();
+        bungeecordAccountManager = new BungeecordAccountManager();
+
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, reloadCommand);
+        ProxyServer.getInstance().getPluginManager().registerListener(this, bungeecordAccountManager);
 
         Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
 
@@ -75,14 +85,26 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("Default-Prefix"),
                 permissionsManager.getString("Default-Suffix")));
 
-        loadScreen();
+        if (prinLoadScreen) {
+            loadScreen();
+        }
     }
 
     @Override
     public void onDisable() {
-        HookManager.removeHook(storedDataHookName);
         HookManager.removeHook(defaultHookName);
+        HookManager.removeHook(storedDataHookName);
         ModuleManager.disableModules();
+
+        ProxyServer.getInstance().getPluginManager().unregisterListener(bungeecordAccountManager);
+        ProxyServer.getInstance().getPluginManager().unregisterCommand(reloadCommand);
+        
+        // Just to be sure
+        ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
+        ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
+
+        PlaceHolderManager.clear();
+        ModuleManager.clearActiveModules();
     }
 
     @Override

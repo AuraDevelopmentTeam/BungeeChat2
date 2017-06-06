@@ -32,6 +32,10 @@ public class PlaceHolderManager {
             registerPlaceholder(p);
         }
     }
+    
+    public static void clear() {
+        placeholders.clear();
+    }
 
     public static void registerPlaceholder(BungeeChatPlaceHolder placeholder) {
         if (placeholders.contains(placeholder))
