@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.api.filter;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -55,7 +56,7 @@ public class FilterManager {
     }
 
     private static void sortFilters() {
-        filters = filters.entrySet().stream().sorted(Entry.comparingByValue())
+        filters = filters.entrySet().stream().sorted(Collections.reverseOrder(Entry.comparingByValue()))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }

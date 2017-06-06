@@ -9,6 +9,6 @@ public interface BungeeChatFilter extends Comparable<BungeeChatFilter> {
 
     @Override
     default int compareTo(BungeeChatFilter other) {
-        return other.getPriority() - getPriority();
+        return getPriority() - other.getPriority();
     }
 }
