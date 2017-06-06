@@ -10,9 +10,9 @@ public class InvalidContextError extends AssertionError {
     private static final long serialVersionUID = -7826893842156075019L;
 
     /**
-     * Constructs a new error to indicate that a certain assertion or requirement
-     * of an {@link BungeeChatContext} failed.
-     * 
+     * Constructs a new error to indicate that a certain assertion or
+     * requirement of an {@link BungeeChatContext} failed.
+     *
      * @param message
      *            A message specifying what is wrong about the context, if
      *            possible
@@ -24,7 +24,7 @@ public class InvalidContextError extends AssertionError {
     /**
      * Equivalent to calling InvalidContextError("Context does not meet all
      * requirements!")
-     * 
+     *
      * @see InvalidContextError#InvalidContextError(String)
      */
     public InvalidContextError() {

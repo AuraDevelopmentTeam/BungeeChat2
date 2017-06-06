@@ -1,9 +1,10 @@
 package dev.aura.bungeechat.listener;
 
-import dev.aura.bungeechat.account.AccountManager;
+import java.util.stream.Stream;
+
+import dev.aura.bungeechat.api.account.AccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.module.ModuleManager;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -21,13 +22,13 @@ public class TabCompletionListener implements Listener {
         if (lastSpaceIndex >= 0) {
             partialPlayerName = partialPlayerName.substring(lastSpaceIndex + 1);
         }
-
-        for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-            if ((!ModuleManager.isModuleActive(ModuleManager.VANISHER_MODULE)
-                    || !AccountManager.getUserAccount(p).isVanished())
-                    && p.getName().toLowerCase().startsWith(partialPlayerName)) {
-                e.getSuggestions().add(p.getName());
-            }
+        
+        Stream<BungeeChatAccount> stream = AccountManager.getAccountsForPartialName(partialPlayerName).stream();
+        
+        if(ModuleManager.isModuleActive(ModuleManager.VANISHER_MODULE)) {
+            stream = stream.filter(account -> !account.isVanished());
         }
+        
+        stream.forEach(account -> e.getSuggestions().add(account.getName()));
     }
 }

@@ -2,7 +2,7 @@ package dev.aura.bungeechat.api.filter;
 
 import java.util.function.Function;
 
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.account.AccountManager;
+import dev.aura.bungeechat.account.BungeecordAccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
@@ -28,14 +29,15 @@ public class StaffChatCommand extends BaseCommand {
                 sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
                 return;
             }
-            if (args.length < 1) {
-                ProxiedPlayer p = (ProxiedPlayer) sender;
-                if (AccountManager.getUserAccount(p).getChannelType().equals(ChannelType.STAFF)) {
-                    AccountManager.getUserAccount(p).setChannelType(ChannelType.NONE);
-                    p.sendMessage(Message.ENABLE_LOCAL.get());
+            if (args.length == 0) {
+                BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+
+                if (player.getChannelType() == ChannelType.STAFF) {
+                    player.setChannelType(ChannelType.NONE);
+                    sender.sendMessage(Message.ENABLE_LOCAL.get());
                 } else {
-                    AccountManager.getUserAccount(p).setChannelType(ChannelType.STAFF);
-                    p.sendMessage(Message.ENABLE_STAFFCHAT.get());
+                    player.setChannelType(ChannelType.STAFF);
+                    sender.sendMessage(Message.ENABLE_STAFFCHAT.get());
                 }
             } else {
                 StringBuilder stringBuilder = new StringBuilder();

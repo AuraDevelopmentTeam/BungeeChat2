@@ -6,7 +6,7 @@ Version 2.0.0
 \+ Ability to save player data on a MySQL database.  
 \+ Ability to register custom placeholders and filters via the API.  
 \+ Added /setprefix back to allow overwriting of the user prefix supplied by the Permission Plugin.  
-  
+
 \* Rewritten the whole plugin.  
 \* Improved performance.  
 \* Improved the Chat Filter Systems (Anti-Advertise, Anti-Duplicate, Anti-Swear).  

@@ -1,14 +1,16 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.account.AccountManager;
+import java.util.Optional;
+
+import dev.aura.bungeechat.account.BungeecordAccountManager;
+import dev.aura.bungeechat.api.account.AccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MessengerModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageCommand extends BaseCommand {
     public MessageCommand(MessengerModule messengerModule) {
@@ -22,25 +24,26 @@ public class MessageCommand extends BaseCommand {
             if (args.length < 2) {
                 sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/msg <player> <message>"));
             } else {
-                ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
+                Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[0]);
+
+                if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
+                        && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_SEE))) {
+                    sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
+                    return;
+                }
+
+                CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                 if (target == sender) {
                     sender.sendMessage(Message.MESSAGE_YOURSELF.get());
                     return;
                 }
-                if ((target == null) || (AccountManager.getUserAccount(target).isVanished()
-                        && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_SEE))) {
-                    sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
-                    return;
-                }
-                if ((sender instanceof ProxiedPlayer) && !AccountManager.getUserAccount(target).hasMessangerEnabled()
+                if (!targetAccount.get().hasMessangerEnabled()
                         && !PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE_BYPASS)) {
                     sender.sendMessage(Message.HAS_MESSAGER_DISABLED.get(target));
                     return;
                 }
-                if ((sender instanceof ProxiedPlayer)
-                        && AccountManager.getUserAccount(target).getIgnored()
-                                .contains(((ProxiedPlayer) sender).getUniqueId())
+                if (targetAccount.get().hasIgnored(BungeecordAccountManager.getAccount(sender).get())
                         && !PermissionManager.hasPermission(sender, Permission.COMMAND_IGNORE_BYPASS)) {
                     sender.sendMessage(Message.HAS_INGORED.get());
                     return;
@@ -53,12 +56,7 @@ public class MessageCommand extends BaseCommand {
                 }
 
                 MessagesService.sendPrivateMessage(sender, target, stringBuilder.toString().trim());
-
-                if (sender instanceof ProxiedPlayer) {
-                    ReplyCommand.setReply((ProxiedPlayer) sender, target);
-                }
-
-                // TODO: Logger..
+                ReplyCommand.setReply(sender, target);
             }
         }
     }

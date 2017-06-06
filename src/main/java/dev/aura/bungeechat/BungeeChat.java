@@ -6,12 +6,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import dev.aura.bungeechat.account.AccountManager;
+import dev.aura.bungeechat.account.AccountFileStorage;
+import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.api.account.AccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
@@ -53,7 +55,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReloadCommand());
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new AccountManager());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new BungeecordAccountManager());
+        AccountManager.setAccountStorage(new AccountFileStorage());
         ModuleManager.enableModules();
         loadScreen();
     }
@@ -67,14 +70,14 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public ServerType getServerType() {
         return ServerType.BUNGEECORD;
     }
-    
+
     @Override
     public File getConfigFolder() {
-        if(configDir == null) {
+        if (configDir == null) {
             configDir = new File(getProxy().getPluginsFolder(), "BungeeChat");
             configDir.mkdirs();
         }
-        
+
         return configDir;
     }
 

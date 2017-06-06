@@ -3,7 +3,7 @@ package dev.aura.bungeechat.placeholder;
 import java.util.UUID;
 
 import dev.aura.bungeechat.account.Account;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

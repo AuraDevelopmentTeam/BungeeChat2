@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.account.AccountManager;
+import dev.aura.bungeechat.account.BungeecordAccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.module.MessengerModule;
@@ -20,12 +21,13 @@ public class ToggleCommand extends BaseCommand {
             if (!(sender instanceof ProxiedPlayer)) {
                 sender.sendMessage(Message.NOT_A_PLAYER.get());
             } else {
-                ProxiedPlayer player = (ProxiedPlayer) sender;
-                AccountManager.getUserAccount(player).toggleMessanger();
-                if (!AccountManager.getUserAccount(player).hasMessangerEnabled()) {
-                    player.sendMessage(Message.DISABLE_MESSAGER.get());
+                BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+                player.toggleMessanger();
+
+                if (player.hasMessangerEnabled()) {
+                    sender.sendMessage(Message.ENABLE_MESSAGER.get());
                 } else {
-                    player.sendMessage(Message.ENABLE_MESSAGER.get());
+                    sender.sendMessage(Message.DISABLE_MESSAGER.get());
                 }
             }
         }

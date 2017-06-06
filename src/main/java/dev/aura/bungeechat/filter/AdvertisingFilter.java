@@ -5,11 +5,11 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.filter.FilterManager;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.utils.RegexUtil;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.permission.PermissionManager;

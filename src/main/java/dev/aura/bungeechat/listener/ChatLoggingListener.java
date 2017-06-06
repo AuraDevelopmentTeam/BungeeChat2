@@ -1,7 +1,7 @@
 package dev.aura.bungeechat.listener;
 
 import dev.aura.bungeechat.account.Account;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

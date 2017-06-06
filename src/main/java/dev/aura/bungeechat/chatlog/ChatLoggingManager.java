@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import lombok.experimental.UtilityClass;
 
@@ -24,17 +24,17 @@ public class ChatLoggingManager {
     public static void logMessage(String channel, BungeeChatAccount sender, String message) {
         BungeeChatContext context = new BungeeChatContext(sender, message);
         context.setChannel(channel);
-        
+
         logMessage(context);
     }
 
     public static void logMessage(ChannelType channel, BungeeChatContext context) {
         logMessage(channel.name(), context);
     }
-    
+
     public static void logMessage(String channel, BungeeChatContext context) {
         context.setChannel(channel);
-        
+
         logMessage(context);
     }
 

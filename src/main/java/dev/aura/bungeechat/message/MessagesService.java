@@ -5,12 +5,13 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import dev.aura.bungeechat.account.Account;
-import dev.aura.bungeechat.account.AccountManager;
+import dev.aura.bungeechat.account.BungeecordAccountManager;
+import dev.aura.bungeechat.api.account.AccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.FilterManager;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
@@ -21,12 +22,11 @@ import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class MessagesService {
-    public static void sendPrivateMessage(CommandSender sender, ProxiedPlayer target, String message)
+    public static void sendPrivateMessage(CommandSender sender, CommandSender target, String message)
             throws InvalidContextError {
         sendPrivateMessage(new Context(sender, target, message));
     }
@@ -48,8 +48,8 @@ public class MessagesService {
         if (ModuleManager.isModuleActive(ModuleManager.SOCIAL_SPY_MODULE)) {
             String socialSpyMessage = preProcessMessage(context, account, "socialspy", false).get();
 
-            sendToMatchingPlayers(socialSpyMessage,
-                    pp -> (pp != target) && (pp != sender) && AccountManager.getUserAccount(pp).hasSocialSpyEnabled());
+            sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(target.getUniqueId()))
+                    && (!acc.getUniqueId().equals(sender.getUniqueId())) && acc.hasSocialSpyEnabled());
         }
     }
 
@@ -93,10 +93,12 @@ public class MessagesService {
 
         Optional<String> finalMessage = preProcessMessage(context, "global-chat");
 
-        if (!Config.get().getBoolean("Settings.GlobalChat.Server-list.enabled"))
+        if (!Config.get().getBoolean("Settings.GlobalChat.Server-list.enabled")) {
             sendToMatchingPlayers(finalMessage);
-        else
-            sendToMatchingPlayers(finalMessage, pp -> Config.get().getStringList("Settings.GlobalChat.Server-list.list").contains(pp.getServer().getInfo().getName()));
+        } else {
+            sendToMatchingPlayers(finalMessage, account -> Config.get()
+                    .getStringList("Settings.GlobalChat.Server-list.list").contains(account.getServerName()));
+        }
 
         ChatLoggingManager.logMessage(ChannelType.GLOBAL, context);
     }
@@ -111,7 +113,7 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "local-chat");
         String localServerName = Account.toProxiedPlayer(context.getSender().get()).getServer().getInfo().getName();
 
-        sendToMatchingPlayers(finalMessage, pp -> pp.getServer().getInfo().getName().equals(localServerName));
+        sendToMatchingPlayers(finalMessage, account -> account.getServerName().equals(localServerName));
 
         ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
     }
@@ -215,7 +217,7 @@ public class MessagesService {
 
     @SafeVarargs
     public static void sendToMatchingPlayers(Optional<String> finalMessage,
-            Predicate<? super ProxiedPlayer>... playerFilters) {
+            Predicate<? super BungeeChatAccount>... playerFilters) {
         if (finalMessage.isPresent()) {
             sendToMatchingPlayers(finalMessage.get(), playerFilters);
         }
@@ -223,13 +225,14 @@ public class MessagesService {
 
     @SafeVarargs
     @SuppressWarnings("deprecation")
-    public static void sendToMatchingPlayers(String finalMessage, Predicate<? super ProxiedPlayer>... playerFilters) {
-        Stream<ProxiedPlayer> stream = ProxyServer.getInstance().getPlayers().stream();
+    public static void sendToMatchingPlayers(String finalMessage,
+            Predicate<? super BungeeChatAccount>... playerFilters) {
+        Stream<BungeeChatAccount> stream = AccountManager.getPlayerAccounts().stream();
 
-        for (Predicate<? super ProxiedPlayer> playerFilter : playerFilters) {
+        for (Predicate<? super BungeeChatAccount> playerFilter : playerFilters) {
             stream = stream.filter(playerFilter);
         }
 
-        stream.forEach(pp -> pp.sendMessage(finalMessage));
+        stream.forEach(account -> BungeecordAccountManager.getCommandSender(account).get().sendMessage(finalMessage));
     }
 }

@@ -1,7 +1,7 @@
 package dev.aura.bungeechat.permission;
 
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import dev.aura.bungeechat.message.Message;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;

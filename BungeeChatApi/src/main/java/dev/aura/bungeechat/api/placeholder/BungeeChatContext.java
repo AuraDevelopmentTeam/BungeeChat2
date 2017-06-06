@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 
@@ -88,10 +88,10 @@ public class BungeeChatContext {
 
         this.sender = Optional.ofNullable(sender);
     }
-    
+
     public BungeeChatContext(String message) {
         this();
-        
+
         this.message = Optional.ofNullable(message);
     }
 
@@ -161,7 +161,7 @@ public class BungeeChatContext {
     public boolean hasMessage() {
         return message.isPresent();
     }
-    
+
     public boolean hasChannel() {
         return channel.isPresent();
     }
@@ -180,7 +180,7 @@ public class BungeeChatContext {
     public void setMessage(String message) {
         setMessage(Optional.ofNullable(message));
     }
-    
+
     @Tolerate
     public void setChannel(String channel) {
         setChannel(Optional.ofNullable(channel));

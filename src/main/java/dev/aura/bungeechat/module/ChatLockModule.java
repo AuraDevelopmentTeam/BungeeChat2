@@ -27,11 +27,11 @@ public class ChatLockModule implements Module {
 
         disableChatLock();
     }
-    
+
     public void enableChatLock() {
         FilterManager.addFilter(getName(), new ChatLockFilter());
     }
-    
+
     public void disableChatLock() {
         FilterManager.removeFilter(getName());
     }

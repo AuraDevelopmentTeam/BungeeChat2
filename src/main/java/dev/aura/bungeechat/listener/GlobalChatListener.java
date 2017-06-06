@@ -1,6 +1,6 @@
 package dev.aura.bungeechat.listener;
 
-import dev.aura.bungeechat.account.AccountManager;
+import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.MessagesService;
@@ -21,7 +21,7 @@ public class GlobalChatListener implements Listener {
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
         String message = e.getMessage();
 
-        if (AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.GLOBAL)
+        if ((BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL)
                 && !ChatUtils.isCommand(message)) {
             e.setCancelled(true);
             MessagesService.sendGlobalMessage(sender, message);

@@ -6,8 +6,8 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ServerType;
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -15,7 +15,7 @@ public class FilterManager {
     public static final int SWEAR_FILTER_PRIORITY = 100;
     public static final int ADVERTISING_FILTER_PRIORITY = 200;
     public static final int LOCK_CHAT_FILTER_PRIORITY = 300;
-    
+
     private static Map<String, BungeeChatFilter> filters = new LinkedHashMap<>();
     private static final boolean validSide = BungeeChatApi.getInstance().getServerType() == ServerType.BUNGEECORD;
 
@@ -23,15 +23,15 @@ public class FilterManager {
         checkSide();
 
         filters.put(name, filter);
-        
+
         sortFilters();
     }
 
     public static BungeeChatFilter removeFilter(String name) throws UnsupportedOperationException {
         checkSide();
-        
+
         BungeeChatFilter out = filters.remove(name);
-        
+
         sortFilters();
 
         return out;

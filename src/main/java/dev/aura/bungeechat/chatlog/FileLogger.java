@@ -41,7 +41,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
         timer = new Timer();
         timer.scheduleAtFixedRate(new LogFileChanger(), getMidnight(), TimeUnit.DAYS.toMillis(1));
     }
-    
+
     @Override
     public void log(BungeeChatContext context) {
         pw.println(PlaceHolderUtil.getFullFormatMessage("chat-logging-file", context));

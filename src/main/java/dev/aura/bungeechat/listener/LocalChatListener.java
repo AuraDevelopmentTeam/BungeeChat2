@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.listener;
 
-import dev.aura.bungeechat.account.AccountManager;
+import dev.aura.bungeechat.account.BungeecordAccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.MessagesService;
@@ -18,10 +19,10 @@ public class LocalChatListener implements Listener {
             return;
 
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
+        BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
         String message = e.getMessage();
 
-        if ((AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.NONE)
-                || AccountManager.getUserAccount(sender).getChannelType().equals(ChannelType.LOCAL))
+        if (((account.getChannelType() == ChannelType.NONE) || (account.getChannelType() == ChannelType.LOCAL))
                 && !ChatUtils.isCommand(message)) {
             e.setCancelled(true);
             MessagesService.sendLocalMessage(sender, message);

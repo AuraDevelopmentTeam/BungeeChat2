@@ -1,6 +1,6 @@
 package dev.aura.bungeechat.message;
 
-import dev.aura.bungeechat.api.interfaces.BungeeChatAccount;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
@@ -53,11 +53,11 @@ public enum Message {
     public String get() {
         return PlaceHolderUtil.getFullMessage(this);
     }
-    
+
     public String get(BungeeChatAccount sender) {
         return get(new BungeeChatContext(sender));
     }
-    
+
     public String get(BungeeChatAccount sender, String command) {
         return get(new BungeeChatContext(sender, command));
     }

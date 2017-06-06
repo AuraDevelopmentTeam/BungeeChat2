@@ -12,7 +12,7 @@ public class BlockMessageException extends Exception {
      * Construct a new {@link BlockMessageException} to indicate that the
      * message should be blocked and not sent but instead the sending user
      * should be warned with the message passed.
-     * 
+     *
      * @param message
      *            The warning displayed to the user.
      */
