@@ -59,7 +59,6 @@ public class BungeeChatCommand extends BaseCommand {
                             }
 
                             targetAccount.get().setStoredPrefix(Optional.of(stringBuilder.toString()));
-                            //TODO: Add the %new-perfix% placeholder...
                             sender.sendMessage(prefix + Message.PREFIX_SET.get(target));
                         }
                     }
@@ -89,7 +88,6 @@ public class BungeeChatCommand extends BaseCommand {
                             }
 
                             targetAccount.get().setStoredSuffix(Optional.of(stringBuilder.toString()));
-                            //TODO: Add the %new-suffix% placeholder...
                             sender.sendMessage(prefix + Message.SUFFIX_SET.get(target));
                         }
                     }

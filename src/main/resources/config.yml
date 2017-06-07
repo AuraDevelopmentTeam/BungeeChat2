@@ -174,9 +174,9 @@ Messages:
   chat-is-locked: "&cYou may not talk now, the chat has been locked!"
   #Prefix/Suffix Messages
   prefix-removed: "&ePrefix of %player_name% has been removed!"
-  prefix-set: "&ePrefix of %player_name% has been set to %new-prefix%."
+  prefix-set: "&ePrefix of %player_name% has been set to %player_prefix%."
   suffix-removed: "&eSuffix of %player_name% has been removed!"
-  suffix-set: "&eSuffix of %player_name% has been set to %new-suffix%."
+  suffix-set: "&eSuffix of %player_name% has been set to %player_suffix%."
 
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"
@@ -190,7 +190,7 @@ Formats:
   joinmessage: "&e%name% has joined the network!"
   leavemessage: "&e%name% has left the network!"
   helpop: "&2HELPOP > &e%name%: &r%message%"
-  server-switch: "&e%name% has moved to the &c%server% &e server!"
+  server-switch: "&e%name% has moved to the &c%servername% &e server!"
   chat-logging-console: "%channel% > %servername% > %name%: %message%"
   chat-logging-file: "[%time%]: %channel% > %servername% > %name%(%uuid%): %message%"
 
