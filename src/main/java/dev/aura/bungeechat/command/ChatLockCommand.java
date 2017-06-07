@@ -1,7 +1,10 @@
 package dev.aura.bungeechat.command;
 
+import dev.aura.bungeechat.account.BungeecordAccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.module.ChatLockModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
@@ -21,15 +24,31 @@ public class ChatLockCommand extends BaseCommand {
             if (!(sender instanceof ProxiedPlayer)) {
                 sender.sendMessage(Message.NOT_A_PLAYER.get());
             } else {
-                ProxiedPlayer player = (ProxiedPlayer) sender;
+                BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+
                 if (args.length < 1) {
                     sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
                 } else {
+                    ChatLockModule chatLock = BungeecordModuleManager.CHAT_LOCK_MODULE;
+
                     if (args[0].equalsIgnoreCase("global")) {
-                        // TODO: ENABLE CHATLOCK OR DISABLE GLOBAL
+                        if (chatLock.isGlobalChatLockEnabled()) {
+                            chatLock.disableGlobalChatLock();
+                            sender.sendMessage(Message.DISABLE_CHATLOCK.get(player));
+                        } else {
+                            chatLock.enableGlobalChatLock();
+                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
+                        }
                     } else if (args[0].equalsIgnoreCase("local")) {
-                        String serverName = player.getServer().getInfo().getName();
-                        // TODO: ADD SERVER TO LOCKED.
+                        String serverName = player.getServerName();
+
+                        if (chatLock.isLocalChatLockEnabled(serverName)) {
+                            chatLock.disableLocalChatLock(serverName);
+                            sender.sendMessage(Message.DISABLE_CHATLOCK.get(player));
+                        } else {
+                            chatLock.enableLocalChatLock(serverName);
+                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
+                        }
                     } else {
                         sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
                     }
