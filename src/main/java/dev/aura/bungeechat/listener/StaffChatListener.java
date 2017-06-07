@@ -13,7 +13,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class StaffChatListener implements Listener {
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled())
             return;
@@ -25,11 +25,6 @@ public class StaffChatListener implements Listener {
 
         if ((BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF)
                 && !ChatUtils.isCommand(message)) {
-
-            if (!PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT)) {
-                BungeecordAccountManager.getAccount(sender).get().setChannelType(ChannelType.LOCAL);
-                return;
-            }
 
             e.setCancelled(true);
             MessagesService.sendStaffMessage(sender, message);

@@ -26,9 +26,9 @@ public class GlobalChatCommand extends BaseCommand {
                 sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
                 return;
             }
-            if (Config.get().getBoolean("Settings.GlobalChat.Server-list.enabled") && (sender instanceof ProxiedPlayer)) {
+            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled") && (sender instanceof ProxiedPlayer)) {
                 BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                if (!Config.get().getStringList("Settings.GlobalChat.Server-list.list").contains(account.getServerName())) {
+                if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list").contains(account.getServerName())) {
                     sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
                     return;
                 }
