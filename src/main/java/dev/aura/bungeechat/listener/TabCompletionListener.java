@@ -20,7 +20,7 @@ public class TabCompletionListener implements Listener {
         if (e.isCancelled())
             return;
 
-        String partialPlayerName = e.getCursor().toLowerCase();
+        String partialPlayerName = e.getCursor();
         int lastSpaceIndex = partialPlayerName.lastIndexOf(' ');
 
         if (lastSpaceIndex >= 0) {
