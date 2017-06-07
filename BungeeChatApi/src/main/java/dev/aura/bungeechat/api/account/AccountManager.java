@@ -42,7 +42,7 @@ public class AccountManager {
     }
 
     public static List<BungeeChatAccount> getAccountsForPartialName(String partialName) {
-        return accounts.values().stream().filter(account -> account.getName().startsWith(partialName)
+        return accounts.values().stream().filter(account -> account.getName().toLowerCase().startsWith(partialName)
                 || account.getUniqueId().toString().startsWith(partialName)).collect(Collectors.toList());
     }
 
