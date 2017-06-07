@@ -33,7 +33,7 @@ public class StaffChatCommand extends BaseCommand {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
 
                 if (player.getChannelType() == ChannelType.STAFF) {
-                    player.setChannelType(ChannelType.NONE);
+                    player.setChannelType(ChannelType.LOCAL);
                     sender.sendMessage(Message.ENABLE_LOCAL.get());
                 } else {
                     player.setChannelType(ChannelType.STAFF);

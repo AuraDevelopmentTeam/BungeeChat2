@@ -50,7 +50,8 @@ public enum Message {
     PREFIX_SET("prefix-set"),
     SUFFIX_REMOVED("suffix-removed"),
     SUFFIX_SET("suffix-set"),
-    BACK_TO_LOCAL("back-to-local");
+    BACK_TO_LOCAL("back-to-local"),
+    NOT_IN_GLOBAL_SERVER("not-in-global-server");
 
     @Getter
     private final String stringPath;

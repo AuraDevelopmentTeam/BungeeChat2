@@ -130,6 +130,7 @@ Messages:
   enable-local: "You are now talking in &clocal chat&e!"
   global-is-default: "&eGlobal chat is already the default chatmode!"
   back-to-local: "&cThe feature linked to the channel you were talking in has been disabled! You are now talking in local chat."
+  not-in-global-server: "&cGlobal Chat is not enabled on this server..."
   #Messenger Messages
   message-yourself: "&cYou can not send a private message to yourself..."
   enable-messager: "&eYou have &aenbaled&e messaging!"

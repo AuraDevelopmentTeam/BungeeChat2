@@ -178,7 +178,7 @@ public class MessagesService {
     }
 
     public static void sendSwitchMessage(CommandSender sender) throws InvalidContextError {
-        sendLeaveMessage(new Context(sender));
+        sendSwitchMessage(new Context(sender));
     }
 
     public static void sendSwitchMessage(BungeeChatContext context) throws InvalidContextError {
