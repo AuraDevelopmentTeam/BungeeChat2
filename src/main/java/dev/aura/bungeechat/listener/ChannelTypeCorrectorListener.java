@@ -16,6 +16,7 @@ import net.md_5.bungee.event.EventPriority;
 import java.util.Optional;
 
 public class ChannelTypeCorrectorListener implements Listener {
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled())
