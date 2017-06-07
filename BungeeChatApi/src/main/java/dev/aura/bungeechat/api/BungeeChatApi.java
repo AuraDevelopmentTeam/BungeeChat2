@@ -111,7 +111,7 @@ public interface BungeeChatApi {
         if (context.hasSender()) {
             sendChannelMessage(context, context.getSender().get().getChannelType());
         } else {
-            sendChannelMessage(context, ChannelType.NONE);
+            sendChannelMessage(context, ChannelType.LOCAL);
         }
     }
 }
