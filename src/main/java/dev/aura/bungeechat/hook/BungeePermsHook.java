@@ -5,6 +5,7 @@ import java.util.Optional;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
+import dev.aura.bungeechat.util.LoggerHelper;
 import net.alpenblock.bungeeperms.BungeePerms;
 import net.alpenblock.bungeeperms.PermissionsManager;
 import net.alpenblock.bungeeperms.User;
@@ -37,7 +38,13 @@ public class BungeePermsHook implements BungeeChatHook {
     }
 
     private Optional<User> getUser(BungeeChatAccount account) {
-        return Optional.ofNullable(permissionManager.getUser(account.getUniqueId()));
+        try {
+            return Optional.ofNullable(permissionManager.getUser(account.getUniqueId()));
+        } catch (NullPointerException e) {
+            LoggerHelper.warning("BungeePerms can't (for some reason) get the user. We're working on it!", e);
+
+            return Optional.empty();
+        }
     }
 
     @Override
