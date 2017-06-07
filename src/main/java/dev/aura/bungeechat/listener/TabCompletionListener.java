@@ -4,7 +4,10 @@ import java.util.stream.Stream;
 
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.permission.PermissionManager;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -25,7 +28,7 @@ public class TabCompletionListener implements Listener {
         
         Stream<BungeeChatAccount> stream = AccountManager.getAccountsForPartialName(partialPlayerName).stream();
         
-        if(BungeecordModuleManager.isModuleActive(BungeecordModuleManager.VANISHER_MODULE)) {
+        if(BungeecordModuleManager.isModuleActive(BungeecordModuleManager.VANISHER_MODULE) && !PermissionManager.hasPermission((CommandSender) e.getSender(), Permission.COMMAND_VANISH_SEE)) {
             stream = stream.filter(account -> !account.isVanished());
         }
         
