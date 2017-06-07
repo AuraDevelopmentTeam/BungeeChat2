@@ -14,7 +14,7 @@ public enum Permission {
     USE_COLORED_CHAT("chat.colors"),
 
     BYPASS_ANTI_ADVERTISEMENT("chat.bypass.antiadvertisement"),
-    BYPASS_ANTI_SPAM("chat.bypass.antispam"),
+    BYPASS_ANTI_DUPLICATE("chat.bypass.antiduplicate"),
     BYPASS_ANTI_SWEAR("chat.bypass.antiswear"),
 
     COMMAND_ALERT("command.alert"),
