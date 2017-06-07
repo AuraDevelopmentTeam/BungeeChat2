@@ -4,7 +4,6 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
-import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
@@ -15,6 +14,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class GlobalChatListener implements Listener {
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled())
