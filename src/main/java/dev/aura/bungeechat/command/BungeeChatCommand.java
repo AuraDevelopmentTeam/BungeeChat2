@@ -34,6 +34,7 @@ public class BungeeChatCommand extends BaseCommand {
 
                 sender.sendMessage(prefix + ChatColor.GREEN + "The plugin has been reloaded!");
 
+                return;
             } else if (args[0].equalsIgnoreCase("setprefix")
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_SETPREFIX)) {
 
@@ -49,7 +50,7 @@ public class BungeeChatCommand extends BaseCommand {
 
                         if (args.length < 3) {
                             targetAccount.get().setStoredPrefix(null);
-                            sender.sendMessage(Message.PREFIX_REMOVED.get(target));
+                            sender.sendMessage(prefix + Message.PREFIX_REMOVED.get(target));
                         } else {
                             StringBuilder stringBuilder = new StringBuilder();
 
@@ -59,10 +60,11 @@ public class BungeeChatCommand extends BaseCommand {
 
                             targetAccount.get().setStoredPrefix(Optional.of(stringBuilder.toString()));
                             //TODO: Add the %new-perfix% placeholder...
-                            sender.sendMessage(Message.PREFIX_SET.get(target));
+                            sender.sendMessage(prefix + Message.PREFIX_SET.get(target));
                         }
                     }
                 }
+                return;
             } else if (args[0].equalsIgnoreCase("setsuffix")
                         && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_SETSUFFIX)) {
 
@@ -78,7 +80,7 @@ public class BungeeChatCommand extends BaseCommand {
 
                         if (args.length < 3) {
                             targetAccount.get().setStoredSuffix(null);
-                            sender.sendMessage(Message.SUFFIX_REMOVED.get(target));
+                            sender.sendMessage(prefix + Message.SUFFIX_REMOVED.get(target));
                         } else {
                             StringBuilder stringBuilder = new StringBuilder();
 
@@ -88,10 +90,11 @@ public class BungeeChatCommand extends BaseCommand {
 
                             targetAccount.get().setStoredSuffix(Optional.of(stringBuilder.toString()));
                             //TODO: Add the %new-suffix% placeholder...
-                            sender.sendMessage(Message.SUFFIX_SET.get(target));
+                            sender.sendMessage(prefix + Message.SUFFIX_SET.get(target));
                         }
                     }
                 }
+                return;
             }
         }
 
