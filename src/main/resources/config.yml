@@ -173,10 +173,10 @@ Messages:
   disable-chatlock: "&eYou have enabled chatting!"
   chat-is-locked: "&cYou may not talk now, the chat has been locked!"
   #Prefix/Suffix Messages
-  prefix-removed: "&ePrefix of %player_name% has been removed!"
-  prefix-set: "&ePrefix of %player_name% has been set to %player_prefix%."
-  suffix-removed: "&eSuffix of %player_name% has been removed!"
-  suffix-set: "&eSuffix of %player_name% has been set to %player_suffix%."
+  prefix-removed: "&ePrefix of %name% has been removed!"
+  prefix-set: "&ePrefix of %name% has been set to %_prefix%."
+  suffix-removed: "&eSuffix of %name% has been removed!"
+  suffix-set: "&eSuffix of %name% has been set to %suffix%."
 
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"
