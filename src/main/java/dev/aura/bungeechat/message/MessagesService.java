@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import dev.aura.bungeechat.account.Account;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
@@ -12,6 +11,7 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.FilterManager;
+import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
@@ -22,7 +22,6 @@ import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class MessagesService {
@@ -36,8 +35,10 @@ public class MessagesService {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_TARGET, BungeeChatContext.HAS_MESSAGE);
 
         Optional<BungeeChatAccount> account = context.getSender();
-        ProxiedPlayer sender = Account.toProxiedPlayer(context.getSender().get());
-        ProxiedPlayer target = Account.toProxiedPlayer(context.getTarget().get());
+        BungeeChatAccount senderAcconut = account.get();
+        BungeeChatAccount targetAcconut = context.getTarget().get();
+        CommandSender sender = BungeecordAccountManager.getCommandSender(senderAcconut).get();
+        CommandSender target = BungeecordAccountManager.getCommandSender(targetAcconut).get();
 
         String messageSender = preProcessMessage(context, account, "message-sender", false).get();
         sender.sendMessage(messageSender);
@@ -45,11 +46,11 @@ public class MessagesService {
         String messageTarget = preProcessMessage(context, account, "message-target", false).get();
         target.sendMessage(messageTarget);
 
-        if (BungeecordModuleManager.isModuleActive(BungeecordModuleManager.SOCIAL_SPY_MODULE)) {
+        if (ModuleManager.isModuleActive(BungeecordModuleManager.SOCIAL_SPY_MODULE)) {
             String socialSpyMessage = preProcessMessage(context, account, "socialspy", false).get();
 
-            sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(target.getUniqueId()))
-                    && (!acc.getUniqueId().equals(sender.getUniqueId())) && acc.hasSocialSpyEnabled());
+            sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
+                    && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
         }
     }
 
@@ -111,7 +112,7 @@ public class MessagesService {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
         Optional<String> finalMessage = preProcessMessage(context, "local-chat");
-        String localServerName = Account.toProxiedPlayer(context.getSender().get()).getServer().getInfo().getName();
+        String localServerName = context.getSender().get().getServerName();
 
         sendToMatchingPlayers(finalMessage, account -> account.getServerName().equals(localServerName));
 
@@ -193,7 +194,7 @@ public class MessagesService {
         context.require(BungeeChatContext.HAS_MESSAGE);
 
         BungeeChatAccount playerAccount = account.get();
-        ProxiedPlayer player = Account.toProxiedPlayer(playerAccount);
+        CommandSender player = BungeecordAccountManager.getCommandSender(playerAccount).get();
         String message = context.getMessage().get();
 
         if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {

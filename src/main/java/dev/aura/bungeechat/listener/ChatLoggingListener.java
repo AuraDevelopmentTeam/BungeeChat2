@@ -1,6 +1,6 @@
 package dev.aura.bungeechat.listener;
 
-import dev.aura.bungeechat.account.Account;
+import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
@@ -18,10 +18,11 @@ public class ChatLoggingListener implements Listener {
         if (!(e.getSender() instanceof ProxiedPlayer))
             return;
 
-        BungeeChatAccount sender = new Account((ProxiedPlayer) e.getSender());
+        BungeeChatAccount sender = BungeecordAccountManager.getAccount((ProxiedPlayer) e.getSender()).get();
         String message = e.getMessage();
 
-        if (ChatUtils.isCommand(message))
+        if (ChatUtils.isCommand(message)) {
             ChatLoggingManager.logCommand(sender, message);
+        }
     }
 }

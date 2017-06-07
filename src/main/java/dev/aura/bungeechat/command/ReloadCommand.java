@@ -47,5 +47,4 @@ public class ReloadCommand extends BaseCommand {
                     + BungeeChat.getInstance().getLatestVersion());
         }
     }
-
 }
