@@ -5,7 +5,7 @@ Version 2.0.0
 \+ Ability to give multiple permissions at once using parent permission.  
 \+ Ability to save player data on a MySQL database.  
 \+ Ability to register custom placeholders and filters via the API.  
-\+ Added /setprefix back to allow overwriting of the user prefix supplied by the Permission Plugin.  
+\+ Ability to set a prefix (or suffix) via BungeeChat has been added back. (/bungeechat setprefix, /bungeechat setsuffix)
 
 \* Rewritten the whole plugin.  
 \* Improved performance.  
@@ -15,7 +15,8 @@ Version 2.0.0
 \* Improved the way of saving player data files.  
 \* Improved the Version Check System.  
 \* Improved Permission Plugin system. The plugin will be detected automatically.  
-\* Improved ChatLock. It can be used either globally or locally.  
+\* Improved ChatLock. It can be used either globally or locally.
+\* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the they were talking in.
 \* The console can now chat too. (Username ~Console~)  
 
 \- Removed Redis support for now. (Will be added back in a later version).  
