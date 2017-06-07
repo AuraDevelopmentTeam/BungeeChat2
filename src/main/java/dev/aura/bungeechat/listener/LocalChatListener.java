@@ -22,7 +22,7 @@ public class LocalChatListener implements Listener {
         BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
         String message = e.getMessage();
 
-        if (((account.getChannelType() == ChannelType.NONE) || (account.getChannelType() == ChannelType.LOCAL))
+        if (account.getChannelType() == ChannelType.LOCAL
                 && !ChatUtils.isCommand(message)) {
             e.setCancelled(true);
             MessagesService.sendLocalMessage(sender, message);

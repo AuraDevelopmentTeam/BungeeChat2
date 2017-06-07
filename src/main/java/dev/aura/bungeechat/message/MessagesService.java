@@ -78,7 +78,6 @@ public class MessagesService {
         case GROUP:
             // TODO
             break;
-        case NONE:
         default:
             // TODO? Maybe do nothing? Throw an Exception?
             break;

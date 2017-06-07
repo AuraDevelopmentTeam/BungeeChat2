@@ -49,7 +49,8 @@ public enum Message {
     PREFIX_REMOVED("prefix-removed"),
     PREFIX_SET("prefix-set"),
     SUFFIX_REMOVED("suffix-removed"),
-    SUFFIX_SET("suffix-set");
+    SUFFIX_SET("suffix-set"),
+    BACK_TO_LOCAL("back-to-local");
 
     @Getter
     private final String stringPath;

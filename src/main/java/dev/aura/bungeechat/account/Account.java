@@ -38,7 +38,7 @@ public class Account implements BungeeChatAccount {
 
     protected Account(UUID uuid) {
         this.uuid = uuid;
-        channelType = ChannelType.NONE;
+        channelType = ChannelType.LOCAL;
         vanished = false;
         messanger = true;
         socialspy = false;

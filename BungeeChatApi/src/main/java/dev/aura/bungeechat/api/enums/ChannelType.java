@@ -6,5 +6,5 @@ package dev.aura.bungeechat.api.enums;
  * message needs to be replicated.
  */
 public enum ChannelType {
-    GLOBAL, LOCAL, STAFF, HELP, GROUP, NONE;
+    GLOBAL, LOCAL, STAFF, HELP, GROUP
 }

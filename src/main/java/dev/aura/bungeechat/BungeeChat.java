@@ -24,6 +24,7 @@ import dev.aura.bungeechat.command.BungeeChatCommand;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
+import dev.aura.bungeechat.listener.ChannelTypeCorrectorListener;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -47,6 +48,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private File configDir;
     private BungeeChatCommand bungeeChatCommand;
     private BungeecordAccountManager bungeecordAccountManager;
+    private ChannelTypeCorrectorListener channelTypeCorrectorListener;
 
     @Override
     public void onLoad() {
@@ -75,9 +77,11 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         bungeeChatCommand = new BungeeChatCommand();
         bungeecordAccountManager = new BungeecordAccountManager();
+        channelTypeCorrectorListener = new ChannelTypeCorrectorListener();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, bungeeChatCommand);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeecordAccountManager);
+        ProxyServer.getInstance().getPluginManager().registerListener(this, channelTypeCorrectorListener);
 
         Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
 
@@ -100,6 +104,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         ProxyServer.getInstance().getPluginManager().unregisterListener(bungeecordAccountManager);
         ProxyServer.getInstance().getPluginManager().unregisterCommand(bungeeChatCommand);
+        ProxyServer.getInstance().getPluginManager().unregisterListener(channelTypeCorrectorListener);
 
         // Just to be sure
         ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
