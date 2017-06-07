@@ -20,7 +20,7 @@ import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
-import dev.aura.bungeechat.command.ReloadCommand;
+import dev.aura.bungeechat.command.BungeeChatCommand;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
@@ -45,7 +45,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     @Getter(lazy = true)
     private final String latestVersion = queryLatestVersion();
     private File configDir;
-    private ReloadCommand reloadCommand;
+    private BungeeChatCommand bungeeChatCommand;
     private BungeecordAccountManager bungeecordAccountManager;
 
     @Override
@@ -73,10 +73,10 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
             return;
         }
 
-        reloadCommand = new ReloadCommand();
+        bungeeChatCommand = new BungeeChatCommand();
         bungeecordAccountManager = new BungeecordAccountManager();
 
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, reloadCommand);
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, bungeeChatCommand);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeecordAccountManager);
 
         Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
@@ -99,7 +99,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ModuleManager.disableModules();
 
         ProxyServer.getInstance().getPluginManager().unregisterListener(bungeecordAccountManager);
-        ProxyServer.getInstance().getPluginManager().unregisterCommand(reloadCommand);
+        ProxyServer.getInstance().getPluginManager().unregisterCommand(bungeeChatCommand);
 
         // Just to be sure
         ProxyServer.getInstance().getPluginManager().unregisterListeners(this);

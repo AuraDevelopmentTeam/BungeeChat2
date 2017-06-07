@@ -8,6 +8,8 @@ import lombok.Getter;
  */
 public enum Permission {
     BUNGEECHAT_RELOAD("admin.reload"),
+    BUNGEECHAT_SETPREFIX("admin.setprefix"),
+    BUNGEECHAT_SETSUFFIX("admin.setsuffix"),
 
     USE_COLORED_CHAT("chat.colors"),
 

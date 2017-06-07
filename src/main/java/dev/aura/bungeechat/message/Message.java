@@ -45,7 +45,11 @@ public enum Message {
     INCORRECT_USAGE("incorrect-usage"),
     UNMUTE("unmute"),
     MUTE("mute"),
-    HAS_MESSAGER_DISABLED("has-messager-disabled");
+    HAS_MESSAGER_DISABLED("has-messager-disabled"),
+    PREFIX_REMOVED("prefix-removed"),
+    PREFIX_SET("prefix-set"),
+    SUFFIX_REMOVED("suffix-removed"),
+    SUFFIX_SET("suffix-set");
 
     @Getter
     private final String stringPath;
