@@ -1,5 +1,9 @@
 package dev.aura.bungeechat.command;
 
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
@@ -10,8 +14,6 @@ import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-
-import java.util.Optional;
 
 @SuppressWarnings("deprecation")
 public class BungeeChatCommand extends BaseCommand {
@@ -39,7 +41,8 @@ public class BungeeChatCommand extends BaseCommand {
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_SETPREFIX)) {
 
                 if (args.length < 2) {
-                    sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/bungeechat setprefix <player> [new prefix]"));
+                    sender.sendMessage(
+                            Message.INCORRECT_USAGE.get(sender, "/bungeechat setprefix <player> [new prefix]"));
                 } else {
                     Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[1]);
 
@@ -52,23 +55,20 @@ public class BungeeChatCommand extends BaseCommand {
                             targetAccount.get().setStoredPrefix(null);
                             sender.sendMessage(prefix + Message.PREFIX_REMOVED.get(target));
                         } else {
-                            StringBuilder stringBuilder = new StringBuilder();
+                            String prefix = Arrays.stream(args, 2, args.length - 1).collect(Collectors.joining(" "));
 
-                            for (int i = 2; i < args.length; i++) {
-                                stringBuilder.append(args[i]).append(" ");
-                            }
-
-                            targetAccount.get().setStoredPrefix(Optional.of(stringBuilder.toString()));
+                            targetAccount.get().setStoredPrefix(Optional.of(prefix));
                             sender.sendMessage(prefix + Message.PREFIX_SET.get(target));
                         }
                     }
                 }
                 return;
             } else if (args[0].equalsIgnoreCase("setsuffix")
-                        && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_SETSUFFIX)) {
+                    && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_SETSUFFIX)) {
 
                 if (args.length < 2) {
-                    sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/bungeechat setsuffix <player> [new suffix]"));
+                    sender.sendMessage(
+                            Message.INCORRECT_USAGE.get(sender, "/bungeechat setsuffix <player> [new suffix]"));
                 } else {
                     Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[1]);
 
@@ -81,17 +81,14 @@ public class BungeeChatCommand extends BaseCommand {
                             targetAccount.get().setStoredSuffix(null);
                             sender.sendMessage(prefix + Message.SUFFIX_REMOVED.get(target));
                         } else {
-                            StringBuilder stringBuilder = new StringBuilder();
+                            String suffix = Arrays.stream(args, 2, args.length - 1).collect(Collectors.joining(" "));
 
-                            for (int i = 2; i < args.length; i++) {
-                                stringBuilder.append(args[i]).append(" ");
-                            }
-
-                            targetAccount.get().setStoredSuffix(Optional.of(stringBuilder.toString()));
+                            targetAccount.get().setStoredSuffix(Optional.of(suffix));
                             sender.sendMessage(prefix + Message.SUFFIX_SET.get(target));
                         }
                     }
                 }
+
                 return;
             }
         }
