@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS `BungeeChat_Accounts` (
+ `UUID` BINARY(16) NOT NULL,
+ `ChannelType` ENUM('STAFF','NONE','GLOBAL','LOCAL','GROUP') NOT NULL,
+ `Vanished` BOOLEAN NOT NULL DEFAULT '0',
+ `Messenger` BOOLEAN NOT NULL DEFAULT '0',
+ `SocialSpy` BOOLEAN NOT NULL DEFAULT '0',
+ `StoredPrefix` TEXT,
+ `StoredSuffix` TEXT,
+ PRIMARY KEY (`UUID`)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `BungeeChat_Ignores` (
+ `User` BINARY(16) NOT NULL,
+ `Ignores` BINARY(16) NOT NULL,
+ UNIQUE KEY (`User`,`Ignores`),
+ KEY (`User`),
+ KEY (`Ignores`),
+ CONSTRAINT FOREIGN KEY (`User`) REFERENCES `BungeeChat_Accounts` (`UUID`),
+ CONSTRAINT FOREIGN KEY (`Ignores`) REFERENCES `BungeeChat_Accounts` (`UUID`)
+) DEFAULT CHARSET=utf8;
+
+REPLACE INTO BungeeChat_Accounts (UUID, ChannelType, Vanished, Messenger, SocialSpy, StoredPrefix, StoredSuffix) VALUES (?, ?, ?, ?, ?, ?, ?)
+SELECT ChannelType, Vanished, Messenger, SocialSpy, StoredPrefix, StoredSuffix FROM BungeeChat_Accounts WHERE UUID = ? LIMIT 1
+DELETE FROM BungeeChat_Ignores WHERE User = ?
+INSERT INTO BungeeChat_Ignores (User, Ignores) VALUES (?, ?)
+SELECT Ignores FROM BungeeChat_Ignores WHERE User = ? 

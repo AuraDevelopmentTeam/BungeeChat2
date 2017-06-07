@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 
 import dev.aura.bungeechat.account.AccountFileStorage;
+import dev.aura.bungeechat.account.AccountSQLStorage;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.AccountManager;
@@ -65,7 +67,23 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         Config.load();
 
         PlaceHolders.registerPlaceholders();
-        AccountManager.setAccountStorage(new AccountFileStorage());
+
+        Configuration accountDataBase = Config.get().getSection("AccountDataBase");
+
+        if (accountDataBase.getBoolean("enabled")) {
+            try {
+                AccountManager.setAccountStorage(
+                        new AccountSQLStorage(accountDataBase.getString("ip"), accountDataBase.getInt("port"),
+                                accountDataBase.getString("database"), accountDataBase.getString("user"),
+                                accountDataBase.getString("password"), accountDataBase.getString("tablePrefix")));
+            } catch (SQLException e) {
+                LoggerHelper.error("Could not connect to specified database. Using file storage", e);
+
+                AccountManager.setAccountStorage(new AccountFileStorage());
+            }
+        } else {
+            AccountManager.setAccountStorage(new AccountFileStorage());
+        }
 
         if (CONFIG_VERSION != Config.get().getDouble("Version")) {
             LoggerHelper.info(

@@ -1,46 +1,280 @@
 package dev.aura.bungeechat.account;
 
+import java.nio.ByteBuffer;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
-import dev.aura.bungeechat.config.Config;
-import lombok.Getter;
-import net.md_5.bungee.config.Configuration;
+import dev.aura.bungeechat.api.enums.ChannelType;
+import dev.aura.bungeechat.util.LoggerHelper;
+import lombok.Cleanup;
+import lombok.NonNull;
 
 public class AccountSQLStorage implements BungeeChatAccountStorage {
-    @Getter
-    private static Connection connection;
+    private final Connection connection;
+    private final String tablePrefix;
 
-    public static void openConnection() throws SQLException {
-        Configuration c = Config.get().getSection("AccountDataBase");
+    private final String tableAccounts;
+    private final String tableAccountsColumnUUID;
+    private final String tableAccountsColumnChannelType;
+    private final String tableAccountsColumnVanished;
+    private final String tableAccountsColumnMessenger;
+    private final String tableAccountsColumnSocialSpy;
+    private final String tableAccountsColumnStoredPrefix;
+    private final String tableAccountsColumnStoredSuffix;
+    private final String tableIgnores;
+    private final String tableIgnoresColumnUser;
+    private final String tableIgnoresColumnIgnores;
 
-        String host = "jdbc:mysql://" + c.getString("ip") + ":" + c.getString("port") + "/" + c.getString("database")
+    @NonNull
+    private PreparedStatement saveAccount;
+    @NonNull
+    private PreparedStatement loadAccount;
+    @NonNull
+    private PreparedStatement deleteIgnores;
+    @NonNull
+    private PreparedStatement addIgnore;
+    @NonNull
+    private PreparedStatement getIgnores;
+
+    private static String getPlayerString(BungeeChatAccount accout) {
+        return accout.getName() + " (" + accout.getUniqueId().toString() + ')';
+    }
+
+    private static byte[] getBytesFromUUID(UUID uuid) {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
+        bb.putLong(uuid.getMostSignificantBits());
+        bb.putLong(uuid.getLeastSignificantBits());
+
+        return bb.array();
+    }
+
+    private static UUID getUUIDFromBytes(byte[] bytes) {
+        ByteBuffer bb = ByteBuffer.wrap(bytes);
+        long mostSigBits = bb.getLong();
+        long leastSigBits = bb.getLong();
+
+        return new UUID(mostSigBits, leastSigBits);
+    }
+
+    public AccountSQLStorage(String ip, int port, String database, String username, String password, String tablePrefix)
+            throws SQLException {
+        this.tablePrefix = tablePrefix;
+
+        tableAccounts = getTableName("Accounts");
+        tableAccountsColumnUUID = "UUID";
+        tableAccountsColumnChannelType = "ChannelType";
+        tableAccountsColumnVanished = "Vanished";
+        tableAccountsColumnMessenger = "Messenger";
+        tableAccountsColumnSocialSpy = "SocialSpy";
+        tableAccountsColumnStoredPrefix = "StoredPrefix";
+        tableAccountsColumnStoredSuffix = "StoredSuffix";
+        tableIgnores = getTableName("Ignores");
+        tableIgnoresColumnUser = "User";
+        tableIgnoresColumnIgnores = "Ignores";
+
+        String host = "jdbc:mysql://" + ip + ":" + port + "/" + database
                 + "?connectTimeout=0&socketTimeout=0&autoReconnect=true";
-        String username = c.getString("username");
-        String password = c.getString("password");
 
         connection = DriverManager.getConnection(host, username, password);
 
-        Statement statement = getConnection().createStatement();
-        String sql = "CREATE TABLE BungeeChatAccounts " + "(id INTEGER not NULL, " + " uuid VARCHAR(255), "
-                + " channeltype VARCHAR(255), " + " vanished BIT, " + " messenger BIT, " + " socialspy BIT, "
-                + " ignored TEXT(40000), " + " PRIMARY KEY ( id ))";
-        statement.executeUpdate(sql);
+        prepareTables();
+        prepareStatements();
     }
 
     @Override
     public void save(BungeeChatAccount account) {
-        // TODO Implement
+        try {
+            byte[] uuidBytes = getBytesFromUUID(account.getUniqueId());
+
+            // deleteIgnores
+            deleteIgnores.setBytes(1, uuidBytes);
+
+            deleteIgnores.executeQuery();
+            deleteIgnores.clearParameters();
+
+            // saveAccount
+            saveAccount.setBytes(1, uuidBytes);
+            saveAccount.setString(2, account.getChannelType().name());
+            saveAccount.setBoolean(3, account.isVanished());
+            saveAccount.setBoolean(4, account.isVanished());
+            saveAccount.setBoolean(5, account.isVanished());
+            saveAccount.setString(6, account.getStoredPrefix().orElse(null));
+            saveAccount.setString(7, account.getStoredSuffix().orElse(null));
+
+            saveAccount.executeQuery();
+            saveAccount.clearParameters();
+
+            // addIgnore
+            addIgnore.setBytes(1, uuidBytes);
+
+            for (UUID uuid : account.getIgnored()) {
+                addIgnore.setBytes(2, getBytesFromUUID(uuid));
+
+                addIgnore.executeQuery();
+            }
+
+            addIgnore.clearParameters();
+        } catch (SQLException e) {
+            LoggerHelper.error("Could not save user " + getPlayerString(account) + " to database!", e);
+        }
     }
 
     @Override
     public BungeeChatAccount load(UUID uuid) {
-        // TODO Implement
-        return null;
+        try {
+            byte[] uuidBytes = getBytesFromUUID(uuid);
+
+            // loadAccount
+            loadAccount.setBytes(1, uuidBytes);
+
+            @Cleanup
+            ResultSet resultLoadAccount = loadAccount.executeQuery();
+            loadAccount.clearParameters();
+
+            if (!resultLoadAccount.next())
+                return new Account(uuid);
+
+            // getIgnores
+            getIgnores.setBytes(1, uuidBytes);
+
+            @Cleanup
+            ResultSet resultGetIgnores = getIgnores.executeQuery();
+            getIgnores.clearParameters();
+
+            BlockingQueue<UUID> ignores = new LinkedBlockingQueue<>();
+
+            while (resultLoadAccount.next()) {
+                ignores.add(getUUIDFromBytes(resultLoadAccount.getBytes(tableIgnoresColumnIgnores)));
+            }
+
+            return new Account(uuid, ChannelType.valueOf(resultLoadAccount.getString(tableAccountsColumnChannelType)),
+                    resultLoadAccount.getBoolean(tableAccountsColumnVanished),
+                    resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
+                    resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy), ignores,
+                    Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
+                    Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix)));
+        } catch (SQLException e) {
+            BungeeChatAccount account = new Account(uuid);
+            LoggerHelper.error("Could not save user " + getPlayerString(account) + " to database!", e);
+
+            return account;
+        }
+    }
+
+    private boolean isConnectionActive() {
+        try {
+            return (connection != null) && connection.isValid(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
+    private Statement getStatement() throws SQLException {
+        if (!isConnectionActive())
+            throw new SQLException("MySQL-connection is not active!");
+
+        return connection.createStatement();
+    }
+
+    private PreparedStatement getPreparedStatement(String statement) throws SQLException {
+        return connection.prepareStatement(statement);
+    }
+
+    @SuppressWarnings("unused")
+    private ResultSet executeQuery(String query) throws SQLException {
+        @Cleanup
+        Statement statement = getStatement();
+
+        return statement.executeQuery(query);
+    }
+
+    private boolean executeStatement(String query) throws SQLException {
+        @Cleanup
+        Statement statement = getStatement();
+
+        return statement.execute(query);
+    }
+
+    @SuppressWarnings("unused")
+    private int executeUpdate(String query) throws SQLException {
+        @Cleanup
+        Statement statement = getStatement();
+
+        return statement.executeUpdate(query);
+    }
+
+    private String getTableName(String baseName) {
+        String name = tablePrefix + baseName;
+        name = '`' + name.replaceAll("`", "``") + '`';
+
+        return name;
+    }
+
+    private void prepareTables() {
+        try {
+            String channelTypeEnum = Arrays.stream(ChannelType.values()).map(ChannelType::name)
+                    .collect(Collectors.joining("','", " ENUM('", "')"));
+
+            String createAccountsTable = "CREATE TABLE IF NOT EXISTS " + tableAccounts + " (" + tableAccountsColumnUUID
+                    + " BINARY(16) NOT NULL, " + tableAccountsColumnChannelType + channelTypeEnum + " NOT NULL, "
+                    + tableAccountsColumnVanished + " BOOLEAN NOT NULL DEFAULT '0', " + tableAccountsColumnMessenger
+                    + " BOOLEAN NOT NULL DEFAULT '0', " + tableAccountsColumnSocialSpy
+                    + " BOOLEAN NOT NULL DEFAULT '0', " + tableAccountsColumnStoredPrefix + " TEXT, "
+                    + tableAccountsColumnStoredSuffix + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID
+                    + ")) DEFAULT CHARSET=utf8";
+            String createIgnoresTable = "CREATE TABLE IF NOT EXISTS " + tableIgnores + " (" + tableIgnoresColumnUser
+                    + " BINARY(16) NOT NULL, " + tableIgnoresColumnIgnores + " BINARY(16) NOT NULL, PRIMARY KEY ("
+                    + tableIgnoresColumnUser + "," + tableIgnoresColumnIgnores + "), KEY (" + tableIgnoresColumnUser
+                    + "), KEY (" + tableIgnoresColumnIgnores + "), CONSTRAINT FOREIGN KEY (" + tableIgnoresColumnUser
+                    + ") REFERENCES " + tableAccounts + " (" + tableAccountsColumnUUID + "), CONSTRAINT FOREIGN KEY ("
+                    + tableIgnoresColumnIgnores + ") REFERENCES " + tableAccounts + " (" + tableAccountsColumnUUID
+                    + ")) DEFAULT CHARSET=utf8";
+
+            executeStatement(createAccountsTable);
+            executeStatement(createIgnoresTable);
+        } catch (SQLException e) {
+            LoggerHelper.error("Could not create tables!", e);
+        }
+    }
+
+    private void prepareStatements() {
+        try {
+            String saveAccountStr = "REPLACE INTO " + tableAccounts + " (" + tableAccountsColumnUUID + ", "
+                    + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished + ", "
+                    + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
+                    + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix
+                    + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String loadAccountStr = "SELECT " + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished
+                    + ", " + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
+                    + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix + " FROM "
+                    + tableAccounts + " WHERE " + tableAccountsColumnUUID + " = ? LIMIT 1";
+            String deleteIgnoresStr = "DELETE FROM " + tableIgnores + " WHERE " + tableIgnoresColumnUser + " = ?";
+            String addIgnoreStr = "INSERT INTO " + tableIgnores + " (" + tableIgnoresColumnUser + ", "
+                    + tableIgnoresColumnIgnores + ") VALUES (?, ?)";
+            String getIgnoresStr = "SELECT " + tableIgnoresColumnIgnores + " FROM " + tableIgnores + " WHERE "
+                    + tableIgnoresColumnUser + " = ? ";
+
+            saveAccount = getPreparedStatement(saveAccountStr);
+            loadAccount = getPreparedStatement(loadAccountStr);
+            deleteIgnores = getPreparedStatement(deleteIgnoresStr);
+            addIgnore = getPreparedStatement(addIgnoreStr);
+            getIgnores = getPreparedStatement(getIgnoresStr);
+        } catch (SQLException e) {
+            LoggerHelper.error("Could not prepare statements!", e);
+        }
     }
 }
