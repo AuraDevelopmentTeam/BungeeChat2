@@ -28,7 +28,8 @@ public class GlobalChatListener implements Listener {
         if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
             if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
                 BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list").contains(account.getServerName())) {
+                if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
+                        .contains(account.getServerName())) {
                     e.setCancelled(true);
                     MessagesService.sendGlobalMessage(sender, message);
                     return;
@@ -41,7 +42,8 @@ public class GlobalChatListener implements Listener {
 
             if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
                 BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list").contains(account.getServerName())) {
+                if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
+                        .contains(account.getServerName())) {
                     sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
                     return;
                 }
@@ -60,7 +62,8 @@ public class GlobalChatListener implements Listener {
 
                 if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
                     BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                    if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list").contains(account.getServerName())) {
+                    if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
+                            .contains(account.getServerName())) {
                         sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
                         return;
                     }

@@ -1,5 +1,8 @@
 package dev.aura.bungeechat.command;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
@@ -19,13 +22,9 @@ public class HelpOpCommand extends BaseCommand {
             if (args.length < 1) {
                 sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/helpop <message>"));
             } else {
-                StringBuilder stringBuilder = new StringBuilder();
+                String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 
-                for (String arg : args) {
-                    stringBuilder.append(arg).append(" ");
-                }
-
-                MessagesService.sendHelpMessage(sender, stringBuilder.toString().trim());
+                MessagesService.sendHelpMessage(sender, finalMessage);
             }
         }
     }

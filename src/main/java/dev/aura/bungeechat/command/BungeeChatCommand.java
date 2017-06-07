@@ -55,7 +55,7 @@ public class BungeeChatCommand extends BaseCommand {
                             targetAccount.get().setStoredPrefix(null);
                             sender.sendMessage(prefix + Message.PREFIX_REMOVED.get(target));
                         } else {
-                            String prefix = Arrays.stream(args, 2, args.length - 1).collect(Collectors.joining(" "));
+                            String prefix = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
 
                             targetAccount.get().setStoredPrefix(Optional.of(prefix));
                             sender.sendMessage(prefix + Message.PREFIX_SET.get(target));
@@ -81,7 +81,7 @@ public class BungeeChatCommand extends BaseCommand {
                             targetAccount.get().setStoredSuffix(null);
                             sender.sendMessage(prefix + Message.SUFFIX_REMOVED.get(target));
                         } else {
-                            String suffix = Arrays.stream(args, 2, args.length - 1).collect(Collectors.joining(" "));
+                            String suffix = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
 
                             targetAccount.get().setStoredSuffix(Optional.of(suffix));
                             sender.sendMessage(prefix + Message.SUFFIX_SET.get(target));

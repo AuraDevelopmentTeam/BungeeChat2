@@ -1,5 +1,8 @@
 package dev.aura.bungeechat.command;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
@@ -25,9 +28,11 @@ public class GlobalChatCommand extends BaseCommand {
                 sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
                 return;
             }
-            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled") && (sender instanceof ProxiedPlayer)) {
+            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")
+                    && (sender instanceof ProxiedPlayer)) {
                 BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list").contains(account.getServerName())) {
+                if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
+                        .contains(account.getServerName())) {
                     sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
                     return;
                 }
@@ -51,13 +56,9 @@ public class GlobalChatCommand extends BaseCommand {
                     sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/global <message>"));
                 }
             } else {
-                StringBuilder stringBuilder = new StringBuilder();
+                String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 
-                for (String arg : args) {
-                    stringBuilder.append(arg).append(" ");
-                }
-
-                MessagesService.sendGlobalMessage(sender, stringBuilder.toString().trim());
+                MessagesService.sendGlobalMessage(sender, finalMessage);
             }
         }
     }

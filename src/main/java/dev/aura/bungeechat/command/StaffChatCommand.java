@@ -1,5 +1,8 @@
 package dev.aura.bungeechat.command;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
@@ -40,13 +43,9 @@ public class StaffChatCommand extends BaseCommand {
                     sender.sendMessage(Message.ENABLE_STAFFCHAT.get());
                 }
             } else {
-                StringBuilder stringBuilder = new StringBuilder();
+                String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 
-                for (String arg : args) {
-                    stringBuilder.append(arg).append(" ");
-                }
-
-                MessagesService.sendStaffMessage(sender, stringBuilder.toString().trim());
+                MessagesService.sendStaffMessage(sender, finalMessage);
             }
         }
     }

@@ -1,6 +1,8 @@
 package dev.aura.bungeechat.command;
 
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
@@ -49,13 +51,9 @@ public class MessageCommand extends BaseCommand {
                     return;
                 }
 
-                StringBuilder stringBuilder = new StringBuilder();
+                String finalMessage = Arrays.stream(args, 1, args.length).collect(Collectors.joining(" "));
 
-                for (int i = 1; i < args.length; i++) {
-                    stringBuilder.append(args[i]).append(" ");
-                }
-
-                MessagesService.sendPrivateMessage(sender, target, stringBuilder.toString().trim());
+                MessagesService.sendPrivateMessage(sender, target, finalMessage);
                 ReplyCommand.setReply(sender, target);
             }
         }

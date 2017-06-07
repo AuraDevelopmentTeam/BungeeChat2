@@ -1,5 +1,8 @@
 package dev.aura.bungeechat.command;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.module.AlertModule;
@@ -21,13 +24,7 @@ public class AlertCommand extends BaseCommand {
             if (args.length < 1) {
                 sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/alert <message>"));
             } else {
-                StringBuilder stringBuilder = new StringBuilder();
-
-                for (String arg : args) {
-                    stringBuilder.append(arg).append(" ");
-                }
-
-                String finalMessage = stringBuilder.toString().trim();
+                String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 
                 if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
                     finalMessage = PlaceHolderUtil.transformAltColorCodes(finalMessage);
