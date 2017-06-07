@@ -16,6 +16,7 @@ Version 2.0.0
 \* Improved the Version Check System.  
 \* Improved Permission Plugin system. The plugin will be detected automatically.  
 \* Improved ChatLock. It can be used either globally or locally.  
+\* The console can now chat too. (Username ~Console~)  
 
 \- Removed Redis support for now. (Will be added back in a later version).  
 
