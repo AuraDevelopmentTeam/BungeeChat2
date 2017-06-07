@@ -14,6 +14,7 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
 
 public class BungeecordAccountManager extends AccountManager implements Listener {
     protected static ConcurrentMap<UUID, CommandSender> nativeObjects = new ConcurrentHashMap<>();
@@ -67,12 +68,12 @@ public class BungeecordAccountManager extends AccountManager implements Listener
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerConnect(PostLoginEvent event) {
         loadAccount(event.getPlayer().getUniqueId());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         unloadAccount(event.getPlayer().getUniqueId());
     }

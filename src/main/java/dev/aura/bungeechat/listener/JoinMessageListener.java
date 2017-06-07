@@ -10,8 +10,8 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class JoinMessageListener implements Listener {
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerChat(PostLoginEvent e) {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerJoin(PostLoginEvent e) {
         ProxiedPlayer player = e.getPlayer();
 
         if (PermissionManager.hasPermission(player, Permission.MESSAGE_JOIN)) {

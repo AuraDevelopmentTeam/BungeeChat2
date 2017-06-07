@@ -1,11 +1,11 @@
 package dev.aura.bungeechat.permission;
 
+import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
@@ -31,6 +31,6 @@ public class PermissionManager {
     }
 
     public static boolean hasPermission(BungeeChatAccount account, Permission permission) {
-        return hasPermission(ProxyServer.getInstance().getPlayer(account.getUniqueId()), permission);
+        return hasPermission(BungeecordAccountManager.getCommandSender(account).get(), permission);
     }
 }

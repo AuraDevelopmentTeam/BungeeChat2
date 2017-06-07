@@ -10,8 +10,8 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class LeaveMessageListener implements Listener {
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerChat(PlayerDisconnectEvent e) {
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerLeave(PlayerDisconnectEvent e) {
         ProxiedPlayer player = e.getPlayer();
 
         if (PermissionManager.hasPermission(player, Permission.MESSAGE_LEAVE)) {
