@@ -52,7 +52,7 @@ public class BungeeChatCommand extends BaseCommand {
                         CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                         if (args.length < 3) {
-                            targetAccount.get().setStoredPrefix(null);
+                            targetAccount.get().setStoredPrefix(Optional.empty());
                             sender.sendMessage(prefix + Message.PREFIX_REMOVED.get(target));
                         } else {
                             String newPrefix = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
@@ -78,7 +78,7 @@ public class BungeeChatCommand extends BaseCommand {
                         CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                         if (args.length < 3) {
-                            targetAccount.get().setStoredSuffix(null);
+                            targetAccount.get().setStoredSuffix(Optional.empty());
                             sender.sendMessage(prefix + Message.SUFFIX_REMOVED.get(target));
                         } else {
                             String newSuffix = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
