@@ -27,6 +27,7 @@ public class BungeecordModuleManager extends ModuleManager {
     public static final HelpOpModule HELP_OP_MODULE = new HelpOpModule();
     public static final JoinMessageModule JOIN_MESSAGE_MODULE = new JoinMessageModule();
     public static final LeaveMessageModule LEAVE_MESSAGE_MODULE = new LeaveMessageModule();
+    public static final ServerSwitchModule SERVER_SWITCH_MODULE = new ServerSwitchModule();
     public static final LocalChatModule LOCAL_CHAT_MODULE = new LocalChatModule();
     public static final MessengerModule MESSENGER_MODULE = new MessengerModule();
     public static final SocialSpyModule SOCIAL_SPY_MODULE = new SocialSpyModule();

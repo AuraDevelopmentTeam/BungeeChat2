@@ -177,6 +177,21 @@ public class MessagesService {
         ChatLoggingManager.logMessage("LEAVE", context);
     }
 
+    public static void sendSwitchMessage(CommandSender sender) throws InvalidContextError {
+        sendLeaveMessage(new Context(sender));
+    }
+
+    public static void sendSwitchMessage(BungeeChatContext context) throws InvalidContextError {
+        context.require(BungeeChatContext.HAS_SENDER);
+
+        String finalMessage = PlaceHolderUtil.getFullFormatMessage("server-switch", context);
+
+        sendToMatchingPlayers(finalMessage);
+
+        context.setMessage(finalMessage);
+        ChatLoggingManager.logMessage("SWITCH", context);
+    }
+
     public static Optional<String> preProcessMessage(BungeeChatContext context, String format)
             throws InvalidContextError {
         return preProcessMessage(context, context.getSender(), format, true);

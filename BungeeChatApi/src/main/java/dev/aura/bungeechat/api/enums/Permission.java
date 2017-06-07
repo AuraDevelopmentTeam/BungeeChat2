@@ -36,7 +36,8 @@ public enum Permission {
     COMMAND_CHAT_LOCK_BYPASS("command.chatlock.bypass"),
 
     MESSAGE_JOIN("message.join"),
-    MESSAGE_LEAVE("message.leave");
+    MESSAGE_LEAVE("message.leave"),
+    MESSAGE_SWITCH("message.switch");
 
     @Getter
     private final String stringedPermission;
