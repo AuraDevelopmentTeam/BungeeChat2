@@ -101,7 +101,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             // deleteIgnores
             deleteIgnores.setBytes(1, uuidBytes);
 
-            deleteIgnores.executeQuery();
+            deleteIgnores.execute();
             deleteIgnores.clearParameters();
 
             // saveAccount
@@ -113,7 +113,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             saveAccount.setString(6, account.getStoredPrefix().orElse(null));
             saveAccount.setString(7, account.getStoredSuffix().orElse(null));
 
-            saveAccount.executeQuery();
+            saveAccount.executeUpdate();
             saveAccount.clearParameters();
 
             // addIgnore
@@ -122,7 +122,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             for (UUID uuid : account.getIgnored()) {
                 addIgnore.setBytes(2, getBytesFromUUID(uuid));
 
-                addIgnore.executeQuery();
+                addIgnore.executeUpdate();
             }
 
             addIgnore.clearParameters();
