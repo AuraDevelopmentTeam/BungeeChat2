@@ -26,7 +26,7 @@ public class StaffChatListener implements Listener {
         if ((BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF)
                 && !ChatUtils.isCommand(message)) {
 
-            if (PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT)) {
+            if (!PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT)) {
                 BungeecordAccountManager.getAccount(sender).get().setChannelType(ChannelType.LOCAL);
                 return;
             }
