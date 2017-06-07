@@ -50,6 +50,7 @@ public enum Permission {
     }
 
     private Permission(String stringedPermission) {
-        this(stringedPermission, stringedPermission.startsWith("command."));
+        this(stringedPermission, (stringedPermission.startsWith("command.") || stringedPermission.startsWith("admin."))
+                && !stringedPermission.endsWith(".bypass"));
     }
 }
