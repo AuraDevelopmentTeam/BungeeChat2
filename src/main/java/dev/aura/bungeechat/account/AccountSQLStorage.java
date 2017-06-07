@@ -48,10 +48,6 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     @NonNull
     private PreparedStatement getIgnores;
 
-    private static String getPlayerString(BungeeChatAccount accout) {
-        return accout.getName() + " (" + accout.getUniqueId().toString() + ')';
-    }
-
     private static byte[] getBytesFromUUID(UUID uuid) {
         ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
         bb.putLong(uuid.getMostSignificantBits());
@@ -127,7 +123,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
             addIgnore.clearParameters();
         } catch (SQLException e) {
-            LoggerHelper.error("Could not save user " + getPlayerString(account) + " to database!", e);
+            LoggerHelper.error("Could not save user " + account.getUniqueId() + " to database!", e);
         }
     }
 
@@ -155,7 +151,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
             BlockingQueue<UUID> ignores = new LinkedBlockingQueue<>();
 
-            while (resultLoadAccount.next()) {
+            while (resultGetIgnores.next()) {
                 ignores.add(getUUIDFromBytes(resultLoadAccount.getBytes(tableIgnoresColumnIgnores)));
             }
 
@@ -166,10 +162,9 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
                     Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix)));
         } catch (SQLException e) {
-            BungeeChatAccount account = new Account(uuid);
-            LoggerHelper.error("Could not save user " + getPlayerString(account) + " to database!", e);
+            LoggerHelper.error("Could not load user " + uuid + " from database!", e);
 
-            return account;
+            return new Account(uuid);
         }
     }
 
