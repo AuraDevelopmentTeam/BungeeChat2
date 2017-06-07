@@ -104,8 +104,8 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             saveAccount.setBytes(1, uuidBytes);
             saveAccount.setString(2, account.getChannelType().name());
             saveAccount.setBoolean(3, account.isVanished());
-            saveAccount.setBoolean(4, account.isVanished());
-            saveAccount.setBoolean(5, account.isVanished());
+            saveAccount.setBoolean(4, account.hasMessangerEnabled());
+            saveAccount.setBoolean(5, account.hasSocialSpyEnabled());
             saveAccount.setString(6, account.getStoredPrefix().orElse(null));
             saveAccount.setString(7, account.getStoredSuffix().orElse(null));
 
