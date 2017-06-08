@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Timestamp;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -48,6 +49,7 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             save.writeObject(account.isVanished());
             save.writeObject(account.hasSocialSpyEnabled());
             save.writeObject(account.getIgnored());
+            save.writeObject(account.getMutedUntil());
             save.writeObject(account.getStoredPrefix().orElse(null));
             save.writeObject(account.getStoredSuffix().orElse(null));
         } catch (IOException e) {
@@ -71,8 +73,8 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
 
             return new SimpleEntry<>(new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
                     (boolean) save.readObject(), (boolean) save.readObject(), (BlockingQueue<UUID>) save.readObject(),
-                    Optional.ofNullable((String) save.readObject()), Optional.ofNullable((String) save.readObject())),
-                    false);
+                    (Timestamp) save.readObject(), Optional.ofNullable((String) save.readObject()),
+                    Optional.ofNullable((String) save.readObject())), false);
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             LoggerHelper.warning("Could not load player " + uuid, e);
 
