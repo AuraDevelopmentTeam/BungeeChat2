@@ -105,4 +105,26 @@ public class TimeUtil {
 
         return sdfDate.format(now);
     }
+
+    //TODO JavaDoc
+    public static double convertStringTimeToDouble(String timetoadd){
+        double timeamount = 0;
+        if(timetoadd.contains("y")){
+            timeamount += Double.valueOf(timetoadd.replaceAll("y", "")) * 31536000 * 1000;
+        }else if(timetoadd.contains("mo")){
+            timeamount += Double.valueOf(timetoadd.replaceAll("mo", "")) * 2592000 * 1000;
+        }else if(timetoadd.contains("w")){
+            timeamount += Double.valueOf(timetoadd.replaceAll("w", "")) * 604800 * 1000;
+        }else if(timetoadd.contains("d")){
+            timeamount += Double.valueOf(timetoadd.replaceAll("d", "")) * 86400 * 1000;
+        }else if(timetoadd.contains("h")){
+            timeamount += Double.valueOf(timetoadd.replaceAll("h", "")) * 3600 * 1000;
+        }else if(timetoadd.contains("m")){
+            timeamount += Double.valueOf(timetoadd.replaceAll("m", "")) * 60 * 1000;
+        }else if(timetoadd.contains("s")){
+            timeamount += Double.valueOf(timetoadd.replaceAll("s", "")) * 1000;
+        }
+        return timeamount;
+    }
+
 }
