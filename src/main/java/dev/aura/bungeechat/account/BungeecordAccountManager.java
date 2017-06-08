@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.account;
 
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,10 +38,14 @@ public class BungeecordAccountManager extends AccountManager implements Listener
     }
 
     public static void loadAccount(UUID uuid) {
-        BungeeChatAccount account = accountStorage.load(uuid);
+        Entry<BungeeChatAccount, Boolean> loadedAccount = accountStorage.load(uuid);
 
-        accounts.put(uuid, account);
-        nativeObjects.put(uuid, getCommandSenderFromAccount(account));
+        accounts.put(uuid, loadedAccount.getKey());
+        nativeObjects.put(uuid, getCommandSenderFromAccount(loadedAccount.getKey()));
+
+        if (loadedAccount.getValue()) {
+            saveAccount(loadedAccount.getKey());
+        }
     }
 
     public static void unloadAccount(UUID uuid) {
@@ -52,9 +57,7 @@ public class BungeecordAccountManager extends AccountManager implements Listener
     }
 
     public static void unloadAccount(BungeeChatAccount account) {
-        accountStorage.save(account);
-
-        accounts.remove(account.getUniqueId());
+        AccountManager.unloadAccount(account);
         nativeObjects.remove(account.getUniqueId());
     }
 

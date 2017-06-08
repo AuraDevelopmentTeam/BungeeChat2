@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -49,33 +51,32 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             save.writeObject(account.getStoredPrefix().orElse(null));
             save.writeObject(account.getStoredSuffix().orElse(null));
         } catch (IOException e) {
-            LoggerHelper.warning("Could not save player " + account, e);
+            LoggerHelper.warning("Could not save player " + account.getUniqueId(), e);
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public BungeeChatAccount load(UUID uuid) {
+    public Entry<BungeeChatAccount, Boolean> load(UUID uuid) {
         try {
             File accountFile = new File(getUserDataDir(), uuid.toString() + FILE_EXTENSION);
 
             if (!accountFile.exists())
-                return new Account(uuid);
+                return new SimpleEntry<>(new Account(uuid), false);
 
             @Cleanup
             FileInputStream saveFile = new FileInputStream(accountFile);
             @Cleanup
             ObjectInputStream save = new ObjectInputStream(saveFile);
 
-            return new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
+            return new SimpleEntry<>(new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
                     (boolean) save.readObject(), (boolean) save.readObject(), (BlockingQueue<UUID>) save.readObject(),
-                    Optional.ofNullable((String) save.readObject()), Optional.ofNullable((String) save.readObject()));
+                    Optional.ofNullable((String) save.readObject()), Optional.ofNullable((String) save.readObject())),
+                    false);
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
-            BungeeChatAccount account = new Account(uuid);
+            LoggerHelper.warning("Could not load player " + uuid, e);
 
-            LoggerHelper.warning("Could not load player " + account, e);
-
-            return account;
+            return new SimpleEntry<>(new Account(uuid), false);
         }
     }
 }

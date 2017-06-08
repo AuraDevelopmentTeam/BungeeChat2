@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -128,7 +130,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     }
 
     @Override
-    public BungeeChatAccount load(UUID uuid) {
+    public Entry<BungeeChatAccount, Boolean> load(UUID uuid) {
         try {
             byte[] uuidBytes = getBytesFromUUID(uuid);
 
@@ -140,7 +142,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             loadAccount.clearParameters();
 
             if (!resultLoadAccount.next())
-                return new Account(uuid);
+                return new SimpleEntry<>(new Account(uuid), true);
 
             // getIgnores
             getIgnores.setBytes(1, uuidBytes);
@@ -155,17 +157,24 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                 ignores.add(getUUIDFromBytes(resultLoadAccount.getBytes(tableIgnoresColumnIgnores)));
             }
 
-            return new Account(uuid, ChannelType.valueOf(resultLoadAccount.getString(tableAccountsColumnChannelType)),
-                    resultLoadAccount.getBoolean(tableAccountsColumnVanished),
-                    resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
-                    resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy), ignores,
-                    Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
-                    Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix)));
+            return new SimpleEntry<>(
+                    new Account(uuid, ChannelType.valueOf(resultLoadAccount.getString(tableAccountsColumnChannelType)),
+                            resultLoadAccount.getBoolean(tableAccountsColumnVanished),
+                            resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
+                            resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy), ignores,
+                            Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
+                            Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix))),
+                    false);
         } catch (SQLException e) {
             LoggerHelper.error("Could not load user " + uuid + " from database!", e);
 
-            return new Account(uuid);
+            return new SimpleEntry<>(new Account(uuid), true);
         }
+    }
+    
+    @Override
+    public boolean requiresConsoleAccountSave() {
+        return true;
     }
 
     private boolean isConnectionActive() {

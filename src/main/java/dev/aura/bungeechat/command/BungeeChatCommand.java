@@ -25,12 +25,9 @@ public class BungeeChatCommand extends BaseCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-
         if (args.length != 0) {
-
             if (args[0].equalsIgnoreCase("reload")
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_RELOAD)) {
-
                 BungeeChat.getInstance().onDisable();
                 BungeeChat.getInstance().onEnable(false);
 

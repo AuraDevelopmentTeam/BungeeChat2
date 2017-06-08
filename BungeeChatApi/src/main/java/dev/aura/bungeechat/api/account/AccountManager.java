@@ -2,6 +2,7 @@ package dev.aura.bungeechat.api.account;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,14 +11,20 @@ import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.enums.AccountType;
 import lombok.Getter;
-import lombok.Setter;
 
 public class AccountManager {
     @Getter
     protected static final BungeeChatAccount consoleAccount = new ConsoleAccount();
     protected static ConcurrentMap<UUID, BungeeChatAccount> accounts = new ConcurrentHashMap<>();
-    @Setter
     protected static BungeeChatAccountStorage accountStorage;
+
+    public static void setAccountStorage(BungeeChatAccountStorage accountStorage) {
+        AccountManager.accountStorage = accountStorage;
+
+        if (accountStorage.requiresConsoleAccountSave()) {
+            saveAccount(consoleAccount);
+        }
+    }
 
     public static Optional<BungeeChatAccount> getAccount(UUID uuid) {
         return Optional.ofNullable(accounts.get(uuid));
@@ -51,7 +58,13 @@ public class AccountManager {
     }
 
     public static void loadAccount(UUID uuid) {
-        accounts.put(uuid, accountStorage.load(uuid));
+        Entry<BungeeChatAccount, Boolean> loadedAccount = accountStorage.load(uuid);
+
+        accounts.put(uuid, loadedAccount.getKey());
+
+        if (loadedAccount.getValue()) {
+            saveAccount(loadedAccount.getKey());
+        }
     }
 
     public static void unloadAccount(UUID uuid) {
@@ -63,9 +76,13 @@ public class AccountManager {
     }
 
     public static void unloadAccount(BungeeChatAccount account) {
-        accountStorage.save(account);
+        saveAccount(account);
 
         accounts.remove(account.getUniqueId());
+    }
+
+    public static void saveAccount(BungeeChatAccount account) {
+        accountStorage.save(account);
     }
 
     static {
