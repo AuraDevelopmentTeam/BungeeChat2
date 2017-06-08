@@ -40,7 +40,6 @@ public class TempMuteCommand extends BaseCommand {
                 double timeAmount = TimeUtil.convertStringTimeToDouble(args[1]), currentTime = System.currentTimeMillis();
                 java.sql.Timestamp timeStamp =  new java.sql.Timestamp((long) (currentTime + timeAmount));
                 targetAccount.get().setMutedUntil(timeStamp);
-                //TODO: Add Time Message
                 sender.sendMessage(Message.TEMPMUTE.get(target));
 
             }

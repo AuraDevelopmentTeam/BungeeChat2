@@ -22,7 +22,7 @@ public class UnmuteCommand extends BaseCommand {
             if (args.length < 1) {
                 sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/unmute <player>"));
             } else {
-                Optional<BungeeChatAccount> targetAccount = BungeecordAccountManager.getAccount(sender);
+                Optional<BungeeChatAccount> targetAccount = BungeecordAccountManager.getAccount(args[0]);
 
                 if (!targetAccount.isPresent()) {
                     sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
