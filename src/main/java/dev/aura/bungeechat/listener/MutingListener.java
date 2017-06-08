@@ -1,8 +1,11 @@
 package dev.aura.bungeechat.listener;
 
+import java.util.List;
+
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
+import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
@@ -12,9 +15,8 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-import java.util.List;
-
 public class MutingListener implements Listener {
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled())
@@ -25,29 +27,34 @@ public class MutingListener implements Listener {
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
         BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
 
-        if (account.isMuted()) {
-            if (ChatUtils.isCommand(e.getMessage())) {
-                List<String> blockCommand = BungeecordModuleManager.MUTING_MODULE.getModuleSection().getStringList("blockedcommands");
-                for (String s : blockCommand) {
-                    if (e.getMessage().startsWith("/" + s + " ")) {
-                        sender.sendMessage(Message.MUTED.get());
-                        e.setCancelled(true);
-                        return;
-                    }
-                }
-            } else {
+        if (!account.isMuted())
+            return;
 
-                if (account.getChannelType() == ChannelType.LOCAL && !BungeecordModuleManager.isModuleActive(BungeecordModuleManager.LOCAL_CHAT_MODULE)) {
-                    if (!BungeecordModuleManager.MUTING_MODULE.getModuleSection().getBoolean("ignoreBukkitLocalChat"))
-                        return;
-                }
+        final String message = e.getMessage();
 
-                if (account.getChannelType() == ChannelType.STAFF)
+        if (ChatUtils.isCommand(message)) {
+            List<String> blockCommand = BungeecordModuleManager.MUTING_MODULE.getModuleSection()
+                    .getStringList("blockedcommands");
+
+            for (String s : blockCommand) {
+                if (message.startsWith("/" + s + " ")) {
+                    sender.sendMessage(Message.MUTED.get(sender));
+                    e.setCancelled(true);
+
                     return;
-
-                e.setCancelled(true);
-                sender.sendMessage(Message.MUTED.get());
+                }
             }
+        } else {
+            final ChannelType channel = account.getChannelType();
+
+            if (((channel == ChannelType.LOCAL)
+                    && !ModuleManager.isModuleActive(BungeecordModuleManager.LOCAL_CHAT_MODULE)
+                    && BungeecordModuleManager.MUTING_MODULE.getModuleSection().getBoolean("ignoreBukkitLocalChat"))
+                    || (channel == ChannelType.STAFF))
+                return;
+
+            e.setCancelled(true);
+            sender.sendMessage(Message.MUTED.get(sender));
         }
     }
 }
