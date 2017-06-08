@@ -154,7 +154,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             BlockingQueue<UUID> ignores = new LinkedBlockingQueue<>();
 
             while (resultGetIgnores.next()) {
-                ignores.add(getUUIDFromBytes(resultLoadAccount.getBytes(tableIgnoresColumnIgnores)));
+                ignores.add(getUUIDFromBytes(resultGetIgnores.getBytes(tableIgnoresColumnIgnores)));
             }
 
             return new SimpleEntry<>(
@@ -171,7 +171,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             return new SimpleEntry<>(new Account(uuid), true);
         }
     }
-    
+
     @Override
     public boolean requiresConsoleAccountSave() {
         return true;
@@ -242,7 +242,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     + ")) DEFAULT CHARSET=utf8";
             String createIgnoresTable = "CREATE TABLE IF NOT EXISTS " + tableIgnores + " (" + tableIgnoresColumnUser
                     + " BINARY(16) NOT NULL, " + tableIgnoresColumnIgnores + " BINARY(16) NOT NULL, PRIMARY KEY ("
-                    + tableIgnoresColumnUser + "," + tableIgnoresColumnIgnores + "), KEY (" + tableIgnoresColumnUser
+                    + tableIgnoresColumnUser + ", " + tableIgnoresColumnIgnores + "), KEY (" + tableIgnoresColumnUser
                     + "), KEY (" + tableIgnoresColumnIgnores + "), CONSTRAINT FOREIGN KEY (" + tableIgnoresColumnUser
                     + ") REFERENCES " + tableAccounts + " (" + tableAccountsColumnUUID + "), CONSTRAINT FOREIGN KEY ("
                     + tableIgnoresColumnIgnores + ") REFERENCES " + tableAccounts + " (" + tableAccountsColumnUUID
@@ -257,11 +257,17 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
     private void prepareStatements() {
         try {
-            String saveAccountStr = "REPLACE INTO " + tableAccounts + " (" + tableAccountsColumnUUID + ", "
+            String saveAccountStr = "INSERT INTO " + tableAccounts + " (" + tableAccountsColumnUUID + ", "
                     + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished + ", "
                     + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
                     + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix
-                    + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    + ") VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE " + tableAccountsColumnChannelType
+                    + " = VALUES(" + tableAccountsColumnChannelType + "), " + tableAccountsColumnVanished + " = VALUES("
+                    + tableAccountsColumnVanished + "), " + tableAccountsColumnMessenger + " = VALUES("
+                    + tableAccountsColumnMessenger + "), " + tableAccountsColumnSocialSpy + " = VALUES("
+                    + tableAccountsColumnSocialSpy + "), " + tableAccountsColumnStoredPrefix + " = VALUES("
+                    + tableAccountsColumnStoredPrefix + "), " + tableAccountsColumnStoredSuffix + " = VALUES("
+                    + tableAccountsColumnStoredSuffix + ")";
             String loadAccountStr = "SELECT " + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished
                     + ", " + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
                     + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix + " FROM "
