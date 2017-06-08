@@ -92,7 +92,9 @@ Settings:
         - bhide
     ChatLock:
       enabled: true
-      aliases: []
+      emptyLinesOnClear: 20
+      aliases:
+        - lockchat
     LocalChat:
       enabled: true
     ServerSwitchMessages:

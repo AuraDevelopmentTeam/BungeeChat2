@@ -12,11 +12,11 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatLockCommand extends BaseCommand {
-    private static final String USAGE = "/lockchat <local|global>";
+    private static final String USAGE = "/chatlock <local|global> [clear]";
     private static final String EMPTY_LINE = "";
 
     public ChatLockCommand(ChatLockModule chatLockModule) {
-        super("lockchat", chatLockModule.getModuleSection().getStringList("aliases"));
+        super("chatlock", chatLockModule.getModuleSection().getStringList("aliases"));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ChatLockCommand extends BaseCommand {
                 } else {
                     final ChatLockModule chatLock = BungeecordModuleManager.CHAT_LOCK_MODULE;
                     final boolean clear = (args.length >= 2) && args[1].equalsIgnoreCase("clear");
-                    final int emptyLines = clear ? getEmptyLinesForClear() : 0;
+                    final int emptyLines = clear ? chatLock.getModuleSection().getInt("emptyLinesOnClear") : 0;
 
                     if (args[0].equalsIgnoreCase("global")) {
                         if (chatLock.isGlobalChatLockEnabled()) {
@@ -73,9 +73,5 @@ public class ChatLockCommand extends BaseCommand {
                 }
             }
         }
-    }
-
-    private static int getEmptyLinesForClear() {
-        return 10;
     }
 }
