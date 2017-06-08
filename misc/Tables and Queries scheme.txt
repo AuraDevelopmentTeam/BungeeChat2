@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `BungeeChat_Accounts2` (
  Vanished BOOLEAN NOT NULL,
  Messenger BOOLEAN NOT NULL,
  SocialSpy BOOLEAN NOT NULL,
- MutedUntil TIMESTAMP NOT NULL,
+ MutedUntil DATETIME NOT NULL,
  StoredPrefix TEXT,
  StoredSuffix TEXT,
  PRIMARY KEY (UUID)
