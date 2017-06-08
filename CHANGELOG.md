@@ -17,6 +17,7 @@ Version 2.0.0
 \* Improved the Version Check System.  
 \* Improved Permission Plugin system. The plugin will be detected automatically.  
 \* Improved ChatLock. It can be used either globally or locally.  
+\* Improved warning for the outdated config. The current default config will be generated next to the old one.  
 \* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the they were talking in.  
 \* The console can now chat too. (Username ~Console~)  
 

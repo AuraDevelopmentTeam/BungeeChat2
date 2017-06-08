@@ -30,16 +30,20 @@ public class Config {
             if (BungeeChat.CONFIG_VERSION > configuration.getDouble("Version")) {
                 File newConfig = getNewConfigFile();
 
-                LoggerHelper.warning("--------------------------------------------------------------------------------");
+                LoggerHelper
+                        .warning("--------------------------------------------------------------------------------");
                 LoggerHelper.warning(
                         "\007Your config is outdated and might cause errors when been used with this version of BungeeChat! Please update your config.");
-                LoggerHelper.warning("The current default config has been generated in " + newConfig.getAbsolutePath()
-                        + ". Simply copy settings into the new config and run \"bungeechat reload\".");
-                LoggerHelper.warning("--------------------------------------------------------------------------------");
+                LoggerHelper.warning(
+                        "The current default config has been generated in " + newConfig.getAbsolutePath() + '.');
+                LoggerHelper.warning("Simply copy settings into the new config and run \"bungeechat reload\".");
+                LoggerHelper.warning("The server will continue starting after 5 seconds.");
+                LoggerHelper
+                        .warning("--------------------------------------------------------------------------------");
 
                 copyDefaultConfig(newConfig);
 
-                Thread.sleep(TimeUnit.SECONDS.toMillis(2));
+                Thread.sleep(TimeUnit.SECONDS.toMillis(5));
             }
         } catch (Exception e) {
             LoggerHelper.error("There is an error with creating or loading the conifg file!", e);
