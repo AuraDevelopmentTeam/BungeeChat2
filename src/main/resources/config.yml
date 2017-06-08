@@ -70,6 +70,7 @@ Settings:
         - g
         - reply
         - r
+      ignoreBukkitLocalChat: false
     JoinMessage:
       enabled: true
     LeaveMessage:
