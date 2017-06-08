@@ -56,8 +56,6 @@ Settings:
       aliases:
         mute:
           - silence
-        tempmute:
-          - tempsilence
         unmute:
           - unsilence
       blockedcommands:

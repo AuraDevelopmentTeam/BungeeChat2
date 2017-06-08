@@ -30,6 +30,7 @@ public class BungeecordModuleManager extends ModuleManager {
     public static final LeaveMessageModule LEAVE_MESSAGE_MODULE = new LeaveMessageModule();
     public static final LocalChatModule LOCAL_CHAT_MODULE = new LocalChatModule();
     public static final MessengerModule MESSENGER_MODULE = new MessengerModule();
+    public static final MutingModule MUTING_MODULE = new MutingModule();
     public static final ServerSwitchModule SERVER_SWITCH_MODULE = new ServerSwitchModule();
     public static final SocialSpyModule SOCIAL_SPY_MODULE = new SocialSpyModule();
     public static final StaffChatModule STAFF_CHAT_MODULE = new StaffChatModule();
