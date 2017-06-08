@@ -1,6 +1,8 @@
 package dev.aura.bungeechat.command;
 
 import java.util.Optional;
+import java.util.Queue;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
@@ -34,11 +36,16 @@ public class IgnoreCommand extends BaseCommand {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
 
                 if (args[0].equalsIgnoreCase("list")) {
-                    String list = player.getIgnored().stream()
-                            .map(uuid -> AccountManager.getAccount(uuid).get().getName())
-                            .collect(Collectors.joining(", "));
+                    Queue<UUID> ignored = player.getIgnored();
 
-                    sender.sendMessage(Message.IGNORE_LIST.get(sender, list));
+                    if (ignored.isEmpty()) {
+                        sender.sendMessage(Message.IGNORE_NOBODY.get(player));
+                    } else {
+                        String list = ignored.stream().map(uuid -> AccountManager.getAccount(uuid).get().getName())
+                                .collect(Collectors.joining(", "));
+
+                        sender.sendMessage(Message.IGNORE_LIST.get(player, list));
+                    }
                 } else if (args[0].equalsIgnoreCase("add")) {
                     if (args.length < 2) {
                         sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/ignore add <player>"));

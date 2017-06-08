@@ -163,7 +163,8 @@ Messages:
   ignore-yourself: "&cYou can not ignore yourself!"
   unignore-yourself: "&cYou can not unignore yourself!"
   not-ignored: "&cYou have not ignored this user!"
-  ignore-list: "&eIngored users: &b%message%."
+  ignore-list: "&eIngored users: &b%message%&e."
+  ignore-nobody: "&eYou are ignoring &anobody&e!"
   #Filter Messages
   anti-advertise: "&cPlease do not advertise!"
   anti-duplication: "&cPlease do not spam messages!"

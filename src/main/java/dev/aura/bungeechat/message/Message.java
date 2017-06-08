@@ -40,6 +40,7 @@ public enum Message {
     UNIGNORE_YOURSELF("unignore-yourself"),
     NOT_IGNORED("not-ignored"),
     IGNORE_LIST("ignore-list"),
+    IGNORE_NOBODY("ignore-nobody"),
     ANTI_DUPLICATION("anti-duplication"),
     NO_PERMISSION("no-permission"),
     HAS_INGORED("has-ignored"),
