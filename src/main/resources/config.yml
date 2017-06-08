@@ -189,6 +189,7 @@ Messages:
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"
   socialspy: "&9SPY > &e%sender_name% &8-> &e%target_name% &8: &r%message%"
+  localspy: "&9SPY > &8%servername% > &e%name% &8: &r%message%"
   global-chat: "&9GLOBAL > %prefix% &e%name%: &r%message%"
   message-sender: "&6You &8-> &6%target_name% &8: &r%message%"
   message-target: "&6%sender_name% &8-> &6You&8: &r%message%"

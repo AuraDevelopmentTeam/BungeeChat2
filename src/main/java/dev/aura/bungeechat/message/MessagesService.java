@@ -95,8 +95,8 @@ public class MessagesService {
         if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
             sendToMatchingPlayers(finalMessage);
         } else {
-            sendToMatchingPlayers(finalMessage, account -> BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
-                    .contains(account.getServerName()));
+            sendToMatchingPlayers(finalMessage, account -> BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
+                    .getStringList("Server-list.list").contains(account.getServerName()));
         }
 
         ChatLoggingManager.logMessage(ChannelType.GLOBAL, context);
@@ -109,12 +109,21 @@ public class MessagesService {
     public static void sendLocalMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
+        Optional<BungeeChatAccount> account = context.getSender();
+        BungeeChatAccount senderAcconut = account.get();
         Optional<String> finalMessage = preProcessMessage(context, "local-chat");
         String localServerName = context.getSender().get().getServerName();
 
-        sendToMatchingPlayers(finalMessage, account -> account.getServerName().equals(localServerName));
+        sendToMatchingPlayers(finalMessage, acc -> acc.getServerName().equals(localServerName));
 
         ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
+
+        if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
+            String localSpyMessage = preProcessMessage(context, account, "localspy", false).get();
+
+            sendToMatchingPlayers(localSpyMessage,
+                    acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+        }
     }
 
     public static void sendStaffMessage(CommandSender sender, String message) throws InvalidContextError {
@@ -200,7 +209,8 @@ public class MessagesService {
 
         String finalMessage = PlaceHolderUtil.getFullFormatMessage("ignore-list", context);
 
-        sendToMatchingPlayers(finalMessage, pp -> BungeecordAccountManager.getAccount(pp.getUniqueId()).equals(context.getSender()));
+        sendToMatchingPlayers(finalMessage,
+                pp -> BungeecordAccountManager.getAccount(pp.getUniqueId()).equals(context.getSender()));
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, String format)
