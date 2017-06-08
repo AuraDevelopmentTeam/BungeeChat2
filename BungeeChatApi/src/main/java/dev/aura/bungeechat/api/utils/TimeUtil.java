@@ -106,7 +106,14 @@ public class TimeUtil {
         return sdfDate.format(now);
     }
 
-    //TODO JavaDoc
+    /**
+     * Gets the time value as a double from a String.
+     *
+     * @param timetoadd
+     *            The time as string to convert
+     * @return double
+     *            The time as double
+     */
     public static double convertStringTimeToDouble(String timetoadd){
         double timeamount = 0;
         if(timetoadd.contains("y")){
