@@ -27,7 +27,7 @@ public class Config {
 
             configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
 
-            if (BungeeChat.CONFIG_VERSION < configuration.getDouble("Version")) {
+            if (BungeeChat.CONFIG_VERSION > configuration.getDouble("Version")) {
                 File newConfig = getNewConfigFile();
 
                 LoggerHelper.warning("----------------------------------------");
