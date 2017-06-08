@@ -2,7 +2,6 @@ package dev.aura.bungeechat.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +34,7 @@ public class Config {
 
                 LoggerHelper.warning(line);
                 LoggerHelper.warning(
-                        "\007Your config is outdated and might cause errors when been used with this version of BungeeChat! Please update your config.");
+                        "\007Your config is outdated and might cause errors when being used with this version of BungeeChat! Please update your config.");
                 LoggerHelper.warning(
                         "The current default config has been generated in " + newConfig.getAbsolutePath() + '.');
                 LoggerHelper.warning("Simply copy settings into the new config and run \"bungeechat reload\".");
