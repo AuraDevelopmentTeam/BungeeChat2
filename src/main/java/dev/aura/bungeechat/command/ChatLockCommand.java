@@ -41,7 +41,6 @@ public class ChatLockCommand extends BaseCommand {
                             sender.sendMessage(Message.DISABLE_CHATLOCK.get(player));
                         } else {
                             chatLock.enableGlobalChatLock();
-                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
 
                             if (clear) {
                                 for (int i = 0; i < emptyLines; i++) {
@@ -49,6 +48,8 @@ public class ChatLockCommand extends BaseCommand {
                                             MessagesService.getGlobalPredicate());
                                 }
                             }
+
+                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
                         }
                     } else if (args[0].equalsIgnoreCase("local")) {
                         String serverName = player.getServerName();
@@ -58,7 +59,6 @@ public class ChatLockCommand extends BaseCommand {
                             sender.sendMessage(Message.DISABLE_CHATLOCK.get(player));
                         } else {
                             chatLock.enableLocalChatLock(serverName);
-                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
 
                             if (clear) {
                                 for (int i = 0; i < emptyLines; i++) {
@@ -66,6 +66,8 @@ public class ChatLockCommand extends BaseCommand {
                                             MessagesService.getLocalPredicate(serverName));
                                 }
                             }
+
+                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
                         }
                     } else {
                         sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
