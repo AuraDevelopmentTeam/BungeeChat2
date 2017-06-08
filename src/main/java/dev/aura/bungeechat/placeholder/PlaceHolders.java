@@ -1,5 +1,7 @@
 package dev.aura.bungeechat.placeholder;
 
+import java.text.SimpleDateFormat;
+
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolder;
@@ -9,6 +11,8 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class PlaceHolders {
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public static void registerPlaceholders() {
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%timestamp%", context -> TimeUtil.getLongTimeStamp()));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%time%", context -> TimeUtil.getTimeStamp()));
@@ -44,7 +48,7 @@ public class PlaceHolders {
                 .registerPlaceholder(new PlaceHolder("%serverip%", context -> context.getSender().get().getServerIP(),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_serverip%"));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%muted_until%",
-                context -> context.getSender().get().getMutedUntil().toLocalDateTime().toString(),
+                context -> dateFormat.format(context.getSender().get().getMutedUntil().toLocalDateTime()),
                 BungeeChatContext.HAS_SENDER).createAliases("%sender_muted_until%"));
 
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_name%",
@@ -64,7 +68,7 @@ public class PlaceHolders {
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_serverip%",
                 context -> context.getTarget().get().getServerIP(), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_muted_until%",
-                context -> context.getSender().get().getMutedUntil().toLocalDateTime().toString(),
+                context -> dateFormat.format(context.getSender().get().getMutedUntil().toLocalDateTime()),
                 BungeeChatContext.HAS_TARGET));
 
         PlaceHolderManager.registerPlaceholder(

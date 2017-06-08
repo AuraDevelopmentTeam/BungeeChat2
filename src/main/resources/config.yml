@@ -146,7 +146,7 @@ Messages:
   muted: "&cSorry but you can not talk because you are muted until %muted_until%!"
   unmute-not-muted: "&cThis player is not muted!"
   mute-is-muted: "This player is already muted!"
-  unmute: "&eThe player &c%name% &cehas been unmuted!"
+  unmute: "&eThe player &c%name% &ehas been unmuted!"
   mute: "&eThe player &c%name% &ehas been muted!"
   tempmute: "&eThe player &c%name% &ehas been muted until %muted_until%"
   #SocialSpy Messages
