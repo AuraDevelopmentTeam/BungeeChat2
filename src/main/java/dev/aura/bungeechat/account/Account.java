@@ -28,7 +28,9 @@ public class Account implements BungeeChatAccount {
     @Getter(AccessLevel.NONE)
     private boolean messanger;
     @Getter(AccessLevel.NONE)
-    private boolean socialspy;
+    private boolean socialSpy;
+    @Getter(AccessLevel.NONE)
+    private boolean localSpy;
     private final BlockingQueue<UUID> ignored;
     private Timestamp mutedUntil;
     private Optional<String> storedPrefix;
@@ -43,21 +45,23 @@ public class Account implements BungeeChatAccount {
         channelType = ChannelType.LOCAL;
         vanished = false;
         messanger = true;
-        socialspy = false;
+        socialSpy = false;
+        localSpy = false;
         ignored = new LinkedBlockingQueue<>();
         mutedUntil = new Timestamp(0);
         storedPrefix = Optional.empty();
         storedSuffix = Optional.empty();
     }
 
-    protected Account(UUID uuid, ChannelType channelType, boolean vanished, boolean messanger, boolean socialspy,
-            BlockingQueue<UUID> ignored, Timestamp mutedUntil, Optional<String> storedPrefix,
+    protected Account(UUID uuid, ChannelType channelType, boolean vanished, boolean messanger, boolean socialSpy,
+            boolean localSpy, BlockingQueue<UUID> ignored, Timestamp mutedUntil, Optional<String> storedPrefix,
             Optional<String> storedSuffix) {
         this.uuid = uuid;
         this.channelType = channelType;
         this.vanished = vanished;
         this.messanger = messanger;
-        this.socialspy = socialspy;
+        this.socialSpy = socialSpy;
+        this.localSpy = localSpy;
         this.ignored = ignored;
         this.mutedUntil = mutedUntil;
         this.storedPrefix = storedPrefix;
@@ -76,7 +80,12 @@ public class Account implements BungeeChatAccount {
 
     @Override
     public boolean hasSocialSpyEnabled() {
-        return socialspy;
+        return socialSpy;
+    }
+
+    @Override
+    public boolean hasLocalSpyEnabled() {
+        return localSpy;
     }
 
     public boolean hasIgnored(ProxiedPlayer player) {

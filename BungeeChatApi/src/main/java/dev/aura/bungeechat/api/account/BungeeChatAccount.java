@@ -23,6 +23,8 @@ public interface BungeeChatAccount {
     public boolean hasMessangerEnabled();
 
     public boolean hasSocialSpyEnabled();
+    
+    public boolean hasLocalSpyEnabled();
 
     public BlockingQueue<UUID> getIgnored();
 
@@ -62,7 +64,9 @@ public interface BungeeChatAccount {
 
     public void setMessanger(boolean messanger);
 
-    public void setSocialspy(boolean socialspy);
+    public void setSocialSpy(boolean socialSpy);
+    
+    public void setLocalSpy(boolean localSpy);
 
     default public void toggleVanished() {
         setVanished(!isVanished());
@@ -73,7 +77,11 @@ public interface BungeeChatAccount {
     }
 
     default public void toggleSocialSpy() {
-        setSocialspy(!hasSocialSpyEnabled());
+        setSocialSpy(!hasSocialSpyEnabled());
+    }
+    
+    default public void toggleLocalSpy() {
+        setLocalSpy(!hasLocalSpyEnabled());
     }
 
     public void addIgnore(UUID uuid);

@@ -48,6 +48,7 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             save.writeObject(account.hasMessangerEnabled());
             save.writeObject(account.isVanished());
             save.writeObject(account.hasSocialSpyEnabled());
+            save.writeObject(account.hasLocalSpyEnabled());
             save.writeObject(account.getIgnored());
             save.writeObject(account.getMutedUntil());
             save.writeObject(account.getStoredPrefix().orElse(null));
@@ -72,9 +73,10 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             ObjectInputStream save = new ObjectInputStream(saveFile);
 
             return new SimpleEntry<>(new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
-                    (boolean) save.readObject(), (boolean) save.readObject(), (BlockingQueue<UUID>) save.readObject(),
-                    (Timestamp) save.readObject(), Optional.ofNullable((String) save.readObject()),
-                    Optional.ofNullable((String) save.readObject())), false);
+                    (boolean) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(),
+                    (BlockingQueue<UUID>) save.readObject(), (Timestamp) save.readObject(),
+                    Optional.ofNullable((String) save.readObject()), Optional.ofNullable((String) save.readObject())),
+                    false);
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             LoggerHelper.warning("Could not load player " + uuid, e);
 

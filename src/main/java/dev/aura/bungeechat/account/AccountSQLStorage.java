@@ -33,6 +33,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     private final String tableAccountsColumnVanished;
     private final String tableAccountsColumnMessenger;
     private final String tableAccountsColumnSocialSpy;
+    private final String tableAccountsColumnLocalSpy;
     private final String tableAccountsColumnMutedUntil;
     private final String tableAccountsColumnStoredPrefix;
     private final String tableAccountsColumnStoredSuffix;
@@ -77,6 +78,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
         tableAccountsColumnVanished = "Vanished";
         tableAccountsColumnMessenger = "Messenger";
         tableAccountsColumnSocialSpy = "SocialSpy";
+        tableAccountsColumnLocalSpy = "SocialSpy";
         tableAccountsColumnMutedUntil = "MutedUntil";
         tableAccountsColumnStoredPrefix = "StoredPrefix";
         tableAccountsColumnStoredSuffix = "StoredSuffix";
@@ -110,9 +112,10 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             saveAccount.setBoolean(3, account.isVanished());
             saveAccount.setBoolean(4, account.hasMessangerEnabled());
             saveAccount.setBoolean(5, account.hasSocialSpyEnabled());
-            saveAccount.setTimestamp(6, account.getMutedUntil());
-            saveAccount.setString(7, account.getStoredPrefix().orElse(null));
-            saveAccount.setString(8, account.getStoredSuffix().orElse(null));
+            saveAccount.setBoolean(6, account.hasLocalSpyEnabled());
+            saveAccount.setTimestamp(7, account.getMutedUntil());
+            saveAccount.setString(8, account.getStoredPrefix().orElse(null));
+            saveAccount.setString(9, account.getStoredSuffix().orElse(null));
 
             saveAccount.executeUpdate();
             saveAccount.clearParameters();
@@ -164,7 +167,8 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     new Account(uuid, ChannelType.valueOf(resultLoadAccount.getString(tableAccountsColumnChannelType)),
                             resultLoadAccount.getBoolean(tableAccountsColumnVanished),
                             resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
-                            resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy), ignores,
+                            resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy),
+                            resultLoadAccount.getBoolean(tableAccountsColumnLocalSpy), ignores,
                             resultLoadAccount.getTimestamp(tableAccountsColumnMutedUntil),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix))),
@@ -241,8 +245,9 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     + " BINARY(16) NOT NULL, " + tableAccountsColumnChannelType + channelTypeEnum + " NOT NULL, "
                     + tableAccountsColumnVanished + " BOOLEAN NOT NULL, " + tableAccountsColumnMessenger
                     + " BOOLEAN NOT NULL, " + tableAccountsColumnSocialSpy + " BOOLEAN NOT NULL, "
-                    + tableAccountsColumnMutedUntil + " DATETIME NOT NULL, " + tableAccountsColumnStoredPrefix
-                    + " TEXT, " + tableAccountsColumnStoredSuffix + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID
+                    + tableAccountsColumnLocalSpy + " BOOLEAN NOT NULL, " + tableAccountsColumnMutedUntil
+                    + " DATETIME NOT NULL, " + tableAccountsColumnStoredPrefix + " TEXT, "
+                    + tableAccountsColumnStoredSuffix + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID
                     + ")) DEFAULT CHARSET=utf8";
             String createIgnoresTable = "CREATE TABLE IF NOT EXISTS " + tableIgnores + " (" + tableIgnoresColumnUser
                     + " BINARY(16) NOT NULL, " + tableIgnoresColumnIgnores + " BINARY(16) NOT NULL, PRIMARY KEY ("
@@ -270,14 +275,15 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     + tableAccountsColumnVanished + " = VALUES(" + tableAccountsColumnVanished + "), "
                     + tableAccountsColumnMessenger + " = VALUES(" + tableAccountsColumnMessenger + "), "
                     + tableAccountsColumnSocialSpy + " = VALUES(" + tableAccountsColumnSocialSpy + "), "
+                    + tableAccountsColumnLocalSpy + " = VALUES(" + tableAccountsColumnLocalSpy + "), "
                     + tableAccountsColumnMutedUntil + " = VALUES(" + tableAccountsColumnMutedUntil + "), "
                     + tableAccountsColumnStoredPrefix + " = VALUES(" + tableAccountsColumnStoredPrefix + "), "
                     + tableAccountsColumnStoredSuffix + " = VALUES(" + tableAccountsColumnStoredSuffix + ")";
             String loadAccountStr = "SELECT " + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished
                     + ", " + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
-                    + tableAccountsColumnMutedUntil + ", " + tableAccountsColumnStoredPrefix + ", "
-                    + tableAccountsColumnStoredSuffix + " FROM " + tableAccounts + " WHERE " + tableAccountsColumnUUID
-                    + " = ? LIMIT 1";
+                    + tableAccountsColumnLocalSpy + ", " + tableAccountsColumnMutedUntil + ", "
+                    + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix + " FROM "
+                    + tableAccounts + " WHERE " + tableAccountsColumnUUID + " = ? LIMIT 1";
             String deleteIgnoresStr = "DELETE FROM " + tableIgnores + " WHERE " + tableIgnoresColumnUser + " = ?";
             String addIgnoreStr = "INSERT INTO " + tableIgnores + " (" + tableIgnoresColumnUser + ", "
                     + tableIgnoresColumnIgnores + ") VALUES (?, ?)";

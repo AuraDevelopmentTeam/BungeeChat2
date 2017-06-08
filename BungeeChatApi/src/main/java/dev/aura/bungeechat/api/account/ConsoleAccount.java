@@ -56,6 +56,11 @@ public class ConsoleAccount implements BungeeChatAccount {
     public boolean hasSocialSpyEnabled() {
         return false;
     }
+    
+    @Override
+    public boolean hasLocalSpyEnabled() {
+        return false;
+    }
 
     @Override
     public BlockingQueue<UUID> getIgnored() {
@@ -108,7 +113,12 @@ public class ConsoleAccount implements BungeeChatAccount {
     }
 
     @Override
-    public void setSocialspy(boolean socialspy) {
+    public void setSocialSpy(boolean socialSpy) {
+        // Do nothing
+    }
+    
+    @Override
+    public void setLocalSpy(boolean localSpy) {
         // Do nothing
     }
 
