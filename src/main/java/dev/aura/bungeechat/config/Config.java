@@ -27,7 +27,7 @@ public class Config {
 
             configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
 
-            if (BungeeChat.CONFIG_VERSION > configuration.getDouble("Version")) {
+            if (BungeeChatApi.CONFIG_VERSION > configuration.getDouble("Version")) {
                 File newConfig = getNewConfigFile();
 
                 LoggerHelper
@@ -68,6 +68,10 @@ public class Config {
     }
 
     private static void copyDefaultConfig(File destination) throws IOException {
+        if (destination.exists()) {
+            destination.delete();
+        }
+
         Files.copy(BungeeChat.getInstance().getResourceAsStream("config.yml"), destination.toPath());
     }
 }
