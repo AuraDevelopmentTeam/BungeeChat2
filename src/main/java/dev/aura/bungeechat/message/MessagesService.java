@@ -59,6 +59,8 @@ public class MessagesService {
             sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
                     && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
         }
+
+        ChatLoggingManager.logMessage("PM to " + targetAcconut.getName(), context);
     }
 
     public static void sendChannelMessage(CommandSender sender, ChannelType channel, String message)
