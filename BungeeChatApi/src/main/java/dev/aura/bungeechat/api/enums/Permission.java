@@ -28,7 +28,7 @@ public enum Permission {
     COMMAND_IGNORE_BYPASS("command.ignore.bypass"),
     COMMAND_MESSAGE("command.msg"),
     COMMAND_MUTE("command.mute"),
-    COMMAND_MUTE_TEMPMUTE("command.mute.tempute"),
+    COMMAND_TEMPMUTE("command.tempmute"),
     COMMAND_UNMUTE("command.unmute"),
     COMMAND_TOGGLE_MESSAGE("command.toggle"),
     COMMAND_TOGGLE_MESSAGE_BYPASS("command.toggle.bypass"),

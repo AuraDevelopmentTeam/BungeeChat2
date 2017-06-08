@@ -58,6 +58,8 @@ Settings:
           - silence
         unmute:
           - unsilence
+        tempmute:
+          - tempsilence
       blockedcommands:
         - message
         - msg
