@@ -38,7 +38,7 @@ public class MutingListener implements Listener {
 
             for (String s : blockCommand) {
                 if (message.startsWith("/" + s + " ")) {
-                    sender.sendMessage(Message.MUTED.get(sender));
+                    sender.sendMessage(Message.MUTED.get(account));
                     e.setCancelled(true);
 
                     return;
@@ -54,7 +54,7 @@ public class MutingListener implements Listener {
                 return;
 
             e.setCancelled(true);
-            sender.sendMessage(Message.MUTED.get(sender));
+            sender.sendMessage(Message.MUTED.get(account));
         }
     }
 }
