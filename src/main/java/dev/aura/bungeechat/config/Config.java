@@ -30,13 +30,12 @@ public class Config {
             if (BungeeChat.CONFIG_VERSION > configuration.getDouble("Version")) {
                 File newConfig = getNewConfigFile();
 
-                LoggerHelper.warning("----------------------------------------");
+                LoggerHelper.warning("--------------------------------------------------------------------------------");
                 LoggerHelper.warning(
-                        "\0007You config is outdated and might cause errors when been used with this version of BungeeChat!");
-                LoggerHelper.warning("Please update your config. The current default config has been generated in "
-                        + newConfig.getAbsolutePath()
+                        "\007Your config is outdated and might cause errors when been used with this version of BungeeChat! Please update your config.");
+                LoggerHelper.warning("The current default config has been generated in " + newConfig.getAbsolutePath()
                         + ". Simply copy settings into the new config and run \"bungeechat reload\".");
-                LoggerHelper.warning("----------------------------------------");
+                LoggerHelper.warning("--------------------------------------------------------------------------------");
 
                 copyDefaultConfig(newConfig);
 
