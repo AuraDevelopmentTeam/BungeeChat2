@@ -46,7 +46,8 @@ public class MessagesService {
         if (messageSender.isPresent()) {
             sender.sendMessage(messageSender.get());
 
-            String messageTarget = preProcessMessage(context, account, "message-target", filterPrivateMessages).get();
+            String messageTarget = preProcessMessage(context, account, "message-target", filterPrivateMessages, true)
+                    .get();
             target.sendMessage(messageTarget);
         }
 
@@ -215,7 +216,7 @@ public class MessagesService {
         String finalMessage = PlaceHolderUtil.getFullFormatMessage("ignore-list", context);
 
         sendToMatchingPlayers(finalMessage,
-                pp -> BungeecordAccountManager.getAccount(pp.getUniqueId()).equals(context.getSender()));
+                pp -> AccountManager.getAccount(pp.getUniqueId()).equals(context.getSender()));
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, String format)
@@ -228,9 +229,14 @@ public class MessagesService {
         return preProcessMessage(context, account, format, true);
     }
 
+    public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
+            String format, boolean runFilters) {
+        return preProcessMessage(context, account, format, runFilters, false);
+    }
+
     @SuppressWarnings("deprecation")
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
-            String format, boolean runFilters) throws InvalidContextError {
+            String format, boolean runFilters, boolean ignoreBlockMessageExceptions) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_MESSAGE);
 
         BungeeChatAccount playerAccount = account.get();
@@ -245,9 +251,11 @@ public class MessagesService {
             try {
                 message = FilterManager.applyFilters(playerAccount, message);
             } catch (BlockMessageException e) {
-                player.sendMessage(e.getMessage());
+                if (!ignoreBlockMessageExceptions) {
+                    player.sendMessage(e.getMessage());
 
-                return Optional.empty();
+                    return Optional.empty();
+                }
             }
         }
 
