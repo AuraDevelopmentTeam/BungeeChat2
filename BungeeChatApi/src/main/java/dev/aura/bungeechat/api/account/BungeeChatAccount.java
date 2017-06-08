@@ -95,7 +95,7 @@ public interface BungeeChatAccount {
     }
 
     default void mutePermanetly() {
-        setMutedUntil(Long.MAX_VALUE);
+        setMutedUntil(Timestamp.valueOf("9999-12-31 23:59:59"));
     }
 
     default void muteFor(long amount, TimeUnit timeUnit) {

@@ -241,7 +241,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     + " BINARY(16) NOT NULL, " + tableAccountsColumnChannelType + channelTypeEnum + " NOT NULL, "
                     + tableAccountsColumnVanished + " BOOLEAN NOT NULL, " + tableAccountsColumnMessenger
                     + " BOOLEAN NOT NULL, " + tableAccountsColumnSocialSpy + " BOOLEAN NOT NULL, "
-                    + tableAccountsColumnMutedUntil + " TIMESTAMP NOT NULL, " + tableAccountsColumnStoredPrefix
+                    + tableAccountsColumnMutedUntil + " DATETIME NOT NULL, " + tableAccountsColumnStoredPrefix
                     + " TEXT, " + tableAccountsColumnStoredSuffix + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID
                     + ")) DEFAULT CHARSET=utf8";
             String createIgnoresTable = "CREATE TABLE IF NOT EXISTS " + tableIgnores + " (" + tableIgnoresColumnUser
