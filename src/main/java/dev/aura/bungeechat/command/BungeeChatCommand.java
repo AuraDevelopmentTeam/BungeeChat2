@@ -14,6 +14,7 @@ import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 
 @SuppressWarnings("deprecation")
 public class BungeeChatCommand extends BaseCommand {
@@ -28,10 +29,14 @@ public class BungeeChatCommand extends BaseCommand {
         if (args.length != 0) {
             if (args[0].equalsIgnoreCase("reload")
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_RELOAD)) {
-                BungeeChat.getInstance().onDisable();
-                BungeeChat.getInstance().onEnable(false);
+                final BungeeChat instance = BungeeChat.getInstance();
 
-                sender.sendMessage(prefix + ChatColor.GREEN + "The plugin has been reloaded!");
+                ProxyServer.getInstance().getScheduler().runAsync(instance, () -> {
+                    instance.onDisable();
+                    instance.onEnable(false);
+
+                    sender.sendMessage(prefix + ChatColor.GREEN + "The plugin has been reloaded!");
+                });
 
                 return;
             } else if (args[0].equalsIgnoreCase("setprefix")
