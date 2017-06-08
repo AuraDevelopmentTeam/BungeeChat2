@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.api.account;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -87,6 +88,11 @@ public class ConsoleAccount implements BungeeChatAccount {
     }
 
     @Override
+    public Timestamp getMutedUntil() {
+        return new Timestamp(0);
+    }
+
+    @Override
     public void setChannelType(ChannelType channelType) {
         // Do nothing
     }
@@ -113,7 +119,12 @@ public class ConsoleAccount implements BungeeChatAccount {
 
     @Override
     public void removeIgnore(UUID uuid) {
-        // Do nothings
+        // Do nothing
+    }
+
+    @Override
+    public void setMutedUntil(Timestamp mutedUntil) {
+        // Do nothing
     }
 
     @Override
