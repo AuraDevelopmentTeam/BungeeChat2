@@ -269,16 +269,17 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             String saveAccountStr = "INSERT INTO " + tableAccounts + " (" + tableAccountsColumnUUID + ", "
                     + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished + ", "
                     + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
-                    + tableAccountsColumnMutedUntil + ", " + tableAccountsColumnStoredPrefix + ", "
-                    + tableAccountsColumnStoredSuffix + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE "
-                    + tableAccountsColumnChannelType + " = VALUES(" + tableAccountsColumnChannelType + "), "
-                    + tableAccountsColumnVanished + " = VALUES(" + tableAccountsColumnVanished + "), "
-                    + tableAccountsColumnMessenger + " = VALUES(" + tableAccountsColumnMessenger + "), "
-                    + tableAccountsColumnSocialSpy + " = VALUES(" + tableAccountsColumnSocialSpy + "), "
-                    + tableAccountsColumnLocalSpy + " = VALUES(" + tableAccountsColumnLocalSpy + "), "
-                    + tableAccountsColumnMutedUntil + " = VALUES(" + tableAccountsColumnMutedUntil + "), "
-                    + tableAccountsColumnStoredPrefix + " = VALUES(" + tableAccountsColumnStoredPrefix + "), "
-                    + tableAccountsColumnStoredSuffix + " = VALUES(" + tableAccountsColumnStoredSuffix + ")";
+                    + tableAccountsColumnLocalSpy + ", " + tableAccountsColumnMutedUntil + ", "
+                    + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix
+                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE " + tableAccountsColumnChannelType
+                    + " = VALUES(" + tableAccountsColumnChannelType + "), " + tableAccountsColumnVanished + " = VALUES("
+                    + tableAccountsColumnVanished + "), " + tableAccountsColumnMessenger + " = VALUES("
+                    + tableAccountsColumnMessenger + "), " + tableAccountsColumnSocialSpy + " = VALUES("
+                    + tableAccountsColumnSocialSpy + "), " + tableAccountsColumnLocalSpy + " = VALUES("
+                    + tableAccountsColumnLocalSpy + "), " + tableAccountsColumnMutedUntil + " = VALUES("
+                    + tableAccountsColumnMutedUntil + "), " + tableAccountsColumnStoredPrefix + " = VALUES("
+                    + tableAccountsColumnStoredPrefix + "), " + tableAccountsColumnStoredSuffix + " = VALUES("
+                    + tableAccountsColumnStoredSuffix + ")";
             String loadAccountStr = "SELECT " + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished
                     + ", " + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
                     + tableAccountsColumnLocalSpy + ", " + tableAccountsColumnMutedUntil + ", "
