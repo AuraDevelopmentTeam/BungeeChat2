@@ -39,6 +39,10 @@ public class MuteCommand extends BaseCommand {
 
                 if (args.length < 2) {
 
+                    if (!PermissionManager.hasPermission(sender, Permission.COMMAND_MUTE)) {
+                        return;
+                    }
+
                     targetAccount.get().mutePermanetly();
                     sender.sendMessage(Message.MUTE.get(target));
 
