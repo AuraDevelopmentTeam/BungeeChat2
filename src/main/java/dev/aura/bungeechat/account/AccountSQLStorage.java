@@ -78,7 +78,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
         tableAccountsColumnVanished = "Vanished";
         tableAccountsColumnMessenger = "Messenger";
         tableAccountsColumnSocialSpy = "SocialSpy";
-        tableAccountsColumnLocalSpy = "SocialSpy";
+        tableAccountsColumnLocalSpy = "LocalSpy";
         tableAccountsColumnMutedUntil = "MutedUntil";
         tableAccountsColumnStoredPrefix = "StoredPrefix";
         tableAccountsColumnStoredSuffix = "StoredSuffix";
