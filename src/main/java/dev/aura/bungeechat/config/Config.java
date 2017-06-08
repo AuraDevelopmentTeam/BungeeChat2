@@ -2,7 +2,9 @@ package dev.aura.bungeechat.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
 
 import dev.aura.bungeechat.BungeeChat;
@@ -28,22 +30,21 @@ public class Config {
             configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
 
             if (BungeeChatApi.CONFIG_VERSION > configuration.getDouble("Version")) {
-                File newConfig = getNewConfigFile();
+                final File newConfig = getNewConfigFile();
+                final String line = "----------------------------------------------------------------------------------------------------------------------------------";
 
-                LoggerHelper
-                        .warning("--------------------------------------------------------------------------------");
+                LoggerHelper.warning(line);
                 LoggerHelper.warning(
                         "\007Your config is outdated and might cause errors when been used with this version of BungeeChat! Please update your config.");
                 LoggerHelper.warning(
                         "The current default config has been generated in " + newConfig.getAbsolutePath() + '.');
                 LoggerHelper.warning("Simply copy settings into the new config and run \"bungeechat reload\".");
-                LoggerHelper.warning("The server will continue starting after 5 seconds.");
-                LoggerHelper
-                        .warning("--------------------------------------------------------------------------------");
+                LoggerHelper.warning("The server will continue starting after 10 seconds.");
+                LoggerHelper.warning(line);
 
                 copyDefaultConfig(newConfig);
 
-                Thread.sleep(TimeUnit.SECONDS.toMillis(5));
+                Thread.sleep(TimeUnit.SECONDS.toMillis(10));
             }
         } catch (Exception e) {
             LoggerHelper.error("There is an error with creating or loading the conifg file!", e);
@@ -68,10 +69,7 @@ public class Config {
     }
 
     private static void copyDefaultConfig(File destination) throws IOException {
-        if (destination.exists()) {
-            destination.delete();
-        }
-
-        Files.copy(BungeeChat.getInstance().getResourceAsStream("config.yml"), destination.toPath());
+        Files.copy(BungeeChat.getInstance().getResourceAsStream("config.yml"), destination.toPath(),
+                StandardCopyOption.REPLACE_EXISTING);
     }
 }
