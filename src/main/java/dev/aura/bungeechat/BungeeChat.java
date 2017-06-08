@@ -84,15 +84,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         } else {
             AccountManager.setAccountStorage(new AccountFileStorage());
         }
-
-        if (CONFIG_VERSION != Config.get().getDouble("Version")) {
-            LoggerHelper.info(
-                    "You config is outdated and might cause errors when been used with this version of BungeeChat!");
-            LoggerHelper.info(
-                    "Please update your config by either deleting your old one or downloading the new one on the plugin page.");
-            return;
-        }
-
+        
         bungeeChatCommand = new BungeeChatCommand();
         bungeecordAccountManager = new BungeecordAccountManager();
         channelTypeCorrectorListener = new ChannelTypeCorrectorListener();

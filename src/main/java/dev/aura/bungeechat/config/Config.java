@@ -1,13 +1,14 @@
 package dev.aura.bungeechat.config;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.util.concurrent.TimeUnit;
 
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.util.LoggerHelper;
 import lombok.experimental.UtilityClass;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -21,14 +22,29 @@ public class Config {
 
         try {
             if (!cfile.exists()) {
-                Files.copy(ProxyServer.getInstance().getPluginManager().getPlugin("BungeeChat")
-                        .getResourceAsStream("config.yml"), cfile.toPath());
+                copyDefaultConfig(cfile);
             }
 
             configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
+
+            if (BungeeChat.CONFIG_VERSION < configuration.getDouble("Version")) {
+                File newConfig = getNewConfigFile();
+
+                LoggerHelper.warning("----------------------------------------");
+                LoggerHelper.warning(
+                        "\0007You config is outdated and might cause errors when been used with this version of BungeeChat!");
+                LoggerHelper.warning("Please update your config. The current default config has been generated in "
+                        + newConfig.getAbsolutePath()
+                        + ". Simply copy settings into the new config and run \"bungeechat reload\".");
+                LoggerHelper.warning("----------------------------------------");
+
+                copyDefaultConfig(newConfig);
+
+                Thread.sleep(TimeUnit.SECONDS.toMillis(2));
+            }
         } catch (Exception e) {
             LoggerHelper.error("There is an error with creating or loading the conifg file!", e);
-            LoggerHelper.error("Please contact the author at spigotmc.org!");
+            LoggerHelper.error("Please contact the authors at http://discord.me/bungeechat!");
         }
     }
 
@@ -42,5 +58,13 @@ public class Config {
 
     private static File getConfigFile() {
         return new File(BungeeChat.getInstance().getConfigFolder(), "config.yml");
+    }
+
+    private static File getNewConfigFile() {
+        return new File(BungeeChat.getInstance().getConfigFolder(), "config.new.yml");
+    }
+
+    private static void copyDefaultConfig(File destination) throws IOException {
+        Files.copy(BungeeChat.getInstance().getResourceAsStream("config.yml"), destination.toPath());
     }
 }
