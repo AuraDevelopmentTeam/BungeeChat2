@@ -14,10 +14,13 @@ Settings:
         - bc
         - balert
         - bbc
-    SocialSpy:
+    Spy:
       enabled: true
       aliases:
+        socialspy:
         - sspy
+        localspy:
+        - lspy
     GlobalChat:
       enabled: true
       aliases:

@@ -45,7 +45,7 @@ public class MessagesService {
         String messageTarget = preProcessMessage(context, account, "message-target", false).get();
         target.sendMessage(messageTarget);
 
-        if (ModuleManager.isModuleActive(BungeecordModuleManager.SOCIAL_SPY_MODULE)) {
+        if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
             String socialSpyMessage = preProcessMessage(context, account, "socialspy", false).get();
 
             sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))

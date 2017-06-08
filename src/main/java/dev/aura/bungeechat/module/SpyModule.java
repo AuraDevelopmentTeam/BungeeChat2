@@ -4,12 +4,12 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.command.SocialSpyCommand;
 import net.md_5.bungee.api.ProxyServer;
 
-public class SocialSpyModule extends Module {
+public class SpyModule extends Module {
     private SocialSpyCommand socialSpyCommand;
 
     @Override
     public String getName() {
-        return "SocialSpy";
+        return "Spy";
     }
 
     @Override
