@@ -4,6 +4,7 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.module.ChatLockModule;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -12,6 +13,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatLockCommand extends BaseCommand {
     private static final String USAGE = "/lockchat <local|global>";
+    private static final String EMPTY_LINE = "";
 
     public ChatLockCommand(ChatLockModule chatLockModule) {
         super("lockchat", chatLockModule.getModuleSection().getStringList("aliases"));
@@ -29,7 +31,9 @@ public class ChatLockCommand extends BaseCommand {
                 if (args.length < 1) {
                     sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
                 } else {
-                    ChatLockModule chatLock = BungeecordModuleManager.CHAT_LOCK_MODULE;
+                    final ChatLockModule chatLock = BungeecordModuleManager.CHAT_LOCK_MODULE;
+                    final boolean clear = (args.length >= 2) && args[1].equalsIgnoreCase("clear");
+                    final int emptyLines = clear ? getEmptyLinesForClear() : 0;
 
                     if (args[0].equalsIgnoreCase("global")) {
                         if (chatLock.isGlobalChatLockEnabled()) {
@@ -38,6 +42,13 @@ public class ChatLockCommand extends BaseCommand {
                         } else {
                             chatLock.enableGlobalChatLock();
                             sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
+
+                            if (clear) {
+                                for (int i = 0; i < emptyLines; i++) {
+                                    MessagesService.sendToMatchingPlayers(EMPTY_LINE,
+                                            MessagesService.getGlobalPredicate());
+                                }
+                            }
                         }
                     } else if (args[0].equalsIgnoreCase("local")) {
                         String serverName = player.getServerName();
@@ -48,6 +59,13 @@ public class ChatLockCommand extends BaseCommand {
                         } else {
                             chatLock.enableLocalChatLock(serverName);
                             sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
+
+                            if (clear) {
+                                for (int i = 0; i < emptyLines; i++) {
+                                    MessagesService.sendToMatchingPlayers(EMPTY_LINE,
+                                            MessagesService.getLocalPredicate(serverName));
+                                }
+                            }
                         }
                     } else {
                         sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
@@ -55,5 +73,9 @@ public class ChatLockCommand extends BaseCommand {
                 }
             }
         }
+    }
+
+    private static int getEmptyLinesForClear() {
+        return 10;
     }
 }

@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.message;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -21,6 +22,7 @@ import dev.aura.bungeechat.placeholder.Context;
 import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.config.Configuration;
 
 @UtilityClass
 public class MessagesService {
@@ -98,12 +100,7 @@ public class MessagesService {
 
         Optional<String> finalMessage = preProcessMessage(context, "global-chat");
 
-        if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
-            sendToMatchingPlayers(finalMessage);
-        } else {
-            sendToMatchingPlayers(finalMessage, account -> BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
-                    .getStringList("Server-list.list").contains(account.getServerName()));
-        }
+        sendToMatchingPlayers(finalMessage, getGlobalPredicate());
 
         ChatLoggingManager.logMessage(ChannelType.GLOBAL, context);
     }
@@ -120,7 +117,7 @@ public class MessagesService {
         Optional<String> finalMessage = preProcessMessage(context, "local-chat");
         String localServerName = context.getSender().get().getServerName();
 
-        sendToMatchingPlayers(finalMessage, acc -> acc.getServerName().equals(localServerName));
+        sendToMatchingPlayers(finalMessage, getLocalPredicate(localServerName));
 
         ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
 
@@ -283,5 +280,21 @@ public class MessagesService {
         }
 
         stream.forEach(account -> BungeecordAccountManager.getCommandSender(account).get().sendMessage(finalMessage));
+    }
+
+    public static Predicate<? super BungeeChatAccount> getGlobalPredicate() {
+        final Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection();
+
+        if (!section.getBoolean("Server-list.enabled"))
+            return account -> true;
+        else {
+            List<String> allowedServers = section.getStringList("Server-list.list");
+
+            return account -> allowedServers.contains(account.getServerName());
+        }
+    }
+
+    public static Predicate<? super BungeeChatAccount> getLocalPredicate(String serverName) {
+        return account -> serverName.equals(account.getServerName());
     }
 }
