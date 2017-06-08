@@ -8,6 +8,7 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.IgnoringModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
@@ -34,10 +35,12 @@ public class IgnoreCommand extends BaseCommand {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
 
                 if (args[0].equalsIgnoreCase("list")) {
+
                     String list = player.getIgnored().stream()
                             .map(uuid -> AccountManager.getAccount(uuid).get().getName())
                             .collect(Collectors.joining(", "));
-                    // TODO: Add the format into the message provider.
+
+                    MessagesService.sendIngoreList(sender, list);
 
                 } else if (args[0].equalsIgnoreCase("add")) {
                     if (args.length < 2) {

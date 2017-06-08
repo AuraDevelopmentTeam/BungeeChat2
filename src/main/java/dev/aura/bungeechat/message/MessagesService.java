@@ -93,11 +93,11 @@ public class MessagesService {
 
         Optional<String> finalMessage = preProcessMessage(context, "global-chat");
 
-        if (!Config.get().getBoolean("Settings.GlobalChat.Server-list.enabled")) {
+        if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
             sendToMatchingPlayers(finalMessage);
         } else {
-            sendToMatchingPlayers(finalMessage, account -> Config.get()
-                    .getStringList("Settings.GlobalChat.Server-list.list").contains(account.getServerName()));
+            sendToMatchingPlayers(finalMessage, account -> BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
+                    .contains(account.getServerName()));
         }
 
         ChatLoggingManager.logMessage(ChannelType.GLOBAL, context);
@@ -190,6 +190,18 @@ public class MessagesService {
 
         context.setMessage(finalMessage);
         ChatLoggingManager.logMessage("SWITCH", context);
+    }
+
+    public static void sendIngoreList(CommandSender sender, String message) throws InvalidContextError {
+        sendIngoreList(new Context(sender, message));
+    }
+
+    public static void sendIngoreList(BungeeChatContext context) throws InvalidContextError {
+        context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
+
+        String finalMessage = PlaceHolderUtil.getFullFormatMessage("ignore-list", context);
+
+        sendToMatchingPlayers(finalMessage, pp -> BungeecordAccountManager.getAccount(pp.getUniqueId()).equals(context.getSender()));
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, String format)

@@ -6,6 +6,7 @@ Version 2.0.0
 \+ Ability to save player data on a MySQL database.  
 \+ Ability to register custom placeholders and filters via the API.  
 \+ Ability to set a prefix (or suffix) via BungeeChat has been added back. (/bungeechat setprefix, /bungeechat setsuffix)
+\+ Ability to list your ignored players by using the '/ignore list' command.
 
 \* Rewritten the whole plugin.  
 \* Improved performance.  
