@@ -124,6 +124,7 @@ Settings:
       aliases: []
     ChatLogging:
       enabled: true
+      privateMessages: true
       console: true
       file: true
   PermissionsManager:

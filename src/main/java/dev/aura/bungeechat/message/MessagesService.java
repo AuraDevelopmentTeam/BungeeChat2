@@ -60,7 +60,9 @@ public class MessagesService {
                     && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
         }
 
-        ChatLoggingManager.logMessage("PM to " + targetAcconut.getName(), context);
+        if (BungeecordModuleManager.CHAT_LOGGING_MODULE.getModuleSection().getBoolean("privateMessages")) {
+            ChatLoggingManager.logMessage("PM to " + targetAcconut.getName(), context);
+        }
     }
 
     public static void sendChannelMessage(CommandSender sender, ChannelType channel, String message)

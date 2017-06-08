@@ -31,6 +31,7 @@ Version 2.0.0
 \* Anti-Duplicate can now be configurered to keep track of more than one message per user.  
 \* Filtering (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) can be enabled for private messages.  
 \* Improved chat logging! You can now save the log to a file and customize logging formats.  
+\* Private messages can optionally be logged too.  
 
 
 Version 1.3.5
