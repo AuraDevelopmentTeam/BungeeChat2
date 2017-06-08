@@ -109,27 +109,27 @@ public class TimeUtil {
     /**
      * Gets the time value as a double from a String.
      *
-     * @param timetoadd
+     * @param stringedTime
      *            The time as string to convert
      * @return double
      *            The time as double
      */
-    public static double convertStringTimeToDouble(String timetoadd){
+    public static double convertStringTimeToDouble(String stringedTime){
         double timeamount = 0;
-        if(timetoadd.contains("y")){
-            timeamount += Double.valueOf(timetoadd.replaceAll("y", "")) * 31536000 * 1000;
-        }else if(timetoadd.contains("mo")){
-            timeamount += Double.valueOf(timetoadd.replaceAll("mo", "")) * 2592000 * 1000;
-        }else if(timetoadd.contains("w")){
-            timeamount += Double.valueOf(timetoadd.replaceAll("w", "")) * 604800 * 1000;
-        }else if(timetoadd.contains("d")){
-            timeamount += Double.valueOf(timetoadd.replaceAll("d", "")) * 86400 * 1000;
-        }else if(timetoadd.contains("h")){
-            timeamount += Double.valueOf(timetoadd.replaceAll("h", "")) * 3600 * 1000;
-        }else if(timetoadd.contains("m")){
-            timeamount += Double.valueOf(timetoadd.replaceAll("m", "")) * 60 * 1000;
-        }else if(timetoadd.contains("s")){
-            timeamount += Double.valueOf(timetoadd.replaceAll("s", "")) * 1000;
+        if(stringedTime.contains("y")){
+            timeamount += Double.valueOf(stringedTime.replaceAll("y", "")) * 31536000 * 1000;
+        }else if(stringedTime.contains("mo")){
+            timeamount += Double.valueOf(stringedTime.replaceAll("mo", "")) * 2592000 * 1000;
+        }else if(stringedTime.contains("w")){
+            timeamount += Double.valueOf(stringedTime.replaceAll("w", "")) * 604800 * 1000;
+        }else if(stringedTime.contains("d")){
+            timeamount += Double.valueOf(stringedTime.replaceAll("d", "")) * 86400 * 1000;
+        }else if(stringedTime.contains("h")){
+            timeamount += Double.valueOf(stringedTime.replaceAll("h", "")) * 3600 * 1000;
+        }else if(stringedTime.contains("m")){
+            timeamount += Double.valueOf(stringedTime.replaceAll("m", "")) * 60 * 1000;
+        }else if(stringedTime.contains("s")){
+            timeamount += Double.valueOf(stringedTime.replaceAll("s", "")) * 1000;
         }
         return timeamount;
     }
