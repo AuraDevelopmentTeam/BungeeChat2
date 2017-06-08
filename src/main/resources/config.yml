@@ -193,7 +193,7 @@ Formats:
   joinmessage: "&e%name% has joined the network!"
   leavemessage: "&e%name% has left the network!"
   helpop: "&2HELPOP > &e%name%: &r%message%"
-  server-switch: "&e%name% has moved to the &c%servername% &e server!"
+  server-switch: "&e%name% has moved to the &c%servername% &eserver!"
   chat-logging-console: "%channel% > %servername% > %name%: %message%"
   chat-logging-file: "[%time%]: %channel% > %servername% > %name%(%uuid%): %message%"
 
