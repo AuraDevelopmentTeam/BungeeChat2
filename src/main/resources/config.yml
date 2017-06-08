@@ -143,12 +143,12 @@ Messages:
   enable-vanish: "&eYou have &aenbaled&e hide mode!"
   disable-vanish: "&eYou have &cdisabled&e hide mode!"
   #Mute Messages
-  muted: "&cSorry but you can not talk because you are muted!"
+  muted: "&cSorry but you can not talk because you are muted until %muted_until%!"
   unmute-not-muted: "&cThis player is not muted!"
   mute-is-muted: "This player is already muted!"
   unmute: "&eThe player &c%name% &cehas been unmuted!"
   mute: "&eThe player &c%name% &ehas been muted!"
-  tempmute: "&eThe player &c%name% &ehas been muted till %mutetime% (UTC +1)"
+  tempmute: "&eThe player &c%name% &ehas been muted until %muted_until%"
   #SocialSpy Messages
   enable-socialspy: "&eSocialspy has been &aenbaled&e!"
   disable-socialspy: "&eSocialspy has been &cdisabled&e!"
