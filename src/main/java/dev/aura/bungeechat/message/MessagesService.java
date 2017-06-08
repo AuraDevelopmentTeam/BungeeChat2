@@ -76,7 +76,7 @@ public class MessagesService {
             sendHelpMessage(context);
             break;
         case GROUP:
-            // TODO
+            // TODO: Feature comes with 2.1.0
             break;
         default:
             // TODO? Maybe do nothing? Throw an Exception?
