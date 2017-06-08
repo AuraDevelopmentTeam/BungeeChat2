@@ -17,6 +17,7 @@ import net.md_5.bungee.config.YamlConfiguration;
 @UtilityClass
 public class Config {
     private static Configuration configuration;
+    private static boolean firstStart = true;
 
     public static void load() {
         File cfile = getConfigFile();
@@ -32,18 +33,26 @@ public class Config {
                 final File newConfig = getNewConfigFile();
                 final String line = "----------------------------------------------------------------------------------------------------------------------------------";
 
+                copyDefaultConfig(newConfig);
+
                 LoggerHelper.warning(line);
                 LoggerHelper.warning(
                         "\007Your config is outdated and might cause errors when being used with this version of BungeeChat! Please update your config.");
                 LoggerHelper.warning(
                         "The current default config has been generated in " + newConfig.getAbsolutePath() + '.');
-                LoggerHelper.warning("Simply copy settings into the new config and run \"bungeechat reload\".");
-                LoggerHelper.warning("The server will continue starting after 10 seconds.");
-                LoggerHelper.warning(line);
+                LoggerHelper.warning(
+                        "Simply copy your old settings into the new config, rename it to \"config.yml\" and run \"bungeechat reload\".");
 
-                copyDefaultConfig(newConfig);
+                if (firstStart) {
+                    LoggerHelper.warning("The server will continue starting after 10 seconds.");
+                    LoggerHelper.warning(line);
 
-                Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+                    Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+
+                    firstStart = false;
+                } else {
+                    LoggerHelper.warning(line);
+                }
             }
         } catch (Exception e) {
             LoggerHelper.error("There is an error with creating or loading the conifg file!", e);
