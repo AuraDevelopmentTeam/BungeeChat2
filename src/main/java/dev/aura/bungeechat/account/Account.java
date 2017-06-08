@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.account;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -29,6 +30,7 @@ public class Account implements BungeeChatAccount {
     @Getter(AccessLevel.NONE)
     private boolean socialspy;
     private final BlockingQueue<UUID> ignored;
+    private Timestamp mutedUntil;
     private Optional<String> storedPrefix;
     private Optional<String> storedSuffix;
 
@@ -43,18 +45,21 @@ public class Account implements BungeeChatAccount {
         messanger = true;
         socialspy = false;
         ignored = new LinkedBlockingQueue<>();
+        mutedUntil = new Timestamp(0);
         storedPrefix = Optional.empty();
         storedSuffix = Optional.empty();
     }
 
     protected Account(UUID uuid, ChannelType channelType, boolean vanished, boolean messanger, boolean socialspy,
-            BlockingQueue<UUID> ignored, Optional<String> storedPrefix, Optional<String> storedSuffix) {
+            BlockingQueue<UUID> ignored, Timestamp mutedUntil, Optional<String> storedPrefix,
+            Optional<String> storedSuffix) {
         this.uuid = uuid;
         this.channelType = channelType;
         this.vanished = vanished;
         this.messanger = messanger;
         this.socialspy = socialspy;
         this.ignored = ignored;
+        this.mutedUntil = mutedUntil;
         this.storedPrefix = storedPrefix;
         this.storedSuffix = storedSuffix;
     }

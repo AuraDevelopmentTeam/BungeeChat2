@@ -1,8 +1,10 @@
 package dev.aura.bungeechat.api.account;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import dev.aura.bungeechat.api.enums.AccountType;
 import dev.aura.bungeechat.api.enums.ChannelType;
@@ -44,6 +46,12 @@ public interface BungeeChatAccount {
 
     public String getServerIP();
 
+    public Timestamp getMutedUntil();
+
+    default public boolean isMuted() {
+        return getMutedUntil().after(new Timestamp(System.currentTimeMillis()));
+    }
+
     public Optional<String> getStoredPrefix();
 
     public Optional<String> getStoredSuffix();
@@ -78,6 +86,24 @@ public interface BungeeChatAccount {
 
     default public void removeIgnore(BungeeChatAccount account) {
         this.removeIgnore(getUniqueId());
+    }
+
+    public void setMutedUntil(Timestamp mutedUntil);
+
+    default public void setMutedUntil(long mutedUntilMillis) {
+        setMutedUntil(new Timestamp(mutedUntilMillis));
+    }
+
+    default void mutePermanetly() {
+        setMutedUntil(Long.MAX_VALUE);
+    }
+
+    default void muteFor(long amount, TimeUnit timeUnit) {
+        setMutedUntil(System.currentTimeMillis() + timeUnit.toMillis(amount));
+    }
+
+    default void unmute() {
+        setMutedUntil(0L);
     }
 
     public void setStoredPrefix(Optional<String> newPrefix);
