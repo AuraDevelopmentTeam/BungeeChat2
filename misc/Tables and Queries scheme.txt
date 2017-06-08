@@ -1,9 +1,10 @@
-CREATE TABLE IF NOT EXISTS `BungeeChat_Accounts` (
+CREATE TABLE IF NOT EXISTS `BungeeChat_Accounts2` (
  UUID BINARY(16) NOT NULL,
  ChannelType ENUM('GLOBAL','LOCAL','STAFF','HELP','GROUP') NOT NULL,
- Vanished BOOLEAN NOT NULL DEFAULT '0',
- Messenger BOOLEAN NOT NULL DEFAULT '0',
- SocialSpy BOOLEAN NOT NULL DEFAULT '0',
+ Vanished BOOLEAN NOT NULL,
+ Messenger BOOLEAN NOT NULL,
+ SocialSpy BOOLEAN NOT NULL,
+ MutedUntil TIMESTAMP NOT NULL,
  StoredPrefix TEXT,
  StoredSuffix TEXT,
  PRIMARY KEY (UUID)
@@ -19,8 +20,8 @@ CREATE TABLE IF NOT EXISTS `BungeeChat_Ignores` (
  CONSTRAINT FOREIGN KEY (Ignores) REFERENCES `BungeeChat_Accounts` (UUID)
 ) DEFAULT CHARSET=utf8;
 
-INSERT INTO `BungeeChat_Accounts` (UUID, ChannelType, Vanished, Messenger, SocialSpy, StoredPrefix, StoredSuffix) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ChannelType = VALUES(ChannelType), Vanished = VALUES(Vanished), Messenger = VALUES(Messenger), SocialSpy = VALUES(SocialSpy), StoredPrefix = VALUES(StoredPrefix), StoredSuffix = VALUES(StoredSuffix)
-SELECT ChannelType, Vanished, Messenger, SocialSpy, StoredPrefix, StoredSuffix FROM `BungeeChat_Accounts` WHERE UUID = ? LIMIT 1
+INSERT INTO `BungeeChat_Accounts` (UUID, ChannelType, Vanished, Messenger, SocialSpy, MutedUntil, StoredPrefix, StoredSuffix) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ChannelType = VALUES(ChannelType), Vanished = VALUES(Vanished), Messenger = VALUES(Messenger), SocialSpy = VALUES(SocialSpy), MutedUntil = VALUES(MutedUntil), StoredPrefix = VALUES(StoredPrefix), StoredSuffix = VALUES(StoredSuffix)
+SELECT ChannelType, Vanished, Messenger, SocialSpy, MutedUntil, StoredPrefix, StoredSuffix FROM `BungeeChat_Accounts` WHERE UUID = ? LIMIT 1
 DELETE FROM `BungeeChat_Ignores` WHERE User = ?
 INSERT INTO `BungeeChat_Ignores` (User, Ignores) VALUES (?, ?)
 SELECT Ignores FROM `BungeeChat_Ignores` WHERE User = ? 

@@ -33,6 +33,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     private final String tableAccountsColumnVanished;
     private final String tableAccountsColumnMessenger;
     private final String tableAccountsColumnSocialSpy;
+    private final String tableAccountsColumnMutedUntil;
     private final String tableAccountsColumnStoredPrefix;
     private final String tableAccountsColumnStoredSuffix;
     private final String tableIgnores;
@@ -76,6 +77,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
         tableAccountsColumnVanished = "Vanished";
         tableAccountsColumnMessenger = "Messenger";
         tableAccountsColumnSocialSpy = "SocialSpy";
+        tableAccountsColumnMutedUntil = "MutedUntil";
         tableAccountsColumnStoredPrefix = "StoredPrefix";
         tableAccountsColumnStoredSuffix = "StoredSuffix";
         tableIgnores = getTableName("Ignores");
@@ -108,8 +110,9 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             saveAccount.setBoolean(3, account.isVanished());
             saveAccount.setBoolean(4, account.hasMessangerEnabled());
             saveAccount.setBoolean(5, account.hasSocialSpyEnabled());
-            saveAccount.setString(6, account.getStoredPrefix().orElse(null));
-            saveAccount.setString(7, account.getStoredSuffix().orElse(null));
+            saveAccount.setTimestamp(6, account.getMutedUntil());
+            saveAccount.setString(7, account.getStoredPrefix().orElse(null));
+            saveAccount.setString(8, account.getStoredSuffix().orElse(null));
 
             saveAccount.executeUpdate();
             saveAccount.clearParameters();
@@ -162,6 +165,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                             resultLoadAccount.getBoolean(tableAccountsColumnVanished),
                             resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
                             resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy), ignores,
+                            resultLoadAccount.getTimestamp(tableAccountsColumnMutedUntil),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix))),
                     false);
@@ -235,10 +239,10 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
             String createAccountsTable = "CREATE TABLE IF NOT EXISTS " + tableAccounts + " (" + tableAccountsColumnUUID
                     + " BINARY(16) NOT NULL, " + tableAccountsColumnChannelType + channelTypeEnum + " NOT NULL, "
-                    + tableAccountsColumnVanished + " BOOLEAN NOT NULL DEFAULT '0', " + tableAccountsColumnMessenger
-                    + " BOOLEAN NOT NULL DEFAULT '0', " + tableAccountsColumnSocialSpy
-                    + " BOOLEAN NOT NULL DEFAULT '0', " + tableAccountsColumnStoredPrefix + " TEXT, "
-                    + tableAccountsColumnStoredSuffix + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID
+                    + tableAccountsColumnVanished + " BOOLEAN NOT NULL, " + tableAccountsColumnMessenger
+                    + " BOOLEAN NOT NULL, " + tableAccountsColumnSocialSpy + " BOOLEAN NOT NULL, "
+                    + tableAccountsColumnMutedUntil + " TIMESTAMP NOT NULL, " + tableAccountsColumnStoredPrefix
+                    + " TEXT, " + tableAccountsColumnStoredSuffix + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID
                     + ")) DEFAULT CHARSET=utf8";
             String createIgnoresTable = "CREATE TABLE IF NOT EXISTS " + tableIgnores + " (" + tableIgnoresColumnUser
                     + " BINARY(16) NOT NULL, " + tableIgnoresColumnIgnores + " BINARY(16) NOT NULL, PRIMARY KEY ("
@@ -260,18 +264,20 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             String saveAccountStr = "INSERT INTO " + tableAccounts + " (" + tableAccountsColumnUUID + ", "
                     + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished + ", "
                     + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
-                    + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix
-                    + ") VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE " + tableAccountsColumnChannelType
-                    + " = VALUES(" + tableAccountsColumnChannelType + "), " + tableAccountsColumnVanished + " = VALUES("
-                    + tableAccountsColumnVanished + "), " + tableAccountsColumnMessenger + " = VALUES("
-                    + tableAccountsColumnMessenger + "), " + tableAccountsColumnSocialSpy + " = VALUES("
-                    + tableAccountsColumnSocialSpy + "), " + tableAccountsColumnStoredPrefix + " = VALUES("
-                    + tableAccountsColumnStoredPrefix + "), " + tableAccountsColumnStoredSuffix + " = VALUES("
-                    + tableAccountsColumnStoredSuffix + ")";
+                    + tableAccountsColumnMutedUntil + ", " + tableAccountsColumnStoredPrefix + ", "
+                    + tableAccountsColumnStoredSuffix + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE "
+                    + tableAccountsColumnChannelType + " = VALUES(" + tableAccountsColumnChannelType + "), "
+                    + tableAccountsColumnVanished + " = VALUES(" + tableAccountsColumnVanished + "), "
+                    + tableAccountsColumnMessenger + " = VALUES(" + tableAccountsColumnMessenger + "), "
+                    + tableAccountsColumnSocialSpy + " = VALUES(" + tableAccountsColumnSocialSpy + "), "
+                    + tableAccountsColumnMutedUntil + " = VALUES(" + tableAccountsColumnMutedUntil + "), "
+                    + tableAccountsColumnStoredPrefix + " = VALUES(" + tableAccountsColumnStoredPrefix + "), "
+                    + tableAccountsColumnStoredSuffix + " = VALUES(" + tableAccountsColumnStoredSuffix + ")";
             String loadAccountStr = "SELECT " + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished
                     + ", " + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
-                    + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix + " FROM "
-                    + tableAccounts + " WHERE " + tableAccountsColumnUUID + " = ? LIMIT 1";
+                    + tableAccountsColumnMutedUntil + ", " + tableAccountsColumnStoredPrefix + ", "
+                    + tableAccountsColumnStoredSuffix + " FROM " + tableAccounts + " WHERE " + tableAccountsColumnUUID
+                    + " = ? LIMIT 1";
             String deleteIgnoresStr = "DELETE FROM " + tableIgnores + " WHERE " + tableIgnoresColumnUser + " = ?";
             String addIgnoreStr = "INSERT INTO " + tableIgnores + " (" + tableIgnoresColumnUser + ", "
                     + tableIgnoresColumnIgnores + ") VALUES (?, ?)";
