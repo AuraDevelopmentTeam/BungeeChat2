@@ -37,6 +37,7 @@ Settings:
           - Hub3
     Messenger:
       enabled: true
+      filterMessages: false
       aliases:
         message:
           - msg

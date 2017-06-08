@@ -38,12 +38,17 @@ public class MessagesService {
         BungeeChatAccount targetAcconut = context.getTarget().get();
         CommandSender sender = BungeecordAccountManager.getCommandSender(senderAcconut).get();
         CommandSender target = BungeecordAccountManager.getCommandSender(targetAcconut).get();
+        boolean filterPrivateMessages = BungeecordModuleManager.MESSENGER_MODULE.getModuleSection()
+                .getBoolean("filterMessages");
 
-        String messageSender = preProcessMessage(context, account, "message-sender", false).get();
-        sender.sendMessage(messageSender);
+        Optional<String> messageSender = preProcessMessage(context, account, "message-sender", filterPrivateMessages);
 
-        String messageTarget = preProcessMessage(context, account, "message-target", false).get();
-        target.sendMessage(messageTarget);
+        if (messageSender.isPresent()) {
+            sender.sendMessage(messageSender.get());
+
+            String messageTarget = preProcessMessage(context, account, "message-target", filterPrivateMessages).get();
+            target.sendMessage(messageTarget);
+        }
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
             String socialSpyMessage = preProcessMessage(context, account, "socialspy", false).get();

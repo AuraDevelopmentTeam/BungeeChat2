@@ -5,19 +5,19 @@ Version 2.0.0
 \+ Ability to give multiple permissions at once using parent permission.  
 \+ Ability to save player data on a MySQL database.  
 \+ Ability to register custom placeholders and filters via the API.  
-\+ Ability to set a prefix (or suffix) via BungeeChat has been added back. (/bungeechat setprefix, /bungeechat setsuffix)
-\+ Ability to list your ignored players by using the '/ignore list' command.
+\+ Ability to set a prefix (or suffix) via BungeeChat has been added back. (/bungeechat setprefix, /bungeechat setsuffix)  
+\+ Ability to list your ignored players by using the '/ignore list' command.  
 
 \* Rewritten the whole plugin.  
 \* Improved performance.  
 \* Improved the Chat Filter Systems (Anti-Advertise, Anti-Duplicate, Anti-Swear).  
-\* Improved the Reloading feature.  
+\* Improved the Reloading feature. When enabling or disabling features the changes get applied.  
 \* Improved the BungeeChat API.  
 \* Improved the way of saving player data files.  
 \* Improved the Version Check System.  
 \* Improved Permission Plugin system. The plugin will be detected automatically.  
-\* Improved ChatLock. It can be used either globally or locally.
-\* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the they were talking in.
+\* Improved ChatLock. It can be used either globally or locally.  
+\* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the they were talking in.  
 \* The console can now chat too. (Username ~Console~)  
 
 \- Removed Redis support for now. (Will be added back in a later version).  
@@ -27,8 +27,8 @@ Version 2.0.0
 \* Wildcards (\* and ?) can be used in domain names for the Anti-Advertising and Anti-Swear filters.  
 \* Regexes (start them with R=) can be used in domain names for the Anti-Advertising and Anti-Swear filters.  
 \* Anti-Swear can be made more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters".  
-\* Anti-Duplicate can now be configurered to keep track of more than one message per user.
-\* Filtering (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) can be enabled for private messages. (TODO)  
+\* Anti-Duplicate can now be configurered to keep track of more than one message per user.  
+\* Filtering (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) can be enabled for private messages.  
 \* Improved chat logging! You can now save the log to a file and customize logging formats.  
 
 
