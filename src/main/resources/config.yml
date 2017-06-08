@@ -152,9 +152,11 @@ Messages:
   unmute: "&eThe player &c%name% &ehas been unmuted!"
   mute: "&eThe player &c%name% &ehas been muted!"
   tempmute: "&eThe player &c%name% &ehas been muted until %muted_until%"
-  #SocialSpy Messages
-  enable-socialspy: "&eSocialspy has been &aenbaled&e!"
-  disable-socialspy: "&eSocialspy has been &cdisabled&e!"
+  #Spy Messages
+  enable-socialspy: "&eSocialSpy has been &aenbaled&e!"
+  disable-socialspy: "&eSocialSpy has been &cdisabled&e!"
+  enable-localspy: "&eLocalSpy has been &aenbaled&e!"
+  disable-localspy: "&eLocalSpy has been &cdisabled&e!"
   #Error Messages
   not-player: "&cYou need to be a player to use this command!"
   player-not-found: "&cCould not find that player..."

@@ -35,6 +35,7 @@ public enum Permission {
     COMMAND_VANISH("command.vanish"),
     COMMAND_VANISH_SEE("command.vanish.see"),
     COMMAND_SOCIALSPY("command.socialspy"),
+    COMMAND_LOCALSPY("command.localspy"),
     COMMAND_CHAT_LOCK("command.chatlock"),
     COMMAND_CHAT_LOCK_BYPASS("command.chatlock.bypass"),
 

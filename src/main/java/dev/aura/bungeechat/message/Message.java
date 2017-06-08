@@ -22,6 +22,8 @@ public enum Message {
     MESSAGE_YOURSELF("message-yourself"),
     ENABLE_SOCIALSPY("enable-socialspy"),
     DISABLE_SOCIALSPY("disable-socialspy"),
+    ENABLE_LOCALSPY("enable-localspy"),
+    DISABLE_LOCALSPY("disable-localspy"),
     ENABLE_STAFFCHAT("enable-staffchat"),
     ENABLE_MESSAGER("enable-messager"),
     DISABLE_MESSAGER("disable-messager"),

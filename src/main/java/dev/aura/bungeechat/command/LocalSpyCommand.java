@@ -9,25 +9,25 @@ import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class SocialSpyCommand extends BaseCommand {
-    public SocialSpyCommand(SpyModule socialSpyModule) {
-        super("socialspy", socialSpyModule.getModuleSection().getStringList("aliases.socialspy"));
+public class LocalSpyCommand extends BaseCommand {
+    public LocalSpyCommand(SpyModule socialSpyModule) {
+        super("localspy", socialSpyModule.getModuleSection().getStringList("aliases.localspy"));
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
-        if (PermissionManager.hasPermission(sender, Permission.COMMAND_SOCIALSPY)) {
+        if (PermissionManager.hasPermission(sender, Permission.COMMAND_LOCALSPY)) {
             if (!(sender instanceof ProxiedPlayer)) {
                 sender.sendMessage(Message.NOT_A_PLAYER.get());
             } else {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
-                player.toggleSocialSpy();
+                player.toggleLocalSpy();
 
                 if (!player.hasSocialSpyEnabled()) {
-                    sender.sendMessage(Message.ENABLE_SOCIALSPY.get(player));
+                    sender.sendMessage(Message.ENABLE_LOCALSPY.get(player));
                 } else {
-                    sender.sendMessage(Message.DISABLE_SOCIALSPY.get(player));
+                    sender.sendMessage(Message.DISABLE_LOCALSPY.get(player));
                 }
             }
         }
