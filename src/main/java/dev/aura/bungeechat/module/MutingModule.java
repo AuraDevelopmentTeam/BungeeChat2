@@ -19,6 +19,11 @@ public class MutingModule extends Module {
     }
 
     @Override
+    public boolean isEnabled() {
+        return (ProxyServer.getInstance().getPluginManager().getPlugin("BungeeBan") == null) && super.isEnabled();
+    }
+
+    @Override
     public void onEnable() {
         muteCommand = new MuteCommand(this);
         tempMuteCommand = new TempMuteCommand(this);
