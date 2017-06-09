@@ -141,7 +141,7 @@ Messages:
   not-in-global-server: "&cGlobal Chat is not enabled on this server..."
   #Messenger Messages
   message-yourself: "&cYou can not send a private message to yourself..."
-  enable-messager: "&eYou have &aenbaled&e messaging!"
+  enable-messager: "&eYou have &aenabled&e messaging!"
   disable-messager: "&eYou have &cdisabled&e messaging"
   no-reply: "&cYou have nobody to reply."
   reply-offline: "&cThe player you were chatting with is no longer online."
