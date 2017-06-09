@@ -18,8 +18,6 @@ import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
-import dev.aura.bungeechat.placeholder.Context;
-import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.config.Configuration;
@@ -43,18 +41,19 @@ public class MessagesService {
         boolean filterPrivateMessages = BungeecordModuleManager.MESSENGER_MODULE.getModuleSection()
                 .getBoolean("filterMessages");
 
-        Optional<String> messageSender = preProcessMessage(context, account, "message-sender", filterPrivateMessages);
+        Optional<String> messageSender = preProcessMessage(context, account, Format.MESSAGE_SENDER,
+                filterPrivateMessages);
 
         if (messageSender.isPresent()) {
             sender.sendMessage(messageSender.get());
 
-            String messageTarget = preProcessMessage(context, account, "message-target", filterPrivateMessages, true)
-                    .get();
+            String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages,
+                    true).get();
             target.sendMessage(messageTarget);
         }
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
-            String socialSpyMessage = preProcessMessage(context, account, "socialspy", false).get();
+            String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
 
             sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
                     && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
@@ -102,7 +101,7 @@ public class MessagesService {
     public static void sendGlobalMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
-        Optional<String> finalMessage = preProcessMessage(context, "global-chat");
+        Optional<String> finalMessage = preProcessMessage(context, Format.GLOBAL_CHAT);
 
         sendToMatchingPlayers(finalMessage, getGlobalPredicate());
 
@@ -118,7 +117,7 @@ public class MessagesService {
 
         Optional<BungeeChatAccount> account = context.getSender();
         BungeeChatAccount senderAcconut = account.get();
-        Optional<String> finalMessage = preProcessMessage(context, "local-chat");
+        Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
         String localServerName = context.getSender().get().getServerName();
 
         sendToMatchingPlayers(finalMessage, getLocalPredicate(localServerName));
@@ -126,7 +125,7 @@ public class MessagesService {
         ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
-            String localSpyMessage = preProcessMessage(context, account, "localspy", false).get();
+            String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
 
             sendToMatchingPlayers(localSpyMessage,
                     acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
@@ -140,7 +139,7 @@ public class MessagesService {
     public static void sendStaffMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
-        Optional<String> finalMessage = preProcessMessage(context, "staff-chat");
+        Optional<String> finalMessage = preProcessMessage(context, Format.STAFF_CHAT);
 
         sendToMatchingPlayers(finalMessage,
                 pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_STAFFCHAT_VIEW));
@@ -155,7 +154,7 @@ public class MessagesService {
     public static void sendHelpMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
-        Optional<String> finalMessage = preProcessMessage(context, "helpop");
+        Optional<String> finalMessage = preProcessMessage(context, Format.HELP_OP);
 
         sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
 
@@ -169,7 +168,7 @@ public class MessagesService {
     public static void sendJoinMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER);
 
-        String finalMessage = PlaceHolderUtil.getFullFormatMessage("joinmessage", context);
+        String finalMessage = Format.JOIN_MESSAGE.get(context);
 
         sendToMatchingPlayers(finalMessage);
 
@@ -184,7 +183,7 @@ public class MessagesService {
     public static void sendLeaveMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER);
 
-        String finalMessage = PlaceHolderUtil.getFullFormatMessage("leavemessage", context);
+        String finalMessage = Format.LEAVE_MESSAGE.get(context);
 
         sendToMatchingPlayers(finalMessage);
 
@@ -199,7 +198,7 @@ public class MessagesService {
     public static void sendSwitchMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER);
 
-        String finalMessage = PlaceHolderUtil.getFullFormatMessage("server-switch", context);
+        String finalMessage = Format.SERVER_SWITCH.get(context);
 
         sendToMatchingPlayers(finalMessage);
 
@@ -207,37 +206,24 @@ public class MessagesService {
         ChatLoggingManager.logMessage("SWITCH", context);
     }
 
-    public static void sendIngoreList(CommandSender sender, String message) throws InvalidContextError {
-        sendIngoreList(new Context(sender, message));
-    }
-
-    public static void sendIngoreList(BungeeChatContext context) throws InvalidContextError {
-        context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
-
-        String finalMessage = PlaceHolderUtil.getFullFormatMessage("ignore-list", context);
-
-        sendToMatchingPlayers(finalMessage,
-                pp -> AccountManager.getAccount(pp.getUniqueId()).equals(context.getSender()));
-    }
-
-    public static Optional<String> preProcessMessage(BungeeChatContext context, String format)
+    public static Optional<String> preProcessMessage(BungeeChatContext context, Format format)
             throws InvalidContextError {
         return preProcessMessage(context, context.getSender(), format, true);
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
-            String format) throws InvalidContextError {
+            Format format) throws InvalidContextError {
         return preProcessMessage(context, account, format, true);
     }
 
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
-            String format, boolean runFilters) {
+            Format format, boolean runFilters) {
         return preProcessMessage(context, account, format, runFilters, false);
     }
 
     @SuppressWarnings("deprecation")
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
-            String format, boolean runFilters, boolean ignoreBlockMessageExceptions) throws InvalidContextError {
+            Format format, boolean runFilters, boolean ignoreBlockMessageExceptions) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_MESSAGE);
 
         BungeeChatAccount playerAccount = account.get();

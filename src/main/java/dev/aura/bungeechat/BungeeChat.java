@@ -28,9 +28,9 @@ import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
 import dev.aura.bungeechat.listener.ChannelTypeCorrectorListener;
 import dev.aura.bungeechat.message.MessagesService;
+import dev.aura.bungeechat.message.PlaceHolders;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
-import dev.aura.bungeechat.placeholder.PlaceHolders;
 import dev.aura.bungeechat.util.LoggerHelper;
 import dev.aura.bungeechat.util.Version;
 import lombok.Cleanup;
@@ -84,7 +84,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         } else {
             AccountManager.setAccountStorage(new AccountFileStorage());
         }
-        
+
         bungeeChatCommand = new BungeeChatCommand();
         bungeecordAccountManager = new BungeecordAccountManager();
         channelTypeCorrectorListener = new ChannelTypeCorrectorListener();

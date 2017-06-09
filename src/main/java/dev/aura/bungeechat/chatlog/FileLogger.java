@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.utils.TimeUtil;
-import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
+import dev.aura.bungeechat.message.Format;
 
 public class FileLogger implements ChatLogger, AutoCloseable {
     private File dataFolder;
@@ -44,7 +44,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
 
     @Override
     public void log(BungeeChatContext context) {
-        pw.println(PlaceHolderUtil.getFullFormatMessage("chat-logging-file", context));
+        pw.println(Format.CHAT_LOGGING_FILE.get(context));
         pw.flush();
     }
 

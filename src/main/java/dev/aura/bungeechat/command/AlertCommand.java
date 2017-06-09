@@ -4,11 +4,12 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.message.Context;
+import dev.aura.bungeechat.message.Format;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.module.AlertModule;
 import dev.aura.bungeechat.permission.PermissionManager;
-import dev.aura.bungeechat.placeholder.Context;
-import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 
@@ -30,9 +31,9 @@ public class AlertCommand extends BaseCommand {
                     finalMessage = PlaceHolderUtil.transformAltColorCodes(finalMessage);
                 }
 
-                String Format = PlaceHolderUtil.getFullFormatMessage("alert", new Context(sender, finalMessage));
+                String format = Format.ALERT.get(new Context(sender, finalMessage));
 
-                ProxyServer.getInstance().broadcast(Format);
+                ProxyServer.getInstance().broadcast(format);
             }
         }
     }

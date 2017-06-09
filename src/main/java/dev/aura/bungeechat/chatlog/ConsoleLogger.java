@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
+import dev.aura.bungeechat.message.Format;
 
 public class ConsoleLogger implements ChatLogger {
     private final Logger logger;
@@ -15,6 +15,6 @@ public class ConsoleLogger implements ChatLogger {
 
     @Override
     public void log(BungeeChatContext context) {
-        logger.info(PlaceHolderUtil.getFullFormatMessage("chat-logging-console", context));
+        logger.info(Format.CHAT_LOGGING_CONSOLE.get(context));
     }
 }

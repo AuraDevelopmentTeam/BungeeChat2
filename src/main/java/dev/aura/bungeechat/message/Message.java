@@ -2,8 +2,6 @@ package dev.aura.bungeechat.message;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.placeholder.Context;
-import dev.aura.bungeechat.placeholder.PlaceHolderUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.CommandSender;

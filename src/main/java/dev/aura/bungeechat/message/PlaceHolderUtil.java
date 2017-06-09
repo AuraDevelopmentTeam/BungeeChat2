@@ -1,11 +1,10 @@
-package dev.aura.bungeechat.placeholder;
+package dev.aura.bungeechat.message;
 
 import java.util.regex.Pattern;
 
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
-import dev.aura.bungeechat.message.Message;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.config.Configuration;
@@ -23,15 +22,15 @@ public class PlaceHolderUtil {
             .compile("(?i)(?<!" + altColorChar + ')' + altColorChar + "([0-9A-FK-OR])");
     private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
 
-    public static String getFormat(String format) {
+    public static String getFormat(Format format) {
         try {
             if (formatsBase == null) {
                 formatsBase = Config.get().getSection(FORMATS);
             }
 
-            return formatsBase.getString(format);
+            return formatsBase.getString(format.getStringPath());
         } catch (RuntimeException e) {
-            return format;
+            return format.getStringPath();
         }
     }
 
@@ -47,7 +46,7 @@ public class PlaceHolderUtil {
         }
     }
 
-    public static String getFullFormatMessage(String format, BungeeChatContext context) {
+    public static String getFullFormatMessage(Format format, BungeeChatContext context) {
         return formatMessage(getFormat(format), context);
     }
 

@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.placeholder;
+package dev.aura.bungeechat.message;
 
 import java.text.SimpleDateFormat;
 

@@ -198,7 +198,6 @@ Formats:
   message-sender: "&6You &8-> &6%target_name% &8: &r%message%"
   message-target: "&6%sender_name% &8-> &6You&8: &r%message%"
   staff-chat: "&9STAFF > &e%name%: &r%message%"
-  muted: "&cSorry, but you can not talk because you are muted!"
   local-chat: "%prefix% &7%name%: %message%"
   joinmessage: "&e%name% has joined the network!"
   leavemessage: "&e%name% has left the network!"
