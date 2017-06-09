@@ -147,7 +147,7 @@ Messages:
   reply-offline: "&cThe player you were chatting with is no longer online."
   has-messager-disabled: "&c%name% has messaging disabled!"
   #Vanish Messages
-  enable-vanish: "&eYou have &aenbaled&e hide mode!"
+  enable-vanish: "&eYou have &aenabled&e hide mode!"
   disable-vanish: "&eYou have &cdisabled&e hide mode!"
   #Mute Messages
   muted: "&cSorry but you can not talk because you are muted until %muted_until%!"
@@ -157,9 +157,9 @@ Messages:
   mute: "&eThe player &c%name% &ehas been muted!"
   tempmute: "&eThe player &c%name% &ehas been muted until %muted_until%"
   #Spy Messages
-  enable-socialspy: "&eSocialSpy has been &aenbaled&e!"
+  enable-socialspy: "&eSocialSpy has been &aenabled&e!"
   disable-socialspy: "&eSocialSpy has been &cdisabled&e!"
-  enable-localspy: "&eLocalSpy has been &aenbaled&e!"
+  enable-localspy: "&eLocalSpy has been &aenabled&e!"
   disable-localspy: "&eLocalSpy has been &cdisabled&e!"
   #Error Messages
   not-player: "&cYou need to be a player to use this command!"
