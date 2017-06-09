@@ -1,38 +1,38 @@
 Version 2.0.0
 -------------
 
-/+ Ability to configure which servers are included in the Global Chat.
-/+ Ability to give multiple permissions at once using parent permission.
-/+ Ability to save player data on a MySQL database.
-/+ Ability to register custom placeholders and filters via the API.
-/+ Ability to set a prefix (or suffix) via BungeeChat has been added back. (/bungeechat setprefix, /bungeechat setsuffix)
-/+ Ability to list your ignored players by using the '/ignore list' command.
-/+ Ability to choose between 'local' and 'global' when using the ChatLock feature.
-/+ Ability to use chat features as the console. (Username ~Console~)
-/+ Ability to configure how much messages must be saved for the Anti-Duplication filter.
-/+ Ability to configure if the muting system of BungeeChat should be active on the Bukkit chat as well or not.
-/+ Ability to configure the Anti-Swear filter even better than before.
-/+ Ability to 'Spy' local chat messages via Localspy.
-/+ Ability to make Anti-Swear more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters".
-/+ Ability to filter (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) to be enabled on private messaging.
-/+ Ability to use Wildcards (\* and ?) in domain names for the Anti-Advertising and Anti-Swear filters.
-/+ Ability to use  Regexes (start them with R=) in domain names for the Anti-Advertising and Anti-Swear filters.
+/+ Ability to configure which servers are included in the Global Chat.  
+/+ Ability to give multiple permissions at once using parent permission.  
+/+ Ability to save player data on a MySQL database.  
+/+ Ability to register custom placeholders and filters via the API.  
+/+ Ability to set a prefix (or suffix) via BungeeChat has been added back. (/bungeechat setprefix, /bungeechat setsuffix)  
+/+ Ability to list your ignored players by using the '/ignore list' command.  
+/+ Ability to choose between 'local' and 'global' when using the ChatLock feature.  
+/+ Ability to use chat features as the console. (Username ~Console~)  
+/+ Ability to configure how much messages must be saved for the Anti-Duplication filter.  
+/+ Ability to configure if the muting system of BungeeChat should be active on the Bukkit chat as well or not.  
+/+ Ability to configure the Anti-Swear filter even better than before.  
+/+ Ability to 'Spy' local chat messages via Localspy.  
+/+ Ability to make Anti-Swear more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters".  
+/+ Ability to filter (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) to be enabled on private messaging.  
+/+ Ability to use Wildcards (\* and ?) in domain names for the Anti-Advertising and Anti-Swear filters.  
+/+ Ability to use  Regexes (start them with R=) in domain names for the Anti-Advertising and Anti-Swear filters.  
 
-/* Improved the performance of the plugin.
-/* Improved the chat filtering system.
-/* Improved the reloadig feature (/bungeechat reload).
-/* Improved the BungeeChat API by adding new features.
-/* Improved the way of saving player data into a file.
-/* Improved the version checking system.
-/* Improved the chat logging system: it could now be saved in a file of which the format can be customized.
-/* Improved the permission plugin hook system. External plugins will now detect automatically!
+/* Improved the performance of the plugin.  
+/* Improved the chat filtering system.  
+/* Improved the reloadig feature (/bungeechat reload).  
+/* Improved the BungeeChat API by adding new features.  
+/* Improved the way of saving player data into a file.  
+/* Improved the version checking system.  
+/* Improved the chat logging system: it could now be saved in a file of which the format can be customized.  
+/* Improved the permission plugin hook system. External plugins will now detect automatically!  
 
-/* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the they were talking in.
-/* Fixed the bug were the Server Switch Message was called when a player joins the network.
-/* Fixed a lot other small bugs.
+/* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the they were talking in.  
+/* Fixed the bug were the Server Switch Message was called when a player joins the network.  
+/* Fixed a lot other small bugs.  
 
-/- Removed all Redis features.
-/- Removed support for the old BungeeChatAPI.
+/- Removed all Redis features.  
+/- Removed support for the old BungeeChatAPI.  
 
 
 Version 1.3.5
