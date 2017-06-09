@@ -25,9 +25,9 @@ public class SocialSpyCommand extends BaseCommand {
                 player.toggleSocialSpy();
 
                 if (!player.hasSocialSpyEnabled()) {
-                    sender.sendMessage(Message.ENABLE_SOCIALSPY.get(player));
+                    sender.sendMessage(Message.ENABLE_SOCIAL_SPY.get(player));
                 } else {
-                    sender.sendMessage(Message.DISABLE_SOCIALSPY.get(player));
+                    sender.sendMessage(Message.DISABLE_SOCIAL_SPY.get(player));
                 }
             }
         }

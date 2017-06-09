@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.AccountType;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
@@ -28,14 +29,13 @@ public class GlobalChatCommand extends BaseCommand {
                 sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
                 return;
             }
-            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")
-                    && (sender instanceof ProxiedPlayer)) {
-                BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
-                        .contains(account.getServerName())) {
-                    sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
-                    return;
-                }
+            BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
+
+            if (!MessagesService.getGlobalPredicate().test(account)
+                    && (account.getAccountType() == AccountType.PLAYER)) {
+                sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
+
+                return;
             }
             if (args.length < 1) {
                 if (!(sender instanceof ProxiedPlayer)) {

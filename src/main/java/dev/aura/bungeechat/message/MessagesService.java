@@ -273,12 +273,13 @@ public class MessagesService {
     }
 
     public static Predicate<? super BungeeChatAccount> getGlobalPredicate() {
-        final Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection();
+        final Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
+                .getSection("serverList");
 
-        if (!section.getBoolean("Server-list.enabled"))
+        if (!section.getBoolean("enabled"))
             return account -> true;
         else {
-            List<String> allowedServers = section.getStringList("Server-list.list");
+            List<String> allowedServers = section.getStringList("list");
 
             return account -> allowedServers.contains(account.getServerName());
         }

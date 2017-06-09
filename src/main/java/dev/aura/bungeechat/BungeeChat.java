@@ -98,8 +98,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();
         HookManager.addHook(storedDataHookName, new StoredDataHook());
-        HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("Default-Prefix"),
-                permissionsManager.getString("Default-Suffix")));
+        HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("defaultPrefix"),
+                permissionsManager.getString("defaultSuffix")));
 
         if (prinLoadScreen) {
             loadScreen();

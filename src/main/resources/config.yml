@@ -6,7 +6,7 @@
 Version: 9.0
 
 Settings:
-  Features:
+  Modules:
     Alert:
       enabled: true
       aliases:
@@ -26,10 +26,10 @@ Settings:
       aliases:
         - g
       default: false
-      Symbol:
+      symbol:
         enabled: false
         symbol: "!"
-      Server-list:
+      serverList:
         enabled: false
         list:
           - Hub1
@@ -128,83 +128,82 @@ Settings:
       console: true
       file: true
   PermissionsManager:
-    Default-Prefix: "&7[Member]"
-    Default-Suffix: "&r"
+    defaultPrefix: "&7[Member]"
+    defaultSuffix: "&r"
 
 Messages:
-  #Channel Type Messages
-  enable-global: "&eYou are now talking in &bglobal chat&e!"
-  enable-staffchat: "&eYou are now talking in &astaff chat&e!"
-  enable-local: "You are now talking in &clocal chat&e!"
-  global-is-default: "&eGlobal chat is already the default chatmode!"
-  back-to-local: "&cThe feature linked to the channel you were talking in has been disabled! You are now talking in local chat."
-  not-in-global-server: "&cGlobal Chat is not enabled on this server..."
-  #Messenger Messages
-  message-yourself: "&cYou can not send a private message to yourself..."
-  enable-messager: "&eYou have &aenabled&e messaging!"
-  disable-messager: "&eYou have &cdisabled&e messaging"
-  no-reply: "&cYou have nobody to reply."
-  reply-offline: "&cThe player you were chatting with is no longer online."
-  has-messager-disabled: "&c%name% has messaging disabled!"
-  #Vanish Messages
-  enable-vanish: "&eYou have &aenabled&e hide mode!"
-  disable-vanish: "&eYou have &cdisabled&e hide mode!"
-  #Mute Messages
+# Channel Type Messages
+  enableGlobal: "&eYou are now talking in &bglobal chat&e!"
+  enableStaffchat: "&eYou are now talking in &astaff chat&e!"
+  enableLocal: "You are now talking in &clocal chat&e!"
+  globalIsDefault: "&eGlobal chat is already the default chatmode!"
+  backToLocal: "&cThe feature linked to the channel you were talking in has been disabled! You are now talking in local chat."
+  notInGlobalServer: "&cGlobal Chat is not enabled on this server..."
+# Messenger Messages
+  messageYourself: "&cYou can not send a private message to yourself..."
+  enableMessager: "&eYou have &aenabled&e messaging!"
+  disableMessager: "&eYou have &cdisabled&e messaging"
+  noReply: "&cYou have nobody to reply."
+  replyOffline: "&cThe player you were chatting with is no longer online."
+  hasMessagerDisabled: "&c%name% has messaging disabled!"
+# Vanish Messages
+  enableVanish: "&eYou have &aenabled&e hide mode!"
+  disableVanish: "&eYou have &cdisabled&e hide mode!"
+# Mute Messages
   muted: "&cSorry but you can not talk because you are muted until %muted_until%!"
-  unmute-not-muted: "&cThis player is not muted!"
-  mute-is-muted: "This player is already muted!"
+  unmuteNotMuted: "&cThis player is not muted!"
+  muteIsMuted: "This player is already muted!"
   unmute: "&eThe player &c%name% &ehas been unmuted!"
   mute: "&eThe player &c%name% &ehas been muted!"
   tempmute: "&eThe player &c%name% &ehas been muted until %muted_until%"
-  #Spy Messages
-  enable-socialspy: "&eSocialSpy has been &aenabled&e!"
-  disable-socialspy: "&eSocialSpy has been &cdisabled&e!"
-  enable-localspy: "&eLocalSpy has been &aenabled&e!"
-  disable-localspy: "&eLocalSpy has been &cdisabled&e!"
-  #Error Messages
-  not-player: "&cYou need to be a player to use this command!"
-  player-not-found: "&cCould not find that player..."
-  incorrect-usage: "&cIncorrect usage! Use this command like this: %command%"
-  no-permission: "&cYou do not have the permissions to perform this action!"
-  not-server: "&c%tserver is not a valid server."
-  #Ignore Messages
-  has-ignored: "&cThis player is ignoring you..."
-  add-ignore: "&eYou have ignored %name%!"
-  remove-ignore: "&eYou have un-ignored %name%!"
-  already-ignored: "&eYou have are already ignoring this player!"
-  ignore-yourself: "&cYou can not ignore yourself!"
-  unignore-yourself: "&cYou can not unignore yourself!"
-  not-ignored: "&cYou have not ignored this user!"
-  ignore-list: "&eIngored users: &b%message%&e."
-  ignore-nobody: "&eYou are ignoring &anobody&e!"
-  #Filter Messages
-  anti-advertise: "&cPlease do not advertise!"
-  anti-duplication: "&cPlease do not spam messages!"
-  #ChatLock Messages
-  enable-chatlock: "&eYou have disabled chatting!"
-  disable-chatlock: "&eYou have enabled chatting!"
-  chat-is-locked: "&cYou may not talk now, the chat has been locked!"
-  #Prefix/Suffix Messages
-  prefix-removed: "&ePrefix of %name% has been removed!"
-  prefix-set: "&ePrefix of %name% has been set to %prefix%."
-  suffix-removed: "&eSuffix of %name% has been removed!"
-  suffix-set: "&eSuffix of %name% has been set to %suffix%."
+# Spy Messages
+  enableSocialSpy: "&eSocialSpy has been &aenabled&e!"
+  disableSocialSpy: "&eSocialSpy has been &cdisabled&e!"
+  enableLocalSpy: "&eLocalSpy has been &aenabled&e!"
+  disableLocalSpy: "&eLocalSpy has been &cdisabled&e!"
+# Error Messages
+  notPlayer: "&cYou need to be a player to use this command!"
+  playerNotFound: "&cCould not find that player..."
+  incorrectUsage: "&cIncorrect usage! Use this command like this: %command%"
+  noPermission: "&cYou do not have the permissions to perform this action!"
+# Ignore Messages
+  hasIgnored: "&cThis player is ignoring you..."
+  addIgnore: "&eYou have ignored %name%!"
+  removeIgnore: "&eYou have un-ignored %name%!"
+  alreadyIgnored: "&eYou have are already ignoring this player!"
+  ignoreYourself: "&cYou can not ignore yourself!"
+  unignoreYourself: "&cYou can not unignore yourself!"
+  notIgnored: "&cYou have not ignored this user!"
+  ignoreList: "&eIngored users: &b%message%&e."
+  ignoreNobody: "&eYou are ignoring &anobody&e!"
+# Filter Messages
+  antiAdvertise: "&cPlease do not advertise!"
+  antiDuplication: "&cPlease do not spam messages!"
+# ChatLock Messages
+  enableChatlock: "&eYou have disabled chatting!"
+  disableChatlock: "&eYou have enabled chatting!"
+  chatIsLocked: "&cYou may not talk now, the chat has been locked!"
+# Prefix/Suffix Messages
+  prefixRemoved: "&ePrefix of %name% has been removed!"
+  prefixSet: "&ePrefix of %name% has been set to %prefix%."
+  suffixRemoved: "&eSuffix of %name% has been removed!"
+  suffixSet: "&eSuffix of %name% has been set to %suffix%."
 
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"
-  socialspy: "&9SPY > &e%sender_name% &8-> &e%target_name% &8: &r%message%"
-  localspy: "&9SPY > &8%servername% > &e%name% &8: &r%message%"
-  global-chat: "&9GLOBAL > %prefix% &e%name%: &r%message%"
-  message-sender: "&6You &8-> &6%target_name% &8: &r%message%"
-  message-target: "&6%sender_name% &8-> &6You&8: &r%message%"
-  staff-chat: "&9STAFF > &e%name%: &r%message%"
-  local-chat: "%prefix% &7%name%: %message%"
-  joinmessage: "&e%name% has joined the network!"
-  leavemessage: "&e%name% has left the network!"
-  helpop: "&2HELPOP > &e%name%: &r%message%"
-  server-switch: "&e%name% has moved to the &c%servername% &eserver!"
-  chat-logging-console: "%channel% > %servername% > %name%: %message%"
-  chat-logging-file: "[%time%]: %channel% > %servername% > %name%(%uuid%): %message%"
+  socialSpy: "&9SPY > &e%sender_name% &8-> &e%target_name% &8: &r%message%"
+  localSpy: "&9SPY > &8%servername% > &e%name% &8: &r%message%"
+  globalChat: "&9GLOBAL > %prefix% &e%name%: &r%message%"
+  messageSender: "&6You &8-> &6%target_name% &8: &r%message%"
+  messageTarget: "&6%sender_name% &8-> &6You&8: &r%message%"
+  staffChat: "&9STAFF > &e%name%: &r%message%"
+  localChat: "%prefix% &7%name%: %message%"
+  joinMessage: "&e%name% has joined the network!"
+  leaveMessage: "&e%name% has left the network!"
+  helpOp: "&2HELPOP > &e%name%: &r%message%"
+  serverSwitch: "&e%name% has moved to the &c%servername% &eserver!"
+  chatLoggingConsole: "%channel% > %servername% > %name%: %message%"
+  chatLoggingFile: "[%time%]: %channel% > %servername% > %name%(%uuid%): %message%"
 
 AccountDataBase:
   enabled: false

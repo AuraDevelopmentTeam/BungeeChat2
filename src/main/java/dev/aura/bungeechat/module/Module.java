@@ -5,7 +5,7 @@ import dev.aura.bungeechat.config.Config;
 import net.md_5.bungee.config.Configuration;
 
 public abstract class Module implements BungeeChatModule {
-    public static final String MODULE_BASE = "Settings.Features";
+    public static final String MODULE_BASE = "Settings.Modules";
     public static final String CONFIG_ENABLED = "enabled";
 
     public String getConfigBasePath() {

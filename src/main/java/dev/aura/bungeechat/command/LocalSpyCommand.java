@@ -25,9 +25,9 @@ public class LocalSpyCommand extends BaseCommand {
                 player.toggleLocalSpy();
 
                 if (!player.hasSocialSpyEnabled()) {
-                    sender.sendMessage(Message.ENABLE_LOCALSPY.get(player));
+                    sender.sendMessage(Message.ENABLE_LOCAL_SPY.get(player));
                 } else {
-                    sender.sendMessage(Message.DISABLE_LOCALSPY.get(player));
+                    sender.sendMessage(Message.DISABLE_LOCAL_SPY.get(player));
                 }
             }
         }

@@ -8,53 +8,71 @@ import net.md_5.bungee.api.CommandSender;
 
 @RequiredArgsConstructor
 public enum Message {
-    NOT_A_PLAYER("not-player"),
+    // Channel Type Messages
+    ENABLE_GLOBAL("enableGlobal"),
+    ENABLE_STAFFCHAT("enableStaffchat"),
+    ENABLE_LOCAL("enableLocal"),
+    GLOBAL_IS_DEFAULT("globalIsDefault"),
+    BACK_TO_LOCAL("backToLocal"),
+    NOT_IN_GLOBAL_SERVER("notInGlobalServer"),
+
+    // Messenger Messages
+    MESSAGE_YOURSELF("messageYourself"),
+    ENABLE_MESSAGER("enableMessager"),
+    DISABLE_MESSAGER("disableMessager"),
+    NO_REPLY("noReply"),
+    REPLY_OFFLINE("replyOffline"),
+    HAS_MESSAGER_DISABLED("hasMessagerDisabled"),
+
+    // Vanish Messages
+    ENABLE_VANISH("enableVanish"),
+    DISABLE_VANISH("disableVanish"),
+
+    // Mute Messages
     MUTED("muted"),
-    UNMUTE_NOT_MUTED("unmute-not-muted"),
-    MUTE_IS_MUTED("mute-is-muted"),
-    NO_REPLY("no-reply"),
-    REPLY_OFFLINE("reply-offline"),
-    PLAYER_NOT_FOUND("player-not-found"),
-    ENABLE_GLOBAL("enable-global"),
-    ENABLE_LOCAL("enable-local"),
-    MESSAGE_YOURSELF("message-yourself"),
-    ENABLE_SOCIALSPY("enable-socialspy"),
-    DISABLE_SOCIALSPY("disable-socialspy"),
-    ENABLE_LOCALSPY("enable-localspy"),
-    DISABLE_LOCALSPY("disable-localspy"),
-    ENABLE_STAFFCHAT("enable-staffchat"),
-    ENABLE_MESSAGER("enable-messager"),
-    DISABLE_MESSAGER("disable-messager"),
-    ENABLE_VANISH("enable-vanish"),
-    DISABLE_VANISH("disable-vanish"),
-    ENABLE_CHATLOCK("enable-chatlock"),
-    DISABLE_CHATLOCK("disable-chatlock"),
-    CHAT_IS_DISABLED("chat-is-locked"),
-    GLOBAL_IS_DEFAULT("global-is-default"),
-    ANTI_ADVERTISE("anti-advertise"),
-    TEMPMUTE("tempmute"),
-    ADD_IGNORE("add-ignore"),
-    REMOVE_IGNORE("remove-ignore"),
-    ALREADY_IGNORED("already-ignored"),
-    IGNORE_YOURSELF("ignore-yourself"),
-    UNIGNORE_YOURSELF("unignore-yourself"),
-    NOT_IGNORED("not-ignored"),
-    IGNORE_LIST("ignore-list"),
-    IGNORE_NOBODY("ignore-nobody"),
-    ANTI_DUPLICATION("anti-duplication"),
-    NO_PERMISSION("no-permission"),
-    HAS_INGORED("has-ignored"),
-    INCORRECT_USAGE("incorrect-usage"),
+    UNMUTE_NOT_MUTED("unmuteNotMuted"),
+    MUTE_IS_MUTED("muteIsMuted"),
     UNMUTE("unmute"),
     MUTE("mute"),
-    HAS_MESSAGER_DISABLED("has-messager-disabled"),
-    PREFIX_REMOVED("prefix-removed"),
-    PREFIX_SET("prefix-set"),
-    SUFFIX_REMOVED("suffix-removed"),
-    SUFFIX_SET("suffix-set"),
-    BACK_TO_LOCAL("back-to-local"),
-    NOT_IN_GLOBAL_SERVER("not-in-global-server");
+    TEMPMUTE("tempmute"),
 
+    // Spy Messages
+    ENABLE_SOCIAL_SPY("enableSocialSpy"),
+    DISABLE_SOCIAL_SPY("disableSocialSpy"),
+    ENABLE_LOCAL_SPY("enableLocalSpy"),
+    DISABLE_LOCAL_SPY("disableLocalSpy"),
+
+    // Error Messages
+    NOT_A_PLAYER("notPlayer"),
+    PLAYER_NOT_FOUND("playerNotFound"),
+    INCORRECT_USAGE("incorrectUsage"),
+    NO_PERMISSION("noPermission"),
+
+    // Ignore Messages
+    HAS_INGORED("hasIgnored"),
+    ADD_IGNORE("addIgnore"),
+    REMOVE_IGNORE("removeIgnore"),
+    ALREADY_IGNORED("alreadyIgnored"),
+    IGNORE_YOURSELF("ignoreYourself"),
+    UNIGNORE_YOURSELF("unignoreYourself"),
+    NOT_IGNORED("notIgnored"),
+    IGNORE_LIST("ignoreList"),
+    IGNORE_NOBODY("ignoreNobody"),
+
+    // Filter Messages
+    ANTI_ADVERTISE("antiAdvertise"),
+    ANTI_DUPLICATION("antiDuplication"),
+
+    // ChatLock Messages
+    ENABLE_CHATLOCK("enableChatlock"),
+    DISABLE_CHATLOCK("disableChatlock"),
+    CHAT_IS_DISABLED("chatIsLocked"),
+
+    // Prefix/Suffix Messages
+    PREFIX_REMOVED("prefixRemoved"),
+    PREFIX_SET("prefixSet"),
+    SUFFIX_REMOVED("suffixRemoved"),
+    SUFFIX_SET("suffixSet");
     @Getter
     private final String stringPath;
 
@@ -70,15 +88,15 @@ public enum Message {
         return get(new BungeeChatContext(sender, command));
     }
 
+    public String get(BungeeChatContext context) {
+        return PlaceHolderUtil.getFullMessage(this, context);
+    }
+
     public String get(CommandSender sender) {
         return get(new Context(sender));
     }
 
     public String get(CommandSender sender, String command) {
         return get(new Context(sender, command));
-    }
-
-    public String get(BungeeChatContext context) {
-        return PlaceHolderUtil.getFullMessage(this, context);
     }
 }

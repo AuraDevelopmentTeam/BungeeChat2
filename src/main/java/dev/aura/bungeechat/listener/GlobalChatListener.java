@@ -10,6 +10,7 @@ import dev.aura.bungeechat.module.BungeecordModuleManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
@@ -24,29 +25,23 @@ public class GlobalChatListener implements Listener {
 
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
         String message = e.getMessage();
+        BungeeChatAccount accout = BungeecordAccountManager.getAccount(sender).get();
 
         if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
-            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
-                BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
-                        .contains(account.getServerName())) {
-                    e.setCancelled(true);
-                    MessagesService.sendGlobalMessage(sender, message);
-                    return;
-                }
+            if (MessagesService.getGlobalPredicate().test(accout)) {
+                e.setCancelled(true);
+                MessagesService.sendGlobalMessage(sender, message);
+
+                return;
             }
         }
 
         if ((BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL)
                 && !ChatUtils.isCommand(message)) {
+            if (!MessagesService.getGlobalPredicate().test(accout)) {
+                sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
 
-            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
-                BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
-                        .contains(account.getServerName())) {
-                    sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
-                    return;
-                }
+                return;
             }
 
             e.setCancelled(true);
@@ -55,18 +50,16 @@ public class GlobalChatListener implements Listener {
             return;
         }
 
-        if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Symbol.enabled")) {
-            String symbol = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getString("Symbol.symbol");
+        Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getSection("symbol");
+
+        if (section.getBoolean("enabled")) {
+            String symbol = section.getString("symbol");
 
             if (message.startsWith(symbol) && !symbol.equals("/")) {
+                if (!MessagesService.getGlobalPredicate().test(accout)) {
+                    sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
 
-                if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("Server-list.enabled")) {
-                    BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
-                    if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getStringList("Server-list.list")
-                            .contains(account.getServerName())) {
-                        sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
-                        return;
-                    }
+                    return;
                 }
 
                 e.setCancelled(true);
