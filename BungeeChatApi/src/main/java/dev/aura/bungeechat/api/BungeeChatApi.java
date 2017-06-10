@@ -3,6 +3,7 @@ package dev.aura.bungeechat.api;
 import java.io.File;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.BuildType;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
@@ -47,6 +48,13 @@ public interface BungeeChatApi {
      * @return One member of the {@link ServerType}
      */
     public ServerType getServerType();
+
+    /**
+     * Method the get the build type of the plugin.
+     *
+     * @return One member of the {@link BuildType}
+     */
+    public BuildType getBuildType();
 
     /**
      * Retrieves (and creates if necessary) the config folder.

@@ -13,6 +13,7 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.BuildType;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.enums.ServerType;
@@ -128,6 +129,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public ServerType getServerType() {
         return ServerType.BUNGEECORD;
     }
+
+    @Override
+    public BuildType getBuildType() { return BuildType.SNAPSHOT; }
 
     @Override
     public File getConfigFolder() {
