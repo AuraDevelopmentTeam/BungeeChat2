@@ -6,15 +6,14 @@ import dev.aura.bungeechat.command.TempMuteCommand;
 import dev.aura.bungeechat.command.UnmuteCommand;
 import dev.aura.bungeechat.listener.MutingListener;
 import net.md_5.bungee.api.ProxyServer;
-
-import java.util.Arrays;
+import net.md_5.bungee.api.plugin.PluginManager;
 
 public class MutingModule extends Module {
     private MuteCommand muteCommand;
     private TempMuteCommand tempMuteCommand;
     private UnmuteCommand unmuteCommand;
     private MutingListener mutingListener;
-    private final String[] mutePlugins = {"BungeeBan", "BungeeSystem", "BungeeAdminTools", "Banmanager"};
+    private final String[] mutePlugins = { "BungeeBan", "BungeeSystem", "BungeeAdminTools", "Banmanager" };
 
     @Override
     public String getName() {
@@ -23,11 +22,19 @@ public class MutingModule extends Module {
 
     @Override
     public boolean isEnabled() {
-        if (getModuleSection().getBoolean("disableWithOtherMutePlugins"))
-            return ((Arrays.stream(mutePlugins).filter(plugin -> (ProxyServer.getInstance().getPluginManager().getPlugin(plugin) != null)).toArray().length == 0)
-            && super.isEnabled());
-        else
-            return super.isEnabled();
+        if (!super.isEnabled())
+            return false;
+
+        if (getModuleSection().getBoolean("disableWithOtherMutePlugins")) {
+            PluginManager pm = ProxyServer.getInstance().getPluginManager();
+
+            for (String mutePlugin : mutePlugins) {
+                if (pm.getPlugin(mutePlugin) != null)
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
