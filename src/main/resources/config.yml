@@ -77,6 +77,7 @@ Settings:
         - reply
         - r
       ignoreBukkitLocalChat: false
+      disableWithOtherMutePlugins: true
     JoinMessage:
       enabled: true
     LeaveMessage:
