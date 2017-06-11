@@ -2,6 +2,7 @@ package dev.aura.bungeechat.lib.spigot;
 
 import java.io.File;
 
+import dev.aura.bungeechat.api.enums.BuildType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dev.aura.bungeechat.api.BungeeChatApi;
@@ -23,6 +24,11 @@ public class BungeeChattLibSpigot extends JavaPlugin implements BungeeChatApi {
     @Override
     public ServerType getServerType() {
         return ServerType.SPIGOT;
+    }
+
+    @Override
+    public BuildType getBuildType() {
+        return BuildType.DEV;
     }
 
     @Override
