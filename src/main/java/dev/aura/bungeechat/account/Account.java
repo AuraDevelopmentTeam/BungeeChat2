@@ -10,6 +10,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -17,6 +18,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
 
 @Data
+@EqualsAndHashCode(of = "uuid")
 public class Account implements BungeeChatAccount {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

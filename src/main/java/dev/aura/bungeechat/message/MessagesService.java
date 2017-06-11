@@ -155,8 +155,10 @@ public class MessagesService {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
         Optional<String> finalMessage = preProcessMessage(context, Format.HELP_OP);
+        BungeeChatAccount sender = context.getSender().get();
 
-        sendToMatchingPlayers(finalMessage, pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW));
+        sendToMatchingPlayers(finalMessage,
+                pp -> PermissionManager.hasPermission(pp, Permission.COMMAND_HELPOP_VIEW) || sender.equals(pp));
 
         ChatLoggingManager.logMessage(ChannelType.HELP, context);
     }
