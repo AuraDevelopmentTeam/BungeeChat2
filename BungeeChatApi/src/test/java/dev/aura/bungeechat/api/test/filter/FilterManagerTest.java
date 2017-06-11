@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 
+import dev.aura.bungeechat.api.enums.BuildType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,6 +31,11 @@ public class FilterManagerTest {
             @Override
             public ServerType getServerType() {
                 return ServerType.BUNGEECORD;
+            }
+
+            @Override
+            public BuildType getBuildType() {
+                return BuildType.SNAPSHOT;
             }
 
             @Override
