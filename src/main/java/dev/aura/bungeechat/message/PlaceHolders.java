@@ -30,6 +30,9 @@ public class PlaceHolders {
                 new PlaceHolder("%displayname%", context -> context.getSender().get().getDisplayName(),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_displayname%"));
         PlaceHolderManager.registerPlaceholder(
+                new PlaceHolder("%fullname%", context -> HookManager.getFullname(context.getSender().get()),
+                        BungeeChatContext.HAS_SENDER).createAliases("%sender_fullname%"));
+        PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%prefix%", context -> HookManager.getPrefix(context.getSender().get()),
                         BungeeChatContext.HAS_SENDER).createAliases("sender_prefix%"));
         PlaceHolderManager.registerPlaceholder(
@@ -55,6 +58,8 @@ public class PlaceHolders {
                 context -> context.getTarget().get().getName(), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_displayname%",
                 context -> context.getTarget().get().getDisplayName(), BungeeChatContext.HAS_TARGET));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_fullname%",
+                context -> HookManager.getFullname(context.getTarget().get()), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_prefix%",
                 context -> HookManager.getPrefix(context.getTarget().get()), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_suffix%",

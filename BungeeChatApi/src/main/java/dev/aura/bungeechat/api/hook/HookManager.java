@@ -69,6 +69,12 @@ public class HookManager {
         return "";
     }
 
+    public String getFullname(BungeeChatAccount account) {
+        checkSide();
+
+        return getPrefix(account) + account.getName() + getSuffix(account);
+    }
+
     private static void checkSide() throws UnsupportedOperationException {
         if (!validSide)
             throw new UnsupportedOperationException("This operation is only allowed on the BungeeCord!");
