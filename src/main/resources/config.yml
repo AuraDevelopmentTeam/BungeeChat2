@@ -1,7 +1,14 @@
-# Bungee Chat Configuration by shawn_ian (v9)
-# Placeholders can be found here: http://tiny.cc/bungeechatplaceholders
-# In the config file you can change the chat formats and disable and enable feautures.
-# If you found any bugs please report them (See plugin site for more information)
+# Bungee Chat configuration by shawn_ian (v9)
+#
+# Information about the placeholders can be found here:
+# https://github.com/AuraDevelopmentTeam/BungeeChatWiki/wiki/Placeholders
+# You can report bugs or request features here:
+# https://github.com/AuraDevelopmentTeam/BungeeChat2/issues
+# You can contact a developer by joining our Discord server:
+# https://discord.me/bungeechat
+#
+# You can change the settings and messages/formats of the plugin in this file.
+# Please do not change the 'Version' value, or else the plugin might not work.
 
 Version: 9.0
 
@@ -136,9 +143,9 @@ Messages:
 # Channel Type Messages
   enableGlobal: "&eYou are now talking in &bglobal chat&e!"
   enableStaffchat: "&eYou are now talking in &astaff chat&e!"
-  enableLocal: "You are now talking in &clocal chat&e!"
+  enableLocal: "&eYou are now talking in &clocal chat&e!"
   globalIsDefault: "&eGlobal chat is already the default chatmode!"
-  backToLocal: "&cThe feature linked to the channel you were talking in has been disabled! You are now talking in local chat."
+  backToLocal: "&cThe feature linked to the channel you were talking in has been disabled or your permissions have been removed! You are now talking in local chat."
   notInGlobalServer: "&cGlobal Chat is not enabled on this server..."
 # Messenger Messages
   messageYourself: "&cYou can not send a private message to yourself..."
