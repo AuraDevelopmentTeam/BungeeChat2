@@ -29,6 +29,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
     private final String tableAccounts;
     private final String tableAccountsColumnUUID;
+    private final String tableAccountsColumnUserName;
     private final String tableAccountsColumnChannelType;
     private final String tableAccountsColumnVanished;
     private final String tableAccountsColumnMessenger;
@@ -74,6 +75,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
         tableAccounts = getTableName("Accounts");
         tableAccountsColumnUUID = "UUID";
+        tableAccountsColumnUserName = "UserName";
         tableAccountsColumnChannelType = "ChannelType";
         tableAccountsColumnVanished = "Vanished";
         tableAccountsColumnMessenger = "Messenger";
@@ -108,14 +110,15 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
             // saveAccount
             saveAccount.setBytes(1, uuidBytes);
-            saveAccount.setString(2, account.getChannelType().name());
-            saveAccount.setBoolean(3, account.isVanished());
-            saveAccount.setBoolean(4, account.hasMessangerEnabled());
-            saveAccount.setBoolean(5, account.hasSocialSpyEnabled());
-            saveAccount.setBoolean(6, account.hasLocalSpyEnabled());
-            saveAccount.setTimestamp(7, account.getMutedUntil());
-            saveAccount.setString(8, account.getStoredPrefix().orElse(null));
-            saveAccount.setString(9, account.getStoredSuffix().orElse(null));
+            saveAccount.setString(2, account.getName());
+            saveAccount.setString(3, account.getChannelType().name());
+            saveAccount.setBoolean(4, account.isVanished());
+            saveAccount.setBoolean(5, account.hasMessangerEnabled());
+            saveAccount.setBoolean(6, account.hasSocialSpyEnabled());
+            saveAccount.setBoolean(7, account.hasLocalSpyEnabled());
+            saveAccount.setTimestamp(8, account.getMutedUntil());
+            saveAccount.setString(9, account.getStoredPrefix().orElse(null));
+            saveAccount.setString(10, account.getStoredSuffix().orElse(null));
 
             saveAccount.executeUpdate();
             saveAccount.clearParameters();
@@ -242,13 +245,13 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     .collect(Collectors.joining("','", " ENUM('", "')"));
 
             String createAccountsTable = "CREATE TABLE IF NOT EXISTS " + tableAccounts + " (" + tableAccountsColumnUUID
-                    + " BINARY(16) NOT NULL, " + tableAccountsColumnChannelType + channelTypeEnum + " NOT NULL, "
-                    + tableAccountsColumnVanished + " BOOLEAN NOT NULL, " + tableAccountsColumnMessenger
-                    + " BOOLEAN NOT NULL, " + tableAccountsColumnSocialSpy + " BOOLEAN NOT NULL, "
-                    + tableAccountsColumnLocalSpy + " BOOLEAN NOT NULL, " + tableAccountsColumnMutedUntil
-                    + " DATETIME NOT NULL, " + tableAccountsColumnStoredPrefix + " TEXT, "
-                    + tableAccountsColumnStoredSuffix + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID
-                    + ")) DEFAULT CHARSET=utf8";
+                    + " VARCHAR(16) NOT NULL, " + tableAccountsColumnUserName + " BINARY(16) NOT NULL, "
+                    + tableAccountsColumnChannelType + channelTypeEnum + " NOT NULL, " + tableAccountsColumnVanished
+                    + " BOOLEAN NOT NULL, " + tableAccountsColumnMessenger + " BOOLEAN NOT NULL, "
+                    + tableAccountsColumnSocialSpy + " BOOLEAN NOT NULL, " + tableAccountsColumnLocalSpy
+                    + " BOOLEAN NOT NULL, " + tableAccountsColumnMutedUntil + " DATETIME NOT NULL, "
+                    + tableAccountsColumnStoredPrefix + " TEXT, " + tableAccountsColumnStoredSuffix
+                    + " TEXT, PRIMARY KEY (" + tableAccountsColumnUUID + ")) DEFAULT CHARSET=utf8";
             String createIgnoresTable = "CREATE TABLE IF NOT EXISTS " + tableIgnores + " (" + tableIgnoresColumnUser
                     + " BINARY(16) NOT NULL, " + tableIgnoresColumnIgnores + " BINARY(16) NOT NULL, PRIMARY KEY ("
                     + tableIgnoresColumnUser + ", " + tableIgnoresColumnIgnores + "), KEY (" + tableIgnoresColumnUser
@@ -267,12 +270,14 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     private void prepareStatements() {
         try {
             String saveAccountStr = "INSERT INTO " + tableAccounts + " (" + tableAccountsColumnUUID + ", "
-                    + tableAccountsColumnChannelType + ", " + tableAccountsColumnVanished + ", "
-                    + tableAccountsColumnMessenger + ", " + tableAccountsColumnSocialSpy + ", "
-                    + tableAccountsColumnLocalSpy + ", " + tableAccountsColumnMutedUntil + ", "
-                    + tableAccountsColumnStoredPrefix + ", " + tableAccountsColumnStoredSuffix
-                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE " + tableAccountsColumnChannelType
-                    + " = VALUES(" + tableAccountsColumnChannelType + "), " + tableAccountsColumnVanished + " = VALUES("
+                    + tableAccountsColumnUserName + ", " + tableAccountsColumnChannelType + ", "
+                    + tableAccountsColumnVanished + ", " + tableAccountsColumnMessenger + ", "
+                    + tableAccountsColumnSocialSpy + ", " + tableAccountsColumnLocalSpy + ", "
+                    + tableAccountsColumnMutedUntil + ", " + tableAccountsColumnStoredPrefix + ", "
+                    + tableAccountsColumnStoredSuffix
+                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE " + tableAccountsColumnUserName
+                    + " = VALUES(" + tableAccountsColumnUserName + "), " + tableAccountsColumnChannelType + " = VALUES("
+                    + tableAccountsColumnChannelType + "), " + tableAccountsColumnVanished + " = VALUES("
                     + tableAccountsColumnVanished + "), " + tableAccountsColumnMessenger + " = VALUES("
                     + tableAccountsColumnMessenger + "), " + tableAccountsColumnSocialSpy + " = VALUES("
                     + tableAccountsColumnSocialSpy + "), " + tableAccountsColumnLocalSpy + " = VALUES("

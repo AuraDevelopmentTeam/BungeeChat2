@@ -5,6 +5,7 @@ createAccounts:
 CREATE TABLE IF NOT EXISTS `BungeeChat_Accounts`
   (
     UUID         BINARY(16) NOT NULL,
+    UserName     VARCHAR(16) NOT NULL,
     ChannelType  ENUM('GLOBAL', 'LOCAL', 'STAFF', 'HELP', 'GROUP') NOT NULL,
     Vanished     BOOLEAN NOT NULL,
     Messenger    BOOLEAN NOT NULL,
@@ -34,7 +35,7 @@ Queries:
 ========
 
 saveAccount:
-INSERT INTO `BungeeChat_Accounts` (UUID, ChannelType, Vanished, Messenger, SocialSpy, MutedUntil, StoredPrefix, StoredSuffix) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ChannelType = VALUES(ChannelType), Vanished = VALUES(Vanished), Messenger = VALUES(Messenger), SocialSpy = VALUES(SocialSpy), MutedUntil = VALUES(MutedUntil), StoredPrefix = VALUES(StoredPrefix), StoredSuffix = VALUES(StoredSuffix)
+INSERT INTO `BungeeChat_Accounts` (UUID, UserName, ChannelType, Vanished, Messenger, SocialSpy, MutedUntil, StoredPrefix, StoredSuffix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE UserName = VALUES(UserName), ChannelType = VALUES(ChannelType), Vanished = VALUES(Vanished), Messenger = VALUES(Messenger), SocialSpy = VALUES(SocialSpy), MutedUntil = VALUES(MutedUntil), StoredPrefix = VALUES(StoredPrefix), StoredSuffix = VALUES(StoredSuffix)
 
 loadAccount:
 SELECT ChannelType, Vanished, Messenger, SocialSpy, MutedUntil, StoredPrefix, StoredSuffix FROM `BungeeChat_Accounts` WHERE UUID = ? LIMIT 1
