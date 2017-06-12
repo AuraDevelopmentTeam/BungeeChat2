@@ -27,6 +27,7 @@ import dev.aura.bungeechat.command.BungeeChatCommand;
 import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
+import dev.aura.bungeechat.hook.metrics.MetricManager;
 import dev.aura.bungeechat.listener.ChannelTypeCorrectorListener;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolders;
@@ -103,6 +104,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
                 permissionsManager.getString("defaultSuffix")));
 
         if (prinLoadScreen) {
+            MetricManager.sendMetrics(this);
+
             loadScreen();
         }
     }
@@ -131,7 +134,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     @Override
-    public BuildType getBuildType() { return BuildType.SNAPSHOT; }
+    public BuildType getBuildType() {
+        return BuildType.SNAPSHOT;
+    }
 
     @Override
     public File getConfigFolder() {

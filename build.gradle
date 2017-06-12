@@ -80,6 +80,7 @@ description = """Bungee Chat"""
 
 configurations {
     reTrace
+    compile.extendsFrom shadow
 }
 
 repositories {

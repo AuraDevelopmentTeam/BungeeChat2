@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.module;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.api.module.BungeeChatModule;
@@ -39,10 +40,11 @@ public class BungeecordModuleManager extends ModuleManager {
 
     private static String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
     private static boolean modulesAdded = false;
+    private static List<BungeeChatModule> localModules = null;
 
-    public static void registerPluginModules() {
-        if (!modulesAdded) {
-            availableModules.addAll(0, Arrays.stream(BungeecordModuleManager.class.getDeclaredFields())
+    public static List<BungeeChatModule> getLocalModules() {
+        if (localModules == null) {
+            localModules = Arrays.stream(BungeecordModuleManager.class.getDeclaredFields())
                     .filter(field -> BungeeChatModule.class.isAssignableFrom(field.getType())).map(field -> {
                         try {
                             return (BungeeChatModule) field.get(null);
@@ -51,7 +53,15 @@ public class BungeecordModuleManager extends ModuleManager {
 
                             return null;
                         }
-                    }).collect(Collectors.toList()));
+                    }).collect(Collectors.toList());
+        }
+
+        return localModules;
+    }
+
+    public static void registerPluginModules() {
+        if (!modulesAdded) {
+            availableModules.addAll(0, getLocalModules());
 
             modulesAdded = true;
         }
