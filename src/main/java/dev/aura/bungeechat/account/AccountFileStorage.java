@@ -44,6 +44,7 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             @Cleanup
             ObjectOutputStream save = new ObjectOutputStream(saveFile);
 
+            save.writeObject(account.getName());
             save.writeObject(account.getChannelType());
             save.writeObject(account.hasMessangerEnabled());
             save.writeObject(account.isVanished());
@@ -71,6 +72,9 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             FileInputStream saveFile = new FileInputStream(accountFile);
             @Cleanup
             ObjectInputStream save = new ObjectInputStream(saveFile);
+
+            // Read Name (and discard it (for now))
+            save.readObject();
 
             return new SimpleEntry<>(new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
                     (boolean) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(),
