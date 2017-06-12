@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.hook.metrics;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.bstats.Metrics.SimpleBarChart;
 
@@ -13,10 +14,13 @@ public class ModuleData extends SimpleBarChart {
 
     @Override
     public HashMap<String, Integer> getValues(HashMap<String, Integer> premadeMap) {
-        premadeMap.put("Servers", 1);
-        
-        BungeecordModuleManager.getLocalModules().stream().forEach(module -> premadeMap.put(module.getName(), module.isEnabled()? 1 : 0));
-        
-        return premadeMap;
+        HashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+
+        BungeecordModuleManager.getLocalModules().stream()
+                .forEach(module -> sortedMap.put(module.getName(), module.isEnabled() ? 1 : 0));
+
+        sortedMap.put("Servers", 1);
+
+        return sortedMap;
     }
 }
