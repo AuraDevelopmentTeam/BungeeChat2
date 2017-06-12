@@ -15,6 +15,7 @@ buildscript {
 
 plugins {
     id "io.franzbecker.gradle-lombok" version "1.8" apply false
+    id "com.github.johnrengelman.shadow" version "2.0.0" apply false
 }
 
 def getBuild() {
@@ -57,6 +58,8 @@ allprojects {
     }
 }
 
+apply plugin: "com.github.johnrengelman.shadow"
+
 ext {
     build = getBuild()
     full_version = getFullVersion()
@@ -96,6 +99,10 @@ repositories {
         name "luck-repo"
         url "https://repo.lucko.me/"
     }
+    maven {
+        name "bstats-repo"
+        url "http://repo.bstats.org/content/repositories/releases/"
+    }
 }
 
 dependencies {
@@ -106,6 +113,8 @@ dependencies {
     compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    
+    shadow "org.bstats:bstats-bungeecord:1.1"
     
     reTrace "net.sf.proguard:proguard-retrace:5.3.3"
 }
@@ -197,8 +206,18 @@ allprojects {
     }
 }
 
-jar {
+shadowJar {
+    from sourceSets.main.output
+    from MainDirResources
     from project(":BungeeChatApi").sourceSets.main.output
+    
+    classifier = "deobf"
+    version = jar.version
+    configurations = [project.configurations.shadow]
+    
+    project.configurations.shadow.dependencies.each {
+        relocate(it.group, "${project.group}.shadow.${it.group}")
+    }
 }
 
 sourceJar {
@@ -212,16 +231,7 @@ javadoc {
     classpath += project(":BungeeChatApi").sourceSets.main.compileClasspath
 }
 
-task deobfJar (type: Jar, dependsOn: jar) {
-    from sourceSets.main.output
-    from project(":BungeeChatApi").sourceSets.main.output
-    from MainDirResources
-
-    classifier = "deobf"
-    version = jar.version
-}
-
-task proguard(type: ProGuardTask, dependsOn: deobfJar) {
+task proguard(type: ProGuardTask, dependsOn: shadowJar) {
     group "build"
     
     def dictonary = file("dictionary.txt")
@@ -229,7 +239,7 @@ task proguard(type: ProGuardTask, dependsOn: deobfJar) {
     configuration "proguard.conf"
 
     // Inputs and outputs
-    injars deobfJar.archivePath
+    injars shadowJar.archivePath
     outjars jar.archivePath
     printmapping "${jar.archivePath}.map"
  
@@ -238,6 +248,7 @@ task proguard(type: ProGuardTask, dependsOn: deobfJar) {
     
     // Stuff that depends on the group name
     keep "class ${project.group}.api.** { *; }"
+    keep "class ${project.group}.shadow.** { *; }"
     repackageclasses project.group
     
     // No notes or warnings from classes that aren't ours!
