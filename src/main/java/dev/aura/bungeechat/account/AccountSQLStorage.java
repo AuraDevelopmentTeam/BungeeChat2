@@ -245,7 +245,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                     .collect(Collectors.joining("','", " ENUM('", "')"));
 
             String createAccountsTable = "CREATE TABLE IF NOT EXISTS " + tableAccounts + " (" + tableAccountsColumnUUID
-                    + " VARCHAR(16) NOT NULL, " + tableAccountsColumnUserName + " BINARY(16) NOT NULL, "
+                    + " BINARY(16) NOT NULL, " + tableAccountsColumnUserName + " VARCHAR(16) NOT NULL, "
                     + tableAccountsColumnChannelType + channelTypeEnum + " NOT NULL, " + tableAccountsColumnVanished
                     + " BOOLEAN NOT NULL, " + tableAccountsColumnMessenger + " BOOLEAN NOT NULL, "
                     + tableAccountsColumnSocialSpy + " BOOLEAN NOT NULL, " + tableAccountsColumnLocalSpy
