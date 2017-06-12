@@ -41,6 +41,13 @@ public class MessagesService {
         boolean filterPrivateMessages = BungeecordModuleManager.MESSENGER_MODULE.getModuleSection()
                 .getBoolean("filterMessages");
 
+        if (targetAcconut.hasIgnored(senderAcconut)
+                && !PermissionManager.hasPermission(sender, Permission.COMMAND_IGNORE_BYPASS)) {
+            sender.sendMessage(Message.HAS_INGORED.get(context));
+
+            return;
+        }
+
         Optional<String> messageSender = preProcessMessage(context, account, Format.MESSAGE_SENDER,
                 filterPrivateMessages);
 

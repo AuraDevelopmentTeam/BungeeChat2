@@ -175,7 +175,7 @@ Messages:
   incorrectUsage: "&cIncorrect usage! Use this command like this: %command%"
   noPermission: "&cYou do not have the permissions to perform this action!"
 # Ignore Messages
-  hasIgnored: "&cThis player is ignoring you..."
+  hasIgnored: "&c%target_name% is ignoring you..."
   addIgnore: "&eYou have ignored %name%!"
   removeIgnore: "&eYou have un-ignored %name%!"
   alreadyIgnored: "&eYou have are already ignoring this player!"

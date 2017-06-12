@@ -45,11 +45,6 @@ public class MessageCommand extends BaseCommand {
                     sender.sendMessage(Message.HAS_MESSAGER_DISABLED.get(target));
                     return;
                 }
-                if (targetAccount.get().hasIgnored(BungeecordAccountManager.getAccount(sender).get())
-                        && !PermissionManager.hasPermission(sender, Permission.COMMAND_IGNORE_BYPASS)) {
-                    sender.sendMessage(Message.HAS_INGORED.get());
-                    return;
-                }
 
                 String finalMessage = Arrays.stream(args, 1, args.length).collect(Collectors.joining(" "));
 
