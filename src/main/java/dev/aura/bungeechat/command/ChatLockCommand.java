@@ -49,7 +49,8 @@ public class ChatLockCommand extends BaseCommand {
                                 }
                             }
 
-                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
+                            MessagesService.sendToMatchingPlayers(Message.ENABLE_CHATLOCK.get(player),
+                                    MessagesService.getGlobalPredicate());
                         }
                     } else if (args[0].equalsIgnoreCase("local")) {
                         String serverName = player.getServerName();
@@ -67,7 +68,8 @@ public class ChatLockCommand extends BaseCommand {
                                 }
                             }
 
-                            sender.sendMessage(Message.ENABLE_CHATLOCK.get(player));
+                            MessagesService.sendToMatchingPlayers(Message.ENABLE_CHATLOCK.get(player),
+                                    MessagesService.getLocalPredicate(serverName));
                         }
                     } else {
                         sender.sendMessage(Message.INCORRECT_USAGE.get(player, USAGE));
