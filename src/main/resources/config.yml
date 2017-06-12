@@ -182,7 +182,7 @@ Messages:
   ignoreYourself: "&cYou can not ignore yourself!"
   unignoreYourself: "&cYou can not unignore yourself!"
   notIgnored: "&cYou have not ignored this user!"
-  ignoreList: "&eIngored users: &b%message%&e."
+  ignoreList: "&eOnline users you ignore: &b%message%&e."
   ignoreNobody: "&eYou are ignoring &anobody&e!"
 # Filter Messages
   antiAdvertise: "&cPlease do not advertise!"
