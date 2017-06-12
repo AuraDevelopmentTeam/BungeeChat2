@@ -13,6 +13,8 @@ public class ModuleData extends SimpleBarChart {
 
     @Override
     public HashMap<String, Integer> getValues(HashMap<String, Integer> premadeMap) {
+        premadeMap.put("Servers", 1);
+        
         BungeecordModuleManager.getLocalModules().stream().forEach(module -> premadeMap.put(module.getName(), module.isEnabled()? 1 : 0));
         
         return premadeMap;
