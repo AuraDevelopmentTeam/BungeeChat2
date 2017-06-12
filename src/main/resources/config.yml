@@ -217,7 +217,7 @@ AccountDataBase:
   enabled: false
   ip: 0.0.0.0
   port: 3306
-  database: BungeeChatAccounts
+  database: BungeeChat
   user: User
   password: Password
   tablePrefix: BungeeChat_
