@@ -41,6 +41,20 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
     apply plugin: "io.franzbecker.gradle-lombok"
+    
+    eclipse {
+        classpath {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+    
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
 
     group = "dev.aura.bungeechat"
     version = "2.0.0"
