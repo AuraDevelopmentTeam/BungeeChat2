@@ -21,9 +21,10 @@ public class StaffChatListener implements Listener {
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
         String message = e.getMessage();
 
-        if ((BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF)
-                && !ChatUtils.isCommand(message)) {
+        if (ChatUtils.isCommand(message))
+            return;
 
+        if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF) {
             e.setCancelled(true);
             MessagesService.sendStaffMessage(sender, message);
         }

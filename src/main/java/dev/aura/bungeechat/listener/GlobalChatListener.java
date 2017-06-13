@@ -27,6 +27,9 @@ public class GlobalChatListener implements Listener {
         String message = e.getMessage();
         BungeeChatAccount accout = BungeecordAccountManager.getAccount(sender).get();
 
+        if (ChatUtils.isCommand(message))
+            return;
+
         if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
             if (MessagesService.getGlobalPredicate().test(accout)) {
                 e.setCancelled(true);
@@ -36,8 +39,7 @@ public class GlobalChatListener implements Listener {
             }
         }
 
-        if ((BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL)
-                && !ChatUtils.isCommand(message)) {
+        if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL) {
             if (!MessagesService.getGlobalPredicate().test(accout)) {
                 sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
 
