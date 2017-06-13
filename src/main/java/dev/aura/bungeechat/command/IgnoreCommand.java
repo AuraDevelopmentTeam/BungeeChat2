@@ -54,7 +54,7 @@ public class IgnoreCommand extends BaseCommand {
                     Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[1]);
 
                     if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
-                            && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_SEE))) {
+                            && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
                         sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
                         return;
                     }
@@ -82,7 +82,7 @@ public class IgnoreCommand extends BaseCommand {
                     Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[1]);
 
                     if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
-                            && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_SEE))) {
+                            && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
                         sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
                         return;
                     }

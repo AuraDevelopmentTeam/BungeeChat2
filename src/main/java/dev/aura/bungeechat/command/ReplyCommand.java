@@ -41,7 +41,7 @@ public class ReplyCommand extends BaseCommand {
                 Optional<BungeeChatAccount> targetAccount = BungeecordAccountManager.getAccount(getReplier(sender));
 
                 if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
-                        && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_SEE))) {
+                        && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
                     sender.sendMessage(Message.NO_REPLY.get());
                     return;
                 }

@@ -20,6 +20,9 @@ public class TabCompletionListener implements Listener {
         if (e.isCancelled())
             return;
 
+        if (!PermissionManager.hasPermission((CommandSender) e.getSender(), Permission.USE_TAB_COMPLETE))
+            return;
+
         String partialPlayerName = e.getCursor();
         int lastSpaceIndex = partialPlayerName.lastIndexOf(' ');
 
@@ -30,7 +33,7 @@ public class TabCompletionListener implements Listener {
         Stream<BungeeChatAccount> stream = AccountManager.getAccountsForPartialName(partialPlayerName).stream();
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.VANISHER_MODULE)
-                && !PermissionManager.hasPermission((CommandSender) e.getSender(), Permission.COMMAND_VANISH_SEE)) {
+                && !PermissionManager.hasPermission((CommandSender) e.getSender(), Permission.COMMAND_VANISH_VIEW)) {
             stream = stream.filter(account -> !account.isVanished());
         }
 

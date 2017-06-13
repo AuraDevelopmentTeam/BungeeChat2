@@ -13,6 +13,8 @@ public enum Permission {
 
     USE_COLORED_CHAT("chat.colors"),
 
+    USE_TAB_COMPLETE("chat.tabcomplete"),
+
     BYPASS_ANTI_ADVERTISEMENT("chat.bypass.antiadvertisement"),
     BYPASS_ANTI_DUPLICATE("chat.bypass.antiduplicate"),
     BYPASS_ANTI_SWEAR("chat.bypass.antiswear"),
@@ -34,7 +36,7 @@ public enum Permission {
     COMMAND_UNMUTE("command.unmute"),
     COMMAND_TOGGLE_MESSAGE("command.toggle"),
     COMMAND_VANISH("command.vanish"),
-    COMMAND_VANISH_SEE("command.vanish.view"),
+    COMMAND_VANISH_VIEW("command.vanish.view"),
     COMMAND_SOCIALSPY("command.socialspy"),
     COMMAND_LOCALSPY("command.localspy"),
     COMMAND_CHAT_LOCK("command.chatlock"),
