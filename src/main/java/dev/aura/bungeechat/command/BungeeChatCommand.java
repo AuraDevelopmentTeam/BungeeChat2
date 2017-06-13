@@ -1,5 +1,8 @@
 package dev.aura.bungeechat.command;
 
+import java.io.IOException;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,6 +15,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.bungeechat.util.LoggerHelper;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -57,7 +61,8 @@ public class BungeeChatCommand extends BaseCommand {
                             targetAccount.get().setStoredPrefix(Optional.empty());
                             sender.sendMessage(prefix + Message.PREFIX_REMOVED.get(target));
                         } else {
-                            String newPrefix = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
+                            String newPrefix = getUnquotedString(
+                                    Arrays.stream(args, 2, args.length).collect(Collectors.joining(" ")));
 
                             targetAccount.get().setStoredPrefix(Optional.of(newPrefix));
                             sender.sendMessage(prefix + Message.PREFIX_SET.get(target));
@@ -83,7 +88,8 @@ public class BungeeChatCommand extends BaseCommand {
                             targetAccount.get().setStoredSuffix(Optional.empty());
                             sender.sendMessage(prefix + Message.SUFFIX_REMOVED.get(target));
                         } else {
-                            String newSuffix = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
+                            String newSuffix = getUnquotedString(
+                                    Arrays.stream(args, 2, args.length).collect(Collectors.joining(" ")));
 
                             targetAccount.get().setStoredSuffix(Optional.of(newSuffix));
                             sender.sendMessage(prefix + Message.SUFFIX_SET.get(target));
@@ -103,13 +109,37 @@ public class BungeeChatCommand extends BaseCommand {
 
     private void checkForUpdates(CommandSender sender) {
         if (BungeeChat.getInstance().isLatestVersion()) {
-            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION
-                    + " [" + BungeeChat.getInstance().getBuildType().toString() + "] (Build #" + BungeeChatApi.BUILD + ")");
+            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION + " ["
+                    + BungeeChat.getInstance().getBuildType().toString() + "] (Build #" + BungeeChatApi.BUILD + ")");
         } else {
-            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION
-                    + " [" + BungeeChat.getInstance().getBuildType().toString() + "] (Build #" + BungeeChatApi.BUILD + ")");
+            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION + " ["
+                    + BungeeChat.getInstance().getBuildType().toString() + "] (Build #" + BungeeChatApi.BUILD + ")");
             sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN
                     + BungeeChat.getInstance().getLatestVersion());
         }
+    }
+
+    private String getUnquotedString(String str) {
+        if ((str == null) || !(str.startsWith("\"") && str.endsWith("\"")))
+            return str;
+
+        new StreamTokenizer(new StringReader(str));
+        StreamTokenizer parser = new StreamTokenizer(new StringReader(str));
+        String result;
+
+        try {
+            parser.nextToken();
+            if (parser.ttype == '"') {
+                result = parser.sval;
+            } else {
+                result = "ERROR!";
+            }
+        } catch (IOException e) {
+            result = null;
+
+            LoggerHelper.info("Encountered an IOException while parsing the input string", e);
+        }
+
+        return result;
     }
 }
