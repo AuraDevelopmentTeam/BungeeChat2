@@ -24,7 +24,7 @@ public class SocialSpyCommand extends BaseCommand {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
                 player.toggleSocialSpy();
 
-                if (!player.hasSocialSpyEnabled()) {
+                if (player.hasSocialSpyEnabled()) {
                     sender.sendMessage(Message.ENABLE_SOCIAL_SPY.get(player));
                 } else {
                     sender.sendMessage(Message.DISABLE_SOCIAL_SPY.get(player));

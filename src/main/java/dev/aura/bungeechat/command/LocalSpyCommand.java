@@ -24,7 +24,7 @@ public class LocalSpyCommand extends BaseCommand {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
                 player.toggleLocalSpy();
 
-                if (!player.hasSocialSpyEnabled()) {
+                if (player.hasSocialSpyEnabled()) {
                     sender.sendMessage(Message.ENABLE_LOCAL_SPY.get(player));
                 } else {
                     sender.sendMessage(Message.DISABLE_LOCAL_SPY.get(player));
