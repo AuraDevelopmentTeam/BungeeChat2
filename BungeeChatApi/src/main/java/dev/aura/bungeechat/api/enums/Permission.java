@@ -20,6 +20,7 @@ public enum Permission {
     BYPASS_ANTI_SWEAR("chat.bypass.antiswear"),
     BYPASS_TOGGLE_MESSAGE("chat.bypass.toggle"),
     BYPASS_CHAT_LOCK("chat.bypass.chatlock"),
+    BYPASS_IGNORE("chat.bypass.ignore"),
 
     COMMAND_ALERT("command.alert"),
     COMMAND_GLOBAL("command.global"),
@@ -29,7 +30,6 @@ public enum Permission {
     COMMAND_HELPOP("command.helpop"),
     COMMAND_HELPOP_VIEW("command.helpop.view"),
     COMMAND_IGNORE("command.ignore"),
-    COMMAND_IGNORE_BYPASS("command.ignore.bypass"),
     COMMAND_MESSAGE("command.msg"),
     COMMAND_MUTE("command.mute"),
     COMMAND_TEMPMUTE("command.tempmute"),

@@ -42,7 +42,7 @@ public class MessagesService {
                 .getBoolean("filterMessages");
 
         if (targetAcconut.hasIgnored(senderAcconut)
-                && !PermissionManager.hasPermission(sender, Permission.COMMAND_IGNORE_BYPASS)) {
+                && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
             sender.sendMessage(Message.HAS_INGORED.get(context));
 
             return;
