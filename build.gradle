@@ -338,13 +338,13 @@ allprojects {
                             developerConnection "scm:git:gitlab.brainstonemod.com:shawn-ian/BungeeChat.git"
                         }
                         issueManagement {
-                            system "gitlab"
-                            url "https://gitlab.brainstonemod.com/shawn-ian/BungeeChat/issues"
+                            system "github"
+                            url "https://github.com/AuraDevelopmentTeam/BungeeChat2/issues"
                         }
                         licenses {
                             license {
                                 name "License"
-                                url "???"
+                                url "https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/LICENSE.md"
                                 distribution "repo"
                             }
                         }
