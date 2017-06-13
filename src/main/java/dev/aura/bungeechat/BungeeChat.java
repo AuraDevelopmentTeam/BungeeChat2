@@ -66,7 +66,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public void onEnable(boolean prinLoadScreen) {
-        Config.load();
+        if (prinLoadScreen)
+            Config.load();
 
         PlaceHolders.registerPlaceholders();
 

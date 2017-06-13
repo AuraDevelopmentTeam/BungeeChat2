@@ -22,6 +22,11 @@ public class PlaceHolderUtil {
             .compile("(?i)(?<!" + altColorChar + ')' + altColorChar + "([0-9A-FK-OR])");
     private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
 
+    public static void reloadConfigSections() {
+        formatsBase = Config.get().getSection(FORMATS);
+        messageBase = Config.get().getSection(MESSAGES);
+    }
+
     public static String getFormat(Format format) {
         try {
             if (formatsBase == null) {
