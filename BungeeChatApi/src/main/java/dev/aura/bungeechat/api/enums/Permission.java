@@ -34,7 +34,7 @@ public enum Permission {
     COMMAND_UNMUTE("command.unmute"),
     COMMAND_TOGGLE_MESSAGE("command.toggle"),
     COMMAND_VANISH("command.vanish"),
-    COMMAND_VANISH_SEE("command.vanish.see"),
+    COMMAND_VANISH_SEE("command.vanish.view"),
     COMMAND_SOCIALSPY("command.socialspy"),
     COMMAND_LOCALSPY("command.localspy"),
     COMMAND_CHAT_LOCK("command.chatlock"),
@@ -55,6 +55,6 @@ public enum Permission {
 
     private Permission(String stringedPermission) {
         this(stringedPermission, (stringedPermission.startsWith("command.") || stringedPermission.startsWith("admin."))
-                && !stringedPermission.endsWith(".bypass") && !stringedPermission.endsWith(".view"));
+                && !stringedPermission.endsWith(".view"));
     }
 }
