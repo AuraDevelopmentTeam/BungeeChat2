@@ -2,6 +2,7 @@ package dev.aura.bungeechat.api.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import lombok.experimental.UtilityClass;
 
@@ -111,26 +112,27 @@ public class TimeUtil {
      *
      * @param stringedTime
      *            The time as string to convert
-     * @return double
-     *            The time as double
+     * @return double The time as double
      */
-    public static double convertStringTimeToDouble(String stringedTime){
+    public static double convertStringTimeToDouble(String stringedTime) {
         double timeamount = 0;
-        if(stringedTime.contains("y")){
-            timeamount += Double.valueOf(stringedTime.replaceAll("y", "")) * 31536000 * 1000;
-        }else if(stringedTime.contains("mo")){
-            timeamount += Double.valueOf(stringedTime.replaceAll("mo", "")) * 2592000 * 1000;
-        }else if(stringedTime.contains("w")){
-            timeamount += Double.valueOf(stringedTime.replaceAll("w", "")) * 604800 * 1000;
-        }else if(stringedTime.contains("d")){
-            timeamount += Double.valueOf(stringedTime.replaceAll("d", "")) * 86400 * 1000;
-        }else if(stringedTime.contains("h")){
-            timeamount += Double.valueOf(stringedTime.replaceAll("h", "")) * 3600 * 1000;
-        }else if(stringedTime.contains("m")){
-            timeamount += Double.valueOf(stringedTime.replaceAll("m", "")) * 60 * 1000;
-        }else if(stringedTime.contains("s")){
-            timeamount += Double.valueOf(stringedTime.replaceAll("s", "")) * 1000;
+
+        if (stringedTime.contains("y")) {
+            timeamount = Double.valueOf(stringedTime.replaceAll("y", "")) * TimeUnit.DAYS.toMillis(365);
+        } else if (stringedTime.contains("mo")) {
+            timeamount = Double.valueOf(stringedTime.replaceAll("mo", "")) * TimeUnit.DAYS.toMillis(30);
+        } else if (stringedTime.contains("w")) {
+            timeamount = Double.valueOf(stringedTime.replaceAll("w", "")) * TimeUnit.DAYS.toMillis(7);
+        } else if (stringedTime.contains("d")) {
+            timeamount = Double.valueOf(stringedTime.replaceAll("d", "")) * TimeUnit.DAYS.toMillis(1);
+        } else if (stringedTime.contains("h")) {
+            timeamount = Double.valueOf(stringedTime.replaceAll("h", "")) * TimeUnit.HOURS.toMillis(1);
+        } else if (stringedTime.contains("m")) {
+            timeamount = Double.valueOf(stringedTime.replaceAll("m", "")) * TimeUnit.MINUTES.toMillis(1);
+        } else if (stringedTime.contains("s")) {
+            timeamount = Double.valueOf(stringedTime.replaceAll("s", "")) * TimeUnit.SECONDS.toMillis(1);
         }
+
         return timeamount;
     }
 
