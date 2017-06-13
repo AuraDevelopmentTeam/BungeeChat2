@@ -188,8 +188,8 @@ Messages:
   antiAdvertise: "&cPlease do not advertise!"
   antiDuplication: "&cPlease do not spam messages!"
 # ChatLock Messages
-  enableChatlock: "&eYou have disabled chatting!"
-  disableChatlock: "&eYou have enabled chatting!"
+  enableChatlock: "&eChatting has been disabled!"
+  disableChatlock: "&eChatting has been enabled!"
   chatIsLocked: "&cYou may not talk now, the chat has been locked!"
 # Prefix/Suffix Messages
   prefixRemoved: "&ePrefix of %name% has been removed!"
