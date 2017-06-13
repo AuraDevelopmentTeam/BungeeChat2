@@ -49,7 +49,7 @@ public class ReplyCommand extends BaseCommand {
                 CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                 if (!targetAccount.get().hasMessangerEnabled()
-                        && !PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE_BYPASS)) {
+                        && !PermissionManager.hasPermission(sender, Permission.BYPASS_TOGGLE_MESSAGE)) {
                     sender.sendMessage(Message.HAS_MESSAGER_DISABLED.get(target));
                     return;
                 }

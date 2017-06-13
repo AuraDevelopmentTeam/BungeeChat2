@@ -18,7 +18,7 @@ public class ChatLockFilter implements BungeeChatFilter {
 
     @Override
     public String applyFilter(BungeeChatAccount sender, String message) throws BlockMessageException {
-        if (PermissionManager.hasPermission(sender, Permission.COMMAND_CHAT_LOCK_BYPASS)
+        if (PermissionManager.hasPermission(sender, Permission.BYPASS_CHAT_LOCK)
                 || !((globalLock && MessagesService.getGlobalPredicate().test(sender))
                         || lockedServers.contains(sender.getServerName())))
             return message;
