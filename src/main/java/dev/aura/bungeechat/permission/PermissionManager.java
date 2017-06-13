@@ -1,5 +1,7 @@
 package dev.aura.bungeechat.permission;
 
+import java.util.regex.Pattern;
+
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
@@ -10,17 +12,31 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class PermissionManager {
+    /**
+     * Greedily matches all letters from the last dot, if it exists, if not from
+     * the beginning, to the end.<br>
+     * So <code>bungeechat.chat.bypass.chatlock</code> will match
+     * <code>.chatlock</code> and <code>bungeechat</code> will match
+     * <code>bungeechat</code>.
+     */
+    private static final Pattern LAST_NODE_REMOVER = Pattern.compile("\\.?\\w+$");
+
     @SuppressWarnings("deprecation")
     public static boolean hasPermission(ProxiedPlayer player, Permission permission) {
-        if (player.hasPermission(permission.getStringedPermission()))
-            return true;
-        else {
-            if (permission.getWarnOnLackingPermission()) {
-                player.sendMessage(Message.NO_PERMISSION.get(player));
-            }
+        String permissionString = permission.getStringedPermission();
 
-            return false;
+        while (!permissionString.isEmpty()) {
+            if (player.hasPermission(permissionString))
+                return true;
+
+            permissionString = LAST_NODE_REMOVER.matcher(permissionString).replaceFirst("");
         }
+
+        if (permission.getWarnOnLackingPermission()) {
+            player.sendMessage(Message.NO_PERMISSION.get(player));
+        }
+
+        return false;
     }
 
     public static boolean hasPermission(CommandSender sender, Permission permission) {
