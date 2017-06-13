@@ -23,8 +23,8 @@ public class PlaceHolderUtil {
     private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
 
     public static void reloadConfigSections() {
-        formatsBase = Config.get().getSection(FORMATS);
-        messageBase = Config.get().getSection(MESSAGES);
+        formatsBase = null;
+        messageBase = null;
     }
 
     public static String getFormat(Format format) {

@@ -13,7 +13,6 @@ import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.config.Config;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
@@ -40,7 +39,6 @@ public class BungeeChatCommand extends BaseCommand {
                     instance.onDisable();
                     instance.onEnable(false);
 
-                    Config.reload();
                     sender.sendMessage(prefix + ChatColor.GREEN + "The plugin has been reloaded!");
                 });
 

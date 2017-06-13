@@ -30,6 +30,7 @@ import dev.aura.bungeechat.hook.StoredDataHook;
 import dev.aura.bungeechat.hook.metrics.MetricManager;
 import dev.aura.bungeechat.listener.ChannelTypeCorrectorListener;
 import dev.aura.bungeechat.message.MessagesService;
+import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.message.PlaceHolders;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -66,9 +67,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public void onEnable(boolean prinLoadScreen) {
-        if (prinLoadScreen)
-            Config.load();
+        Config.load();
 
+        PlaceHolderUtil.reloadConfigSections();
         PlaceHolders.registerPlaceholders();
 
         Configuration accountDataBase = Config.get().getSection("AccountDataBase");

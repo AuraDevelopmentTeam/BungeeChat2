@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.BungeeChatApi;
-import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.util.LoggerHelper;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.config.Configuration;
@@ -71,16 +70,6 @@ public class Config {
 
     private static File getConfigFile() {
         return new File(BungeeChat.getInstance().getConfigFolder(), "config.yml");
-    }
-
-    public static void reload() {
-        try {
-            configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getConfigFile());
-            PlaceHolderUtil.reloadConfigSections();
-        } catch (IOException e) {
-            LoggerHelper.error("There is an error with reloading the conifg file!", e);
-            LoggerHelper.error("Please contact the authors at http://discord.me/bungeechat!");
-        }
     }
 
     private static File getNewConfigFile() {
