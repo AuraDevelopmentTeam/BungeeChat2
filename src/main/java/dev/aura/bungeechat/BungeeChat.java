@@ -137,7 +137,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     @Override
     public BuildType getBuildType() {
-        return BuildType.SNAPSHOT;
+        return BuildType.DEV;
     }
 
     @Override
