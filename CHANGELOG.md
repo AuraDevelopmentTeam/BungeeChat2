@@ -2,7 +2,6 @@ Version 2.0.0
 -------------
 
 \+ Ability to configure which servers are included in the Global Chat.  
-\+ Ability to give multiple permissions at once using parent permission.  
 \+ Ability to save player data on a MySQL database.  
 \+ Ability to register custom placeholders and filters via the API.  
 \+ Ability to set a prefix (or suffix) via BungeeChat has been added back. (/bungeechat setprefix, /bungeechat setsuffix)  
