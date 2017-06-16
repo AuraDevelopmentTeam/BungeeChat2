@@ -221,6 +221,12 @@ allprojects {
     }
 }
 
+jar {
+    from sourceSets.main.output
+    from MainDirResources
+    from project(":BungeeChatApi").sourceSets.main.output
+}
+
 shadowJar {
     from sourceSets.main.output
     from MainDirResources
