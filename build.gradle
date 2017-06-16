@@ -29,8 +29,6 @@ def getFullVersion() {
 
     if(buildType == "SNAPSHOT")
         baseVersion += "_SNAPSHOT"
-    else if(buildType == "DEV")
-        baseVersion += "_DEV"
 
     return baseVersion
 }
