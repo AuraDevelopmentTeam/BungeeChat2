@@ -44,7 +44,7 @@ public class RegexUtil {
      * M: /\/\ /V\ JVI [V] []V[] |\/| ^^ &lt;\/&gt; {V} (v) (V) |V| nn IVI |\|\ ]\/[ 1^1 ITI JTI 
      * N: ^/ |\| /\/ [\] &lt;\&gt; {\} |V /V И ^ ท 
      * O: 0 Q () oh [] 
-     * P: &lt;&gt; &Oslash; P |* |o |&ordm; ? |^ |&gt; |&quot; 9 []D |&deg; |7 
+     * P: &lt;&gt; &Oslash; |* |o |&ordm; ? |^ |&gt; |&quot; 9 []D |&deg; |7 
      * Q: (_,) 9 ()_ 2 0_ &lt;| &amp;
      * R: I2 |` |~ |? /2 |^ lz |9 2 12 &reg; [z Я .- |2 |- 
      * S: 5 $ z &sect; ehs es 2
@@ -77,7 +77,7 @@ public class RegexUtil {
                     new LeetSpeakPattern("N", "^/", "|\\|", "/\\/", "[\\]", "<\\>", "{\\}", "|V", "/V", "И", "^", "ท"),
                     new LeetSpeakPattern("O", "0", "Q", "()", "oh", "[]"),
                     new LeetSpeakPattern(
-                            "P", "<>", "Ø", "P", "|*", "|o", "|º", "?", "|^", "|>", "|\"", "9", "[]D", "|°", "|7"),
+                            "P", "<>", "Ø", "|*", "|o", "|º", "?", "|^", "|>", "|\"", "9", "[]D", "|°", "|7"),
                     new LeetSpeakPattern("Q", "(_,)", "9", "()_", "2", "0_", "<|", "&"),
                     new LeetSpeakPattern("R", "I2", "|`", "|~", "|?", "/2", "|^", "lz", "|9", "2", "12", "®", "[z", "Я",
                             ".-", "|2", "|-"),
@@ -258,9 +258,10 @@ public class RegexUtil {
             stream = stream.map(WILDCARD_STAR::apply).map(WILDCARD_QUESTIONMARK::apply);
 
             String delimiter = ignoreSpaces ? "\\s*" : "";
-            String around = freeMatching ? "" : "\\b";
+            String start = freeMatching ? "" : "(?<=^|\\s)";
+            String end = freeMatching ? "" : "(?=\\s|$)";
 
-            return Pattern.compile(stream.collect(Collectors.joining(delimiter, around, around)), flags);
+            return Pattern.compile(stream.collect(Collectors.joining(delimiter, start, end)), flags);
         }
     }
 
