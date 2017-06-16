@@ -1,3 +1,8 @@
+Version 2.0.1
+-------------
+
+\* Fixed LocalSpy not correctly stating whether it got enabled or disabled.
+
 Version 2.0.0
 -------------
 
