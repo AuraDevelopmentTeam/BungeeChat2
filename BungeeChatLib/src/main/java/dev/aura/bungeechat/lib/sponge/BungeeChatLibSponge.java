@@ -2,7 +2,6 @@ package dev.aura.bungeechat.lib.sponge;
 
 import java.io.File;
 
-import dev.aura.bungeechat.api.enums.BuildType;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
@@ -29,11 +28,6 @@ public class BungeeChatLibSponge implements BungeeChatApi {
     @Override
     public ServerType getServerType() {
         return ServerType.SPONGE;
-    }
-
-    @Override
-    public BuildType getBuildType() {
-        return BuildType.DEV;
     }
 
     @Override
