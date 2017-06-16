@@ -23,6 +23,7 @@ public interface BungeeChatApi {
     public static final String DESCRIPTION = "Bungee Chat Plugin";
     public static final String DESCRIPTION_LIB = DESCRIPTION + " Lib";
     public static final String VERSION = "@version@";
+    public static final BuildType BUILD_TYPE = BuildType.valueOf("@buildType@");
     public static final int BUILD = Integer.parseInt("@build@");
     public static final String URL = "https://www.spigotmc.org/threads/bungee-chat.93960";
     public static final String AUTHOR_SHAWN = "shawn_ian";
@@ -48,13 +49,6 @@ public interface BungeeChatApi {
      * @return One member of the {@link ServerType}
      */
     public ServerType getServerType();
-
-    /**
-     * Method the get the build type of the plugin.
-     *
-     * @return One member of the {@link BuildType}
-     */
-    public BuildType getBuildType();
 
     /**
      * Retrieves (and creates if necessary) the config folder.

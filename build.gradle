@@ -27,10 +27,22 @@ def getBuild() {
 def getFullVersion() {
     def baseVersion = "${version}_${build}"
 
-    if("git status --porcelain".execute().text != "")
+    if(buildType == "SNAPSHOT")
         baseVersion += "_SNAPSHOT"
+    else if(buildType == "DEV")
+        baseVersion += "_DEV"
 
     return baseVersion
+}
+def getBuildType() {
+    def description = "git describe --dirty".execute().text.trim()
+    
+    if(description.endsWith("dirty"))
+        return "SNAPSHOT"
+    else if(description.contains("-"))
+        return "DEV"
+    else
+        return "RELEASE"
 }
 
 allprojects {
@@ -76,6 +88,7 @@ apply plugin: "com.github.johnrengelman.shadow"
 
 ext {
     build = getBuild()
+    buildType = getBuildType()
     full_version = getFullVersion()
     shouldSign = project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")
     MainDirResources = fileTree(dir: file(projectDir), includes: ["CHANGELOG.md", "LICENSE.md"])
@@ -85,6 +98,7 @@ subprojects {
     ext {
         build = rootProject.build
         full_version = rootProject.full_version
+        buildType = rootProject.buildType
         shouldSign = rootProject.shouldSign
         MainDirResources = rootProject.MainDirResources
     }
@@ -146,8 +160,9 @@ allprojects {
         // this will ensure that this task is redone when the versions change.
         inputs.property "version", version
         inputs.property "build", build
+        inputs.property "buildType", buildType
         
-        expand "version": version, "build": build
+        expand "version": version, "build": build, "buildType": buildType
     }
 
     task processSources (type: Sync) {
@@ -159,7 +174,8 @@ allprojects {
         into outputDir
         filter (ReplaceTokens, tokens: [
             "version": version,
-            "build": build
+            "build": build,
+            "buildType": buildType
         ])
     }
     
@@ -427,3 +443,8 @@ Specify "-Pstacktrace_file=<file>" (with quotes) to specify the stacktrace file.
     args mapping_file
     args stacktrace_file
 }
+
+println "Version:\t${version}"
+println "Build:\t\t${build}"
+println "Build Type:\t${buildType}"
+println "Full Version:\t${full_version}"
