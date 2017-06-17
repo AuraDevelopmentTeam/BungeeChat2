@@ -30,6 +30,9 @@ public class GlobalChatListener implements Listener {
         if (ChatUtils.isCommand(message))
             return;
 
+        if (accout.getChannelType() == ChannelType.STAFF)
+            return;
+
         if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
             if (MessagesService.getGlobalPredicate().test(accout)) {
                 e.setCancelled(true);
