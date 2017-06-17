@@ -1,5 +1,5 @@
-Version 2.0.2.1
----------------
+Version 2.0.3
+-------------
 
 \* Fixed update message appearing when already on latest version.  
 \* Fixed Exception when using `/ignore list`.   
