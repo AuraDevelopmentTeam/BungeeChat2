@@ -1,7 +1,0 @@
-name: Bungee Chat Lib
-id: bungeechatlib
-main: dev.aura.bungeechat.lib.spigot.BungeeChattLibSpigot
-version: ${version}
-authors: [shawn_ian, BrainStone]
-description: Bungee Chat Plugin Lib
-url: https://www.spigotmc.org/threads/bungee-chat.93960

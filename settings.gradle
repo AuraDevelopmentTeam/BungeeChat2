@@ -1,2 +1,2 @@
-include "BungeeChatApi", "BungeeChatLib"
+include "BungeeChatApi"
 
