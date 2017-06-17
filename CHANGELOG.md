@@ -22,7 +22,8 @@ Version 2.0.0
 \+ Ability to make Anti-Swear more aggressive by enabling "freeMatching", "leetSpeak", "ignoreSpaces" and "ignoreDuplicateLetters".  
 \+ Ability to filter (Anti-Advertising, Anti-Swear, Anti-Duplicate and ChatLock) to be enabled on private messaging.  
 \+ Ability to use Wildcards (\* and ?) in domain names for the Anti-Advertising and Anti-Swear filters.  
-\+ Ability to use Regexes (start them with R=) in domain names for the Anti-Advertising and Anti-Swear filters.  
+\+ Ability to use Regexes (start them with R=) in domain names for the Anti-Advertising and Anti-Swear filters.
+\+ Ability to automatically disable the muting module when certain mute plugins are installed.
 \+ Added plugin metrics (https://bstats.org/plugin/bungeecord/BungeeChat)  
 
 \* Improved the performance of the plugin.  
