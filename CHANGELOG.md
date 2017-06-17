@@ -1,9 +1,22 @@
+Version 2.0.2.1
+---------------
+
+\* Fixed update message appearing when already on latest version.  
+\* Fixed Exception when using `/ignore list`.   
+
+Version 2.0.2
+-------------
+
+\* Fixed staff chat not being toggled when having global chat as default.  
+
+
 Version 2.0.1
 -------------
 
-\* Fixed LocalSpy not correctly stating whether it got enabled or disabled.
-\* Fixed that StaffChat message displayed the Global Chat Is Default Message.
-\* Fixed that the Global Chat Is Default message was displayed when not being on a server added to the list of servers.
+\* Fixed LocalSpy not correctly stating whether it got enabled or disabled.  
+\* Fixed that StaffChat message displayed the Global Chat Is Default Message.  
+\* Fixed that the Global Chat Is Default message was displayed when not being on a server added to the list of servers.  
+
 
 Version 2.0.0
 -------------
