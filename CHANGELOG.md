@@ -2,6 +2,8 @@ Version 2.0.1
 -------------
 
 \* Fixed LocalSpy not correctly stating whether it got enabled or disabled.
+\* Fixed that StaffChat message displayed the Global Chat Is Default Message.
+\* Fixed that the Global Chat Is Default message was displayed when not being on a server added to the list of servers.
 
 Version 2.0.0
 -------------

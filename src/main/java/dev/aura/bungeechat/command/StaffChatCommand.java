@@ -28,10 +28,6 @@ public class StaffChatCommand extends BaseCommand {
                 sender.sendMessage(Message.NOT_A_PLAYER.get());
                 return;
             }
-            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
-                sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
-                return;
-            }
             if (args.length == 0) {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
 

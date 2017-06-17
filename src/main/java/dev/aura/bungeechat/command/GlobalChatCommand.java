@@ -25,10 +25,6 @@ public class GlobalChatCommand extends BaseCommand {
     @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL)) {
-            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
-                sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
-                return;
-            }
             BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
 
             if (!MessagesService.getGlobalPredicate().test(account)
@@ -37,6 +33,12 @@ public class GlobalChatCommand extends BaseCommand {
 
                 return;
             }
+
+            if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
+                sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
+                return;
+            }
+
             if (args.length < 1) {
                 if (!(sender instanceof ProxiedPlayer)) {
                     sender.sendMessage(Message.NOT_A_PLAYER.get());

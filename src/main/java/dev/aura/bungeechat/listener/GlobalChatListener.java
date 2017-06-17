@@ -34,7 +34,6 @@ public class GlobalChatListener implements Listener {
             if (MessagesService.getGlobalPredicate().test(accout)) {
                 e.setCancelled(true);
                 MessagesService.sendGlobalMessage(sender, message);
-
                 return;
             }
         }
