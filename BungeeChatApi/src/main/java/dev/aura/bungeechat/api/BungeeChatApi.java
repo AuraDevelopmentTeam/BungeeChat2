@@ -25,7 +25,7 @@ public interface BungeeChatApi {
     public static final String VERSION = "@version@";
     public static final BuildType BUILD_TYPE = BuildType.valueOf("@buildType@");
     public static final int BUILD = Integer.parseInt("@build@");
-    public static final String URL = "https://www.spigotmc.org/threads/bungee-chat.93960";
+    public static final String URL = "https://www.spigotmc.org/resources/bungee-chat.12592";
     public static final String AUTHOR_SHAWN = "shawn_ian";
     public static final String AUTHOR_BRAINSTONE = "The_BrainStone";
     public static final String AUTHOR_RYADA = "Ryada";

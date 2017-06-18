@@ -169,7 +169,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
                 ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
         if (!isLatestVersion()) {
             LoggerHelper.info(ChatColor.YELLOW + "There is an update avalible. You can download version "
-                    + ChatColor.GREEN + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at SpigotMC.org!");
+                    + ChatColor.GREEN + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at " + URL + " !");
         }
         LoggerHelper.info(ChatColor.GOLD + "---------------------------------------------");
     }
