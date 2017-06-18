@@ -10,7 +10,7 @@
 # You can change the settings and messages/formats of the plugin in this file.
 # Please do not change the 'Version' value, or else the plugin might not work.
 
-Version: 9.0
+Version: 9.1
 
 Settings:
   Modules:
@@ -30,6 +30,7 @@ Settings:
         - lspy
     GlobalChat:
       enabled: true
+      passToClientServer: false
       aliases:
         - g
       default: false
@@ -58,6 +59,7 @@ Settings:
           - mtoggle
     StaffChat:
       enabled: true
+      passToClientServer: false
       aliases:
         - sc
         - s
@@ -105,6 +107,7 @@ Settings:
         - lockchat
     LocalChat:
       enabled: true
+      passToClientServer: false
     ServerSwitchMessages:
       enabled: true
     AntiAdvertising:
