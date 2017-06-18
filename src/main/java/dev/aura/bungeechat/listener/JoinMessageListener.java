@@ -15,7 +15,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class JoinMessageListener implements Listener {
-    private final List<UUID> joinedPlayers = new LinkedList<>();
+    private static final List<UUID> joinedPlayers = new LinkedList<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerServerSwitch(ServerSwitchEvent e) {
