@@ -2,7 +2,10 @@ Version 2.0.3
 -------------
 
 \* Fixed update message appearing when already on latest version.  
-\* Fixed Exception when using `/ignore list`.   
+\* Fixed Exception when using `/ignore list`.  
+\* JoinMessage now has access to the server (instead of unknow).  
+\* When a player gets kicked before they join a client server no JoinMessage or LeaveMessage will be displayed.  
+
 
 Version 2.0.2
 -------------
