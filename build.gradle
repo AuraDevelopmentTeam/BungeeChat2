@@ -1,5 +1,6 @@
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import java.security.SecureRandom
+import java.util.regex.*
 import org.apache.tools.ant.filters.ReplaceTokens
 import proguard.gradle.ProGuardTask
 
@@ -41,6 +42,15 @@ def getBuildType() {
         return "DEV"
     else
         return "RELEASE"
+}
+def getChangelog() {
+    Pattern pattern = Pattern.compile("^Version .*?(?= {0,2}\\n{0,3}Version)", Pattern.DOTALL);
+    Matcher match = pattern.matcher(file("CHANGELOG.md").text.replaceAll("\r", ""));
+    
+    if (match.find())
+        return match.group();
+    else
+        return "";
 }
 
 allprojects {
@@ -442,7 +452,21 @@ Specify "-Pstacktrace_file=<file>" (with quotes) to specify the stacktrace file.
     args stacktrace_file
 }
 
+task gitTag {
+    description "Tags the current version in git."
+    group "help"
+    
+    doLast {
+        exec {
+            executable "git"
+            args "tag", "-a", version, "-m", getChangelog()
+        }
+    }
+}
+
 println "Version:\t${version}"
 println "Build:\t\t${build}"
 println "Build Type:\t${buildType}"
 println "Full Version:\t${full_version}"
+
+println getChangelog()
