@@ -29,7 +29,7 @@ public class StaffChatListener implements Listener {
             return;
 
         if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF) {
-            e.setCancelled(passToClientServer);
+            e.setCancelled(!passToClientServer);
             MessagesService.sendStaffMessage(sender, message);
         }
     }

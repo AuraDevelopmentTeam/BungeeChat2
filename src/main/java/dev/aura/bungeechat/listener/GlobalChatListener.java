@@ -38,7 +38,7 @@ public class GlobalChatListener implements Listener {
 
         if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
             if (MessagesService.getGlobalPredicate().test(accout)) {
-                e.setCancelled(passToClientServer);
+                e.setCancelled(!passToClientServer);
                 MessagesService.sendGlobalMessage(sender, message);
                 return;
             }
@@ -51,7 +51,7 @@ public class GlobalChatListener implements Listener {
                 return;
             }
 
-            e.setCancelled(passToClientServer);
+            e.setCancelled(!passToClientServer);
             MessagesService.sendGlobalMessage(sender, message);
 
             return;
@@ -69,7 +69,7 @@ public class GlobalChatListener implements Listener {
                     return;
                 }
 
-                e.setCancelled(passToClientServer);
+                e.setCancelled(!passToClientServer);
                 MessagesService.sendGlobalMessage(sender, message.replaceFirst(symbol, ""));
             }
         }

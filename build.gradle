@@ -77,7 +77,7 @@ allprojects {
     }
 
     group = "dev.aura.bungeechat"
-    version = "2.0.3"
+    version = "2.0.3.1"
     
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

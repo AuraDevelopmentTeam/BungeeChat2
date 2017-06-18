@@ -31,7 +31,7 @@ public class LocalChatListener implements Listener {
             return;
 
         if (account.getChannelType() == ChannelType.LOCAL) {
-            e.setCancelled(passToClientServer);
+            e.setCancelled(!passToClientServer);
             MessagesService.sendLocalMessage(sender, message);
         }
     }

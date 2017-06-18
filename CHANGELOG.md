@@ -1,3 +1,9 @@
+Version 2.0.3.1
+---------------
+
+\* Fixed option `passToClientServer` working inverted.  
+
+
 Version 2.0.3
 -------------
 
