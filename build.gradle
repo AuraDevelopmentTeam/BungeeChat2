@@ -468,5 +468,3 @@ println "Version:\t${version}"
 println "Build:\t\t${build}"
 println "Build Type:\t${buildType}"
 println "Full Version:\t${full_version}"
-
-println getChangelog()
