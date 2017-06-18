@@ -5,6 +5,7 @@ Version 2.0.3
 \* Fixed Exception when using `/ignore list`.  
 \* JoinMessage now has access to the server (instead of unknow).  
 \* When a player gets kicked before they join a client server no JoinMessage or LeaveMessage will be displayed.  
+\* Allow passing of the chat messages to the client servers.  
 
 
 Version 2.0.2

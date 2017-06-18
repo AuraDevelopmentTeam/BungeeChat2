@@ -15,6 +15,9 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class GlobalChatListener implements Listener {
+    private final boolean passToClientServer = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
+            .getBoolean("passToClientServer");
+
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerChat(ChatEvent e) {
@@ -35,7 +38,7 @@ public class GlobalChatListener implements Listener {
 
         if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
             if (MessagesService.getGlobalPredicate().test(accout)) {
-                e.setCancelled(true);
+                e.setCancelled(passToClientServer);
                 MessagesService.sendGlobalMessage(sender, message);
                 return;
             }
@@ -48,7 +51,7 @@ public class GlobalChatListener implements Listener {
                 return;
             }
 
-            e.setCancelled(true);
+            e.setCancelled(passToClientServer);
             MessagesService.sendGlobalMessage(sender, message);
 
             return;
@@ -66,7 +69,7 @@ public class GlobalChatListener implements Listener {
                     return;
                 }
 
-                e.setCancelled(true);
+                e.setCancelled(passToClientServer);
                 MessagesService.sendGlobalMessage(sender, message.replaceFirst(symbol, ""));
             }
         }
