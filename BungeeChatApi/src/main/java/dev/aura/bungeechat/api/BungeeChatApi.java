@@ -30,7 +30,7 @@ public interface BungeeChatApi {
     public static final String AUTHOR_BRAINSTONE = "The_BrainStone";
     public static final String AUTHOR_RYADA = "Ryada";
     public static final String[] AUTHORS = new String[] { AUTHOR_SHAWN, AUTHOR_BRAINSTONE };
-    public static final double CONFIG_VERSION = 9.1;
+    public static final double CONFIG_VERSION = 9.2;
     public static final int PLUGIN_ID = 12592;
 
     /**
