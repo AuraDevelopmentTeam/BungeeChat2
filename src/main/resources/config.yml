@@ -10,7 +10,7 @@
 # You can change the settings and messages/formats of the plugin in this file.
 # Please do not change the 'Version' value, or else the plugin might not work.
 
-Version: 9.1
+Version: 9.2
 
 Settings:
   Modules:
