@@ -1,3 +1,16 @@
+Version 2.0.4
+-------------
+
+\+ Added VersionChecker module.  
+\* Fixed "No permission" message not being displayed.  
+
+
+Version 2.0.3.2
+---------------
+
+\* Fixed bug where some players did not see LocalSpy messages.  
+
+
 Version 2.0.3.1
 ---------------
 
