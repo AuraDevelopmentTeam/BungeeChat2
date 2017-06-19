@@ -135,7 +135,7 @@ public class MessagesService {
             String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
 
             sendToMatchingPlayers(localSpyMessage,
-                    acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+                    acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId())) && acc.hasLocalSpyEnabled());
         }
     }
 
