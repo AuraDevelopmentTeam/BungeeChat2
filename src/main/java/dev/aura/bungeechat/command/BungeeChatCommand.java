@@ -108,14 +108,16 @@ public class BungeeChatCommand extends BaseCommand {
     }
 
     private void checkForUpdates(CommandSender sender) {
-        if (BungeeChat.getInstance().isLatestVersion()) {
+        BungeeChat instance = BungeeChat.getInstance();
+        String latestVersion = instance.getLatestVersion(true);
+
+        if (instance.isLatestVersion()) {
             sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION + " ["
                     + BungeeChatApi.BUILD_TYPE.name() + "] (Build #" + BungeeChatApi.BUILD + ")");
         } else {
             sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION + " ["
                     + BungeeChatApi.BUILD_TYPE.name() + "] (Build #" + BungeeChatApi.BUILD + ")");
-            sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN
-                    + BungeeChat.getInstance().getLatestVersion());
+            sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + latestVersion);
         }
     }
 
