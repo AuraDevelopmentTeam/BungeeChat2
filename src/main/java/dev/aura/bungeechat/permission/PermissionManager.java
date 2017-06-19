@@ -3,14 +3,24 @@ package dev.aura.bungeechat.permission;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.message.Message;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class PermissionManager {
+    @SuppressWarnings("deprecation")
     public static boolean hasPermission(ProxiedPlayer player, Permission permission) {
-        return player.hasPermission(permission.getStringedPermission());
+        if (player.hasPermission(permission.getStringedPermission()))
+            return true;
+        else {
+            if (permission.getWarnOnLackingPermission()) {
+                player.sendMessage(Message.NO_PERMISSION.get(player));
+            }
+
+            return false;
+        }
     }
 
     public static boolean hasPermission(CommandSender sender, Permission permission) {
