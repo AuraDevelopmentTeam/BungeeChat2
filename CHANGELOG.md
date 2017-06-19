@@ -3,6 +3,7 @@ Version 2.0.4
 
 \+ Added VersionChecker module.  
 \* Fixed "No permission" message not being displayed.  
+\* Don't display LocalSpy to players that recive the local chat message anyway.  
 
 
 Version 2.0.3.2

@@ -123,19 +123,19 @@ public class MessagesService {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
         Optional<BungeeChatAccount> account = context.getSender();
-        BungeeChatAccount senderAcconut = account.get();
         Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
         String localServerName = context.getSender().get().getServerName();
+        Predicate<? super BungeeChatAccount> isLocal = getLocalPredicate(localServerName);
 
-        sendToMatchingPlayers(finalMessage, getLocalPredicate(localServerName));
+        sendToMatchingPlayers(finalMessage, isLocal);
 
         ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
             String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
+            Predicate<? super BungeeChatAccount> isNotLocal = isLocal.negate();
 
-            sendToMatchingPlayers(localSpyMessage,
-                    acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId())) && acc.hasLocalSpyEnabled());
+            sendToMatchingPlayers(localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal);
         }
     }
 
