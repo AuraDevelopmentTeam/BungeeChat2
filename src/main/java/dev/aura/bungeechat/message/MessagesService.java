@@ -1,9 +1,9 @@
 package dev.aura.bungeechat.message;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
@@ -272,13 +272,11 @@ public class MessagesService {
     @SuppressWarnings("deprecation")
     public static void sendToMatchingPlayers(String finalMessage,
             Predicate<? super BungeeChatAccount>... playerFilters) {
-        Stream<BungeeChatAccount> stream = AccountManager.getPlayerAccounts().stream();
+        Predicate<? super BungeeChatAccount> playerFiler = Arrays.stream(playerFilters).reduce(acc -> true,
+                Predicate::and);
 
-        for (Predicate<? super BungeeChatAccount> playerFilter : playerFilters) {
-            stream = stream.filter(playerFilter);
-        }
-
-        stream.forEach(account -> BungeecordAccountManager.getCommandSender(account).get().sendMessage(finalMessage));
+        AccountManager.getPlayerAccounts().stream().filter(playerFiler)
+                .forEach(account -> BungeecordAccountManager.getCommandSender(account).get().sendMessage(finalMessage));
     }
 
     public static Predicate<? super BungeeChatAccount> getGlobalPredicate() {
