@@ -47,8 +47,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private static final String defaultHookName = "default";
     @Getter
     private static BungeeChat instance;
-    @Getter(lazy = true)
-    private final String latestVersion = queryLatestVersion();
+    private String latestVersion = null;
     private File configDir;
     private BungeeChatCommand bungeeChatCommand;
     private BungeecordAccountManager bungeecordAccountManager;
@@ -191,6 +190,18 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
             return "";
         }
+    }
+
+    public String getLatestVersion() {
+        return getLatestVersion(false);
+    }
+
+    public String getLatestVersion(boolean refreshCache) {
+        if (refreshCache || (latestVersion == null)) {
+            latestVersion = queryLatestVersion();
+        }
+
+        return latestVersion;
     }
 
     public boolean isLatestVersion() {
