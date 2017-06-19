@@ -138,6 +138,9 @@ Settings:
       privateMessages: true
       console: true
       file: true
+    VersionChecker:
+      enabled: true
+      checkOnAdminLogin: true
   PermissionsManager:
     defaultPrefix: "&7[Member]"
     defaultSuffix: "&r"
@@ -199,6 +202,8 @@ Messages:
   prefixSet: "&ePrefix of %name% has been set to %prefix%."
   suffixRemoved: "&eSuffix of %name% has been removed!"
   suffixSet: "&eSuffix of %name% has been set to %suffix%."
+# Update available Message
+  updateAvailable: "&aAn update for Bungee Chat is available! Version &6%message%&a. Download it at: https://www.spigotmc.org/resources/bungee-chat.12592/"
 
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"

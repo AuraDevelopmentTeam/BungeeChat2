@@ -5,7 +5,7 @@ import dev.aura.bungeechat.listener.LeaveMessageListener;
 import net.md_5.bungee.api.ProxyServer;
 
 public class LeaveMessageModule extends Module {
-    private LeaveMessageListener LeaveMessageListener;
+    private LeaveMessageListener leaveMessageListener;
 
     @Override
     public String getName() {
@@ -14,13 +14,13 @@ public class LeaveMessageModule extends Module {
 
     @Override
     public void onEnable() {
-        LeaveMessageListener = new LeaveMessageListener();
+        leaveMessageListener = new LeaveMessageListener();
 
-        ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), LeaveMessageListener);
+        ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), leaveMessageListener);
     }
 
     @Override
     public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterListener(LeaveMessageListener);
+        ProxyServer.getInstance().getPluginManager().unregisterListener(leaveMessageListener);
     }
 }

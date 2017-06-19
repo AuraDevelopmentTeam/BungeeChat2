@@ -72,7 +72,11 @@ public enum Message {
     PREFIX_REMOVED("prefixRemoved"),
     PREFIX_SET("prefixSet"),
     SUFFIX_REMOVED("suffixRemoved"),
-    SUFFIX_SET("suffixSet");
+    SUFFIX_SET("suffixSet"),
+    
+    // Update available Message
+    UPDATE_AVAILABLE("updateAvailable");
+    
     @Getter
     private final String stringPath;
 
