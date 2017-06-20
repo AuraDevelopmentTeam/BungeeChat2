@@ -125,7 +125,7 @@ public class MessagesService {
         Optional<BungeeChatAccount> account = context.getSender();
         Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
         String localServerName = context.getSender().get().getServerName();
-        Predicate<? super BungeeChatAccount> isLocal = getLocalPredicate(localServerName);
+        Predicate<BungeeChatAccount> isLocal = getLocalPredicate(localServerName);
 
         sendToMatchingPlayers(finalMessage, isLocal);
 
@@ -133,7 +133,7 @@ public class MessagesService {
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
             String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
-            Predicate<? super BungeeChatAccount> isNotLocal = isLocal.negate();
+            Predicate<BungeeChatAccount> isNotLocal = isLocal.negate();
 
             sendToMatchingPlayers(localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal);
         }
@@ -262,7 +262,7 @@ public class MessagesService {
 
     @SafeVarargs
     public static void sendToMatchingPlayers(Optional<String> finalMessage,
-            Predicate<? super BungeeChatAccount>... playerFilters) {
+            Predicate<BungeeChatAccount>... playerFilters) {
         if (finalMessage.isPresent()) {
             sendToMatchingPlayers(finalMessage.get(), playerFilters);
         }
@@ -270,16 +270,15 @@ public class MessagesService {
 
     @SafeVarargs
     @SuppressWarnings("deprecation")
-    public static void sendToMatchingPlayers(String finalMessage,
-            Predicate<? super BungeeChatAccount>... playerFilters) {
-        Predicate<? super BungeeChatAccount> playerFiler = Arrays.stream(playerFilters).reduce(acc -> true,
-                Predicate::and);
+    public static void sendToMatchingPlayers(String finalMessage, Predicate<BungeeChatAccount>... playerFilters) {
+        Predicate<BungeeChatAccount> playerFiler = Arrays.stream(playerFilters).reduce(Predicate::and)
+                .orElse(acc -> true);
 
         AccountManager.getPlayerAccounts().stream().filter(playerFiler)
                 .forEach(account -> BungeecordAccountManager.getCommandSender(account).get().sendMessage(finalMessage));
     }
 
-    public static Predicate<? super BungeeChatAccount> getGlobalPredicate() {
+    public static Predicate<BungeeChatAccount> getGlobalPredicate() {
         final Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
                 .getSection("serverList");
 
@@ -292,7 +291,7 @@ public class MessagesService {
         }
     }
 
-    public static Predicate<? super BungeeChatAccount> getLocalPredicate(String serverName) {
+    public static Predicate<BungeeChatAccount> getLocalPredicate(String serverName) {
         return account -> serverName.equals(account.getServerName());
     }
 }
