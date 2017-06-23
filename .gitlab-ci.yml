@@ -1,25 +1,26 @@
 variables:
-  ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/libs/BungeeChat*.jar* $CI_PROJECT_DIR/*/build/libs/BungeeChat*.jar*"
-  ARTIFACTS: "$CI_PROJECT_DIR/BungeeChat*.jar*"
-  TEST_REPORTS: "$CI_PROJECT_DIR/BungeeChat*-TestReport.zip"
+  ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/**/libs/*.jar*"
+  ARTIFACTS: "$CI_PROJECT_DIR/*.jar*"
+  TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
 
 cache:
   key: "$CI_COMMIT_REF_NAME/$CI_COMMIT_SHA"
   untracked: true
 
+before_script:
+  - shopt -s globstar
+
 stages:
 - build
 - test
 - deploy
-  
+
 build:
   stage: build
   script:
   - ./gradlew --console=plain assemble -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
   - cp $ORIG_ARTIFACTS .
   when: on_success
-  except:
-    - tags
   artifacts:
     paths:
     - $ARTIFACTS
@@ -29,16 +30,14 @@ test:
   script:
   - ./gradlew --console=plain check
   when: on_success
-  except:
-    - tags
   artifacts:
     paths:
     - $TEST_REPORTS
-    
+
 deploy:
   stage: deploy
   script:
   - ./gradlew --console=plain uploadArchives -Psigning.keyId="$keyId" -Psigning.password="$password" -Psigning.secretKeyRingFile="$secretKeyRingFile"
-  when: on_success
+  when: always
   only:
   - tags
