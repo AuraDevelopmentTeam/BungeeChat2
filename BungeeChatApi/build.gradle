@@ -1,7 +1,9 @@
-description = """Bungee Chat API"""
+apply from: "../GradleCommon/common.gradle"
 
-artifacts {
-    archives jar
-    archives sourceJar
-    archives javadocJar
+repositories {
+    // Additional repositories
+}
+
+dependencies {
+    // Additional dependencies
 }
