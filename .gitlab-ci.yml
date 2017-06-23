@@ -1,4 +1,5 @@
 variables:
+  GIT_SUBMODULE_STRATEGY: recursive
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/build/**/libs/*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/*.jar*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
