@@ -1,7 +1,8 @@
 Version 2.0.5
 -------------
 
-\* New versioning scheme. The build is now part of the version number.  
+\* New versioning scheme. The build is now part of the version number.
+\* Fixed FileStorage storing wrong data (Fixes [#5](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/5))  
 
 
 Version 2.0.4
