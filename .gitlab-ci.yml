@@ -3,10 +3,11 @@ variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/**/build/libs/*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/*.jar*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
-  ORG_GRADLE_PROJECT_signing.keyId="$keyId"
-  ORG_GRADLE_PROJECT_signing.password="$password"
-  ORG_GRADLE_PROJECT_signing.secretKeyRingFile="$secretKeyRingFile"
-  ORG_GRADLE_PROJECT_branchName="$CI_COMMIT_REF_NAME"
+  GRADLE_OPTS: >
+    -Dorg.gradle.project.signing.keyId="$keyId"
+    -Dorg.gradle.project.signing.password="$password"
+    -Dorg.gradle.project.signing.secretKeyRingFile="$secretKeyRingFile"
+    -Dorg.gradle.project.branchName="$CI_COMMIT_REF_NAME"
 
 cache:
   key: "$CI_COMMIT_REF_NAME/$CI_COMMIT_SHA"
