@@ -1,2 +1,3 @@
-include "BungeeChatApi"
+include "GradleCommon"
 
+include "BungeeChatApi"
