@@ -16,7 +16,9 @@ repositories {
 }
 
 dependencies {
-    compile project(":BungeeChatApi")
+    shadow (project(":BungeeChatApi")) {
+        transitive = false
+    }
     
     compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
