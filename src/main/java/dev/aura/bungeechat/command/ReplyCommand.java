@@ -32,17 +32,16 @@ public class ReplyCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_MESSAGE)) {
             if (args.length < 1) {
-                sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/reply <message>"));
+                MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/reply <message>"));
             } else {
                 Optional<BungeeChatAccount> targetAccount = BungeecordAccountManager.getAccount(getReplier(sender));
 
                 if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
                         && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
-                    sender.sendMessage(Message.NO_REPLY.get());
+                    MessagesService.sendMessage(sender, Message.NO_REPLY.get());
                     return;
                 }
 
@@ -50,7 +49,7 @@ public class ReplyCommand extends BaseCommand {
 
                 if (!targetAccount.get().hasMessangerEnabled()
                         && !PermissionManager.hasPermission(sender, Permission.BYPASS_TOGGLE_MESSAGE)) {
-                    sender.sendMessage(Message.HAS_MESSAGER_DISABLED.get(target));
+                    MessagesService.sendMessage(sender, Message.HAS_MESSAGER_DISABLED.get(target));
                     return;
                 }
 

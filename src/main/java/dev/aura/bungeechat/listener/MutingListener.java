@@ -8,6 +8,7 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -16,7 +17,6 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class MutingListener implements Listener {
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled())
@@ -38,7 +38,7 @@ public class MutingListener implements Listener {
 
             for (String s : blockCommand) {
                 if (message.startsWith("/" + s + " ")) {
-                    sender.sendMessage(Message.MUTED.get(account));
+                    MessagesService.sendMessage(sender, Message.MUTED.get(account));
                     e.setCancelled(true);
 
                     return;
@@ -54,7 +54,7 @@ public class MutingListener implements Listener {
                 return;
 
             e.setCancelled(true);
-            sender.sendMessage(Message.MUTED.get(account));
+            MessagesService.sendMessage(sender, Message.MUTED.get(account));
         }
     }
 }

@@ -18,7 +18,6 @@ public class GlobalChatListener implements Listener {
     private final boolean passToClientServer = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
             .getBoolean("passToClientServer");
 
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled())
@@ -46,7 +45,7 @@ public class GlobalChatListener implements Listener {
 
         if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL) {
             if (!MessagesService.getGlobalPredicate().test(accout)) {
-                sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
+                MessagesService.sendMessage(sender, Message.NOT_IN_GLOBAL_SERVER.get());
 
                 return;
             }
@@ -64,7 +63,7 @@ public class GlobalChatListener implements Listener {
 
             if (message.startsWith(symbol) && !symbol.equals("/")) {
                 if (!MessagesService.getGlobalPredicate().test(accout)) {
-                    sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
+                    MessagesService.sendMessage(sender, Message.NOT_IN_GLOBAL_SERVER.get());
 
                     return;
                 }

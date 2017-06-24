@@ -1,14 +1,15 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.account.BungeecordAccountManager;
+import java.util.Optional;
+
+import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MutingModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
-
-import java.util.Optional;
 
 public class UnmuteCommand extends BaseCommand {
     public UnmuteCommand(MutingModule mutingModule) {
@@ -16,26 +17,25 @@ public class UnmuteCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_UNMUTE)) {
             if (args.length < 1) {
-                sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/unmute <player>"));
+                MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/unmute <player>"));
             } else {
-                Optional<BungeeChatAccount> targetAccount = BungeecordAccountManager.getAccount(args[0]);
+                Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[0]);
 
                 if (!targetAccount.isPresent()) {
-                    sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
+                    MessagesService.sendMessage(sender, Message.PLAYER_NOT_FOUND.get());
                     return;
                 }
 
                 if (!targetAccount.get().isMuted()) {
-                    sender.sendMessage(Message.UNMUTE_NOT_MUTED.get());
+                    MessagesService.sendMessage(sender, Message.UNMUTE_NOT_MUTED.get());
                     return;
                 }
 
                 targetAccount.get().unmute();
-                sender.sendMessage(Message.UNMUTE.get(sender));
+                MessagesService.sendMessage(sender, Message.UNMUTE.get(sender));
 
             }
         }

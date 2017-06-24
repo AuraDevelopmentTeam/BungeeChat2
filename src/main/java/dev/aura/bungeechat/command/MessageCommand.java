@@ -20,29 +20,28 @@ public class MessageCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_MESSAGE)) {
             if (args.length < 2) {
-                sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/msg <player> <message>"));
+                MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/msg <player> <message>"));
             } else {
                 Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[0]);
 
                 if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
                         && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
-                    sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
+                    MessagesService.sendMessage(sender, Message.PLAYER_NOT_FOUND.get());
                     return;
                 }
 
                 CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                 if (target == sender) {
-                    sender.sendMessage(Message.MESSAGE_YOURSELF.get());
+                    MessagesService.sendMessage(sender, Message.MESSAGE_YOURSELF.get());
                     return;
                 }
                 if (!targetAccount.get().hasMessangerEnabled()
                         && !PermissionManager.hasPermission(sender, Permission.BYPASS_TOGGLE_MESSAGE)) {
-                    sender.sendMessage(Message.HAS_MESSAGER_DISABLED.get(target));
+                    MessagesService.sendMessage(sender, Message.HAS_MESSAGER_DISABLED.get(target));
                     return;
                 }
 

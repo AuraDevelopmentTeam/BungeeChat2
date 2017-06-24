@@ -7,6 +7,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Context;
 import dev.aura.bungeechat.message.Format;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.module.AlertModule;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -18,12 +19,12 @@ public class AlertCommand extends BaseCommand {
         super("alert", alertModule.getModuleSection().getStringList("aliases"));
     }
 
-    @Override
     @SuppressWarnings("deprecation")
+    @Override
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_ALERT)) {
             if (args.length < 1) {
-                sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/alert <message>"));
+                MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/alert <message>"));
             } else {
                 String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 

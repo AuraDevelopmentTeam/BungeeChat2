@@ -22,26 +22,25 @@ public class GlobalChatCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL)) {
             BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
 
             if (!MessagesService.getGlobalPredicate().test(account)
                     && (account.getAccountType() == AccountType.PLAYER)) {
-                sender.sendMessage(Message.NOT_IN_GLOBAL_SERVER.get());
+                MessagesService.sendMessage(sender, Message.NOT_IN_GLOBAL_SERVER.get());
 
                 return;
             }
 
             if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
-                sender.sendMessage(Message.GLOBAL_IS_DEFAULT.get());
+                MessagesService.sendMessage(sender, Message.GLOBAL_IS_DEFAULT.get());
                 return;
             }
 
             if (args.length < 1) {
                 if (!(sender instanceof ProxiedPlayer)) {
-                    sender.sendMessage(Message.NOT_A_PLAYER.get());
+                    MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
                     return;
                 }
                 if (PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL_TOGGLE)) {
@@ -49,13 +48,13 @@ public class GlobalChatCommand extends BaseCommand {
 
                     if (player.getChannelType() == ChannelType.GLOBAL) {
                         player.setChannelType(ChannelType.LOCAL);
-                        sender.sendMessage(Message.ENABLE_LOCAL.get());
+                        MessagesService.sendMessage(sender, Message.ENABLE_LOCAL.get());
                     } else {
                         player.setChannelType(ChannelType.GLOBAL);
-                        sender.sendMessage(Message.ENABLE_GLOBAL.get());
+                        MessagesService.sendMessage(sender, Message.ENABLE_GLOBAL.get());
                     }
                 } else {
-                    sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/global <message>"));
+                    MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/global <message>"));
                 }
             } else {
                 String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));

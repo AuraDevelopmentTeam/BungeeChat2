@@ -9,6 +9,7 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.IgnoringModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
@@ -20,15 +21,15 @@ public class IgnoreCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_IGNORE)) {
             if (!(sender instanceof ProxiedPlayer)) {
-                sender.sendMessage(Message.NOT_A_PLAYER.get());
+                MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
             } else {
 
                 if (args.length < 1) {
-                    sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/ignore <list|add|remove> [player]"));
+                    MessagesService.sendMessage(sender,
+                            Message.INCORRECT_USAGE.get(sender, "/ignore <list|add|remove> [player]"));
                     return;
                 }
 
@@ -40,16 +41,17 @@ public class IgnoreCommand extends BaseCommand {
                             .collect(Collectors.toList());
 
                     if (ignored.size() <= 0) {
-                        sender.sendMessage(Message.IGNORE_NOBODY.get(player));
+                        MessagesService.sendMessage(sender, Message.IGNORE_NOBODY.get(player));
                     } else {
                         String list = ignored.stream().map(account -> account.get().getName())
                                 .collect(Collectors.joining(", "));
 
-                        sender.sendMessage(Message.IGNORE_LIST.get(player, list));
+                        MessagesService.sendMessage(sender, Message.IGNORE_LIST.get(player, list));
                     }
                 } else if (args[0].equalsIgnoreCase("add")) {
                     if (args.length < 2) {
-                        sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/ignore add <player>"));
+                        MessagesService.sendMessage(sender,
+                                Message.INCORRECT_USAGE.get(sender, "/ignore add <player>"));
                         return;
                     }
 
@@ -57,27 +59,28 @@ public class IgnoreCommand extends BaseCommand {
 
                     if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
                             && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
-                        sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
+                        MessagesService.sendMessage(sender, Message.PLAYER_NOT_FOUND.get());
                         return;
                     }
 
                     CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                     if (target == sender) {
-                        sender.sendMessage(Message.IGNORE_YOURSELF.get());
+                        MessagesService.sendMessage(sender, Message.IGNORE_YOURSELF.get());
                         return;
                     }
 
                     if (player.hasIgnored(targetAccount.get().getUniqueId())) {
-                        sender.sendMessage(Message.ALREADY_IGNORED.get());
+                        MessagesService.sendMessage(sender, Message.ALREADY_IGNORED.get());
                         return;
                     }
 
                     player.addIgnore(targetAccount.get().getUniqueId());
-                    sender.sendMessage(Message.ADD_IGNORE.get(target));
+                    MessagesService.sendMessage(sender, Message.ADD_IGNORE.get(target));
                 } else if (args[0].equalsIgnoreCase("remove")) {
                     if (args.length < 2) {
-                        sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/ignore remove <player>"));
+                        MessagesService.sendMessage(sender,
+                                Message.INCORRECT_USAGE.get(sender, "/ignore remove <player>"));
                         return;
                     }
 
@@ -85,26 +88,27 @@ public class IgnoreCommand extends BaseCommand {
 
                     if (!targetAccount.isPresent() || (targetAccount.get().isVanished()
                             && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
-                        sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
+                        MessagesService.sendMessage(sender, Message.PLAYER_NOT_FOUND.get());
                         return;
                     }
 
                     CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                     if (target == sender) {
-                        sender.sendMessage(Message.UNIGNORE_YOURSELF.get());
+                        MessagesService.sendMessage(sender, Message.UNIGNORE_YOURSELF.get());
                         return;
                     }
 
                     if (!player.hasIgnored(targetAccount.get().getUniqueId())) {
-                        sender.sendMessage(Message.NOT_IGNORED.get());
+                        MessagesService.sendMessage(sender, Message.NOT_IGNORED.get());
                         return;
                     }
 
                     player.removeIgnore(targetAccount.get().getUniqueId());
-                    sender.sendMessage(Message.REMOVE_IGNORE.get(target));
+                    MessagesService.sendMessage(sender, Message.REMOVE_IGNORE.get(target));
                 } else {
-                    sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/ignore <list|add|remove> [player]"));
+                    MessagesService.sendMessage(sender,
+                            Message.INCORRECT_USAGE.get(sender, "/ignore <list|add|remove> [player]"));
                 }
             }
         }

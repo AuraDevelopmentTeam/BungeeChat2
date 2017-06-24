@@ -29,7 +29,6 @@ public class MessagesService {
         sendPrivateMessage(new Context(sender, target, message));
     }
 
-    @SuppressWarnings("deprecation")
     public static void sendPrivateMessage(BungeeChatContext context) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_TARGET, BungeeChatContext.HAS_MESSAGE);
 
@@ -43,7 +42,7 @@ public class MessagesService {
 
         if (targetAcconut.hasIgnored(senderAcconut)
                 && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
-            sender.sendMessage(Message.HAS_INGORED.get(context));
+            MessagesService.sendMessage(sender, Message.HAS_INGORED.get(context));
 
             return;
         }
@@ -52,11 +51,11 @@ public class MessagesService {
                 filterPrivateMessages);
 
         if (messageSender.isPresent()) {
-            sender.sendMessage(messageSender.get());
+            MessagesService.sendMessage(sender, messageSender.get());
 
             String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages,
                     true).get();
-            target.sendMessage(messageTarget);
+            MessagesService.sendMessage(target, messageTarget);
         }
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
@@ -230,7 +229,6 @@ public class MessagesService {
         return preProcessMessage(context, account, format, runFilters, false);
     }
 
-    @SuppressWarnings("deprecation")
     public static Optional<String> preProcessMessage(BungeeChatContext context, Optional<BungeeChatAccount> account,
             Format format, boolean runFilters, boolean ignoreBlockMessageExceptions) throws InvalidContextError {
         context.require(BungeeChatContext.HAS_MESSAGE);
@@ -248,7 +246,7 @@ public class MessagesService {
                 message = FilterManager.applyFilters(playerAccount, message);
             } catch (BlockMessageException e) {
                 if (!ignoreBlockMessageExceptions) {
-                    player.sendMessage(e.getMessage());
+                    MessagesService.sendMessage(player, e.getMessage());
 
                     return Optional.empty();
                 }
@@ -269,13 +267,12 @@ public class MessagesService {
     }
 
     @SafeVarargs
-    @SuppressWarnings("deprecation")
     public static void sendToMatchingPlayers(String finalMessage, Predicate<BungeeChatAccount>... playerFilters) {
         Predicate<BungeeChatAccount> playerFiler = Arrays.stream(playerFilters).reduce(Predicate::and)
                 .orElse(acc -> true);
 
-        AccountManager.getPlayerAccounts().stream().filter(playerFiler)
-                .forEach(account -> BungeecordAccountManager.getCommandSender(account).get().sendMessage(finalMessage));
+        AccountManager.getPlayerAccounts().stream().filter(playerFiler).forEach(account -> MessagesService
+                .sendMessage(BungeecordAccountManager.getCommandSender(account).get(), finalMessage));
     }
 
     public static Predicate<BungeeChatAccount> getGlobalPredicate() {
@@ -293,5 +290,13 @@ public class MessagesService {
 
     public static Predicate<BungeeChatAccount> getLocalPredicate(String serverName) {
         return account -> serverName.equals(account.getServerName());
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void sendMessage(CommandSender sender, String message) {
+        if ((message == null) || message.isEmpty())
+            return;
+
+        sender.sendMessage(message);
     }
 }

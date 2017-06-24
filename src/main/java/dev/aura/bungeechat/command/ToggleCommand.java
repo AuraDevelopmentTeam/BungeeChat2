@@ -4,6 +4,7 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MessengerModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
@@ -15,19 +16,18 @@ public class ToggleCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE)) {
             if (!(sender instanceof ProxiedPlayer)) {
-                sender.sendMessage(Message.NOT_A_PLAYER.get());
+                MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
             } else {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
                 player.toggleMessanger();
 
                 if (player.hasMessangerEnabled()) {
-                    sender.sendMessage(Message.ENABLE_MESSAGER.get());
+                    MessagesService.sendMessage(sender, Message.ENABLE_MESSAGER.get());
                 } else {
-                    sender.sendMessage(Message.DISABLE_MESSAGER.get());
+                    MessagesService.sendMessage(sender, Message.DISABLE_MESSAGER.get());
                 }
             }
         }

@@ -16,11 +16,10 @@ public class HelpOpCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_HELPOP)) {
             if (args.length < 1) {
-                sender.sendMessage(Message.INCORRECT_USAGE.get(sender, "/helpop <message>"));
+                MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/helpop <message>"));
             } else {
                 String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 

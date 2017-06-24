@@ -14,13 +14,13 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 
-@SuppressWarnings("deprecation")
 public class BungeeChatCommand extends BaseCommand {
     private final String prefix = ChatColor.BLUE + "Bungee Chat " + ChatColor.DARK_GRAY + "// ";
 
@@ -39,7 +39,7 @@ public class BungeeChatCommand extends BaseCommand {
                     instance.onDisable();
                     instance.onEnable(false);
 
-                    sender.sendMessage(prefix + ChatColor.GREEN + "The plugin has been reloaded!");
+                    MessagesService.sendMessage(sender, prefix + ChatColor.GREEN + "The plugin has been reloaded!");
                 });
 
                 return;
@@ -47,25 +47,25 @@ public class BungeeChatCommand extends BaseCommand {
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_SETPREFIX)) {
 
                 if (args.length < 2) {
-                    sender.sendMessage(
+                    MessagesService.sendMessage(sender,
                             Message.INCORRECT_USAGE.get(sender, "/bungeechat setprefix <player> [new prefix]"));
                 } else {
                     Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[1]);
 
                     if (!targetAccount.isPresent()) {
-                        sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
+                        MessagesService.sendMessage(sender, Message.PLAYER_NOT_FOUND.get());
                     } else {
                         CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                         if (args.length < 3) {
                             targetAccount.get().setStoredPrefix(Optional.empty());
-                            sender.sendMessage(prefix + Message.PREFIX_REMOVED.get(target));
+                            MessagesService.sendMessage(sender, prefix + Message.PREFIX_REMOVED.get(target));
                         } else {
                             String newPrefix = getUnquotedString(
                                     Arrays.stream(args, 2, args.length).collect(Collectors.joining(" ")));
 
                             targetAccount.get().setStoredPrefix(Optional.of(newPrefix));
-                            sender.sendMessage(prefix + Message.PREFIX_SET.get(target));
+                            MessagesService.sendMessage(sender, prefix + Message.PREFIX_SET.get(target));
                         }
                     }
                 }
@@ -74,25 +74,25 @@ public class BungeeChatCommand extends BaseCommand {
                     && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_SETSUFFIX)) {
 
                 if (args.length < 2) {
-                    sender.sendMessage(
+                    MessagesService.sendMessage(sender,
                             Message.INCORRECT_USAGE.get(sender, "/bungeechat setsuffix <player> [new suffix]"));
                 } else {
                     Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[1]);
 
                     if (!targetAccount.isPresent()) {
-                        sender.sendMessage(Message.PLAYER_NOT_FOUND.get());
+                        MessagesService.sendMessage(sender, Message.PLAYER_NOT_FOUND.get());
                     } else {
                         CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
                         if (args.length < 3) {
                             targetAccount.get().setStoredSuffix(Optional.empty());
-                            sender.sendMessage(prefix + Message.SUFFIX_REMOVED.get(target));
+                            MessagesService.sendMessage(sender, prefix + Message.SUFFIX_REMOVED.get(target));
                         } else {
                             String newSuffix = getUnquotedString(
                                     Arrays.stream(args, 2, args.length).collect(Collectors.joining(" ")));
 
                             targetAccount.get().setStoredSuffix(Optional.of(newSuffix));
-                            sender.sendMessage(prefix + Message.SUFFIX_SET.get(target));
+                            MessagesService.sendMessage(sender, prefix + Message.SUFFIX_SET.get(target));
                         }
                     }
                 }
@@ -102,9 +102,10 @@ public class BungeeChatCommand extends BaseCommand {
         }
 
         checkForUpdates(sender);
-        sender.sendMessage(prefix + ChatColor.GRAY + "Coded by " + ChatColor.GOLD + BungeeChatApi.AUTHOR_SHAWN
-                + ChatColor.GRAY + " and " + ChatColor.GOLD + BungeeChatApi.AUTHOR_BRAINSTONE + ChatColor.GRAY
-                + ", with help from " + ChatColor.GOLD + BungeeChatApi.AUTHOR_RYADA + ChatColor.GRAY + ".");
+        MessagesService.sendMessage(sender,
+                prefix + ChatColor.GRAY + "Coded by " + ChatColor.GOLD + BungeeChatApi.AUTHOR_SHAWN + ChatColor.GRAY
+                        + " and " + ChatColor.GOLD + BungeeChatApi.AUTHOR_BRAINSTONE + ChatColor.GRAY
+                        + ", with help from " + ChatColor.GOLD + BungeeChatApi.AUTHOR_RYADA + ChatColor.GRAY + ".");
     }
 
     private void checkForUpdates(CommandSender sender) {
@@ -112,10 +113,13 @@ public class BungeeChatCommand extends BaseCommand {
         String latestVersion = instance.getLatestVersion(true);
 
         if (instance.isLatestVersion()) {
-            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION);
+            MessagesService.sendMessage(sender,
+                    prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION);
         } else {
-            sender.sendMessage(prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION);
-            sender.sendMessage(prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + latestVersion);
+            MessagesService.sendMessage(sender,
+                    prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION);
+            MessagesService.sendMessage(sender,
+                    prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + latestVersion);
         }
     }
 

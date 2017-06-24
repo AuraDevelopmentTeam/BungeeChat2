@@ -8,6 +8,7 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -17,7 +18,6 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class ChannelTypeCorrectorListener implements Listener {
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(ChatEvent e) {
         if (e.isCancelled())
@@ -36,7 +36,7 @@ public class ChannelTypeCorrectorListener implements Listener {
                                 || !PermissionManager.hasPermission(player, Permission.COMMAND_STAFFCHAT)))) {
             e.setCancelled(true);
             bungeeChatAccountOptional.get().setChannelType(ChannelType.LOCAL);
-            player.sendMessage(Message.BACK_TO_LOCAL.get());
+            MessagesService.sendMessage(player, Message.BACK_TO_LOCAL.get());
         }
     }
 }

@@ -20,11 +20,10 @@ public class StaffChatCommand extends BaseCommand {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT)) {
             if (!(sender instanceof ProxiedPlayer)) {
-                sender.sendMessage(Message.NOT_A_PLAYER.get());
+                MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
                 return;
             }
             if (args.length == 0) {
@@ -32,10 +31,10 @@ public class StaffChatCommand extends BaseCommand {
 
                 if (player.getChannelType() == ChannelType.STAFF) {
                     player.setChannelType(ChannelType.LOCAL);
-                    sender.sendMessage(Message.ENABLE_LOCAL.get());
+                    MessagesService.sendMessage(sender, Message.ENABLE_LOCAL.get());
                 } else {
                     player.setChannelType(ChannelType.STAFF);
-                    sender.sendMessage(Message.ENABLE_STAFFCHAT.get());
+                    MessagesService.sendMessage(sender, Message.ENABLE_STAFFCHAT.get());
                 }
             } else {
                 String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
