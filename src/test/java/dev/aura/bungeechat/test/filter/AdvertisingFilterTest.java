@@ -24,7 +24,7 @@ public class AdvertisingFilterTest {
             assertEquals("Exception Message is wrong", Message.NO_PERMISSION.getStringPath(), e.getMessage());
         }
     }
-    
+
     private static void expectNoException(String text) {
         try {
             FILTER.applyFilter(null, text);
@@ -84,7 +84,7 @@ public class AdvertisingFilterTest {
         expectException("text http://www.web.de/testUrl.php?bla=baum&foo=bar foobar");
         expectException("text https://www.web.de/testUrl.php?bla=baum&foo=bar foobar");
     }
-    
+
     @Test
     public void whitelistTest() {
         expectException("web.de");
