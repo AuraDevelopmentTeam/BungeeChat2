@@ -1,3 +1,9 @@
+Version 2.0.5
+-------------
+
+\* New versioning scheme. The build is now part of the version number.  
+
+
 Version 2.0.4
 -------------
 
