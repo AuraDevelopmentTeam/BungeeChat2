@@ -163,7 +163,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
                 + " ----------------");
         LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + " & " + AUTHOR_BRAINSTONE);
         LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION);
-        LoggerHelper.info(ChatColor.YELLOW + "Build: " + ChatColor.GREEN + BUILD);
         LoggerHelper.info(
                 ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
         if (!isLatestVersion()) {

@@ -1,17 +1,24 @@
 package dev.aura.bungeechat.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Version implements Comparable<Version> {
     private static final String separator = "(?:\\.|_|-)";
+    private static final Pattern versionPattern = Pattern.compile("[0-9]+(?:" + separator + "[0-9]+)*");
 
     private String version;
 
     public Version(String version) {
         if (version == null)
             throw new IllegalArgumentException("Version can not be null");
-        if (!version.matches("[0-9]+(?:" + separator + "[0-9]+)*"))
+        
+        Matcher match = versionPattern.matcher(version);
+        
+        if (!match.find())
             throw new IllegalArgumentException("Invalid version format");
 
-        this.version = version;
+        this.version = match.group();
     }
 
     public final String get() {
