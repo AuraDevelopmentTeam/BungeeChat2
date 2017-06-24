@@ -3,13 +3,18 @@ variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/**/build/libs/*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/*.jar*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
-  GRADLE_OPTS: "-Dorg.gradle.project.signing.keyId=\"$keyId\" -Dorg.gradle.project.signing.password=\"$password\" -Dorg.gradle.project.signing.secretKeyRingFile=\"$secretKeyRingFile\" -Dorg.gradle.project.branchName=\"$CI_COMMIT_REF_NAME\""
+  GRADLE_OPTS: >
+    -Dorg.gradle.project.signing.keyId="$keyId"
+    -Dorg.gradle.project.signing.password="$password"
+    -Dorg.gradle.project.signing.secretKeyRingFile="$secretKeyRingFile"
+    -Dorg.gradle.project.branchName="$CI_COMMIT_REF_NAME"
 
 cache:
   key: "$CI_COMMIT_REF_NAME/$CI_COMMIT_SHA"
   untracked: true
 
 before_script:
+  - export
   - shopt -s globstar
 
 stages:
