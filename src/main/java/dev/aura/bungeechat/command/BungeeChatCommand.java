@@ -15,6 +15,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
 import net.md_5.bungee.api.ChatColor;
@@ -97,6 +98,9 @@ public class BungeeChatCommand extends BaseCommand {
                     }
                 }
 
+                return;
+            } else if (args[0].equalsIgnoreCase("modules") && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_MODULES)) {
+                MessagesService.sendMessage(sender, prefix + ChatColor.GRAY + "Active Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
                 return;
             }
         }
