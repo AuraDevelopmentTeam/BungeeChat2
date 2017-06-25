@@ -1,7 +1,9 @@
 Version 2.0.5
 -------------
 
+\+ Added ClearChat command and module.  
 \* New versioning scheme. The build is now part of the version number.  
+\* A lot of internal improvements.  
 \* Fixed FileStorage storing wrong data (Fixes [#5](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/5))  
 \* Empty messages don't get send.  
 
