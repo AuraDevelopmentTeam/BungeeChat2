@@ -17,6 +17,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
+@SuppressWarnings("unused")
 public class BungeecordAccountManager extends AccountManager implements Listener {
     protected static ConcurrentMap<UUID, CommandSender> nativeObjects = new ConcurrentHashMap<>();
 
@@ -51,9 +52,7 @@ public class BungeecordAccountManager extends AccountManager implements Listener
     public static void unloadAccount(UUID uuid) {
         Optional<BungeeChatAccount> account = getAccount(uuid);
 
-        if (account.isPresent()) {
-            unloadAccount(account.get());
-        }
+        account.ifPresent(BungeecordAccountManager::unloadAccount);
     }
 
     public static void unloadAccount(BungeeChatAccount account) {

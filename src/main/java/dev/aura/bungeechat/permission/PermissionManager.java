@@ -24,10 +24,7 @@ public class PermissionManager {
     }
 
     public static boolean hasPermission(CommandSender sender, Permission permission) {
-        if (sender instanceof ProxiedPlayer)
-            return hasPermission((ProxiedPlayer) sender, permission);
-        else
-            return true;
+        return !(sender instanceof ProxiedPlayer) || hasPermission((ProxiedPlayer) sender, permission);
     }
 
     public static boolean hasPermission(BungeeChatAccount account, Permission permission) {

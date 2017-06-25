@@ -9,9 +9,6 @@ import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.module.ClearChatModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-
-import java.util.Optional;
 
 public class ClearChatCommand extends BaseCommand {
     private static final String USAGE = "/clearchat <local|global>";

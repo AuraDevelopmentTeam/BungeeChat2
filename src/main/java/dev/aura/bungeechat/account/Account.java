@@ -19,6 +19,7 @@ import net.md_5.bungee.api.connection.Server;
 
 @Data
 @EqualsAndHashCode(of = "uuid")
+@SuppressWarnings("unused")
 public class Account implements BungeeChatAccount {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

@@ -37,7 +37,7 @@ public class IgnoreCommand extends BaseCommand {
 
                 if (args[0].equalsIgnoreCase("list")) {
                     List<Optional<BungeeChatAccount>> ignored = player.getIgnored().stream()
-                            .map(uuid -> AccountManager.getAccount(uuid)).filter(account -> account.isPresent())
+                            .map(AccountManager::getAccount).filter(Optional::isPresent)
                             .collect(Collectors.toList());
 
                     if (ignored.size() <= 0) {

@@ -22,12 +22,12 @@ public class ReplyCommand extends BaseCommand {
         replies = new HashMap<>();
     }
 
-    public static void setReply(CommandSender sender, CommandSender target) {
+    static void setReply(CommandSender sender, CommandSender target) {
         replies.put(sender, target);
         replies.put(target, sender);
     }
 
-    public static CommandSender getReplier(CommandSender player) {
+    private static CommandSender getReplier(CommandSender player) {
         return replies.getOrDefault(player, null);
     }
 

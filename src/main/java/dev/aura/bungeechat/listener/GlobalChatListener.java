@@ -14,6 +14,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
+@SuppressWarnings("unused")
 public class GlobalChatListener implements Listener {
     private final boolean passToClientServer = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
             .getBoolean("passToClientServer");

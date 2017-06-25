@@ -12,6 +12,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
+@SuppressWarnings("unused")
 public class LocalChatListener implements Listener {
     private final boolean passToClientServer = BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection()
             .getBoolean("passToClientServer");

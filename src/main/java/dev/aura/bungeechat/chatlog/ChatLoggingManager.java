@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ChatLoggingManager {
-    private static List<ChatLogger> loggers = new LinkedList<ChatLogger>();
+    private static List<ChatLogger> loggers = new LinkedList<>();
 
     public static void addLogger(ChatLogger logger) {
         loggers.add(logger);
