@@ -53,12 +53,12 @@ public enum Permission {
     @Getter
     private final boolean warnOnLackingPermission;
 
-    Permission(String stringedPermission, boolean warnOnLackingPermission) {
+    private Permission(String stringedPermission, boolean warnOnLackingPermission) {
         this.stringedPermission = "bungeechat." + stringedPermission;
         this.warnOnLackingPermission = warnOnLackingPermission;
     }
 
-    Permission(String stringedPermission) {
+    private Permission(String stringedPermission) {
         this(stringedPermission, (stringedPermission.startsWith("command.") || stringedPermission.startsWith("admin."))
                 && !stringedPermission.endsWith(".view"));
     }

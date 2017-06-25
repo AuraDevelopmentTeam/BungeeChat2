@@ -22,7 +22,7 @@ public class ReplyCommand extends BaseCommand {
         replies = new HashMap<>();
     }
 
-    static void setReply(CommandSender sender, CommandSender target) {
+    protected static void setReply(CommandSender sender, CommandSender target) {
         replies.put(sender, target);
         replies.put(target, sender);
     }
