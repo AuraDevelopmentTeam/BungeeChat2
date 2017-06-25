@@ -90,7 +90,7 @@ public class RegexUtil {
                     new LeetSpeakPattern("X", "><", "Ж", "}{", "ecks", "×", "?", ")(", "]["),
                     new LeetSpeakPattern("Y", "j", "`/", "Ч", "7", "\\|/", "¥", "\\//"),
                     new LeetSpeakPattern("Z", "2", "7_", "-/_", "%", ">_", "s", "~/_", "-\\_", "-|_"))
-            .stream().collect(Collectors.toMap(pattern -> pattern.getLetter(), pattern -> pattern));
+            .stream().collect(Collectors.toMap(LeetSpeakPattern::getLetter, pattern -> pattern));
 
     /**
      * Escapes a string into a regex that matches this string literally.<br>

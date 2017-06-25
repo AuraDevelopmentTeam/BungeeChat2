@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class PlaceHolderManager {
-    private static final List<BungeeChatPlaceHolder> placeholders = new LinkedList<BungeeChatPlaceHolder>();
+    private static final List<BungeeChatPlaceHolder> placeholders = new LinkedList<>();
 
     public static Stream<BungeeChatPlaceHolder> getPlaceholderStream() {
         return placeholders.stream();

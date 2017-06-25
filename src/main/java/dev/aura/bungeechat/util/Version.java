@@ -55,10 +55,7 @@ public class Version implements Comparable<Version> {
         if (that == null)
             return false;
 
-        if (this.getClass() != that.getClass())
-            return false;
-
-        return compareTo((Version) that) == 0;
+        return this.getClass() == that.getClass() && compareTo((Version) that) == 0;
     }
 
     private static int parseInt(String str) {

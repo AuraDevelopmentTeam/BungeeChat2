@@ -76,10 +76,8 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof BungeeChatPlaceHolder))
-            return false;
+        return obj instanceof BungeeChatPlaceHolder && placeholder.equals(((BungeeChatPlaceHolder) obj).getName());
 
-        return placeholder.equals(((BungeeChatPlaceHolder) obj).getName());
     }
 
     public PlaceHolder[] createAliases(String... aliases) {
