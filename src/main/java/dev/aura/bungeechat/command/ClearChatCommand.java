@@ -10,10 +10,8 @@ import dev.aura.bungeechat.module.ClearChatModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class ClearChatCommand extends BaseCommand {
     public ClearChatCommand(ClearChatModule clearChatModule) {
@@ -31,13 +29,13 @@ public class ClearChatCommand extends BaseCommand {
                 Optional<BungeeChatAccount> bungeeChatAccount = BungeecordAccountManager.getAccount(sender);
 
                 if (args[0].equalsIgnoreCase("local")) {
-                    Stream<ProxiedPlayer> players = ProxyServer.getInstance().getPlayers().stream().filter(proxiedPlayer ->
-                            proxiedPlayer.getServer().getInfo().getName().equalsIgnoreCase(bungeeChatAccount.get().getServerName()));
                     while (lines != 0) {
-                        players.forEach(player -> player.sendMessage(" "));
+                        ProxyServer.getInstance().getPlayers().stream().filter(proxiedPlayer ->
+                                proxiedPlayer.getServer().getInfo().getName().equalsIgnoreCase(bungeeChatAccount.get().getServerName())).forEach(player -> player.sendMessage(" "));
                         lines--;
                     }
-                    players.forEach(player -> player.sendMessage(Message.CLEARED_LOCAL.get(sender)));
+                    ProxyServer.getInstance().getPlayers().stream().filter(proxiedPlayer ->
+                            proxiedPlayer.getServer().getInfo().getName().equalsIgnoreCase(bungeeChatAccount.get().getServerName())).forEach(player -> player.sendMessage(Message.CLEARED_LOCAL.get(sender)));
                 } else if (args[0].equalsIgnoreCase("global")) {
                     while (lines != 0) {
                         ProxyServer.getInstance().broadcast(" ");
