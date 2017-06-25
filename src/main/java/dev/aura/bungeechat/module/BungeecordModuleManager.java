@@ -24,6 +24,7 @@ public class BungeecordModuleManager extends ModuleManager {
     public static final AntiSwearModule ANTI_SWEAR_MODULE = new AntiSwearModule();
     public static final ChatLockModule CHAT_LOCK_MODULE = new ChatLockModule();
     public static final ChatLoggingModule CHAT_LOGGING_MODULE = new ChatLoggingModule();
+    public static final ClearChatModule CLEAR_CHAT_MODULE = new ClearChatModule();
     public static final GlobalChatModule GLOBAL_CHAT_MODULE = new GlobalChatModule();
     public static final HelpOpModule HELP_OP_MODULE = new HelpOpModule();
     public static final IgnoringModule IGNORING_MODULE = new IgnoringModule();

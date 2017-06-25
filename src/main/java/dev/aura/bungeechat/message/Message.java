@@ -24,6 +24,10 @@ public enum Message {
     REPLY_OFFLINE("replyOffline"),
     HAS_MESSAGER_DISABLED("hasMessagerDisabled"),
 
+    //Clear Chat
+    CLEARED_LOCAL("clearedLocal"),
+    CLEARED_GLOBAL("clearedGlobal"),
+
     // Vanish Messages
     ENABLE_VANISH("enableVanish"),
     DISABLE_VANISH("disableVanish"),

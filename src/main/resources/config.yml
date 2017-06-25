@@ -10,7 +10,7 @@
 # You can change the settings and messages/formats of the plugin in this file.
 # Please do not change the 'Version' value, or else the plugin might not work.
 
-Version: 9.2
+Version: 9.3
 
 Settings:
   Modules:
@@ -108,6 +108,12 @@ Settings:
     LocalChat:
       enabled: true
       passToClientServer: false
+    ClearChat:
+      enabled: true
+      emptyLines: 100
+      aliases:
+        - cc
+        - chatclear
     ServerSwitchMessages:
       enabled: true
     AntiAdvertising:

@@ -41,6 +41,7 @@ public enum Permission {
     COMMAND_SOCIALSPY("command.socialspy"),
     COMMAND_LOCALSPY("command.localspy"),
     COMMAND_CHAT_LOCK("command.chatlock"),
+    COMMAND_CLEAR_CHAT("command.clearchat"),
 
     MESSAGE_JOIN("message.join"),
     MESSAGE_LEAVE("message.leave"),
