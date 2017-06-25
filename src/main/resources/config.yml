@@ -169,6 +169,9 @@ Messages:
 # Vanish Messages
   enableVanish: "&eYou have &aenabled&e hide mode!"
   disableVanish: "&eYou have &cdisabled&e hide mode!"
+# Clear Chat Messages
+  clearedLocal: "&e%name% has cleared the chat locally."
+  clearedGlobal: "&e%name% has cleared the chat globally."
 # Mute Messages
   muted: "&cSorry but you can not talk because you are muted until %muted_until%!"
   unmuteNotMuted: "&cThis player is not muted!"
