@@ -110,7 +110,7 @@ Settings:
       passToClientServer: false
     ClearChat:
       enabled: true
-      emptyLines: 100
+      emptyLines: 20
       aliases:
         - cc
         - chatclear

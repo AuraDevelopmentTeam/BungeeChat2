@@ -13,7 +13,6 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatLockCommand extends BaseCommand {
     private static final String USAGE = "/chatlock <local|global> [clear]";
-    private static final String EMPTY_LINE = " ";
 
     public ChatLockCommand(ChatLockModule chatLockModule) {
         super("chatlock", chatLockModule.getModuleSection().getStringList("aliases"));
@@ -42,10 +41,7 @@ public class ChatLockCommand extends BaseCommand {
                             chatLock.enableGlobalChatLock();
 
                             if (clear) {
-                                for (int i = 0; i < emptyLines; i++) {
-                                    MessagesService.sendToMatchingPlayers(EMPTY_LINE,
-                                            MessagesService.getGlobalPredicate());
-                                }
+                                ClearChatCommand.clearGlobalChat(emptyLines);
                             }
 
                             MessagesService.sendToMatchingPlayers(Message.ENABLE_CHATLOCK.get(player),
@@ -61,10 +57,7 @@ public class ChatLockCommand extends BaseCommand {
                             chatLock.enableLocalChatLock(serverName);
 
                             if (clear) {
-                                for (int i = 0; i < emptyLines; i++) {
-                                    MessagesService.sendToMatchingPlayers(EMPTY_LINE,
-                                            MessagesService.getLocalPredicate(serverName));
-                                }
+                                ClearChatCommand.clearLocalChat(serverName, emptyLines);
                             }
 
                             MessagesService.sendToMatchingPlayers(Message.ENABLE_CHATLOCK.get(player),
