@@ -14,6 +14,9 @@ import net.md_5.bungee.api.ProxyServer;
 import java.util.Optional;
 
 public class ClearChatCommand extends BaseCommand {
+    private static final String USAGE = "/clearchat <local|global>";
+    private static final String EMPTY_LINE = " ";
+
     public ClearChatCommand(ClearChatModule clearChatModule) {
         super("clearchat", clearChatModule.getModuleSection().getStringList("aliases"));
     }
@@ -22,28 +25,25 @@ public class ClearChatCommand extends BaseCommand {
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_CLEAR_CHAT)) {
             if (args.length == 0) {
-                MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/clearchat <local|global>"));
+                MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, USAGE));
             } else {
 
-                int lines = Math.abs(BungeecordModuleManager.CLEAR_CHAT_MODULE.getModuleSection().getInt("emptyLines"));
-                Optional<BungeeChatAccount> bungeeChatAccount = BungeecordAccountManager.getAccount(sender);
+                final int lines = Math.abs(BungeecordModuleManager.CLEAR_CHAT_MODULE.getModuleSection().getInt("emptyLines"));
+                final BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(sender).get();
+                final String serverName = bungeeChatAccount.getServerName();
 
                 if (args[0].equalsIgnoreCase("local")) {
-                    while (lines != 0) {
-                        ProxyServer.getInstance().getPlayers().stream().filter(proxiedPlayer ->
-                                proxiedPlayer.getServer().getInfo().getName().equalsIgnoreCase(bungeeChatAccount.get().getServerName())).forEach(player -> player.sendMessage(" "));
-                        lines--;
+                    for (int i = 0; i < lines; i++) {
+                        MessagesService.sendToMatchingPlayers(EMPTY_LINE, MessagesService.getLocalPredicate(serverName));
                     }
-                    ProxyServer.getInstance().getPlayers().stream().filter(proxiedPlayer ->
-                            proxiedPlayer.getServer().getInfo().getName().equalsIgnoreCase(bungeeChatAccount.get().getServerName())).forEach(player -> player.sendMessage(Message.CLEARED_LOCAL.get(sender)));
+                    MessagesService.sendToMatchingPlayers(Message.CLEARED_LOCAL.get(sender), MessagesService.getLocalPredicate(serverName));
                 } else if (args[0].equalsIgnoreCase("global")) {
-                    while (lines != 0) {
-                        ProxyServer.getInstance().broadcast(" ");
-                        lines--;
+                    for (int i = 0; i < lines; i++) {
+                        MessagesService.sendToMatchingPlayers(EMPTY_LINE, MessagesService.getGlobalPredicate());
                     }
-                    ProxyServer.getInstance().broadcast(Message.CLEARED_GLOBAL.get(sender));
+                    MessagesService.sendToMatchingPlayers(Message.CLEARED_GLOBAL.get(sender), MessagesService.getGlobalPredicate());
                 } else {
-                    MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/clearchat <local|global>"));
+                    MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, USAGE));
                 }
 
             }
