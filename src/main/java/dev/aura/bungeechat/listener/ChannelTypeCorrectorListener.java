@@ -17,7 +17,6 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-@SuppressWarnings("unused")
 public class ChannelTypeCorrectorListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(ChatEvent e) {

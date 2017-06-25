@@ -17,7 +17,6 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-@SuppressWarnings("unused")
 public class BungeecordAccountManager extends AccountManager implements Listener {
     protected static ConcurrentMap<UUID, CommandSender> nativeObjects = new ConcurrentHashMap<>();
 

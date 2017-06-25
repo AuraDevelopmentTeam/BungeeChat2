@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import dev.aura.bungeechat.api.enums.AccountType;
 import lombok.Getter;
 
-@SuppressWarnings("unused")
 public class AccountManager {
     @Getter
     protected static final BungeeChatAccount consoleAccount = new ConsoleAccount();

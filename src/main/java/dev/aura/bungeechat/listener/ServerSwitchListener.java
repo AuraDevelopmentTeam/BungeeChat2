@@ -14,7 +14,6 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-@SuppressWarnings("unused")
 public class ServerSwitchListener implements Listener {
     private static final List<UUID> skipPlayer = new LinkedList<>();
 

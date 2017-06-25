@@ -11,7 +11,6 @@ import dev.aura.bungeechat.module.perms.LuckPermsModule;
 import dev.aura.bungeechat.module.perms.PowerfulPermsModule;
 import net.md_5.bungee.api.ChatColor;
 
-@SuppressWarnings("unused")
 public class BungeecordModuleManager extends ModuleManager {
     // PermissionHookModules
     public static final BungeePermsModule BUNGEE_PERMS_MODULE = new BungeePermsModule();

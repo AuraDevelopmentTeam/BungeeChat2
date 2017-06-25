@@ -16,7 +16,6 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-@SuppressWarnings("unused")
 public class MutingListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(ChatEvent e) {
