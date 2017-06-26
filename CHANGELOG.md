@@ -1,3 +1,9 @@
+Version 2.0.6
+-------------
+
+\* Fixed "No Permission" message being displayed, when new plugin version available.  
+
+
 Version 2.0.5
 -------------
 

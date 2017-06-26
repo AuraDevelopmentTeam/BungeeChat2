@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.VersionCheckerModule;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,6 @@ public class VersionCheckerListener implements Listener {
         private final ProxiedPlayer player;
         private final boolean checkOnAdminLogin;
 
-        @SuppressWarnings("deprecation")
         @Override
         public void run() {
             BungeeChat instance = BungeeChat.getInstance();
@@ -49,7 +49,7 @@ public class VersionCheckerListener implements Listener {
             }
 
             if (!instance.isLatestVersion()) {
-                player.sendMessages(Message.NO_PERMISSION.get(player, instance.getLatestVersion()));
+                MessagesService.sendMessage(player, Message.UPDATE_AVAILABLE.get(player, instance.getLatestVersion()));
             }
         }
     }
