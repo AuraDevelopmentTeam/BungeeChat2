@@ -1,3 +1,8 @@
+Version 2.0.7
+-------------
+
+\* Fixed bStats Metrics for real this time.  
+
 Version 2.0.6
 -------------
 
