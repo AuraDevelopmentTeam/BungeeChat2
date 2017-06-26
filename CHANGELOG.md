@@ -2,6 +2,7 @@ Version 2.0.6
 -------------
 
 \* Fixed "No Permission" message being displayed, when new plugin version available.  
+\* Fixed bStats Metrics.  
 
 
 Version 2.0.5
