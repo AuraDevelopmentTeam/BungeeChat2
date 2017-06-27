@@ -22,6 +22,12 @@ Settings:
         - bc
         - balert
         - bbc
+      automaticBroadcast:
+        enabled: false
+        interval: 20
+        messages:
+         - "Message 1"
+         - "Messaeg 2"
   #-----------------------#
     AntiAdvertising:
       enabled: true
