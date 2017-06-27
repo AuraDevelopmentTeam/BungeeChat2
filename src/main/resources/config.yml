@@ -14,6 +14,7 @@ Version: 10.0
 
 Settings:
   Modules:
+  #-----------------------#
     Alert:
       enabled: true
       aliases:
@@ -21,13 +22,47 @@ Settings:
         - bc
         - balert
         - bbc
-    Spy:
+  #-----------------------#
+    AntiAdvertising:
       enabled: true
+      whitelisted:
+        - www.google.com
+  #-----------------------#
+    AntiDuplication:
+      enabled: true
+      checkPastMessages: 5
+  #-----------------------#
+    AntiSwear:
+      enabled: true
+      freeMatching: false
+      leetSpeak: false
+      ignoreSpaces: false
+      ignoreDuplicateLetters: false
+      words:
+        - fuck
+        - kut
+        - tyfus
+      replacement: "****"
+  #-----------------------#
+    ChatLock:
+      enabled: true
+      emptyLinesOnClear: 20
       aliases:
-        socialspy:
-        - sspy
-        localspy:
-        - lspy
+        - lockchat
+  #-----------------------#
+    ChatLogging:
+      enabled: true
+      privateMessages: true
+      console: true
+      file: true
+  #-----------------------#
+    ClearChat:
+      enabled: true
+      emptyLines: 20
+      aliases:
+        - cc
+        - chatclear
+  #-----------------------#
     GlobalChat:
       enabled: true
       passToClientServer: false
@@ -43,6 +78,27 @@ Settings:
           - Hub1
           - Hub2
           - Hub3
+  #-----------------------#
+    HelpOp:
+      enabled: true
+      aliases:
+        - ahelp
+        - helpme
+  #-----------------------#
+    Ignoring:
+      enabled: true
+      aliases: []
+  #-----------------------#
+    JoinMessage:
+      enabled: true
+  #-----------------------#
+    LeaveMessage:
+      enabled: true
+  #-----------------------#
+    LocalChat:
+      enabled: true
+      passToClientServer: false
+  #-----------------------#
     Messenger:
       enabled: true
       filterMessages: false
@@ -57,13 +113,14 @@ Settings:
           - r
         msgtoggle:
           - mtoggle
-    StaffChat:
+  #-----------------------#
+    MOTD:
       enabled: true
-      passToClientServer: false
-      aliases:
-        - sc
-        - s
-        - schat
+      message:
+        - "This is line 1"
+        - "This is line 2"
+        - "Placeholders do work in here %name%"
+  #-----------------------#
     Muting:
       enabled: true
       aliases:
@@ -87,72 +144,38 @@ Settings:
         - r
       ignoreBukkitLocalChat: false
       disableWithOtherMutePlugins: true
-    JoinMessage:
+  #-----------------------#
+    ServerSwitchMessages:
       enabled: true
-    LeaveMessage:
-      enabled: true
-    HelpOp:
+  #-----------------------#
+    Spy:
       enabled: true
       aliases:
-        - ahelp
-        - helpme
+        socialspy:
+        - sspy
+        localspy:
+        - lspy
+  #-----------------------#
+    StaffChat:
+      enabled: true
+      passToClientServer: false
+      aliases:
+        - sc
+        - s
+        - schat
+  #-----------------------#
+    TabCompletion:
+      enabled: true
+  #-----------------------#
     Vanish:
       enabled: true
       aliases:
         - bhide
-    ChatLock:
-      enabled: true
-      emptyLinesOnClear: 20
-      aliases:
-        - lockchat
-    LocalChat:
-      enabled: true
-      passToClientServer: false
-    ClearChat:
-      enabled: true
-      emptyLines: 20
-      aliases:
-        - cc
-        - chatclear
-    ServerSwitchMessages:
-      enabled: true
-    AntiAdvertising:
-      enabled: true
-      whitelisted:
-        - www.google.com
-    AntiDuplication:
-      enabled: true
-      checkPastMessages: 5
-    AntiSwear:
-      enabled: true
-      freeMatching: false
-      leetSpeak: false
-      ignoreSpaces: false
-      ignoreDuplicateLetters: false
-      words:
-        - fuck
-        - kut
-        - tyfus
-      replacement: "****"
-    TabCompletion:
-      enabled: true
-    Ignoring:
-      enabled: true
-      aliases: []
-    ChatLogging:
-      enabled: true
-      privateMessages: true
-      console: true
-      file: true
-    MOTD:
-      enabled: true
-      message:
-        - "This is line 1"
-        - "This is line 2"
-        - "Placeholders do work in here %name%"
+  #-----------------------#
     VersionChecker:
       enabled: true
       checkOnAdminLogin: true
+  #-----------------------#
   PermissionsManager:
     defaultPrefix: "&7[Member]"
     defaultSuffix: "&r"
