@@ -1,4 +1,4 @@
-# Bungee Chat configuration by shawn_ian (v9)
+# Bungee Chat configuration by shawn_ian (v10)
 #
 # Information about the placeholders can be found here:
 # https://github.com/AuraDevelopmentTeam/BungeeChatWiki/wiki/Placeholders
@@ -10,7 +10,7 @@
 # You can change the settings and messages/formats of the plugin in this file.
 # Please do not change the 'Version' value, or else the plugin might not work.
 
-Version: 9.3
+Version: 10.0
 
 Settings:
   Modules:
@@ -144,6 +144,12 @@ Settings:
       privateMessages: true
       console: true
       file: true
+    MOTD:
+      enabled: true
+      message:
+        - "This is line 1"
+        - "This is line 2"
+        - "Placeholders do work in here %name%"
     VersionChecker:
       enabled: true
       checkOnAdminLogin: true
