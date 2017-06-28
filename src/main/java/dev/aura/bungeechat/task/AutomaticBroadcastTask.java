@@ -28,9 +28,6 @@ public class AutomaticBroadcastTask {
         ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(),
                 () -> {
                     MessagesService.sendToMatchingPlayers(PlaceHolderUtil.formatMessage(messages.get(current), new BungeeChatContext()));
-                    BungeeChatContext context = new BungeeChatContext();
-                    context.setMessage(messages.get(current));
-                    ChatLoggingManager.logMessage("BROADCAST", context);
                     next();
                 }, time, time, TimeUnit.SECONDS);
     }
