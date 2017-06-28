@@ -120,6 +120,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().unregisterCommand(bungeeChatCommand);
         ProxyServer.getInstance().getPluginManager().unregisterListener(channelTypeCorrectorListener);
 
+        ProxyServer.getInstance().getScheduler().cancel(this);
+
         // Just to be sure
         ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
         ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
