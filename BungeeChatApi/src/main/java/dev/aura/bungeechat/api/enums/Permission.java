@@ -11,7 +11,7 @@ public enum Permission {
     BUNGEECHAT_SETPREFIX("admin.setprefix"),
     BUNGEECHAT_SETSUFFIX("admin.setsuffix"),
     BUNGEECHAT_MODULES("admin.modules"),
-    CHECK_VERSION("admin.checkversion"),
+    CHECK_VERSION("admin.checkversion", false),
 
     USE_COLORED_CHAT("chat.colors"),
 
