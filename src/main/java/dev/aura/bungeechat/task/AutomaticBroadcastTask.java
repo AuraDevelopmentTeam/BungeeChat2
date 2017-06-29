@@ -10,28 +10,26 @@ import net.md_5.bungee.api.ProxyServer;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class AutomaticBroadcastTask {
+public class AutomaticBroadcastTask implements RepeatingTask {
 
     private static ArrayList<String> messages;
     private static int current = 0;
 
-    public static void startAutoBroadcast() {
+    @Override
+    public void start() {
         if (BungeecordModuleManager.ALERT_MODULE.getModuleSection().getBoolean("automaticBroadcast.enabled")) {
             messages = (ArrayList<String>) BungeecordModuleManager.ALERT_MODULE.getModuleSection().getStringList("automaticBroadcast.messages");
             int interval = BungeecordModuleManager.ALERT_MODULE.getModuleSection().getInt("automaticBroadcast.interval");
-            startTask(interval);
+            ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(),
+                    () -> {
+                        MessagesService.sendToMatchingPlayers(PlaceHolderUtil.formatMessage(messages.get(current), new BungeeChatContext()));
+                        next();
+                    }, interval, interval, TimeUnit.SECONDS);
         }
     }
 
-    private static void startTask(int time) {
-        ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(),
-                () -> {
-                    MessagesService.sendToMatchingPlayers(PlaceHolderUtil.formatMessage(messages.get(current), new BungeeChatContext()));
-                    next();
-                }, time, time, TimeUnit.SECONDS);
-    }
-
-    private static void next() {
+    @Override
+    public void next() {
         current++;
         if ((current + 1) > (messages.size())) {
             current = 0;

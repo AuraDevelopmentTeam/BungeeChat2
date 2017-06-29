@@ -7,6 +7,7 @@ import net.md_5.bungee.api.ProxyServer;
 
 public class AlertModule extends Module {
     private AlertCommand alertCommand;
+    private AutomaticBroadcastTask automaticBroadcastTask;
 
     @Override
     public String getName() {
@@ -16,9 +17,10 @@ public class AlertModule extends Module {
     @Override
     public void onEnable() {
         alertCommand = new AlertCommand(this);
+        automaticBroadcastTask = new AutomaticBroadcastTask();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(BungeeChat.getInstance(), alertCommand);
-        AutomaticBroadcastTask.startAutoBroadcast();
+        automaticBroadcastTask.start();
     }
 
     @Override
