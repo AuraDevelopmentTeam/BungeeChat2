@@ -2,12 +2,17 @@ package dev.aura.bungeechat.message;
 
 import java.text.SimpleDateFormat;
 
+import dev.aura.bungeechat.account.BungeecordAccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.AccountType;
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolder;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.TimeUtil;
 import lombok.experimental.UtilityClass;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class PlaceHolders {
@@ -53,6 +58,9 @@ public class PlaceHolders {
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%muted_until%",
                 context -> dateFormat.format(context.getSender().get().getMutedUntil()), BungeeChatContext.HAS_SENDER)
                         .createAliases("%sender_muted_until%"));
+        PlaceHolderManager.registerPlaceholder(
+                new PlaceHolder("%server_online%", context -> getLocalPlayerCount(context.getSender().get()),
+                        BungeeChatContext.HAS_SENDER).createAliases("%sender_server_online%"));
 
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_name%",
                 context -> context.getTarget().get().getName(), BungeeChatContext.HAS_TARGET));
@@ -74,11 +82,27 @@ public class PlaceHolders {
                 context -> context.getTarget().get().getServerIP(), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_muted_until%",
                 context -> dateFormat.format(context.getSender().get().getMutedUntil()), BungeeChatContext.HAS_TARGET));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_server_online%",
+                context -> getLocalPlayerCount(context.getTarget().get()), BungeeChatContext.HAS_TARGET));
 
         PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%channel%", context -> context.getChannel().get(), BungeeChatContext.HAS_CHANNEL));
         PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%message%", context -> PlaceHolderUtil.escapeAltColorCodes(context.getMessage().get()),
                         BungeeChatContext.HAS_MESSAGE).createAliases("%command%"));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%network_online%", context -> getTotalPlayerCount()));
+    }
+
+    private static String getLocalPlayerCount(BungeeChatAccount player) {
+        if (player.getAccountType() == AccountType.CONSOLE)
+            return getTotalPlayerCount();
+
+        ProxiedPlayer nativePlayer = (ProxiedPlayer) BungeecordAccountManager.getCommandSender(player).get();
+
+        return Integer.toString(nativePlayer.getServer().getInfo().getPlayers().size());
+    }
+
+    private static String getTotalPlayerCount() {
+        return Integer.toString(ProxyServer.getInstance().getPlayers().size());
     }
 }
