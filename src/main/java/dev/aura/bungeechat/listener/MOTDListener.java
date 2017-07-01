@@ -7,10 +7,12 @@ import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
@@ -31,12 +33,14 @@ public class MOTDListener implements Listener {
 
         joinedPlayers.add(uuid);
 
-        BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(player).get();
-        List<String> motd = BungeecordModuleManager.MOTD_MODULE.getModuleSection().getStringList("message");
+        if (PermissionManager.hasPermission(player, Permission.MESSAGE_MOTD)) {
+            BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(player).get();
+            List<String> motd = BungeecordModuleManager.MOTD_MODULE.getModuleSection().getStringList("message");
 
-        String message = motd.stream().collect(Collectors.joining("\n"));
-        MessagesService.sendMessage(player,
-                PlaceHolderUtil.formatMessage(message, new BungeeChatContext(bungeeChatAccount)));
+            String message = motd.stream().collect(Collectors.joining("\n"));
+            MessagesService.sendMessage(player,
+                    PlaceHolderUtil.formatMessage(message, new BungeeChatContext(bungeeChatAccount)));
+        }
     }
 
     @EventHandler

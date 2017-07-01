@@ -46,7 +46,8 @@ public enum Permission {
 
     MESSAGE_JOIN("message.join"),
     MESSAGE_LEAVE("message.leave"),
-    MESSAGE_SWITCH("message.switch");
+    MESSAGE_SWITCH("message.switch"),
+    MESSAGE_MOTD("message.motd");
 
     @Getter
     private final String stringedPermission;
