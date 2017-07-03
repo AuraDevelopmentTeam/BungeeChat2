@@ -248,7 +248,7 @@ Messages:
   suffixRemoved: "&eSuffix of %name% has been removed!"
   suffixSet: "&eSuffix of %name% has been set to %suffix%."
 # Update available Message
-  updateAvailable: "&aAn update for Bungee Chat is available! Version &6%message%&a. Download it at: https://www.spigotmc.org/resources/bungee-chat.12592/"
+  updateAvailable: "&aAn update for Bungee Chat is available! Version &6%message%&a. Download it at: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
 
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"
