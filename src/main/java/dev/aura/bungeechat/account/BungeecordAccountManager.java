@@ -1,13 +1,15 @@
 package dev.aura.bungeechat.account;
 
-import java.util.Map.Entry;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import net.md_5.bungee.api.CommandSender;
@@ -22,6 +24,7 @@ import net.md_5.bungee.event.EventPriority;
 
 public class BungeecordAccountManager extends AccountManager implements Listener {
     protected static ConcurrentMap<UUID, CommandSender> nativeObjects = new ConcurrentHashMap<>();
+    protected static List<UUID> newPlayers = new LinkedList<>();
 
     public static Optional<BungeeChatAccount> getAccount(CommandSender player) {
         if (player instanceof ProxiedPlayer)
@@ -41,25 +44,37 @@ public class BungeecordAccountManager extends AccountManager implements Listener
     }
 
     public static void loadAccount(UUID uuid) {
-        Entry<BungeeChatAccount, Boolean> loadedAccount = accountStorage.load(uuid);
+        AccountInfo loadedAccount = accountStorage.load(uuid);
 
-        accounts.put(uuid, loadedAccount.getKey());
-        nativeObjects.put(uuid, getCommandSenderFromAccount(loadedAccount.getKey()));
+        accounts.put(uuid, loadedAccount.getAccount());
+        nativeObjects.put(uuid, getCommandSenderFromAccount(loadedAccount.getAccount()));
 
-        if (loadedAccount.getValue()) {
-            saveAccount(loadedAccount.getKey());
+        if (loadedAccount.isForceSave()) {
+            saveAccount(loadedAccount.getAccount());
+        }
+        
+        if(loadedAccount.isNewAccount()) {
+            newPlayers.add(loadedAccount.getAccount().getUniqueId());
         }
     }
 
     public static void unloadAccount(UUID uuid) {
         Optional<BungeeChatAccount> account = getAccount(uuid);
 
-        account.ifPresent(BungeecordAccountManager::unloadAccount);
+        account.ifPresent(acc -> {
+            unloadAccount(acc);
+            
+            newPlayers.remove(acc.getUniqueId());
+        });
     }
 
     public static void unloadAccount(BungeeChatAccount account) {
         AccountManager.unloadAccount(account);
         nativeObjects.remove(account.getUniqueId());
+    }
+    
+    public static boolean isNew(UUID uuid) {
+        return newPlayers.contains(uuid);
     }
 
     private static CommandSender getCommandSenderFromAccount(BungeeChatAccount account) {

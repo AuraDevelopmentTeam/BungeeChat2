@@ -7,13 +7,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Timestamp;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 
 import dev.aura.bungeechat.BungeeChat;
+import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.api.enums.ChannelType;
@@ -61,12 +60,12 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Entry<BungeeChatAccount, Boolean> load(UUID uuid) {
+    public AccountInfo load(UUID uuid) {
         try {
             File accountFile = new File(getUserDataDir(), uuid.toString() + FILE_EXTENSION);
 
             if (!accountFile.exists())
-                return new SimpleEntry<>(new Account(uuid), false);
+                return new AccountInfo(new Account(uuid), false, true);
 
             @Cleanup
             FileInputStream saveFile = new FileInputStream(accountFile);
@@ -76,15 +75,15 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
             // Read Name (and discard it (for now))
             save.readObject();
 
-            return new SimpleEntry<>(new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
+            return new AccountInfo(new Account(uuid, (ChannelType) save.readObject(), (boolean) save.readObject(),
                     (boolean) save.readObject(), (boolean) save.readObject(), (boolean) save.readObject(),
                     (BlockingQueue<UUID>) save.readObject(), (Timestamp) save.readObject(),
                     Optional.ofNullable((String) save.readObject()), Optional.ofNullable((String) save.readObject())),
-                    false);
+                    false, false);
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             LoggerHelper.warning("Could not load player " + uuid, e);
 
-            return new SimpleEntry<>(new Account(uuid), false);
+            return new AccountInfo(new Account(uuid), false, true);
         }
     }
 }

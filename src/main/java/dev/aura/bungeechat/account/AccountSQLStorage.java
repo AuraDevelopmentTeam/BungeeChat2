@@ -7,15 +7,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
+import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.api.enums.ChannelType;
@@ -139,7 +138,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     }
 
     @Override
-    public Entry<BungeeChatAccount, Boolean> load(UUID uuid) {
+    public AccountInfo load(UUID uuid) {
         try {
             byte[] uuidBytes = getBytesFromUUID(uuid);
 
@@ -151,7 +150,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             loadAccount.clearParameters();
 
             if (!resultLoadAccount.next())
-                return new SimpleEntry<>(new Account(uuid), true);
+                return new AccountInfo(new Account(uuid), true, true);
 
             // getIgnores
             getIgnores.setBytes(1, uuidBytes);
@@ -166,7 +165,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                 ignores.add(getUUIDFromBytes(resultGetIgnores.getBytes(tableIgnoresColumnIgnores)));
             }
 
-            return new SimpleEntry<>(
+            return new AccountInfo(
                     new Account(uuid, ChannelType.valueOf(resultLoadAccount.getString(tableAccountsColumnChannelType)),
                             resultLoadAccount.getBoolean(tableAccountsColumnVanished),
                             resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
@@ -175,11 +174,11 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                             resultLoadAccount.getTimestamp(tableAccountsColumnMutedUntil),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix))),
-                    false);
+                    false, true);
         } catch (SQLException e) {
             LoggerHelper.error("Could not load user " + uuid + " from database!", e);
 
-            return new SimpleEntry<>(new Account(uuid), true);
+            return new AccountInfo(new Account(uuid), true, true);
         }
     }
 

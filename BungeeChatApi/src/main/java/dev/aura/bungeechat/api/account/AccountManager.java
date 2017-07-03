@@ -2,7 +2,6 @@ package dev.aura.bungeechat.api.account;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,12 +57,12 @@ public class AccountManager {
     }
 
     public static void loadAccount(UUID uuid) {
-        Entry<BungeeChatAccount, Boolean> loadedAccount = accountStorage.load(uuid);
+        AccountInfo loadedAccount = accountStorage.load(uuid);
 
-        accounts.put(uuid, loadedAccount.getKey());
+        accounts.put(uuid, loadedAccount.getAccount());
 
-        if (loadedAccount.getValue()) {
-            saveAccount(loadedAccount.getKey());
+        if (loadedAccount.isForceSave()) {
+            saveAccount(loadedAccount.getAccount());
         }
     }
 
