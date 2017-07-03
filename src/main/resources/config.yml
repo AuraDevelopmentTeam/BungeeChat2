@@ -27,7 +27,7 @@ Settings:
         interval: 20
         messages:
          - "Message 1"
-         - "Messaeg 2"
+         - "Message 2\nWith newline!"
   #-----------------------#
     AntiAdvertising:
       enabled: true
