@@ -1,6 +1,8 @@
 package dev.aura.bungeechat.account;
 
 import java.util.Map.Entry;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,6 +12,7 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
@@ -60,12 +63,17 @@ public class BungeecordAccountManager extends AccountManager implements Listener
     }
 
     private static CommandSender getCommandSenderFromAccount(BungeeChatAccount account) {
+        ProxyServer instance = ProxyServer.getInstance();
+
+        if (instance == null)
+            return new DummyConsole();
+
         switch (account.getAccountType()) {
         case PLAYER:
-            return ProxyServer.getInstance().getPlayer(account.getUniqueId());
+            return instance.getPlayer(account.getUniqueId());
         case CONSOLE:
         default:
-            return ProxyServer.getInstance().getConsole();
+            return instance.getConsole();
         }
     }
 
@@ -81,5 +89,64 @@ public class BungeecordAccountManager extends AccountManager implements Listener
 
     static {
         nativeObjects.put(consoleAccount.getUniqueId(), getCommandSenderFromAccount(consoleAccount));
+    }
+
+    private static class DummyConsole implements CommandSender {
+        @Override
+        public String getName() {
+            return null;
+        }
+
+        @Override
+        @Deprecated
+        public void sendMessage(String message) {
+            // Do nothing
+        }
+
+        @Override
+        @Deprecated
+        public void sendMessages(String... messages) {
+            // Do nothing
+        }
+
+        @Override
+        public void sendMessage(BaseComponent... message) {
+            // Do nothing
+        }
+
+        @Override
+        public void sendMessage(BaseComponent message) {
+            // Do nothing
+        }
+
+        @Override
+        public Collection<String> getGroups() {
+            return null;
+        }
+
+        @Override
+        public void addGroups(String... groups) {
+            // Do nothing
+        }
+
+        @Override
+        public void removeGroups(String... groups) {
+            // Do nothing
+        }
+
+        @Override
+        public boolean hasPermission(String permission) {
+            return true;
+        }
+
+        @Override
+        public void setPermission(String permission, boolean value) {
+            // Do nothing
+        }
+
+        @Override
+        public Collection<String> getPermissions() {
+            return Arrays.asList("*");
+        }
     }
 }
