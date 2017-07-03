@@ -24,6 +24,7 @@ import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.BungeeChatCommand;
 import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.event.BungeeChatEventsListener;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
 import dev.aura.bungeechat.hook.metrics.MetricManager;
@@ -52,6 +53,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private BungeeChatCommand bungeeChatCommand;
     private BungeecordAccountManager bungeecordAccountManager;
     private ChannelTypeCorrectorListener channelTypeCorrectorListener;
+    private BungeeChatEventsListener bungeeChatEventsListener;
 
     @Override
     public void onLoad() {
@@ -90,10 +92,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         bungeeChatCommand = new BungeeChatCommand();
         bungeecordAccountManager = new BungeecordAccountManager();
         channelTypeCorrectorListener = new ChannelTypeCorrectorListener();
+        bungeeChatEventsListener = new BungeeChatEventsListener();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, bungeeChatCommand);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeecordAccountManager);
         ProxyServer.getInstance().getPluginManager().registerListener(this, channelTypeCorrectorListener);
+        ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
 
         Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
 
@@ -119,6 +123,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().unregisterListener(bungeecordAccountManager);
         ProxyServer.getInstance().getPluginManager().unregisterCommand(bungeeChatCommand);
         ProxyServer.getInstance().getPluginManager().unregisterListener(channelTypeCorrectorListener);
+        ProxyServer.getInstance().getPluginManager().unregisterListener(bungeeChatEventsListener);
 
         ProxyServer.getInstance().getScheduler().cancel(this);
 
