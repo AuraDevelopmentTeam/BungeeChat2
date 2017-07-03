@@ -1,7 +1,10 @@
 package dev.aura.bungeechat.message;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
+import dev.aura.bungeechat.api.account.AccountManager;
+import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Config;
@@ -64,10 +67,15 @@ public class PlaceHolderUtil {
     }
 
     public static String formatMessage(String message, BungeeChatContext context) {
-        return transformAltColorCodes(PlaceHolderManager.processMessage(message, context));
+        return transformAltColorCodes(PlaceHolderManager.processMessage(message, context), context.getSender());
     }
 
-    public static String transformAltColorCodes(String message) {
+    public static String transformAltColorCodes(String message, Optional<BungeeChatAccount> account) {
+        BungeeChatAccount permsAccount = account.orElseGet(() -> AccountManager.getConsoleAccount());
+        
+        // TODO generate pattern
+        // TODO cache pattern
+
         message = colorCodeDetection.matcher(message).replaceAll(ChatColor.COLOR_CHAR + "$1");
         message = duplicateDection.matcher(message).replaceAll(altColorString);
 

@@ -3,6 +3,7 @@ package dev.aura.bungeechat.command;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Context;
 import dev.aura.bungeechat.message.Format;
@@ -26,12 +27,9 @@ public class AlertCommand extends BaseCommand {
             if (args.length < 1) {
                 MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(sender, "/alert <message>"));
             } else {
-                String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
-
-                if (PermissionManager.hasPermission(sender, Permission.USE_COLORED_CHAT)) {
-                    finalMessage = PlaceHolderUtil.transformAltColorCodes(finalMessage);
-                }
-
+                String finalMessage = PlaceHolderUtil.transformAltColorCodes(
+                        Arrays.stream(args).collect(Collectors.joining(" ")),
+                        BungeecordAccountManager.getAccount(sender));
                 String format = Format.ALERT.get(new Context(sender, finalMessage));
 
                 ProxyServer.getInstance().broadcast(format);

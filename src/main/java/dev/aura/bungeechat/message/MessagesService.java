@@ -235,11 +235,7 @@ public class MessagesService {
 
         BungeeChatAccount playerAccount = account.get();
         CommandSender player = BungeecordAccountManager.getCommandSender(playerAccount).get();
-        String message = context.getMessage().get();
-
-        if (PermissionManager.hasPermission(player, Permission.USE_COLORED_CHAT)) {
-            message = PlaceHolderUtil.transformAltColorCodes(message);
-        }
+        String message = PlaceHolderUtil.transformAltColorCodes(context.getMessage().get(), account);
 
         if (runFilters) {
             try {

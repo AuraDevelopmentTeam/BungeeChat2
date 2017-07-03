@@ -99,8 +99,10 @@ public class BungeeChatCommand extends BaseCommand {
                 }
 
                 return;
-            } else if (args[0].equalsIgnoreCase("modules") && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_MODULES)) {
-                MessagesService.sendMessage(sender, prefix + ChatColor.GRAY + "Active Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
+            } else if (args[0].equalsIgnoreCase("modules")
+                    && PermissionManager.hasPermission(sender, Permission.BUNGEECHAT_MODULES)) {
+                MessagesService.sendMessage(sender, prefix + ChatColor.GRAY + "Active Modules: " + ChatColor.GREEN
+                        + BungeecordModuleManager.getActiveModuleString());
                 return;
             }
         }

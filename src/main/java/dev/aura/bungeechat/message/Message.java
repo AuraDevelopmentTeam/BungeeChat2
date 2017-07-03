@@ -24,7 +24,7 @@ public enum Message {
     REPLY_OFFLINE("replyOffline"),
     HAS_MESSAGER_DISABLED("hasMessagerDisabled"),
 
-    //Clear Chat
+    // Clear Chat
     CLEARED_LOCAL("clearedLocal"),
     CLEARED_GLOBAL("clearedGlobal"),
 
@@ -77,10 +77,10 @@ public enum Message {
     PREFIX_SET("prefixSet"),
     SUFFIX_REMOVED("suffixRemoved"),
     SUFFIX_SET("suffixSet"),
-    
+
     // Update available Message
     UPDATE_AVAILABLE("updateAvailable");
-    
+
     @Getter
     private final String stringPath;
 
