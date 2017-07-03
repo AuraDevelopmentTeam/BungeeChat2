@@ -91,9 +91,6 @@ public class MessagesService {
         case HELP:
             sendHelpMessage(context);
             break;
-        case GROUP:
-            // TODO: Feature comes with 2.1.0
-            break;
         default:
             // TODO? Maybe do nothing? Throw an Exception?
             break;
