@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
@@ -24,7 +25,7 @@ public class BungeeChatEventsListener implements Listener {
 
         joinedPlayers.add(uuid);
 
-        // TODO: Fire BungeeChatJoinEvent
+        ProxyServer.getInstance().getPluginManager().callEvent(new BungeeChatJoinEvent(player));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -37,6 +38,6 @@ public class BungeeChatEventsListener implements Listener {
 
         joinedPlayers.remove(uuid);
 
-        // TODO: Fire BungeeChatLeaveEvent
+        ProxyServer.getInstance().getPluginManager().callEvent(new BungeeChatLeaveEvent(player));
     }
 }
