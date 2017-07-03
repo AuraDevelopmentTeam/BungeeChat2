@@ -24,6 +24,7 @@ Settings:
         - bbc
       automaticBroadcast:
         enabled: false
+        random: false
         interval: 20
         messages:
          - "Message 1"

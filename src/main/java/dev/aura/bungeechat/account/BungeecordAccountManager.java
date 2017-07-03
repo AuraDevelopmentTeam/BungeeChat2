@@ -52,8 +52,8 @@ public class BungeecordAccountManager extends AccountManager implements Listener
         if (loadedAccount.isForceSave()) {
             saveAccount(loadedAccount.getAccount());
         }
-        
-        if(loadedAccount.isNewAccount()) {
+
+        if (loadedAccount.isNewAccount()) {
             newPlayers.add(loadedAccount.getAccount().getUniqueId());
         }
     }
@@ -63,7 +63,6 @@ public class BungeecordAccountManager extends AccountManager implements Listener
 
         account.ifPresent(acc -> {
             unloadAccount(acc);
-            
             newPlayers.remove(acc.getUniqueId());
         });
     }
@@ -72,7 +71,7 @@ public class BungeecordAccountManager extends AccountManager implements Listener
         AccountManager.unloadAccount(account);
         nativeObjects.remove(account.getUniqueId());
     }
-    
+
     public static boolean isNew(UUID uuid) {
         return newPlayers.contains(uuid);
     }
