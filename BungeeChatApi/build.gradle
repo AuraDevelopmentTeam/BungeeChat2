@@ -1,8 +1,12 @@
-apply from: "../GradleCommon/common.gradle"
-
 plugins {
     id "me.champeau.gradle.jmh" version "0.4.3"
 }
+
+jmh {
+    jmhVersion = "1.19"
+}
+
+apply from: "../GradleCommon/common.gradle"
 
 repositories {
     // Additional repositories
