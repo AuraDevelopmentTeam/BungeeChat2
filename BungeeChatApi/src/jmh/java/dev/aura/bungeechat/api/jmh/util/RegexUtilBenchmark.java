@@ -46,7 +46,7 @@ public class RegexUtilBenchmark {
     }
 
     @State(Scope.Thread)
-    public static class MatchingState {
+    public static class MatchingState extends CompilationState {
         @Param({ "10", "100", "1000" })
         public int length;
 
@@ -56,8 +56,8 @@ public class RegexUtilBenchmark {
 
         @Setup(Level.Trial)
         public void compilePattern() {
-            pattern = RegexUtil.parseWildcardToPattern(CompilationState.pattern, Pattern.CASE_INSENSITIVE, false, true,
-                    true, true);
+            pattern = RegexUtil.parseWildcardToPattern(CompilationState.pattern, Pattern.CASE_INSENSITIVE, freeMatching, leetSpeak,
+                    ignoreSpaces, ignoreDuplicateLetters);
             stringToMatch = randStrGen.generateByRegex(".{" + length + '}');
         }
     }

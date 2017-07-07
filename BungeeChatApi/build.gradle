@@ -3,9 +3,11 @@ plugins {
 }
 
 jmh {
-    benchmarkMode = ["thrpt", "avgt"]
-    fork = 5
-    threads = Runtime.getRuntime().availableProcessors() / 2
+    iterations = 10
+    benchmarkMode = ["sample"]
+    fork = 2
+    resultFormat = 'CSV'
+    threads = 1
     timeUnit = "ms"
     warmupIterations = 10
     jmhVersion = "1.19"
