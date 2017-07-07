@@ -286,10 +286,10 @@ public class MessagesService {
     }
 
     @SuppressWarnings("deprecation")
-    public static void sendMessage(CommandSender sender, String message) {
+    public static void sendMessage(CommandSender recipient, String message) {
         if ((message == null) || message.isEmpty())
             return;
 
-        sender.sendMessage(message);
+        recipient.sendMessage(message);
     }
 }

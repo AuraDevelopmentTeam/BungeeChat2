@@ -50,7 +50,8 @@ Settings:
       interval: 20
       messages:
        - "Message 1"
-       - "Message 2\nWith newline!"
+       - "Message 2\nwith newline!"
+       - "&6Message 3 &lwith &4colors &band &r&0Formats &mtoo!"
   #-----------------------#
     ChatLock:
       enabled: true
@@ -129,6 +130,7 @@ Settings:
         - "This is line 1"
         - "This is line 2"
         - "Placeholders do work in here %name%"
+        - "&6Color&4codes &land &r&0Formats &mtoo!"
   #-----------------------#
     Muting:
       enabled: true
@@ -184,6 +186,14 @@ Settings:
     VersionChecker:
       enabled: true
       checkOnAdminLogin: true
+  #-----------------------#
+    WelcomeMessage:
+      enabled: true
+      message:
+        - "This is line 1"
+        - "This is line 2"
+        - "Placeholders do work in here %name%"
+        - "&6Color&4codes &land &r&0Formats &mtoo!"
   #-----------------------#
   PermissionsManager:
     defaultPrefix: "&7[Member]"
