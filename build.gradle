@@ -23,4 +23,6 @@ dependencies {
     compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    
+    testCompile "com.google.caliper:caliper:1.0-beta-2"
 }
