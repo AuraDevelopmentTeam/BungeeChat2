@@ -22,13 +22,6 @@ Settings:
         - bc
         - balert
         - bbc
-      automaticBroadcast:
-        enabled: false
-        random: false
-        interval: 20
-        messages:
-         - "Message 1"
-         - "Message 2\nWith newline!"
   #-----------------------#
     AntiAdvertising:
       enabled: true
@@ -50,6 +43,14 @@ Settings:
         - kut
         - tyfus
       replacement: "****"
+  #-----------------------#
+    AutoBroadcast:
+      enabled: false
+      random: false
+      interval: 20
+      messages:
+       - "Message 1"
+       - "Message 2\nWith newline!"
   #-----------------------#
     ChatLock:
       enabled: true
