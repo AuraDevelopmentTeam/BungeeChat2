@@ -2,7 +2,7 @@ Version 2.1.0
 -------------
 
 \+ Added AutoBroadcast Module.  
-\+ Added MOTD Module.
+\+ Added MOTD Module.  
 \+ Added WelcomeMessage Module.  
 \+ Added key to customize chatlog file path.  
 \+ Added separate permissions for colors and formats for messages.  
