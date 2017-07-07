@@ -1,3 +1,15 @@
+Version 2.1.0
+-------------
+
+\+ Added AutoBroadcast Module.  
+\+ Added MOTD Module.
+\+ Added WelcomeMessage Module.  
+\+ Added key to customize chatlog file path.  
+\+ Added separate permissions for colors and formats for messages.  
+\* Fixed no permission message on join when user does not have permission `bungeechat.admin.checkversion`.  
+\* Fixed Metrics for real.  
+
+
 Version 2.0.7
 -------------
 
