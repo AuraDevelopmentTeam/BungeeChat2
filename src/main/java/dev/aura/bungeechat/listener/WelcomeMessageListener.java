@@ -21,6 +21,10 @@ public class WelcomeMessageListener implements Listener {
         ProxiedPlayer player = e.getPlayer();
 
         BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(player).get();
+
+        if (!BungeecordAccountManager.isNew(bungeeChatAccount.getUniqueId()))
+            return;
+
         List<String> welcome = BungeecordModuleManager.WELCOME_MESSAGE_MODULE.getModuleSection()
                 .getStringList("message");
 
