@@ -63,6 +63,7 @@ Settings:
       privateMessages: true
       console: true
       file: true
+      logFile: "logs/%year%-%month%-%day%-chat.log"
   #-----------------------#
     ClearChat:
       enabled: true

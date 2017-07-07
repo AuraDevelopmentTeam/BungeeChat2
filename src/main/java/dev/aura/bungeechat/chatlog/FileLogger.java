@@ -4,61 +4,48 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
 
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
-import dev.aura.bungeechat.api.utils.TimeUtil;
+import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.message.Format;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class FileLogger implements ChatLogger, AutoCloseable {
-    private File dataFolder;
+    private static final BungeeChatContext context = new BungeeChatContext();
+    private static final File pluginDir = BungeeChat.getInstance().getConfigFolder();
+
+    private final String logFile;
+    private String oldFile = "";
     private File saveTo;
     private FileWriter fw;
     private PrintWriter pw;
-    private Timer timer;
-
-    private static Date getMidnight() {
-        Calendar now = new GregorianCalendar();
-        now.add(Calendar.DAY_OF_MONTH, 1);
-        Calendar midnight = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
-                now.get(Calendar.DATE), 0, 0);
-
-        return midnight.getTime();
-    }
-
-    public FileLogger() {
-        dataFolder = new File(BungeeChat.getInstance().getConfigFolder(), "logs");
-        dataFolder.mkdirs();
-
-        initLogFile();
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new LogFileChanger(), getMidnight(), TimeUnit.DAYS.toMillis(1));
-    }
 
     @Override
     public void log(BungeeChatContext context) {
+        initLogFile();
+
         pw.println(Format.CHAT_LOGGING_FILE.get(context));
         pw.flush();
     }
 
     @Override
     public void close() throws Exception {
-        timer.cancel();
-
         fw.close();
         pw.close();
     }
 
     private void initLogFile() {
+        String newFile = PlaceHolderManager.processMessage(logFile, context);
+
+        if (oldFile.equals(newFile))
+            return;
+
         try {
-            saveTo = new File(dataFolder, TimeUtil.getDate().replace('/', '-') + "-chat.log");
+            saveTo = new File(pluginDir, newFile);
+            Optional.ofNullable(saveTo.getParentFile()).ifPresent(File::mkdirs);
 
             if (!saveTo.exists()) {
                 saveTo.createNewFile();
@@ -68,13 +55,6 @@ public class FileLogger implements ChatLogger, AutoCloseable {
             pw = new PrintWriter(fw);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private class LogFileChanger extends TimerTask {
-        @Override
-        public void run() {
-            initLogFile();
         }
     }
 }

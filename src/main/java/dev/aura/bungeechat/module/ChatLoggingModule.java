@@ -29,7 +29,7 @@ public class ChatLoggingModule extends Module {
             ChatLoggingManager.addLogger(consoleLogger);
         }
         if (section.getBoolean("file")) {
-            fileLogger = new FileLogger();
+            fileLogger = new FileLogger(section.getString("logFile"));
 
             ChatLoggingManager.addLogger(fileLogger);
         }
