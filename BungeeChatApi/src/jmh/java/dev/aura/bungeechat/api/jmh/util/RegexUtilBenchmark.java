@@ -1,32 +1,64 @@
 package dev.aura.bungeechat.api.jmh.util;
 
+import java.util.Random;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Level;
+import org.openjdk.jmh.annotations.Param;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.Blackhole;
 
 import dev.aura.bungeechat.api.utils.RegexUtil;
+import net.moznion.random.string.RandomStringGenerator;
 
 public class RegexUtilBenchmark {
     @Benchmark
-    public void leetSpeakPatterns() {
-        for (RegexUtil.LeetSpeakPattern leet : RegexUtil.LEET_PATTERNS.values()) {
-            Pattern pattern = Pattern.compile(leet.getPattern());
+    public void compilation(CompilationState state, Blackhole blackhole) {
+        Pattern pattern = RegexUtil.parseWildcardToPattern(CompilationState.pattern, Pattern.CASE_INSENSITIVE,
+                state.freeMatching, state.leetSpeak, state.ignoreSpaces, state.ignoreDuplicateLetters);
 
-            for (String replacement : leet.getLeetAlternatives()) {
-                pattern.matcher(replacement).matches();
-            }
-        }
+        blackhole.consume(pattern);
     }
 
     @Benchmark
-    public void leetSpeakWildcard() {
-        for (RegexUtil.LeetSpeakPattern leet : RegexUtil.LEET_PATTERNS.values()) {
-            Pattern pattern = RegexUtil.parseWildcardToPattern(leet.getLetter(), Pattern.CASE_INSENSITIVE, false, true,
-                    false, false);
+    public void matching(MatchingState state, Blackhole blackhole) {
+        Matcher match = state.pattern.matcher(state.stringToMatch);
+        
+        blackhole.consume(match);
+    }
 
-            for (String replacement : leet.getLeetAlternatives()) {
-                pattern.matcher(replacement).matches();
-            }
+    @State(Scope.Thread)
+    public static class CompilationState {
+        @Param({ "false", "true" })
+        public boolean freeMatching;
+        @Param({ "false", "true" })
+        public boolean leetSpeak;
+        @Param({ "false", "true" })
+        public boolean ignoreSpaces;
+        @Param({ "false", "true" })
+        public boolean ignoreDuplicateLetters;
+
+        public static final String pattern = "*abcdefghijklmnopqrstuvwxyz?";
+    }
+
+    @State(Scope.Thread)
+    public static class MatchingState {
+        @Param({ "10", "100", "1000" })
+        public int length;
+
+        public Pattern pattern;
+        public String stringToMatch;
+        public RandomStringGenerator randStrGen = new RandomStringGenerator(new Random(0));
+
+        @Setup(Level.Trial)
+        public void compilePattern() {
+            pattern = RegexUtil.parseWildcardToPattern(CompilationState.pattern, Pattern.CASE_INSENSITIVE, false, true,
+                    true, true);
+            stringToMatch = randStrGen.generateByRegex(".{" + length + '}');
         }
     }
 

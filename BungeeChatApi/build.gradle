@@ -1,8 +1,13 @@
 plugins {
-    id "me.champeau.gradle.jmh" version "0.4.3"
+    id "me.champeau.gradle.jmh" version "0.4.4"
 }
 
 jmh {
+    benchmarkMode = ["thrpt", "avgt"]
+    fork = 5
+    threads = Runtime.getRuntime().availableProcessors() / 2
+    timeUnit = "ms"
+    warmupIterations = 10
     jmhVersion = "1.19"
 }
 
@@ -13,5 +18,5 @@ repositories {
 }
 
 dependencies {
-    // Additional dependencies
+    jmh "net.moznion:random-string:1.1.0"
 }
