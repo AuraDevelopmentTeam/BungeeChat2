@@ -40,6 +40,16 @@ test:
     paths:
     - $TEST_REPORTS
 
+benchmark:
+  stage: test
+  script:
+  - ./gradlew --console=plain jmh
+  - cp "BungeeChatApi/build/reports/jmh/results.txt" .
+  when: manual
+  artifacts:
+    paths:
+    - "results.txt"
+
 deploy:
   stage: deploy
   script:
