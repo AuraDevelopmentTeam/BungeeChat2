@@ -1,5 +1,9 @@
 apply from: "../GradleCommon/common.gradle"
 
+plugins {
+    id "me.champeau.gradle.jmh" version "0.4.3"
+}
+
 repositories {
     // Additional repositories
 }
