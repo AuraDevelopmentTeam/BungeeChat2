@@ -27,7 +27,7 @@ public class RegexUtilBenchmark {
     @Benchmark
     public void matching(MatchingState state, Blackhole blackhole) {
         Matcher match = state.pattern.matcher(state.stringToMatch);
-        
+
         blackhole.consume(match);
     }
 
@@ -42,7 +42,7 @@ public class RegexUtilBenchmark {
         @Param({ "false", "true" })
         public boolean ignoreDuplicateLetters;
 
-        public static final String pattern = "*abcdefghijklmnopqrstuvwxyz?";
+        public static final String pattern = "abcdefghijklmnopqrstuvwxyz*ABCDEFGHIJKLMNOPQRSTUVWXYZ?";
     }
 
     @State(Scope.Thread)
@@ -56,8 +56,8 @@ public class RegexUtilBenchmark {
 
         @Setup(Level.Trial)
         public void compilePattern() {
-            pattern = RegexUtil.parseWildcardToPattern(CompilationState.pattern, Pattern.CASE_INSENSITIVE, freeMatching, leetSpeak,
-                    ignoreSpaces, ignoreDuplicateLetters);
+            pattern = RegexUtil.parseWildcardToPattern(CompilationState.pattern, Pattern.CASE_INSENSITIVE, freeMatching,
+                    leetSpeak, ignoreSpaces, ignoreDuplicateLetters);
             stringToMatch = randStrGen.generateByRegex(".{" + length + '}');
         }
     }
