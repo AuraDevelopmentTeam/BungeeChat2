@@ -44,11 +44,11 @@ benchmark:
   stage: test
   script:
   - ./gradlew --console=plain jmh
-  - cp "BungeeChatApi/build/reports/jmh/results.csv" .
+  - cp "BungeeChatApi/build/reports/jmh/results.json" .
   when: manual
   artifacts:
     paths:
-    - "results.csv"
+    - "results.json"
 
 deploy:
   stage: deploy
