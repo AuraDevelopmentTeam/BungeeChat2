@@ -6,8 +6,8 @@ jmh {
     iterations = 10
     benchmarkMode = ["sample"]
     fork = 2
-    resultFormat = 'CSV'
-    threads = 1
+    resultFormat = "JSON"
+    threads = Runtime.getRuntime().availableProcessors() / 2
     timeUnit = "ms"
     warmupIterations = 10
     jmhVersion = "1.19"
