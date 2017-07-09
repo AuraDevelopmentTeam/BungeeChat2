@@ -2,6 +2,9 @@ Version 2.1.1
 -------------
 
 \* Fixed color codes not working properly.  
+\* Fixed aliases of `/msgtoggle` to registering.  
+\* Fixed `/msgtoggle` not working.  
+\* Fixed staffchat not working from console.  
 
 
 Version 2.1.0
