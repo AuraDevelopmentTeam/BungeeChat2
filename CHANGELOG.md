@@ -1,3 +1,8 @@
+Version 2.1.2
+-------------
+
+\* Fixed chatlogging causing exceptions on every message.  
+
 Version 2.1.1
 -------------
 

@@ -10,6 +10,7 @@ import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.message.Format;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
     private static final BungeeChatContext context = new BungeeChatContext();
     private static final File pluginDir = BungeeChat.getInstance().getConfigFolder();
 
-    private final String logFile;
+    private final String logFile = BungeecordModuleManager.CHAT_LOGGING_MODULE.getModuleSection().getString("logFile");
     private String oldFile = "";
     private File saveTo;
     private FileWriter fw;
