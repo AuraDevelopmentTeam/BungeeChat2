@@ -73,7 +73,7 @@ public interface BungeeChatAccount {
     }
 
     default public void toggleMessanger() {
-        setMessanger(!hasSocialSpyEnabled());
+        setMessanger(!hasMessangerEnabled());
     }
 
     default public void toggleSocialSpy() {
