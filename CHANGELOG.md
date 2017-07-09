@@ -2,6 +2,10 @@ Version 2.1.2
 -------------
 
 \* Fixed chatlogging causing exceptions on every message.  
+\* Changed license to GPL v3.0.  
+\* Removed obfuscation of code.  
+\* Made source available.  
+
 
 Version 2.1.1
 -------------
