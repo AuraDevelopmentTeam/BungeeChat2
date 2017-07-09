@@ -2,10 +2,6 @@ apply from: "GradleCommon/common.gradle"
 
 repositories {
     maven {
-        name "bungeeperms-repo"
-        url "http://repo.wea-ondara.net/repository/public/"
-    }
-    maven {
         name "jitpack.io"
         url "https://jitpack.io"
     }
