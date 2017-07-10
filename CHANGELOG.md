@@ -1,3 +1,9 @@
+Version 2.1.3
+-------------
+
+\* Fixed plugin not detecting outdated config.  
+
+
 Version 2.1.2
 -------------
 
