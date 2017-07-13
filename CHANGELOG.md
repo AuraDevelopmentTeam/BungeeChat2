@@ -1,3 +1,10 @@
+Version 2.1.4
+-------------
+
+\* Fixed config not being read as UTF-8.  
+\* Performance improvements.  
+
+
 Version 2.1.3
 -------------
 
