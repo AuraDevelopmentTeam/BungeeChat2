@@ -1,7 +1,8 @@
-# Bungee Chat configuration by shawn_ian (v10)
+# Bungee Chat configuration by shawn_ian & BrainStone (v10)
 #
-# Information about the placeholders can be found here:
-# https://github.com/AuraDevelopmentTeam/BungeeChatWiki/wiki/Placeholders
+# A full documentation fo the plugin (including things like the config or
+# placeholders) can be found at:
+# https://github.com/AuraDevelopmentTeam/BungeeChatWiki/wiki
 # You can report bugs or request features here:
 # https://github.com/AuraDevelopmentTeam/BungeeChat2/issues
 # You can contact a developer by joining our Discord server:
@@ -10,7 +11,7 @@
 # You can change the settings and messages/formats of the plugin in this file.
 # Please do not change the 'Version' value, or else the plugin might not work.
 
-Version: 10.0
+Version: 10.1
 
 Settings:
   Modules:
