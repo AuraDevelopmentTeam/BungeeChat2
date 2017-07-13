@@ -3,6 +3,7 @@ Version 2.1.4
 
 \+ Added server aliases.  
 \+ Added placeholders `%serveralias%`, `%sender_serveralias%` and `%target_serveralias%` for the server aliases.  
+\+ Added ability to filter commands in logging.  
 \* Fixed config not being read as UTF-8.  
 \* Fixed error related to bStats.  
 \* Performance improvements.  

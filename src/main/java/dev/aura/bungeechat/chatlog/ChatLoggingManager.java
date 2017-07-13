@@ -2,16 +2,20 @@ package dev.aura.bungeechat.chatlog;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
+import dev.aura.bungeechat.api.utils.RegexUtil;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ChatLoggingManager {
     private static List<ChatLogger> loggers = new LinkedList<>();
+    private static List<Pattern> filteredCommands = new LinkedList<>();
 
     public static void addLogger(ChatLogger logger) {
         loggers.add(logger);
@@ -45,7 +49,18 @@ public class ChatLoggingManager {
     }
 
     public static void logCommand(BungeeChatAccount account, String command) {
+        for (Pattern pattern : filteredCommands) {
+            if (pattern.matcher(command).find())
+                return;
+        }
+
         logMessage("COMMAND", account, command);
+    }
+
+    public static void loadFilteredCommands(List<String> commands) {
+        filteredCommands = commands.stream()
+                .map(command -> Pattern.compile('/' + RegexUtil.escapeRegex(command) + "\\b", Pattern.CASE_INSENSITIVE))
+                .collect(Collectors.toList());
     }
 
     private static Stream<ChatLogger> getStream() {

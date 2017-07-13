@@ -66,6 +66,10 @@ Settings:
       console: true
       file: true
       logFile: "logs/%year%-%month%-%day%-chat.log"
+      filteredCommands:
+      - login
+      - help
+      - pagination
   #-----------------------#
     ClearChat:
       enabled: true
