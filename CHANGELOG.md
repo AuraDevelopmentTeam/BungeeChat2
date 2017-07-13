@@ -2,6 +2,7 @@ Version 2.1.4
 -------------
 
 \* Fixed config not being read as UTF-8.  
+\* Fixed error related to bStats.  
 \* Performance improvements.  
 
 
