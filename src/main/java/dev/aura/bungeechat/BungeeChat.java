@@ -32,6 +32,7 @@ import dev.aura.bungeechat.listener.ChannelTypeCorrectorListener;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.message.PlaceHolders;
+import dev.aura.bungeechat.message.ServerAliases;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
@@ -106,6 +107,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         HookManager.addHook(storedDataHookName, new StoredDataHook());
         HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("defaultPrefix"),
                 permissionsManager.getString("defaultSuffix")));
+        ServerAliases.loadAliases();
 
         if (prinLoadScreen) {
             MetricManager.sendMetrics(this);

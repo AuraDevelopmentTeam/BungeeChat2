@@ -198,6 +198,11 @@ Settings:
   PermissionsManager:
     defaultPrefix: "&7[Member]"
     defaultSuffix: "&r"
+  #-----------------------#
+  ServerAlias:
+    lobby: "Lobby"
+    game1: "Survival Games"
+    hub: "H"
 
 Messages:
 # Channel Type Messages
