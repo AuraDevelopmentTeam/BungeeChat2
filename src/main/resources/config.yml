@@ -1,4 +1,4 @@
-# Bungee Chat configuration by shawn_ian & BrainStone (v10)
+# Bungee Chat configuration by shawn_ian & BrainStone (v11)
 #
 # A full documentation fo the plugin (including things like the config or
 # placeholders) can be found at:
@@ -11,203 +11,213 @@
 # You can change the settings and messages/formats of the plugin in this file.
 # Please do not change the 'Version' value, or else the plugin might not work.
 
-Version: 10.1
+Version: 11.0
 
-Settings:
-  Modules:
-  #-----------------------#
-    Alert:
-      enabled: true
-      aliases:
-        - broadcast
-        - bc
-        - balert
-        - bbc
-  #-----------------------#
-    AntiAdvertising:
-      enabled: true
-      whitelisted:
-        - www.google.com
-  #-----------------------#
-    AntiDuplication:
-      enabled: true
-      checkPastMessages: 5
-  #-----------------------#
-    AntiSwear:
-      enabled: true
-      freeMatching: false
-      leetSpeak: false
-      ignoreSpaces: false
-      ignoreDuplicateLetters: false
-      words:
-        - fuck
-        - kut
-        - tyfus
-      replacement: "****"
-  #-----------------------#
-    AutoBroadcast:
+Language: "en_US"
+
+Modules:
+#-----------------------#
+  Alert:
+    enabled: true
+    aliases:
+      - broadcast
+      - bc
+      - balert
+      - bbc
+#-----------------------#
+  AntiAdvertising:
+    enabled: true
+    whitelisted:
+      - www.google.com
+#-----------------------#
+  AntiDuplication:
+    enabled: true
+    checkPastMessages: 5
+#-----------------------#
+  AntiSwear:
+    enabled: true
+    freeMatching: false
+    leetSpeak: false
+    ignoreSpaces: false
+    ignoreDuplicateLetters: false
+    words:
+      - fuck
+      - kut
+      - tyfus
+    replacement: "****"
+#-----------------------#
+  AutoBroadcast:
+    enabled: false
+    random: false
+    interval: 20
+    messages:
+     - "Message 1"
+     - "Message 2\nwith newline!"
+     - "&6Message 3 &lwith &4colors &band &r&0Formats &mtoo!"
+#-----------------------#
+  ChatLock:
+    enabled: true
+    emptyLinesOnClear: 20
+    aliases:
+      - lockchat
+#-----------------------#
+  ChatLogging:
+    enabled: true
+    privateMessages: true
+    console: true
+    file: true
+    logFile: "logs/%year%-%month%-%day%-chat.log"
+    filteredCommands:
+    - login
+    - help
+    - pagination
+#-----------------------#
+  ClearChat:
+    enabled: true
+    emptyLines: 20
+    aliases:
+      - cc
+      - chatclear
+#-----------------------#
+  GlobalChat:
+    enabled: true
+    passToClientServer: false
+    aliases:
+      - g
+    default: false
+    symbol:
       enabled: false
-      random: false
-      interval: 20
-      messages:
-       - "Message 1"
-       - "Message 2\nwith newline!"
-       - "&6Message 3 &lwith &4colors &band &r&0Formats &mtoo!"
-  #-----------------------#
-    ChatLock:
-      enabled: true
-      emptyLinesOnClear: 20
-      aliases:
-        - lockchat
-  #-----------------------#
-    ChatLogging:
-      enabled: true
-      privateMessages: true
-      console: true
-      file: true
-      logFile: "logs/%year%-%month%-%day%-chat.log"
-      filteredCommands:
-      - login
-      - help
-      - pagination
-  #-----------------------#
-    ClearChat:
-      enabled: true
-      emptyLines: 20
-      aliases:
-        - cc
-        - chatclear
-  #-----------------------#
-    GlobalChat:
-      enabled: true
-      passToClientServer: false
-      aliases:
-        - g
-      default: false
-      symbol:
-        enabled: false
-        symbol: "!"
-      serverList:
-        enabled: false
-        list:
-          - Hub1
-          - Hub2
-          - Hub3
-  #-----------------------#
-    HelpOp:
-      enabled: true
-      aliases:
-        - ahelp
-        - helpme
-  #-----------------------#
-    Ignoring:
-      enabled: true
-      aliases: []
-  #-----------------------#
-    JoinMessage:
-      enabled: true
-  #-----------------------#
-    LeaveMessage:
-      enabled: true
-  #-----------------------#
-    LocalChat:
-      enabled: true
-      passToClientServer: false
-  #-----------------------#
-    Messenger:
-      enabled: true
-      filterMessages: false
-      aliases:
-        message:
-          - msg
-          - tell
-          - m
-          - w
-          - whisper
-        reply:
-          - r
-        msgtoggle:
-          - mtoggle
-  #-----------------------#
-    MOTD:
-      enabled: true
+      symbol: "!"
+    serverList:
+      enabled: false
+      list:
+        - Hub1
+        - Hub2
+        - Hub3
+#-----------------------#
+  HelpOp:
+    enabled: true
+    aliases:
+      - ahelp
+      - helpme
+#-----------------------#
+  Ignoring:
+    enabled: true
+    aliases: []
+#-----------------------#
+  JoinMessage:
+    enabled: true
+#-----------------------#
+  LeaveMessage:
+    enabled: true
+#-----------------------#
+  LocalChat:
+    enabled: true
+    passToClientServer: false
+#-----------------------#
+  Messenger:
+    enabled: true
+    filterMessages: false
+    aliases:
       message:
-        - "This is line 1"
-        - "This is line 2"
-        - "Placeholders do work in here %name%"
-        - "&6Color&4codes &land &r&0Formats &mtoo!"
-  #-----------------------#
-    Muting:
-      enabled: true
-      aliases:
-        mute:
-          - silence
-        unmute:
-          - unsilence
-        tempmute:
-          - tempsilence
-      blockedcommands:
-        - message
         - msg
-        - whisper
-        - m
         - tell
-        - t
+        - m
         - w
-        - global
-        - g
-        - reply
+        - whisper
+      reply:
         - r
-      ignoreBukkitLocalChat: false
-      disableWithOtherMutePlugins: true
-  #-----------------------#
-    ServerSwitchMessages:
-      enabled: true
-  #-----------------------#
-    Spy:
-      enabled: true
-      aliases:
-        socialspy:
-        - sspy
-        localspy:
-        - lspy
-  #-----------------------#
-    StaffChat:
-      enabled: true
-      passToClientServer: false
-      aliases:
-        - sc
-        - s
-        - schat
-  #-----------------------#
-    TabCompletion:
-      enabled: true
-  #-----------------------#
-    Vanish:
-      enabled: true
-      aliases:
-        - bhide
-  #-----------------------#
-    VersionChecker:
-      enabled: true
-      checkOnAdminLogin: true
-  #-----------------------#
-    WelcomeMessage:
-      enabled: true
-      message:
-        - "This is line 1"
-        - "This is line 2"
-        - "Placeholders do work in here %name%"
-        - "&6Color&4codes &land &r&0Formats &mtoo!"
-  #-----------------------#
-  PermissionsManager:
-    defaultPrefix: "&7[Member]"
-    defaultSuffix: "&r"
-  #-----------------------#
-  ServerAlias:
-    lobby: "Lobby"
-    game1: "Survival Games"
-    hub: "H"
+      msgtoggle:
+        - mtoggle
+#-----------------------#
+  MOTD:
+    enabled: true
+    message:
+      - "This is line 1"
+      - "This is line 2"
+      - "Placeholders do work in here %name%"
+      - "&6Color&4codes &land &r&0Formats &mtoo!"
+#-----------------------#
+  Muting:
+    enabled: true
+    aliases:
+      mute:
+        - silence
+      unmute:
+        - unsilence
+      tempmute:
+        - tempsilence
+    blockedcommands:
+      - message
+      - msg
+      - whisper
+      - m
+      - tell
+      - t
+      - w
+      - global
+      - g
+      - reply
+      - r
+    ignoreBukkitLocalChat: false
+    disableWithOtherMutePlugins: true
+#-----------------------#
+  ServerSwitchMessages:
+    enabled: true
+#-----------------------#
+  Spy:
+    enabled: true
+    aliases:
+      socialspy:
+      - sspy
+      localspy:
+      - lspy
+#-----------------------#
+  StaffChat:
+    enabled: true
+    passToClientServer: false
+    aliases:
+      - sc
+      - s
+      - schat
+#-----------------------#
+  TabCompletion:
+    enabled: true
+#-----------------------#
+  Vanish:
+    enabled: true
+    aliases:
+      - bhide
+#-----------------------#
+  VersionChecker:
+    enabled: true
+    checkOnAdminLogin: true
+#-----------------------#
+  WelcomeMessage:
+    enabled: true
+    message:
+      - "This is line 1"
+      - "This is line 2"
+      - "Placeholders do work in here %name%"
+      - "&6Color&4codes &land &r&0Formats &mtoo!"
+
+AccountDataBase:
+  enabled: false
+  ip: 0.0.0.0
+  port: 3306
+  database: BungeeChat
+  user: User
+  password: Password
+  tablePrefix: BungeeChat_
+
+PermissionsManager:
+  defaultPrefix: "&7[Member]"
+  defaultSuffix: "&r"
+
+ServerAlias:
+  lobby: "Lobby"
+  game1: "Survival Games"
+  hub: "H"
 
 Formats:
   alert: "&9ALERT > &c&l%name%: &r%message%"
@@ -224,12 +234,3 @@ Formats:
   serverSwitch: "&e%name% has moved to the &c%servername% &eserver!"
   chatLoggingConsole: "%channel% > %servername% > %name%: %message%"
   chatLoggingFile: "[%time%]: %channel% > %servername% > %name%(%uuid%): %message%"
-
-AccountDataBase:
-  enabled: false
-  ip: 0.0.0.0
-  port: 3306
-  database: BungeeChat
-  user: User
-  password: Password
-  tablePrefix: BungeeChat_
