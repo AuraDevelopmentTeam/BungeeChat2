@@ -1,12 +1,13 @@
 # Bungee Chat API
 
 [![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/commits/master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 
 The API for Bungee Chat!
 
 ## Downloads
 
-You can download all builds from either:
+You can download all builds from:
 
 - Personal Maven: https://maven.jnc.world/dev/aura/bungeechat/BungeeChatApi/
 
@@ -72,9 +73,12 @@ version `2.0.0_615` get uploaded to my maven repository. (Replace `{version}` wi
 
 ## Setting up a Workspace/Compiling from Source
 
-* Clone: Clone the repository like this: `git clone --recursive https://github.com/AuraDevelopmentTeam/BungeeChat2.git`
-* IDE-Setup: Run [gradle] in the repository root: `./gradlew installLombok <[BungeeChatApi:]eclipse|[BungeeChatApi:]idea>`
-* Build: Run [gradle] in the repository root: `./gradlew [BungeeChatApi:]build`. The build will be in `BungeeChatApi/build/libs`
+* Clone:  
+  Clone the repository like this: `git clone --recursive https://github.com/AuraDevelopmentTeam/BungeeChat2.git`
+* IDE-Setup:  
+  Run [gradle] in the repository root: `./gradlew installLombok <[BungeeChatApi:]eclipse|[BungeeChatApi:]idea>`
+* Build:  
+  Run [gradle] in the repository root: `./gradlew [BungeeChatApi:]build`. The build will be in `BungeeChatApi/build/libs`
 * If obscure Gradle issues are found try running `./gradlew cleanCache clean`
 
 ## Development builds

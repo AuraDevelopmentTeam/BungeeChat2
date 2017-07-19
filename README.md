@@ -1,12 +1,13 @@
 # [Bungee Chat](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
 [![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/commits/master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 
 A new way to send private, global or help messages and to do much more with chatting network wide!
 
 ## Downloads
 
-You can download all builds from either:
+You can download all builds from:
 
 - SpigotMC: https://www.spigotmc.org/resources/bungee-chat.12592/
 - Personal Maven: https://maven.jnc.world/dev/aura/bungeechat/BungeeChat/
@@ -37,14 +38,17 @@ You can also talk to us on [Discord](https://dicord.me/bungeechat).
 
 ## Developing with our Plugin
 
-So you want to add support or even develop an addon for our plugin then you can easily add our API to your development environment:
-[API documentation](https://github.com/AuraDevelopmentTeam/BungeeChat2/BungeeChatApi/README.md)
+So you want to add support or even develop an addon for our plugin then you can easily add our API to your development environment, read the
+[API documentation](https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/BungeeChatApi/README.md).
 
 ## Setting up a Workspace/Compiling from Source
 
-* Clone: Clone the repository like this: `git clone --recursive https://github.com/AuraDevelopmentTeam/BungeeChat2.git`
-* IDE-Setup: Run [gradle] in the repository root: `./gradlew installLombok <eclipse|idea>`
-* Build: Run [gradle] in the repository root: `./gradlew build`. The build will be in `build/libs`
+* Clone:  
+  Clone the repository like this: `git clone --recursive https://github.com/AuraDevelopmentTeam/BungeeChat2.git`
+* IDE-Setup:  
+  Run [gradle] in the repository root: `./gradlew installLombok <eclipse|idea>`
+* Build:  
+  Run [gradle] in the repository root: `./gradlew build`. The build will be in `build/libs`
 * If obscure Gradle issues are found try running `./gradlew cleanCache clean`
 
 ## Development builds
