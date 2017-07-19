@@ -65,7 +65,7 @@ plugin jar.
 ## PGP Signing
 
 All files will be signed with PGP.  
-The public key to verify it can be found in `keys/publicKey.asc`. The signatures of the files will also be found in the maven.
+The public key to verify it can be found in `misc/publicKey.asc`. The signatures of the files will also be found in the maven.
 
 ## License
 
