@@ -18,6 +18,6 @@ public abstract class Module implements BungeeChatModule {
 
     @Override
     public boolean isEnabled() {
-        return getModuleSection().getBoolean(CONFIG_ENABLED);
+        return getModuleSection().getBoolean(CONFIG_ENABLED, false);
     }
 }

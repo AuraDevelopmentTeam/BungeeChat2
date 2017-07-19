@@ -1,6 +1,6 @@
 package dev.aura.bungeechat.hook.metrics;
 
-import org.bstats.Metrics;
+import org.bstats.bungeecord.Metrics;
 
 import dev.aura.bungeechat.BungeeChat;
 import lombok.experimental.UtilityClass;

@@ -18,10 +18,7 @@ import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 public interface BungeeChatApi {
     public static final String ID = "bungeechat";
     public static final String NAME = "Bungee Chat";
-    public static final String ID_LIB = ID + "lib";
-    public static final String NAME_LIB = NAME + " Lib";
     public static final String DESCRIPTION = "Bungee Chat Plugin";
-    public static final String DESCRIPTION_LIB = DESCRIPTION + " Lib";
     public static final String VERSION = "@version@";
     public static final BuildType BUILD_TYPE = BuildType.valueOf("@buildType@");
     public static final int BUILD = Integer.parseInt("@build@");
@@ -30,7 +27,7 @@ public interface BungeeChatApi {
     public static final String AUTHOR_BRAINSTONE = "The_BrainStone";
     public static final String AUTHOR_RYADA = "Ryada";
     public static final String[] AUTHORS = new String[] { AUTHOR_SHAWN, AUTHOR_BRAINSTONE };
-    public static final double CONFIG_VERSION = 9.2;
+    public static final double CONFIG_VERSION = 10.1;
     public static final int PLUGIN_ID = 12592;
 
     /**

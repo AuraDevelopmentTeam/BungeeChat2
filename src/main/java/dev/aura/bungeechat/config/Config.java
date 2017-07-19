@@ -1,7 +1,9 @@
 package dev.aura.bungeechat.config;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +29,8 @@ public class Config {
                 copyDefaultConfig(cfile);
             }
 
-            configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
+            configuration = ConfigurationProvider.getProvider(YamlConfiguration.class)
+                    .load(new InputStreamReader(new FileInputStream(cfile), "UTF-8"));
 
             if (BungeeChatApi.CONFIG_VERSION > configuration.getDouble("Version")) {
                 final File newConfig = getNewConfigFile();
@@ -48,12 +51,12 @@ public class Config {
                     LoggerHelper.warning(line);
 
                     Thread.sleep(TimeUnit.SECONDS.toMillis(10));
-
-                    firstStart = false;
                 } else {
                     LoggerHelper.warning(line);
                 }
             }
+
+            firstStart = false;
         } catch (Exception e) {
             LoggerHelper.error("There is an error with creating or loading the conifg file!", e);
             LoggerHelper.error("Please contact the authors at http://discord.me/bungeechat!");

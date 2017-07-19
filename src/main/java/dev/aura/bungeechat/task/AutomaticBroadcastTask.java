@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ public class AutomaticBroadcastTask implements Runnable {
     private Random rand;
 
     public AutomaticBroadcastTask(List<String> messages, boolean random) {
-        this.messages = messages;
+        this.messages = new ArrayList<>(messages);
         size = messages.size();
         this.random = random;
         current = -1;

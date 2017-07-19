@@ -1,8 +1,43 @@
+Version 2.1.4
+-------------
+
+\+ Added server aliases.  
+\+ Added placeholders `%serveralias%`, `%sender_serveralias%` and `%target_serveralias%` for the server aliases.  
+\+ Added ability to filter commands in logging.  
+\* Fixed config not being read as UTF-8.  
+\* Fixed error related to bStats.  
+\* Performance improvements.  
+
+
+Version 2.1.3
+-------------
+
+\* Fixed plugin not detecting outdated config.  
+
+
+Version 2.1.2
+-------------
+
+\* Fixed chatlogging causing exceptions on every message.  
+\* Changed license to GPL v3.0.  
+\* Removed obfuscation of code.  
+\* Made source available.  
+
+
+Version 2.1.1
+-------------
+
+\* Fixed color codes not working properly.  
+\* Fixed aliases of `/msgtoggle` to registering.  
+\* Fixed `/msgtoggle` not working.  
+\* Fixed staffchat not working from console.  
+
+
 Version 2.1.0
 -------------
 
 \+ Added AutoBroadcast Module.  
-\+ Added MOTD Module.
+\+ Added MOTD Module.  
 \+ Added WelcomeMessage Module.  
 \+ Added key to customize chatlog file path.  
 \+ Added separate permissions for colors and formats for messages.  

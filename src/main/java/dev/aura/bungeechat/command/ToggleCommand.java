@@ -12,7 +12,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ToggleCommand extends BaseCommand {
     public ToggleCommand(MessengerModule messengerModule) {
-        super("msgtoggle", messengerModule.getModuleSection().getStringList("aliases.toggle"));
+        super("msgtoggle", messengerModule.getModuleSection().getStringList("aliases.msgtoggle"));
     }
 
     @Override

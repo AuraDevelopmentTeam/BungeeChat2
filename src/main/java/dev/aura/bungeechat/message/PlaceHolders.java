@@ -52,6 +52,9 @@ public class PlaceHolders {
         PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%servername%", context -> context.getSender().get().getServerName(),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_servername%"));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%serveralias%",
+                context -> ServerAliases.getServerAlias(context.getSender().get().getServerName()),
+                BungeeChatContext.HAS_SENDER).createAliases("%sender_serveralias%"));
         PlaceHolderManager
                 .registerPlaceholder(new PlaceHolder("%serverip%", context -> context.getSender().get().getServerIP(),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_serverip%"));
@@ -78,6 +81,9 @@ public class PlaceHolders {
                 context -> context.getTarget().get().getUniqueId().toString(), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_servername%",
                 context -> context.getTarget().get().getServerName(), BungeeChatContext.HAS_TARGET));
+        PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_serveralias%",
+                context -> ServerAliases.getServerAlias(context.getTarget().get().getServerName()),
+                BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_serverip%",
                 context -> context.getTarget().get().getServerIP(), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_muted_until%",
