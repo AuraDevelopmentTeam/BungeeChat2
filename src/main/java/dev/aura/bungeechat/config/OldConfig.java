@@ -17,7 +17,8 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
 @UtilityClass
-public class Config {
+@Deprecated
+public class OldConfig {
     private static Configuration configuration;
     private static boolean firstStart = true;
 

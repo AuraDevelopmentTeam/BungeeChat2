@@ -13,7 +13,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
-import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.config.OldConfig;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
@@ -53,7 +53,7 @@ public class PlaceHolderUtil {
     public static String getFormat(Format format) {
         try {
             if (formatsBase == null) {
-                formatsBase = Config.get().getSection(FORMATS);
+                formatsBase = OldConfig.get().getSection(FORMATS);
             }
 
             return formatsBase.getString(format.getStringPath());
@@ -65,7 +65,7 @@ public class PlaceHolderUtil {
     public static String getMessage(Message message) {
         try {
             if (messageBase == null) {
-                messageBase = Config.get().getSection(MESSAGES);
+                messageBase = OldConfig.get().getSection(MESSAGES);
             }
 
             return messageBase.getString(message.getStringPath());

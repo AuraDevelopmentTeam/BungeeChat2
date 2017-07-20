@@ -1,7 +1,7 @@
 package dev.aura.bungeechat.module;
 
 import dev.aura.bungeechat.api.module.BungeeChatModule;
-import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.config.OldConfig;
 import net.md_5.bungee.config.Configuration;
 
 public abstract class Module implements BungeeChatModule {
@@ -13,7 +13,7 @@ public abstract class Module implements BungeeChatModule {
     }
 
     public Configuration getModuleSection() {
-        return Config.get().getSection(getConfigBasePath());
+        return OldConfig.get().getSection(getConfigBasePath());
     }
 
     @Override

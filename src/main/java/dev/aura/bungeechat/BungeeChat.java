@@ -23,7 +23,7 @@ import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.BungeeChatCommand;
-import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.config.OldConfig;
 import dev.aura.bungeechat.event.BungeeChatEventsListener;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
@@ -68,12 +68,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public void onEnable(boolean prinLoadScreen) {
-        Config.load();
+        OldConfig.load();
 
         PlaceHolderUtil.reloadConfigSections();
         PlaceHolders.registerPlaceholders();
 
-        Configuration accountDataBase = Config.get().getSection("AccountDataBase");
+        Configuration accountDataBase = OldConfig.get().getSection("AccountDataBase");
 
         if (accountDataBase.getBoolean("enabled")) {
             try {
@@ -100,7 +100,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().registerListener(this, channelTypeCorrectorListener);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
 
-        Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
+        Configuration permissionsManager = OldConfig.get().getSection("Settings.PermissionsManager");
 
         BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();
