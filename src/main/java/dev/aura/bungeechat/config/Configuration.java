@@ -1,7 +1,9 @@
 package dev.aura.bungeechat.config;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -27,6 +29,8 @@ public class Configuration implements Config {
 	protected static final ConfigParseOptions PARSE_OPTIONS = ConfigParseOptions.defaults().setAllowMissing(false)
 			.setSyntax(ConfigSyntax.CONF);
 	protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false);
+	@Getter(value = AccessLevel.PROTECTED, lazy = true)
+	private static final String header = loadHeader();
 
 	@Getter
 	protected static Configuration currentConfig;
@@ -50,6 +54,27 @@ public class Configuration implements Config {
 		return config;
 	}
 
+	private static String loadHeader() {
+		StringBuilder header = new StringBuilder();
+		String line;
+
+		try {
+			@Cleanup
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME)));
+
+			do {
+				line = reader.readLine();
+
+				header.append(line).append('\n');
+			} while (line.startsWith("#"));
+		} catch (IOException e) {
+			LoggerHelper.error("Error loading file header", e);
+		}
+
+		return header.toString();
+	}
+
 	protected void load() {
 		Config defaultConfig = ConfigFactory.parseReader(
 				new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME)), PARSE_OPTIONS);
@@ -57,11 +82,12 @@ public class Configuration implements Config {
 		if (CONFIG_FILE.exists()) {
 			Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
 
-			config = fileConfig.withFallback(defaultConfig).resolve();
+			config = fileConfig.withFallback(defaultConfig);
 		} else {
 			config = defaultConfig;
 		}
 
+		config.resolve();
 		save();
 	}
 
@@ -70,6 +96,7 @@ public class Configuration implements Config {
 			@Cleanup
 			PrintWriter writer = new PrintWriter(CONFIG_FILE, "UTF-8");
 			String renderedConfig = config.root().render(RENDER_OPTIONS);
+			renderedConfig = getHeader() + renderedConfig;
 
 			writer.print(renderedConfig);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
