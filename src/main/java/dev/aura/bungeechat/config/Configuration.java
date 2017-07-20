@@ -42,7 +42,7 @@ public class Configuration implements Config {
 	 * Creates and loads the config. Also saves it so that all missing values
 	 * exist!<br>
 	 * Also set currentConfig to this config.
-	 * 
+	 *
 	 * @return a configuration object, loaded from the config file.
 	 */
 	public static Configuration get() {
@@ -56,18 +56,18 @@ public class Configuration implements Config {
 
 	private static String loadHeader() {
 		StringBuilder header = new StringBuilder();
-		String line;
 
 		try {
 			@Cleanup
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME)));
+			String line = reader.readLine();
 
-			do {
-				line = reader.readLine();
-
+			while (line.startsWith("#")) {
 				header.append(line).append('\n');
-			} while (line.startsWith("#"));
+
+				line = reader.readLine();
+			}
 		} catch (IOException e) {
 			LoggerHelper.error("Error loading file header", e);
 		}
@@ -87,7 +87,6 @@ public class Configuration implements Config {
 			config = defaultConfig;
 		}
 
-		config.resolve();
 		save();
 	}
 
