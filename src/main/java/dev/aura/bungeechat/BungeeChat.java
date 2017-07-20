@@ -69,6 +69,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     public void onEnable(boolean prinLoadScreen) {
         OldConfig.load();
+        dev.aura.bungeechat.config.Configuration.load();
 
         PlaceHolderUtil.reloadConfigSections();
         PlaceHolders.registerPlaceholders();

@@ -1,0 +1,79 @@
+package dev.aura.bungeechat.config;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigParseOptions;
+import com.typesafe.config.ConfigRenderOptions;
+import com.typesafe.config.ConfigSyntax;
+
+import dev.aura.bungeechat.BungeeChat;
+import dev.aura.bungeechat.util.LoggerHelper;
+import lombok.AccessLevel;
+import lombok.Cleanup;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Delegate;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Configuration implements Config {
+	protected static final String CONFIG_FILE_NAME = "config.conf";
+	protected static final File CONFIG_FILE = new File(BungeeChat.getInstance().getConfigFolder(), CONFIG_FILE_NAME);
+	protected static final ConfigParseOptions PARSE_OPTIONS = ConfigParseOptions.defaults().setAllowMissing(false)
+			.setSyntax(ConfigSyntax.CONF);
+	protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false);
+
+	@Getter
+	protected static Configuration currentConfig;
+
+	@Delegate
+	protected Config config;
+
+	/**
+	 * Creates and loads the config. Also saves it so that all missing values
+	 * exist!<br>
+	 * Also set currentConfig to this config.
+	 * 
+	 * @return a configuration object, loaded from the config file.
+	 */
+	public static Configuration get() {
+		Configuration config = new Configuration();
+		config.load();
+
+		currentConfig = config;
+
+		return config;
+	}
+
+	protected void load() {
+		Config defaultConfig = ConfigFactory.parseReader(
+				new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME)), PARSE_OPTIONS);
+
+		if (CONFIG_FILE.exists()) {
+			Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
+
+			config = fileConfig.withFallback(defaultConfig).resolve();
+		} else {
+			config = defaultConfig;
+		}
+
+		save();
+	}
+
+	protected void save() {
+		try {
+			@Cleanup
+			PrintWriter writer = new PrintWriter(CONFIG_FILE, "UTF-8");
+			String renderedConfig = config.root().render(RENDER_OPTIONS);
+
+			writer.print(renderedConfig);
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			LoggerHelper.error("Something very unsupported happend!", e);
+		}
+	}
+}
