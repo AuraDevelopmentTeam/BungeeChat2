@@ -4,7 +4,26 @@
 [![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/commits/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 
+[![Bungee Chat Thread](https://proxy.spigotmc.org/e0e5c022701e9b3f55bdfee19e0a5d226f5c53ab?url=http%3A%2F%2Fi.imgur.com%2F9hHniVP.png](https://www.spigotmc.org/resources/bungee-chat.12592/)
+
 A new way to send private, global or help messages and to do much more with chatting network wide!
+
+## Table of Contents
+
+- [Downloads](#downloads)
+- [Wiki](#wiki)
+- [Issue Reporting](#issue-reporting)
+- [Feature Requests](#feature-requests)
+- [Developing with the API](#developing-with-the-api)
+	- [Maven](#maven)
+	- [Gradle](#gradle)
+- [Setting up a Workspace/Compiling from Source](#setting-up-a-workspacecompiling-from-source)
+- [Development builds](#development-builds)
+- [PGP Signing](#pgp-signing)
+- [License](#license)
+- [Support](#support)
+	- [Getting Support](#getting-support)
+	- [Supporting us!](#supporting-us)
 
 ## Downloads
 
@@ -12,6 +31,11 @@ You can download all builds from:
 
 - SpigotMC: https://www.spigotmc.org/resources/bungee-chat.12592/
 - Personal Maven: https://maven.jnc.world/dev/aura/bungeechat/BungeeChat/
+
+## Wiki
+
+We have created a wiki for this plugin to help you with various issues and problems. Check out our
+[Wiki](https://github.com/AuraDevelopmentTeam/BungeeChat2/wiki)!
 
 ## [Issue Reporting](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
 
@@ -39,7 +63,7 @@ You can also talk to us on [Discord](https://dicord.me/bungeechat).
 
 ## Developing with our Plugin
 
-So you want to add support or even develop an addon for our plugin then you can easily add our API to your development environment, read the
+So you want to add support or even develop an add-on for our plugin then you can easily add our API to your development environment, read the
 [API documentation](https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/BungeeChatApi/README.md).
 
 ## Setting up a Workspace/Compiling from Source
@@ -54,7 +78,7 @@ So you want to add support or even develop an addon for our plugin then you can 
 
 ## Development builds
 
-Between each offical release there are several bleeding edge development builds, which you can also use. But be aware that they might contain unfinished
+Between each official release there are several bleeding edge development builds, which you can also use. But be aware that they might contain unfinished
 features and therefore won't work properly.
 
 You can find the builds here: https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines
@@ -70,6 +94,21 @@ The public key to verify it can be found in `misc/publicKey.asc`. The signatures
 ## License
 
 Bungee Chat 2 is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html)
+
+## Support
+
+### Getting Support
+
+If you need help with anything, want to discuss issues or suggestions, or just want to say hi, you can visit our
+[Discord Server (https://discord.me/bungeechat)](https://discord.me/bungeechat).
+
+### Supporting us!
+
+Thanks for scrolling down so far!  
+We are developing this plugin (and others!) as well as providing constant support for all our plugins free of charge so that as many people as possible can use
+it! Since it is still a lot of work we would really appreciate it if you could support us on [Patreon](https://www.patreon.com/AuraDev)!
+
+[![Support us on Patreon](https://proxy.spigotmc.org/030a24c1a9beb7f47102be7fe38028e80942dd3e?url=http%3A%2F%2Fnovelsnao.com%2Fwp-content%2Fuploads%2F2015%2F12%2FPatreon-Support-Button-300x100.png)](https://www.patreon.com/AuraDev)
 
 ## Random Quote
 
