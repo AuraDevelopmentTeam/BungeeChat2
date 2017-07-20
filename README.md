@@ -4,7 +4,7 @@
 [![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/commits/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 
-[![Bungee Chat Thread](https://proxy.spigotmc.org/e0e5c022701e9b3f55bdfee19e0a5d226f5c53ab?url=http%3A%2F%2Fi.imgur.com%2F9hHniVP.png](https://www.spigotmc.org/resources/bungee-chat.12592/)
+[![Bungee Chat Thread](https://proxy.spigotmc.org/e0e5c022701e9b3f55bdfee19e0a5d226f5c53ab?url=http%3A%2F%2Fi.imgur.com%2F9hHniVP.png)](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
 A new way to send private, global or help messages and to do much more with chatting network wide!
 
