@@ -87,6 +87,7 @@ public class Configuration implements Config {
 			config = defaultConfig;
 		}
 
+		config = config.resolve();
 		save();
 	}
 
@@ -99,7 +100,7 @@ public class Configuration implements Config {
 
 			writer.print(renderedConfig);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			LoggerHelper.error("Something very unsupported happend!", e);
+			LoggerHelper.error("Something very unexpected happend! Please report this!", e);
 		}
 	}
 }
