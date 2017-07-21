@@ -1,10 +1,9 @@
 # Bungee Chat API
 
-[![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2)
+[![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://www.spigotmc.org/resources/bungee-chat.12592/history)
 [![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 [![Issue Stats](https://img.shields.io/issuestats/i/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
-[![Pull Requests Stats](https://img.shields.io/issuestats/p/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/pulls)
 [![License](https://img.shields.io/github/license/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/LICENSE)
 [![Supports Minecraft 1.7 - 1.12](https://img.shields.io/badge/supports_minecraft-1.7_--_1.12-brightgreen.svg)](https://www.spigotmc.org/threads/392/)
 
