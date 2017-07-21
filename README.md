@@ -1,6 +1,6 @@
 # [Bungee Chat](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
-[![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2)
+[![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2)
 [![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 [![Issue Stats](https://img.shields.io/issuestats/i/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
