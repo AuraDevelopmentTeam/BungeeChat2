@@ -22,7 +22,15 @@ dependencies {
     // Additional dependencies
 }
 
-task printCoverage(dependsOn: jacocoTestCoverageVerification) {
+task generateCoverageReport(type: Zip, dependsOn: jacocoTestCoverageVerification) {
+    from file("${buildDir}/reports/jacoco/test/html")
+    archiveName "${project.name}-CoverageReport.zip"
+    destinationDir rootProject.projectDir
+
+    test.finalizedBy generateTestReport
+}
+
+task printCoverage(dependsOn: generateCoverageReport) {
     doLast {
         def instructions = [0, 0]
         def branches = [0, 0]
@@ -33,15 +41,30 @@ task printCoverage(dependsOn: jacocoTestCoverageVerification) {
         for(line in parseCsv(new FileReader(file("${buildDir}/reports/jacoco/test/jacocoTestReport.csv")))) {
             instructions[0] += Integer.parseInt(line.INSTRUCTION_MISSED) + Integer.parseInt(line.INSTRUCTION_COVERED)
             instructions[1] += Integer.parseInt(line.INSTRUCTION_COVERED)
+            branches[0] += Integer.parseInt(line.BRANCH_MISSED) + Integer.parseInt(line.BRANCH_COVERED)
+            branches[1] += Integer.parseInt(line.BRANCH_COVERED)
+            lines[0] += Integer.parseInt(line.LINE_MISSED) + Integer.parseInt(line.LINE_COVERED)
+            lines[1] += Integer.parseInt(line.LINE_COVERED)
+            complexity[0] += Integer.parseInt(line.COMPLEXITY_MISSED) + Integer.parseInt(line.COMPLEXITY_COVERED)
+            complexity[1] += Integer.parseInt(line.COMPLEXITY_COVERED)
+            methods[0] += Integer.parseInt(line.METHOD_MISSED) + Integer.parseInt(line.METHOD_COVERED)
+            methods[1] += Integer.parseInt(line.METHOD_COVERED)
         }
         
-        println String.format("Covered %.1f%% of instructions.", ((double)instructions[1] / (double)instructions[0]) * 100.0) 
+        println String.format("Covered %.1f%% of instructions.", ((double)instructions[1] / (double)instructions[0]) * 100.0)
+        println String.format("Covered %.1f%% of branches.", ((double)branches[1] / (double)branches[0]) * 100.0)
+        println String.format("Covered %.1f%% of lines.", ((double)lines[1] / (double)lines[0]) * 100.0)
+        println String.format("Covered %.1f%% of complexity.", ((double)complexity[1] / (double)complexity[0]) * 100.0)
+        println String.format("Covered %.1f%% of methods.", ((double)branches[1] / (double)methods[0]) * 100.0)
     }
 } 
 
 test.finalizedBy jacocoTestReport
 jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 jacocoTestCoverageVerification.finalizedBy printCoverage
+generateCoverageReport.finalizedBy printCoverage
+
+clean.dependsOn cleanGenerateTestReport
 
 jacocoTestReport {
     reports {

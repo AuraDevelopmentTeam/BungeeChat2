@@ -8,6 +8,8 @@ gradle-app.setting
 
 # Test reports
 *-TestReport*
+# Coverage reports
+*-CoverageReport*
 
 
 #################
