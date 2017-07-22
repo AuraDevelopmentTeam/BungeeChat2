@@ -13,6 +13,14 @@ jmh {
     jmhVersion = "1.19"
 }
 
+task generateBenchmarkReport(type: Zip, dependsOn: tasks.jmh) {
+    from file("${buildDir}/reports/jmh/results.json")
+    archiveName "${project.name}-BenchmarkReport.zip"
+    destinationDir rootProject.projectDir
+
+    tasks.jmh.finalizedBy generateBenchmarkReport
+}
+
 apply from: "../GradleCommon/common.gradle"
 
 repositories {

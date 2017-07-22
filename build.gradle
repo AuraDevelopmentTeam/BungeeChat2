@@ -1,4 +1,4 @@
-plugins {
+/*plugins {
     id "me.champeau.gradle.jmh" version "0.4.4"
 }
 
@@ -12,6 +12,14 @@ jmh {
     warmupIterations = 10
     jmhVersion = "1.19"
 }
+
+task generateBenchmarkReport(type: Zip, dependsOn: jmh) {
+    from file("${buildDir}/reports/jmh/results.json")
+    archiveName "${project.name}-BenchmarkReport.zip"
+    destinationDir rootProject.projectDir
+
+    //jmh.finalizedBy generateBenchmarkReport
+} */
 
 apply from: "GradleCommon/common.gradle"
 
