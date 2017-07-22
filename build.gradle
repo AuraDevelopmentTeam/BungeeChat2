@@ -1,3 +1,18 @@
+plugins {
+    id "me.champeau.gradle.jmh" version "0.4.4"
+}
+
+jmh {
+    iterations = 10
+    benchmarkMode = ["sample"]
+    fork = 2
+    resultFormat = "JSON"
+    threads = Runtime.getRuntime().availableProcessors() / 2
+    timeUnit = "ms"
+    warmupIterations = 10
+    jmhVersion = "1.19"
+}
+
 apply from: "GradleCommon/common.gradle"
 
 repositories {
