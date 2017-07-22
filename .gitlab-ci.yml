@@ -3,6 +3,7 @@ variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/**/build/libs/*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/*.jar*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
+  COVERAGE_REPORTS: "$CI_PROJECT_DIR/*-CoverageReport.zip"
   GRADLE_OPTS: >
     -Dorg.gradle.project.signing.keyId="$keyId"
     -Dorg.gradle.project.signing.password="$password"
@@ -35,10 +36,12 @@ test:
   stage: test
   script:
   - ./gradlew --console=plain check
+  coverage: "Covered (\d{2,3}\.\d%) of instructions\."
   when: on_success
   artifacts:
     paths:
     - $TEST_REPORTS
+    - $COVERAGE_REPORTS
 
 deploy:
   stage: deploy
