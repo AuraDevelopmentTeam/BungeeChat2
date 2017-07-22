@@ -109,7 +109,7 @@ Thanks for scrolling down so far!
 We are developing this plugin (and others!) as well as providing constant support for all our plugins free of charge so that as many people as possible can use
 it! Since it is still a lot of work we would really appreciate it if you could support us on [Patreon](https://www.patreon.com/AuraDev)!
 
-<center>[![Become a Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=6416598)</center>
+<p align="center">[![Become a Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=6416598)</p>
 
 ## Random Quote
 
