@@ -51,11 +51,11 @@ task printCoverage(dependsOn: generateCoverageReport) {
             methods[1] += Integer.parseInt(line.METHOD_COVERED)
         }
         
-        println String.format("Covered %.1f%% of instructions.", ((double)instructions[1] / (double)instructions[0]) * 100.0)
-        println String.format("Covered %.1f%% of branches.", ((double)branches[1] / (double)branches[0]) * 100.0)
-        println String.format("Covered %.1f%% of lines.", ((double)lines[1] / (double)lines[0]) * 100.0)
-        println String.format("Covered %.1f%% of complexity.", ((double)complexity[1] / (double)complexity[0]) * 100.0)
-        println String.format("Covered %.1f%% of methods.", ((double)branches[1] / (double)methods[0]) * 100.0)
+        println String.format("Covered %.1f%% of API instructions.", ((double)instructions[1] / (double)instructions[0]) * 100.0)
+        println String.format("Covered %.1f%% of API branches.", ((double)branches[1] / (double)branches[0]) * 100.0)
+        println String.format("Covered %.1f%% of API lines.", ((double)lines[1] / (double)lines[0]) * 100.0)
+        println String.format("Covered %.1f%% of API complexity.", ((double)complexity[1] / (double)complexity[0]) * 100.0)
+        println String.format("Covered %.1f%% of API methods.", ((double)branches[1] / (double)methods[0]) * 100.0)
     }
 } 
 
