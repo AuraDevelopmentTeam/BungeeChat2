@@ -142,10 +142,10 @@ Thanks for scrolling down so far!
 We are developing this plugin (and others!) as well as providing constant support for all our plugins free of charge so that as many people as possible can use
 it! Since it is still a lot of work we would really appreciate it if you could support us on [Patreon](https://www.patreon.com/AuraDev)!
 
-[![Support us on Patreon](https://proxy.spigotmc.org/030a24c1a9beb7f47102be7fe38028e80942dd3e?url=http%3A%2F%2Fnovelsnao.com%2Fwp-content%2Fuploads%2F2015%2F12%2FPatreon-Support-Button-300x100.png)](https://www.patreon.com/AuraDev)
+<center>[![Become a Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=6416598)</center>
 
 ## Random Quote
 
 > I have always wished for my computer to be as easy to use as my telephone; my wish has come true because I can no longer figure out how to use my telephone.
 >
-> -- <cite>Bjarne Stroustrup</cite>
+> — <cite>Bjarne Stroustrup</cite>
