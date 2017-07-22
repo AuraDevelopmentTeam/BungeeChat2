@@ -1,3 +1,17 @@
+import static com.xlson.groovycsv.CsvParser.parseCsv
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.xlson.groovycsv:groovycsv:1.2"
+    }
+}
+
+apply plugin: "jacoco"
+
 apply from: "../GradleCommon/common.gradle"
 
 repositories {
@@ -6,4 +20,31 @@ repositories {
 
 dependencies {
     // Additional dependencies
+}
+
+task printCoverage(dependsOn: jacocoTestCoverageVerification) {
+    doLast {
+        def instructions = [0, 0]
+        def branches = [0, 0]
+        def lines = [0, 0]
+        def complexity = [0, 0]
+        def methods = [0, 0]
+    
+        for(line in parseCsv(new FileReader(file("${buildDir}/reports/jacoco/test/jacocoTestReport.csv")))) {
+            instructions[0] += Integer.parseInt(line.INSTRUCTION_MISSED) + Integer.parseInt(line.INSTRUCTION_COVERED)
+            instructions[1] += Integer.parseInt(line.INSTRUCTION_COVERED)
+        }
+        
+        println String.format("Covered %.1f%% of instructions.", ((double)instructions[1] / (double)instructions[0]) * 100.0) 
+    }
+} 
+
+test.finalizedBy jacocoTestReport
+jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+jacocoTestCoverageVerification.finalizedBy printCoverage
+
+jacocoTestReport {
+    reports {
+        csv.enabled true
+    }
 }
