@@ -1,0 +1,97 @@
+import static com.xlson.groovycsv.CsvParser.parseCsv
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.xlson.groovycsv:groovycsv:1.2"
+    }
+}
+
+apply plugin: "jacoco"
+
+def printCoverage(projectName, coverageInstructions, coverageBranches, coverageLines, coverageComplexity, coverageMethods) {
+    println String.format("Covered %.1f%% of instructions for ${projectName}.", ((double)coverageInstructions[1] / (double)coverageInstructions[0]) * 100.0)
+    println String.format("Covered %.1f%% of branches for ${projectName}.", ((double)coverageBranches[1] / (double)coverageBranches[0]) * 100.0)
+    println String.format("Covered %.1f%% of lines for ${projectName}.", ((double)coverageLines[1] / (double)coverageLines[0]) * 100.0)
+    println String.format("Covered %.1f%% of complexity for ${projectName}.", ((double)coverageComplexity[1] / (double)coverageComplexity[0]) * 100.0)
+    println String.format("Covered %.1f%% of methods for ${projectName}.", ((double)coverageMethods[1] / (double)coverageMethods[0]) * 100.0)
+}
+
+jacocoTestReport {
+    reports {
+        csv.enabled true
+    }
+}
+
+if (project == rootProject) {
+    ext {
+        coverageInstructions = [0, 0]
+        coverageBranches = [0, 0]
+        coverageLines = [0, 0]
+        coverageComplexity = [0, 0]
+        coverageMethods = [0, 0]
+    }
+    
+    task printFinalCoverage {
+        doLast {
+            printCoverage("all projects", coverageInstructions, coverageBranches, coverageLines, coverageComplexity, coverageMethods)
+        }
+    }
+}
+
+task generateCoverageReport(type: Zip, dependsOn: jacocoTestCoverageVerification) {
+    from file("${buildDir}/reports/jacoco/test/html")
+    archiveName "${project.name}-CoverageReport.zip"
+    destinationDir rootProject.projectDir
+
+    test.finalizedBy generateTestReport
+}
+
+task printCoverage(dependsOn: generateCoverageReport) {
+    doLast {
+        def instructions = [0, 0]
+        def branches = [0, 0]
+        def lines = [0, 0]
+        def complexity = [0, 0]
+        def methods = [0, 0]
+    
+        for(line in parseCsv(new FileReader(file("${buildDir}/reports/jacoco/test/jacocoTestReport.csv")))) {
+            instructions[0] += Integer.parseInt(line.INSTRUCTION_MISSED) + Integer.parseInt(line.INSTRUCTION_COVERED)
+            instructions[1] += Integer.parseInt(line.INSTRUCTION_COVERED)
+            branches[0] += Integer.parseInt(line.BRANCH_MISSED) + Integer.parseInt(line.BRANCH_COVERED)
+            branches[1] += Integer.parseInt(line.BRANCH_COVERED)
+            lines[0] += Integer.parseInt(line.LINE_MISSED) + Integer.parseInt(line.LINE_COVERED)
+            lines[1] += Integer.parseInt(line.LINE_COVERED)
+            complexity[0] += Integer.parseInt(line.COMPLEXITY_MISSED) + Integer.parseInt(line.COMPLEXITY_COVERED)
+            complexity[1] += Integer.parseInt(line.COMPLEXITY_COVERED)
+            methods[0] += Integer.parseInt(line.METHOD_MISSED) + Integer.parseInt(line.METHOD_COVERED)
+            methods[1] += Integer.parseInt(line.METHOD_COVERED)
+        }
+        
+        printCoverage(project.name, instructions, branches, lines, complexity, methods, instructions)
+        
+        rootProject.coverageInstructions[0] += instructions[0]
+        rootProject.coverageInstructions[1] += instructions[1]
+        rootProject.coverageBranches[0] += branches[0]
+        rootProject.coverageBranches[1] += branches[1]
+        rootProject.coverageLines[0] += lines[0]
+        rootProject.coverageLines[1] += lines[1]
+        rootProject.coverageComplexity[0] += complexity[0]
+        rootProject.coverageComplexity[1] += complexity[1]
+        rootProject.coverageMethods[0] += methods[0]
+        rootProject.coverageMethods[1] += methods[1]
+    }
+    
+    finalizedBy rootProject.printFinalCoverage
+    rootProject.printFinalCoverage.dependsOn printCoverage
+} 
+
+test.finalizedBy jacocoTestReport
+jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+jacocoTestCoverageVerification.finalizedBy printCoverage
+generateCoverageReport.finalizedBy printCoverage
+
+clean.dependsOn cleanGenerateTestReport

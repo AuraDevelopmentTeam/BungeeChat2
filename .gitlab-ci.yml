@@ -36,7 +36,7 @@ test:
   stage: test
   script:
   - ./gradlew --console=plain check
-  coverage: "/Covered (\\d{2,3}\\.\\d%) of instructions\\./"
+  coverage: "/Covered (\\d{2,3}\\.\\d%) of instructions for all projects\\./"
   when: on_success
   artifacts:
     paths:
