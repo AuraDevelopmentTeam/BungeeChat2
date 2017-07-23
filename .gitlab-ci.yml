@@ -57,6 +57,7 @@ pages:
   script:
   - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
+  - echo "<html><head></head><body><h1>Test!</h1></body></html>" > public/index.html
   artifacts:
     paths:
     - public
