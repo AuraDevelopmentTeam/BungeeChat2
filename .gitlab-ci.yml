@@ -47,3 +47,13 @@ deploy:
   when: always
   only:
   - tags
+
+pages:
+  stage: deploy
+  dependsOn:
+  - test
+  script:
+  - for file in $TEST_REPORTS; do dir=public/test/${file%-*}; mkdir -p $dir; unzip $file -d $dir; done
+  artifacts:
+    paths:
+    - public
