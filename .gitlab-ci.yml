@@ -3,6 +3,7 @@ variables:
   ORIG_ARTIFACTS: "$CI_PROJECT_DIR/**/build/libs/*.jar*"
   ARTIFACTS: "$CI_PROJECT_DIR/*.jar*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
+  JAVADOCS: "$CI_PROJECT_DIR/*-javadoc.jar"
   GRADLE_OPTS: >
     -Dorg.gradle.project.signing.keyId="$keyId"
     -Dorg.gradle.project.signing.password="$password"
@@ -51,9 +52,11 @@ deploy:
 pages:
   stage: deploy
   dependencies:
+  - build
   - test
   script:
-  - for file in $TEST_REPORTS; do dir=public/test/${file%-*}; mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
   artifacts:
     paths:
     - public
