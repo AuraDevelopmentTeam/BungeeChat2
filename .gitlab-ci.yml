@@ -50,7 +50,7 @@ deploy:
 
 pages:
   stage: deploy
-  dependsOn:
+  dependencies:
   - test
   script:
   - for file in $TEST_REPORTS; do dir=public/test/${file%-*}; mkdir -p $dir; unzip $file -d $dir; done
