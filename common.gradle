@@ -12,12 +12,12 @@ buildscript {
 
 apply plugin: "jacoco"
 
-def printCoverage(projectName, coverageInstructions, coverageBranches, coverageLines, coverageComplexity, coverageMethods) {
-    println String.format("Covered %.1f%% of instructions for ${projectName}.", ((double)coverageInstructions[1] / (double)coverageInstructions[0]) * 100.0)
-    println String.format("Covered %.1f%% of branches for ${projectName}.", ((double)coverageBranches[1] / (double)coverageBranches[0]) * 100.0)
-    println String.format("Covered %.1f%% of lines for ${projectName}.", ((double)coverageLines[1] / (double)coverageLines[0]) * 100.0)
-    println String.format("Covered %.1f%% of complexity for ${projectName}.", ((double)coverageComplexity[1] / (double)coverageComplexity[0]) * 100.0)
-    println String.format("Covered %.1f%% of methods for ${projectName}.", ((double)coverageMethods[1] / (double)coverageMethods[0]) * 100.0)
+def printCoverageText(projectName, coverageInstructions, coverageBranches, coverageLines, coverageComplexity, coverageMethods) {
+    println String.format("Covered %.2f%% of instructions for ${projectName}.", ((double)coverageInstructions[1] / (double)coverageInstructions[0]) * 100.0)
+    println String.format("Covered %.2f%% of branches for ${projectName}.", ((double)coverageBranches[1] / (double)coverageBranches[0]) * 100.0)
+    println String.format("Covered %.2f%% of lines for ${projectName}.", ((double)coverageLines[1] / (double)coverageLines[0]) * 100.0)
+    println String.format("Covered %.2f%% of complexity for ${projectName}.", ((double)coverageComplexity[1] / (double)coverageComplexity[0]) * 100.0)
+    println String.format("Covered %.2f%% of methods for ${projectName}.", ((double)coverageMethods[1] / (double)coverageMethods[0]) * 100.0)
 }
 
 jacocoTestReport {
@@ -37,7 +37,7 @@ if (project == rootProject) {
     
     task printFinalCoverage {
         doLast {
-            printCoverage("all projects", coverageInstructions, coverageBranches, coverageLines, coverageComplexity, coverageMethods)
+            printCoverageText("all projects", coverageInstructions, coverageBranches, coverageLines, coverageComplexity, coverageMethods)
         }
     }
 }
@@ -71,7 +71,7 @@ task printCoverage(dependsOn: generateCoverageReport) {
             methods[1] += Integer.parseInt(line.METHOD_COVERED)
         }
         
-        printCoverage(project.name, instructions, branches, lines, complexity, methods, instructions)
+        printCoverageText(project.name, instructions, branches, lines, complexity, methods)
         
         rootProject.coverageInstructions[0] += instructions[0]
         rootProject.coverageInstructions[1] += instructions[1]
