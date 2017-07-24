@@ -40,7 +40,7 @@ test:
   - ./gradlew --continue --console=plain test
   when: on_success
   artifacts:
-    when: alyways
+    when: always
     paths:
     - $TEST_REPORTS
 
@@ -52,7 +52,7 @@ coverage:
   allow_failure: true
   when: on_success
   artifacts:
-    when: alyways
+    when: always
     paths:
     - $COVERAGE_REPORTS
 
