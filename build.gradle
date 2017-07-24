@@ -20,3 +20,13 @@ dependencies {
     compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
 }
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.4
+            }
+        }
+    }
+}

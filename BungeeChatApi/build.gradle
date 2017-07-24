@@ -7,3 +7,13 @@ repositories {
 dependencies {
     // Additional dependencies
 }
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.5
+            }
+        }
+    }
+}
