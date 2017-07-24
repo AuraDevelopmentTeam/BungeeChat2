@@ -1,5 +1,4 @@
 apply from: "GradleCommon/common.gradle"
-apply from: "common.gradle"
 
 repositories {
     maven {
