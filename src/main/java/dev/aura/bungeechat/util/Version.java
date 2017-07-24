@@ -12,9 +12,9 @@ public class Version implements Comparable<Version> {
     public Version(String version) {
         if (version == null)
             throw new IllegalArgumentException("Version can not be null");
-        
+
         Matcher match = versionPattern.matcher(version);
-        
+
         if (!match.find())
             throw new IllegalArgumentException("Invalid version format");
 
@@ -55,7 +55,7 @@ public class Version implements Comparable<Version> {
         if (that == null)
             return false;
 
-        return this.getClass() == that.getClass() && compareTo((Version) that) == 0;
+        return (this.getClass() == that.getClass()) && (compareTo((Version) that) == 0);
     }
 
     private static int parseInt(String str) {

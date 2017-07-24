@@ -1,12 +1,13 @@
 package dev.aura.bungeechat.module;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import dev.aura.bungeechat.chatlog.ConsoleLogger;
 import dev.aura.bungeechat.chatlog.FileLogger;
 import dev.aura.bungeechat.listener.ChatLoggingListener;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.config.Configuration;
 
 public class ChatLoggingModule extends Module {
     private ChatLoggingListener chatLoggingListener;
@@ -21,7 +22,7 @@ public class ChatLoggingModule extends Module {
 
     @Override
     public void onEnable() {
-        Configuration section = getModuleSection();
+        Config section = getModuleSection();
 
         if (section.getBoolean("console")) {
             consoleLogger = new ConsoleLogger();
@@ -29,11 +30,11 @@ public class ChatLoggingModule extends Module {
             ChatLoggingManager.addLogger(consoleLogger);
         }
         if (section.getBoolean("file")) {
-            fileLogger = new FileLogger(section.getString("logFile", "logs/%year%-%month%-%day%-chat.log"));
+            fileLogger = new FileLogger(section.getString("logFile"));
 
             ChatLoggingManager.addLogger(fileLogger);
         }
-        
+
         ChatLoggingManager.loadFilteredCommands(section.getStringList("filteredCommands"));
 
         chatLoggingListener = new ChatLoggingListener();
