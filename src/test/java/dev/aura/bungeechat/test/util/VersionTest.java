@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import dev.aura.bungeechat.util.Version;
 
-public class TestVersion {
+public class VersionTest {
     private static final Version ver1_2_3 = new Version("1.2.3");
     private static final Version ver1_2_3_dev = new Version("1.2.3_DEV");
     private static final Version ver1_2_4 = new Version("1.2.4");
