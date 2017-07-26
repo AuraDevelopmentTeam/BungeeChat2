@@ -275,6 +275,7 @@ public class MessagesService {
         if (!section.getBoolean("enabled"))
             return account -> true;
         else {
+            // TODO: Use wildcard string
             List<String> allowedServers = section.getStringList("list");
 
             return account -> allowedServers.contains(account.getServerName());
