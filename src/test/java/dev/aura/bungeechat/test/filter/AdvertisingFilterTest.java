@@ -21,7 +21,7 @@ public class AdvertisingFilterTest {
 
             fail("Expected exception!");
         } catch (BlockMessageException e) {
-            assertEquals("Exception Message is wrong", Message.NO_PERMISSION.getStringPath(), e.getMessage());
+            assertEquals("Exception Message is wrong", Message.ANTI_ADVERTISE.getStringPath(), e.getMessage());
         }
     }
 
