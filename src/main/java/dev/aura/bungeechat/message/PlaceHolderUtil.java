@@ -89,7 +89,7 @@ public class PlaceHolderUtil {
     public static String formatMessage(String message, BungeeChatContext context) {
         return transformAltColorCodes(PlaceHolderManager.processMessage(message, context));
     }
-    
+
     public static String transformAltColorCodes(String message) {
         return transformAltColorCodes(message, Optional.empty());
     }

@@ -33,7 +33,7 @@ public class ChatLoggingModule extends Module {
 
             ChatLoggingManager.addLogger(fileLogger);
         }
-        
+
         ChatLoggingManager.loadFilteredCommands(section.getStringList("filteredCommands"));
 
         chatLoggingListener = new ChatLoggingListener();

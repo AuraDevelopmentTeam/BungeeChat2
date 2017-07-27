@@ -6,7 +6,7 @@ import net.md_5.bungee.api.ProxyServer;
 
 public class VersionCheckerModule extends Module {
     private VersionCheckerListener versionCheckerListener;
-    
+
     @Override
     public String getName() {
         return "VersionChecker";

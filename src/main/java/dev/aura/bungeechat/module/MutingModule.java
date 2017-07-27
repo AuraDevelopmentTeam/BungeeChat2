@@ -13,7 +13,8 @@ public class MutingModule extends Module {
     private TempMuteCommand tempMuteCommand;
     private UnmuteCommand unmuteCommand;
     private MutingListener mutingListener;
-    private final String[] mutePlugins = { "AdvancedBan", "BungeeBan", "BungeeSystem", "BungeeAdminTools", "Banmanager" };
+    private final String[] mutePlugins = { "AdvancedBan", "BungeeBan", "BungeeSystem", "BungeeAdminTools",
+            "Banmanager" };
 
     @Override
     public String getName() {
