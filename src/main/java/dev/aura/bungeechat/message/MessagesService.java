@@ -50,20 +50,19 @@ public class MessagesService {
         Optional<String> messageSender = preProcessMessage(context, account, Format.MESSAGE_SENDER,
                 filterPrivateMessages);
 
-        if (!messageSender.isPresent())
-            return;
+        if (messageSender.isPresent()) {
+            MessagesService.sendMessage(sender, messageSender.get());
 
-        MessagesService.sendMessage(sender, messageSender.get());
+            String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages,
+                    true).get();
+            MessagesService.sendMessage(target, messageTarget);
 
-        String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages, true)
-                .get();
-        MessagesService.sendMessage(target, messageTarget);
+            if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
+                String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
 
-        if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
-            String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
-
-            sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
-                    && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+                sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
+                        && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+            }
         }
 
         if (BungeecordModuleManager.CHAT_LOGGING_MODULE.getModuleSection().getBoolean("privateMessages")) {
