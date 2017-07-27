@@ -68,7 +68,7 @@ You can also talk to us on [Discord](https://dicord.me/bungeechat).
 ## Developing with the API
 
 So you want to add support or even develop an add-on for our plugin then you can easily add our API to your development environment! All releases beginning from
-version `2.0.0_615` get uploaded to my maven repository. (Replace `{version}` with the appropriate version!)
+version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` with the appropriate version!)
  
 ### Maven
 
@@ -82,7 +82,7 @@ version `2.0.0_615` get uploaded to my maven repository. (Replace `{version}` wi
     <dependencies>
         <dependency>
             <groupId>dev.aura.bungeechat</groupId>
-            <artifactId>dev.aura.bungeechat</artifactId>
+            <artifactId>BungeeChatApi</artifactId>
             <version>{version}</version>
             <scope>provided</scope>
         </dependency>
