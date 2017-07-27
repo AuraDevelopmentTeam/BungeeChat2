@@ -36,7 +36,7 @@ import dev.aura.bungeechat.message.ServerAliases;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
-import dev.aura.bungeechat.util.Version;
+import dev.aura.lib.version.Version;
 import lombok.Cleanup;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
