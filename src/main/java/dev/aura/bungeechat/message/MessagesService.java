@@ -50,13 +50,14 @@ public class MessagesService {
         Optional<String> messageSender = preProcessMessage(context, account, Format.MESSAGE_SENDER,
                 filterPrivateMessages);
 
-        if (messageSender.isPresent()) {
-            MessagesService.sendMessage(sender, messageSender.get());
+        if (!messageSender.isPresent())
+            return;
 
-            String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages,
-                    true).get();
-            MessagesService.sendMessage(target, messageTarget);
-        }
+        MessagesService.sendMessage(sender, messageSender.get());
+
+        String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages, true)
+                .get();
+        MessagesService.sendMessage(target, messageTarget);
 
         if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
             String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
