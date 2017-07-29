@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    shadow "dev.aura.lib.version:VersionLib:${versionLib_version}"
+    compile "dev.aura.lib.version:VersionLib:${versionLib_version}"
 }
 
 jacocoTestCoverageVerification {
