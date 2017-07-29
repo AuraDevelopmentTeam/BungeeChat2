@@ -6,9 +6,6 @@ variables:
   COVERAGE_REPORTS: "$CI_PROJECT_DIR/*-CoverageReport.zip"
   JAVADOCS: "$CI_PROJECT_DIR/*-javadoc.jar"
   GRADLE_OPTS: >
-    -Dorg.gradle.project.signing.keyId="$keyId"
-    -Dorg.gradle.project.signing.password="$password"
-    -Dorg.gradle.project.signing.secretKeyRingFile="$secretKeyRingFile"
     -Dorg.gradle.project.branchName="$CI_COMMIT_REF_NAME"
 
 cache:
@@ -59,10 +56,18 @@ coverage:
 deploy:
   stage: deploy
   script:
-  - ./gradlew --console=plain uploadArchives
+  - ./gradlew --console=plain uploadArchives uploadArchivesToMavenCentral
   when: always
   only:
   - tags
+  
+sendCoverage:
+  stage: deploy
+  dependencies:
+  - coverage
+  script:
+  - ./gradlew --console=plain sendCoverageToCodacy
+  when: always
 
 pages:
   stage: deploy
