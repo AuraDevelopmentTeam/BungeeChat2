@@ -15,7 +15,6 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
@@ -135,11 +134,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         PlaceHolderManager.clear();
         ModuleManager.clearActiveModules();
-    }
-
-    @Override
-    public ServerType getServerType() {
-        return ServerType.BUNGEECORD;
     }
 
     @Override

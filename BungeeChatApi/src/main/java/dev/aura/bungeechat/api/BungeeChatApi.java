@@ -6,7 +6,6 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.BuildType;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
@@ -40,14 +39,6 @@ public interface BungeeChatApi {
     public static BungeeChatApi getInstance() {
         return BungeeChatInstaceHolder.getInstance();
     }
-
-    /**
-     * Method the get the server type. In most cases you know what server type
-     * you're running on, but in case you need to know, use this.
-     *
-     * @return One member of the {@link ServerType}
-     */
-    public ServerType getServerType();
 
     /**
      * Retrieves (and creates if necessary) the config folder.
