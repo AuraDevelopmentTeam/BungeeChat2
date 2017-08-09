@@ -69,7 +69,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public void onEnable(boolean prinLoadScreen) {
         Config.load();
 
-        PlaceHolderUtil.reloadConfigSections();
         PlaceHolders.registerPlaceholders();
 
         Configuration accountDataBase = Config.get().getSection("AccountDataBase");
@@ -133,6 +132,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
 
         PlaceHolderManager.clear();
+        PlaceHolderUtil.clearConfigSections();
         ModuleManager.clearActiveModules();
     }
 
