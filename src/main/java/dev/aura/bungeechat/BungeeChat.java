@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import dev.aura.bungeechat.account.AccountFileStorage;
 import dev.aura.bungeechat.account.AccountSQLStorage;
@@ -46,6 +48,7 @@ import net.md_5.bungee.config.Configuration;
 public class BungeeChat extends Plugin implements BungeeChatApi {
     private static final String storedDataHookName = "storedData";
     private static final String defaultHookName = "default";
+    private static final String errorVersion = "error";
     @Getter
     private static BungeeChat instance;
     private String latestVersion = null;
@@ -178,7 +181,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private String queryLatestVersion() {
         try {
             @Cleanup("disconnect")
-            HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php")
+            HttpURLConnection con = (HttpURLConnection) new URL("https://www.spigotmc.org/api/general.php")
                     .openConnection();
             con.setDoOutput(true);
             con.setRequestMethod("POST");
@@ -186,11 +189,24 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
                     ("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=" + PLUGIN_ID)
                             .getBytes("UTF-8"));
 
-            return new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+            con.connect();
+
+            int responseCode = con.getResponseCode();
+            @Cleanup
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            if (responseCode != 200) {
+                LoggerHelper.warning("Invalid response! HTTP code: " + responseCode + " Content:\n"
+                        + reader.lines().collect(Collectors.joining("\n")));
+
+                return errorVersion;
+            }
+
+            return Optional.ofNullable(reader.readLine()).orElse(errorVersion);
         } catch (Exception ex) {
             LoggerHelper.warning("Could not fetch the latest version!", ex);
 
-            return "";
+            return errorVersion;
         }
     }
 
