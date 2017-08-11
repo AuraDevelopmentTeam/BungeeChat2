@@ -1,6 +1,13 @@
 Version 2.1.5
 -------------
 
+\* Fixed leave message not showing after a reload.  
+\* Added AdvancedBan to list of known mute plugins.  
+\* Fixed no permission message being displayed instead of anti advertise.  
+\* Anti-Advertise is now case insensitive.  
+\* Fixed blocked PMs being shown in socialSpy.  
+\* Using wildcardStrings for filteredCommands.  
+\* Using better version comparison library.  
 \* Internal improvements.  
 
 
