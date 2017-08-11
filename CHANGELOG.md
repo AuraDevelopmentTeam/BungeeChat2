@@ -1,3 +1,9 @@
+Version 2.1.6
+-------------
+
+\* Fixed bug with update checker.  
+
+
 Version 2.1.5
 -------------
 
