@@ -3,11 +3,12 @@ package dev.aura.bungeechat;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import dev.aura.bungeechat.account.AccountFileStorage;
 import dev.aura.bungeechat.account.AccountSQLStorage;
@@ -181,7 +182,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private String queryLatestVersion() {
         try {
             @Cleanup("disconnect")
-            HttpURLConnection con = (HttpURLConnection) new URL("https://www.spigotmc.org/api/general.php")
+            HttpsURLConnection con = (HttpsURLConnection) new URL("https://www.spigotmc.org/api/general.php")
                     .openConnection();
             con.setDoOutput(true);
             con.setRequestMethod("POST");
