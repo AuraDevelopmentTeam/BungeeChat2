@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import dev.aura.bungeechat.config.OldConfig;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValueType;
+
+import dev.aura.bungeechat.config.Configuration;
 import lombok.experimental.UtilityClass;
-import net.md_5.bungee.config.Configuration;
 
 @UtilityClass
 public class ServerAliases {
@@ -20,8 +22,13 @@ public class ServerAliases {
     }
 
     public static void loadAliases() {
-        Configuration section = OldConfig.get().getSection("Settings.ServerAlias");
+        Config section = Configuration.get().getConfig("ServerAlias");
 
-        aliasMapping = section.getKeys().stream().collect(Collectors.toMap(key -> key, key -> section.getString(key)));
+        aliasMapping = section.entrySet().stream().filter(entry -> {
+            ConfigValueType valueType = entry.getValue().valueType();
+
+            return (valueType != ConfigValueType.LIST) && (valueType != ConfigValueType.OBJECT)
+                    && (valueType != ConfigValueType.NULL);
+        }).collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue().unwrapped().toString()));
     }
 }
