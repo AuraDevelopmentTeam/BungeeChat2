@@ -118,7 +118,7 @@ public class Configuration implements Config {
             try {
                 net.md_5.bungee.config.Configuration oldConfig = ConfigurationProvider
                         .getProvider(YamlConfiguration.class)
-                        .load(new InputStreamReader(new FileInputStream(OLD_CONFIG_FILE_NAME), StandardCharsets.UTF_8));
+                        .load(new InputStreamReader(new FileInputStream(OLD_CONFIG_FILE), StandardCharsets.UTF_8));
 
                 @Cleanup
                 StringWriter writer = new StringWriter();
