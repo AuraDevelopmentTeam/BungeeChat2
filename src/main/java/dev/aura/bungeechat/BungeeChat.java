@@ -76,14 +76,14 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         PlaceHolders.registerPlaceholders();
 
-        Config accountDataBase = Configuration.get().atPath("AccountDatabase");
+        Config accountDatabase = Configuration.get().atKey("AccountDatabase");
 
-        if (accountDataBase.getBoolean("enabled")) {
+        if (accountDatabase.getBoolean("enabled")) {
             try {
                 AccountManager.setAccountStorage(
-                        new AccountSQLStorage(accountDataBase.getString("ip"), accountDataBase.getInt("port"),
-                                accountDataBase.getString("database"), accountDataBase.getString("user"),
-                                accountDataBase.getString("password"), accountDataBase.getString("tablePrefix")));
+                        new AccountSQLStorage(accountDatabase.getString("ip"), accountDatabase.getInt("port"),
+                                accountDatabase.getString("database"), accountDatabase.getString("user"),
+                                accountDatabase.getString("password"), accountDatabase.getString("tablePrefix")));
             } catch (SQLException e) {
                 LoggerHelper.error("Could not connect to specified database. Using file storage", e);
 
