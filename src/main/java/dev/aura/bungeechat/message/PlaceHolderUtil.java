@@ -7,24 +7,25 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
+import com.typesafe.config.Config;
 
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
+import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.config.OldConfig;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.config.Configuration;
 
 @UtilityClass
 public class PlaceHolderUtil {
     private static final String FORMATS = "Formats";
     private static final String MESSAGES = "Messages";
-    private static Configuration formatsBase;
-    private static Configuration messageBase;
+    private static Config formatsBase;
+    private static net.md_5.bungee.config.Configuration messageBase;
 
     private static final char altColorChar = '&';
     private static final String altColorString = String.valueOf(altColorChar);
@@ -53,7 +54,7 @@ public class PlaceHolderUtil {
     public static String getFormat(Format format) {
         try {
             if (formatsBase == null) {
-                formatsBase = OldConfig.get().getSection(FORMATS);
+                formatsBase = Configuration.get().getConfig(FORMATS);
             }
 
             return formatsBase.getString(format.getStringPath());
