@@ -84,9 +84,15 @@ public class Configuration implements Config {
                 new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME)), PARSE_OPTIONS);
 
         if (CONFIG_FILE.exists()) {
-            Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
+            try {
+                Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
 
-            config = fileConfig.withFallback(defaultConfig);
+                config = fileConfig.withFallback(defaultConfig);
+            } catch (ConfigException e) {
+                LoggerHelper.error("Error while reading config:\n" + e.getLocalizedMessage());
+
+                config = defaultConfig;
+            }
         } else {
             config = defaultConfig;
         }
