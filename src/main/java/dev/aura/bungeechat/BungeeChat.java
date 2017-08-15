@@ -76,7 +76,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         PlaceHolders.registerPlaceholders();
 
-        Config accountDatabase = Configuration.get().atKey("AccountDatabase");
+        Config accountDatabase = Configuration.get().getConfig("AccountDatabase");
 
         if (accountDatabase.getBoolean("enabled")) {
             try {
@@ -103,7 +103,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().registerListener(this, channelTypeCorrectorListener);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
 
-        Config permissionsManager = Configuration.get().atPath("Settings.PermissionsManager");
+        Config permissionsManager = Configuration.get().getConfig("PermissionsManager");
 
         BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();
