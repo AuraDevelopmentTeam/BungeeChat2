@@ -76,7 +76,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         PlaceHolders.registerPlaceholders();
 
-        Config accountDataBase = Configuration.get().atPath("AccountDataBase");
+        Config accountDataBase = Configuration.get().atPath("AccountDatabase");
 
         if (accountDataBase.getBoolean("enabled")) {
             try {
