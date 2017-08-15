@@ -33,9 +33,12 @@ import net.md_5.bungee.config.YamlConfiguration;
 public class Configuration implements Config {
     protected static final String CONFIG_FILE_NAME = "config.conf";
     protected static final String OLD_CONFIG_FILE_NAME = "config.yml";
+    protected static final String OLD_OLD_CONFIG_FILE_NAME = "config.old.yml";
     protected static final File CONFIG_FILE = new File(BungeeChat.getInstance().getConfigFolder(), CONFIG_FILE_NAME);
     protected static final File OLD_CONFIG_FILE = new File(BungeeChat.getInstance().getConfigFolder(),
             OLD_CONFIG_FILE_NAME);
+    protected static final File OLD_OLD_CONFIG_FILE = new File(BungeeChat.getInstance().getConfigFolder(),
+            OLD_OLD_CONFIG_FILE_NAME);
     protected static final ConfigParseOptions PARSE_OPTIONS = ConfigParseOptions.defaults().setAllowMissing(false)
             .setSyntax(ConfigSyntax.CONF);
     protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false);
@@ -115,27 +118,32 @@ public class Configuration implements Config {
 
     protected void convertOldConfig() {
         if (OLD_CONFIG_FILE.exists()) {
-            try {
-                net.md_5.bungee.config.Configuration oldConfig = ConfigurationProvider
-                        .getProvider(YamlConfiguration.class)
-                        .load(new InputStreamReader(new FileInputStream(OLD_CONFIG_FILE), StandardCharsets.UTF_8));
+            convertYAMLConfig();
 
-                @Cleanup
-                StringWriter writer = new StringWriter();
-                ConfigurationProvider.getProvider(YamlConfiguration.class).save(oldConfig, writer);
-
-                LoggerHelper.info(writer.toString());
-
-                // TODO: convert old config
-            } catch (Exception e) {
-                LoggerHelper.error("There is an error with creating or loading the old config file!", e);
-            }
+            OLD_CONFIG_FILE.renameTo(OLD_OLD_CONFIG_FILE);
         }
 
         switch (String.valueOf(BungeeChatApi.CONFIG_VERSION)) {
         case "11.0":
         default:
             // Up to date. No action needed
+        }
+    }
+
+    private void convertYAMLConfig() {
+        try {
+            net.md_5.bungee.config.Configuration oldConfig = ConfigurationProvider.getProvider(YamlConfiguration.class)
+                    .load(new InputStreamReader(new FileInputStream(OLD_CONFIG_FILE), StandardCharsets.UTF_8));
+
+            @Cleanup
+            StringWriter writer = new StringWriter();
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(oldConfig, writer);
+
+            LoggerHelper.info(writer.toString());
+
+            // TODO: convert old config
+        } catch (Exception e) {
+            LoggerHelper.error("There is an error with creating or loading the old config file!", e);
         }
     }
 
