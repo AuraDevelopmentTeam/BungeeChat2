@@ -1,6 +1,9 @@
 package dev.aura.bungeechat.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,7 +30,7 @@ public class BungeeChatTest {
     public void isLatestTest() {
         assertTrue("Version should not be \"error\"be latest", bungeeChat.isLatestVersion());
     }
-    
+
     @Test
     public void queryTest() {
         String result = bungeeChat.getLatestVersion(true);

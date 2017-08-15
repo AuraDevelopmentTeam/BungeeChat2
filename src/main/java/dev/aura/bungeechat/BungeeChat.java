@@ -55,6 +55,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private static BungeeChat instance;
     private String latestVersion = null;
     private File configDir;
+    private File langDir;
     private BungeeChatCommand bungeeChatCommand;
     private BungeecordAccountManager bungeecordAccountManager;
     private ChannelTypeCorrectorListener channelTypeCorrectorListener;
@@ -149,6 +150,15 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
 
         return configDir;
+    }
+
+    public File getLangFolder() {
+        if (langDir == null) {
+            langDir = new File(getConfigFolder(), "lang");
+            langDir.mkdirs();
+        }
+
+        return langDir;
     }
 
     @Override

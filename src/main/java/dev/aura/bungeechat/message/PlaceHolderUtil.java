@@ -9,13 +9,14 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
 
+import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Configuration;
-import dev.aura.bungeechat.config.OldConfig;
+import dev.aura.bungeechat.config.lang.MessagesTranslator;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
@@ -23,9 +24,9 @@ import net.md_5.bungee.api.ChatColor;
 @UtilityClass
 public class PlaceHolderUtil {
     private static final String FORMATS = "Formats";
-    private static final String MESSAGES = "Messages";
+    private static final String LANGUAGE = "Language";
     private static Config formatsBase;
-    private static net.md_5.bungee.config.Configuration messageBase;
+    private static MessagesTranslator messageBase;
 
     private static final char altColorChar = '&';
     private static final String altColorString = String.valueOf(altColorChar);
@@ -66,10 +67,11 @@ public class PlaceHolderUtil {
     public static String getMessage(Message message) {
         try {
             if (messageBase == null) {
-                messageBase = OldConfig.get().getSection(MESSAGES);
+                messageBase = new MessagesTranslator(BungeeChat.getInstance().getLangFolder(),
+                        Configuration.get().getString(LANGUAGE));
             }
 
-            return messageBase.getString(message.getStringPath());
+            return messageBase.translate(message).orElse(message.getStringPath());
         } catch (RuntimeException e) {
             return message.getStringPath();
         }
