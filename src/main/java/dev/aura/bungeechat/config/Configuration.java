@@ -2,31 +2,40 @@ package dev.aura.bungeechat.config;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigParseOptions;
 import com.typesafe.config.ConfigRenderOptions;
 import com.typesafe.config.ConfigSyntax;
 
 import dev.aura.bungeechat.BungeeChat;
+import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.util.LoggerHelper;
 import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Delegate;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
-// TODO: convert old config
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Configuration implements Config {
     protected static final String CONFIG_FILE_NAME = "config.conf";
+    protected static final String OLD_CONFIG_FILE_NAME = "config.yml";
     protected static final File CONFIG_FILE = new File(BungeeChat.getInstance().getConfigFolder(), CONFIG_FILE_NAME);
+    protected static final File OLD_CONFIG_FILE = new File(BungeeChat.getInstance().getConfigFolder(),
+            OLD_CONFIG_FILE_NAME);
     protected static final ConfigParseOptions PARSE_OPTIONS = ConfigParseOptions.defaults().setAllowMissing(false)
             .setSyntax(ConfigSyntax.CONF);
     protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false);
@@ -80,8 +89,8 @@ public class Configuration implements Config {
     }
 
     protected void loadConfig() {
-        Config defaultConfig = ConfigFactory.parseReader(
-                new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME)), PARSE_OPTIONS);
+        Config defaultConfig = ConfigFactory.parseReader(new InputStreamReader(
+                BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME), StandardCharsets.UTF_8), PARSE_OPTIONS);
 
         if (CONFIG_FILE.exists()) {
             try {
@@ -98,13 +107,42 @@ public class Configuration implements Config {
         }
 
         config = config.resolve();
+
+        convertOldConfig();
+
         saveConfig();
+    }
+
+    protected void convertOldConfig() {
+        if (OLD_CONFIG_FILE.exists()) {
+            try {
+                net.md_5.bungee.config.Configuration oldConfig = ConfigurationProvider
+                        .getProvider(YamlConfiguration.class)
+                        .load(new InputStreamReader(new FileInputStream(OLD_CONFIG_FILE_NAME), StandardCharsets.UTF_8));
+
+                @Cleanup
+                StringWriter writer = new StringWriter();
+                ConfigurationProvider.getProvider(YamlConfiguration.class).save(oldConfig, writer);
+
+                LoggerHelper.info(writer.toString());
+
+                // TODO: convert old config
+            } catch (Exception e) {
+                LoggerHelper.error("There is an error with creating or loading the old config file!", e);
+            }
+        }
+
+        switch (String.valueOf(BungeeChatApi.CONFIG_VERSION)) {
+        case "11.0":
+        default:
+            // Up to date. No action needed
+        }
     }
 
     protected void saveConfig() {
         try {
             @Cleanup
-            PrintWriter writer = new PrintWriter(CONFIG_FILE, "UTF-8");
+            PrintWriter writer = new PrintWriter(CONFIG_FILE, StandardCharsets.UTF_8.name());
             String renderedConfig = config.root().render(RENDER_OPTIONS);
             renderedConfig = getHeader() + renderedConfig;
 
