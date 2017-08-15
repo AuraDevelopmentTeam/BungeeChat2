@@ -139,7 +139,7 @@ public class Configuration implements Config {
             StringWriter writer = new StringWriter();
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(oldConfig, writer);
 
-            LoggerHelper.info(writer.toString());
+            // LoggerHelper.info(writer.toString());
 
             // TODO: convert old config
         } catch (Exception e) {
