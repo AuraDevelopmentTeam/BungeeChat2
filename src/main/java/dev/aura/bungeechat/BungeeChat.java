@@ -3,9 +3,12 @@ package dev.aura.bungeechat;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import com.typesafe.config.Config;
 
@@ -17,7 +20,6 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
@@ -38,7 +40,7 @@ import dev.aura.bungeechat.message.ServerAliases;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
-import dev.aura.bungeechat.util.Version;
+import dev.aura.lib.version.Version;
 import lombok.Cleanup;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
@@ -48,6 +50,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 public class BungeeChat extends Plugin implements BungeeChatApi {
     private static final String storedDataHookName = "storedData";
     private static final String defaultHookName = "default";
+    private static final String errorVersion = "error";
     @Getter
     private static BungeeChat instance;
     private String latestVersion = null;
@@ -71,7 +74,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     public void onEnable(boolean prinLoadScreen) {
         Configuration.load();
 
-        PlaceHolderUtil.reloadConfigSections();
         PlaceHolders.registerPlaceholders();
 
         Config accountDataBase = Configuration.get().atPath("AccountDataBase");
@@ -135,12 +137,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
 
         PlaceHolderManager.clear();
+        PlaceHolderUtil.clearConfigSections();
         ModuleManager.clearActiveModules();
-    }
-
-    @Override
-    public ServerType getServerType() {
-        return ServerType.BUNGEECORD;
     }
 
     @Override
@@ -172,7 +170,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         LoggerHelper.info(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD
                 + " ----------------");
         LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + " & " + AUTHOR_BRAINSTONE);
-        LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION);
+        LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION_STR);
         LoggerHelper.info(
                 ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
         if (!isLatestVersion()) {
@@ -185,7 +183,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private String queryLatestVersion() {
         try {
             @Cleanup("disconnect")
-            HttpURLConnection con = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php")
+            HttpsURLConnection con = (HttpsURLConnection) new URL("https://www.spigotmc.org/api/general.php")
                     .openConnection();
             con.setDoOutput(true);
             con.setRequestMethod("POST");
@@ -193,11 +191,24 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
                     ("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=" + PLUGIN_ID)
                             .getBytes("UTF-8"));
 
-            return new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+            con.connect();
+
+            int responseCode = con.getResponseCode();
+            @Cleanup
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            if (responseCode != 200) {
+                LoggerHelper.warning("Invalid response! HTTP code: " + responseCode + " Content:\n"
+                        + reader.lines().collect(Collectors.joining("\n")));
+
+                return errorVersion;
+            }
+
+            return Optional.ofNullable(reader.readLine()).orElse(errorVersion);
         } catch (Exception ex) {
             LoggerHelper.warning("Could not fetch the latest version!", ex);
 
-            return "";
+            return errorVersion;
         }
     }
 
@@ -214,6 +225,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public boolean isLatestVersion() {
-        return (new Version(getLatestVersion())).compareTo(new Version(VERSION)) <= 0;
+        return VERSION.compareTo(new Version(getLatestVersion())) >= 0;
     }
 }

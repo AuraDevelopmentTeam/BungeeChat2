@@ -57,13 +57,13 @@ public class MessagesService {
             String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages,
                     true).get();
             MessagesService.sendMessage(target, messageTarget);
-        }
 
-        if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
-            String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
+            if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
+                String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
 
-            sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
-                    && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+                sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
+                        && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+            }
         }
 
         if (BungeecordModuleManager.CHAT_LOGGING_MODULE.getModuleSection().getBoolean("privateMessages")) {
@@ -275,6 +275,7 @@ public class MessagesService {
         if (!section.getBoolean("enabled"))
             return account -> true;
         else {
+            // TODO: Use wildcard string
             List<String> allowedServers = section.getStringList("list");
 
             return account -> allowedServers.contains(account.getServerName());

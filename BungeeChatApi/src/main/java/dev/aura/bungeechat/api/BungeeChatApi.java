@@ -6,10 +6,10 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.BuildType;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
+import dev.aura.lib.version.Version;
 
 /**
  * This is the base Interface for the BungeChatApi. The central methods will be
@@ -19,7 +19,8 @@ public interface BungeeChatApi {
     public static final String ID = "bungeechat";
     public static final String NAME = "Bungee Chat";
     public static final String DESCRIPTION = "Bungee Chat Plugin";
-    public static final String VERSION = "@version@";
+    public static final String VERSION_STR = "@version@";
+    public static final Version VERSION = new Version(VERSION_STR);
     public static final BuildType BUILD_TYPE = BuildType.valueOf("@buildType@");
     public static final int BUILD = Integer.parseInt("@build@");
     public static final String URL = "https://www.spigotmc.org/resources/bungee-chat.12592";
@@ -38,14 +39,6 @@ public interface BungeeChatApi {
     public static BungeeChatApi getInstance() {
         return BungeeChatInstaceHolder.getInstance();
     }
-
-    /**
-     * Method the get the server type. In most cases you know what server type
-     * you're running on, but in case you need to know, use this.
-     *
-     * @return One member of the {@link ServerType}
-     */
-    public ServerType getServerType();
 
     /**
      * Retrieves (and creates if necessary) the config folder.

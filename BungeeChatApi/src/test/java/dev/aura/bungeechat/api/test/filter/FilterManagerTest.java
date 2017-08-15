@@ -12,7 +12,6 @@ import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.enums.ServerType;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.filter.FilterManager;
@@ -28,16 +27,13 @@ public class FilterManagerTest {
     public static void setupApi() {
         BungeeChatInstaceHolder.setInstance(new BungeeChatApi() {
             @Override
-            public ServerType getServerType() {
-                return ServerType.BUNGEECORD;
-            }
-
-            @Override
             public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextError {
+                // Nothing
             }
 
             @Override
             public void sendChannelMessage(BungeeChatContext context, ChannelType channel) throws InvalidContextError {
+                // Nothing
             }
 
             @Override

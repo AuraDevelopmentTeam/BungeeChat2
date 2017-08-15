@@ -108,7 +108,7 @@ public class RegexUtil {
             if (c >= 0x20 && c <= 0x7E) {
                 b.append(c);
             } else {
-                b.append(String.format("\\x{%04X}", (int)c));
+                b.append(String.format("\\x{%04X}", (int) c));
             }
         }
 
@@ -159,7 +159,8 @@ public class RegexUtil {
      * <br>
      * This is the same as
      * {@link RegexUtil#parseWildcardToPattern(String, int, boolean, boolean, boolean, boolean)
-     * StringUtil.parseWildcardToPattern(wildcard, flags, false, false, false)}
+     * StringUtil.parseWildcardToPattern(wildcard, flags, false, false, false,
+     * false)}
      *
      * @param wildcard
      *            The string that is to be parsed.

@@ -120,10 +120,10 @@ public class BungeeChatCommand extends BaseCommand {
 
         if (instance.isLatestVersion()) {
             MessagesService.sendMessage(sender,
-                    prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION);
+                    prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION_STR);
         } else {
             MessagesService.sendMessage(sender,
-                    prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION);
+                    prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION_STR);
             MessagesService.sendMessage(sender,
                     prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + latestVersion);
         }
