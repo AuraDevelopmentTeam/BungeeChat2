@@ -14,7 +14,7 @@ public abstract class Module implements BungeeChatModule {
     }
 
     public Config getModuleSection() {
-        return Configuration.getCurrentConfig().atPath(MODULE_BASE);
+        return Configuration.get().atPath(MODULE_BASE);
     }
 
     @Override

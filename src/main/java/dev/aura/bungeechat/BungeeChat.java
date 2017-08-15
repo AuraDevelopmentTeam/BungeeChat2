@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.account.AccountFileStorage;
 import dev.aura.bungeechat.account.AccountSQLStorage;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
@@ -23,7 +25,7 @@ import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.BungeeChatCommand;
-import dev.aura.bungeechat.config.OldConfig;
+import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.event.BungeeChatEventsListener;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
@@ -42,7 +44,6 @@ import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.config.Configuration;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
     private static final String storedDataHookName = "storedData";
@@ -68,13 +69,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public void onEnable(boolean prinLoadScreen) {
-        OldConfig.load();
-        dev.aura.bungeechat.config.Configuration.get();
+        Configuration.load();
 
         PlaceHolderUtil.reloadConfigSections();
         PlaceHolders.registerPlaceholders();
 
-        Configuration accountDataBase = OldConfig.get().getSection("AccountDataBase");
+        Config accountDataBase = Configuration.get().atPath("AccountDataBase");
 
         if (accountDataBase.getBoolean("enabled")) {
             try {
@@ -101,7 +101,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().registerListener(this, channelTypeCorrectorListener);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
 
-        Configuration permissionsManager = OldConfig.get().getSection("Settings.PermissionsManager");
+        Config permissionsManager = Configuration.get().atPath("Settings.PermissionsManager");
 
         BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();

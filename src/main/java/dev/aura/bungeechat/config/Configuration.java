@@ -33,7 +33,6 @@ public class Configuration implements Config {
     @Getter(value = AccessLevel.PROTECTED, lazy = true)
     private static final String header = loadHeader();
 
-    @Getter
     protected static Configuration currentConfig;
 
     @Delegate
@@ -46,13 +45,17 @@ public class Configuration implements Config {
      *
      * @return a configuration object, loaded from the config file.
      */
-    public static Configuration get() {
+    public static Configuration load() {
         Configuration config = new Configuration();
-        config.load();
+        config.loadConfig();
 
         currentConfig = config;
 
-        return config;
+        return currentConfig;
+    }
+
+    public static Configuration get() {
+        return currentConfig;
     }
 
     private static String loadHeader() {
@@ -76,7 +79,7 @@ public class Configuration implements Config {
         return header.toString();
     }
 
-    protected void load() {
+    protected void loadConfig() {
         Config defaultConfig = ConfigFactory.parseReader(
                 new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME)), PARSE_OPTIONS);
 
@@ -89,10 +92,10 @@ public class Configuration implements Config {
         }
 
         config = config.resolve();
-        save();
+        saveConfig();
     }
 
-    protected void save() {
+    protected void saveConfig() {
         try {
             @Cleanup
             PrintWriter writer = new PrintWriter(CONFIG_FILE, "UTF-8");
