@@ -34,18 +34,22 @@ public class FileUtils {
     }
 
     public static boolean copyFilesRecusively(final File toCopy, final File destDir) {
+        return copyFilesRecusively(toCopy, destDir, true);
+    }
+
+    public static boolean copyFilesRecusively(final File toCopy, final File destDir, boolean skipFirstDir) {
         assert destDir.isDirectory();
 
         if (!toCopy.isDirectory())
             return FileUtils.copyFile(toCopy, new File(destDir, toCopy.getName()));
         else {
-            final File newDestDir = new File(destDir, toCopy.getName());
+            final File newDestDir = skipFirstDir ? destDir : new File(destDir, toCopy.getName());
 
             if (!newDestDir.exists() && !newDestDir.mkdir())
                 return false;
 
             for (final File child : toCopy.listFiles()) {
-                if (!FileUtils.copyFilesRecusively(child, newDestDir))
+                if (!FileUtils.copyFilesRecusively(child, newDestDir, false))
                     return false;
             }
         }

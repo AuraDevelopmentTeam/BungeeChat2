@@ -15,7 +15,7 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
 public class MessagesTranslator {
-    private static final String DEFAULT_LANGUAGE = "en_US";
+    public static final String DEFAULT_LANGUAGE = "en_US";
     private static final String INHERIT = "inherit";
 
     @Delegate
