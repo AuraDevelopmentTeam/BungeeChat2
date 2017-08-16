@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.message;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -52,10 +53,26 @@ public class PlaceHolderUtil {
         messageBase = null;
     }
 
+    public static void loadConfigSections() {
+        loadFormatsBase();
+        loadMessageBase();
+    }
+
+    public static void loadFormatsBase() {
+        formatsBase = Configuration.get().getConfig(FORMATS);
+    }
+
+    public static void loadMessageBase() {
+        File dir = BungeeChat.getInstance().getLangFolder();
+        String language = Configuration.get().getString(LANGUAGE);
+
+        messageBase = new MessagesTranslator(dir, language);
+    }
+
     public static String getFormat(Format format) {
         try {
             if (formatsBase == null) {
-                formatsBase = Configuration.get().getConfig(FORMATS);
+                loadFormatsBase();
             }
 
             return formatsBase.getString(format.getStringPath());
@@ -67,8 +84,7 @@ public class PlaceHolderUtil {
     public static String getMessage(Message message) {
         try {
             if (messageBase == null) {
-                messageBase = new MessagesTranslator(BungeeChat.getInstance().getLangFolder(),
-                        Configuration.get().getString(LANGUAGE));
+                loadMessageBase();
             }
 
             return messageBase.translate(message).orElse(message.getStringPath());
