@@ -70,6 +70,12 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
 
     public AccountSQLStorage(String ip, int port, String database, String username, String password, String tablePrefix)
             throws SQLException {
+        this(ip, port, database, username, password, tablePrefix,
+                "connectTimeout=0&socketTimeout=0&autoReconnect=true");
+    }
+
+    public AccountSQLStorage(String ip, int port, String database, String username, String password, String tablePrefix,
+            String options) throws SQLException {
         this.tablePrefix = tablePrefix;
 
         tableAccounts = getTableName("Accounts");
@@ -87,8 +93,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
         tableIgnoresColumnUser = "User";
         tableIgnoresColumnIgnores = "Ignores";
 
-        String host = "jdbc:mysql://" + ip + ":" + port + "/" + database
-                + "?connectTimeout=0&socketTimeout=0&autoReconnect=true";
+        String host = "jdbc:mysql://" + ip + ":" + port + "/" + database + (options.isEmpty() ? "" : ('?' + options));
 
         connection = DriverManager.getConnection(host, username, password);
 
@@ -174,7 +179,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
                             resultLoadAccount.getTimestamp(tableAccountsColumnMutedUntil),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
                             Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix))),
-                    false, true);
+                    true, false);
         } catch (SQLException e) {
             LoggerHelper.error("Could not load user " + uuid + " from database!", e);
 

@@ -17,15 +17,21 @@ import dev.aura.bungeechat.permission.PermissionManager;
 public class DuplicationFilter implements BungeeChatFilter {
     private final ConcurrentMap<UUID, Queue<String>> playerMessagesStorage;
     private final int checkPastMessages;
+    private final boolean noPermissions;
 
     public DuplicationFilter(int checkPastMessages) {
+        this(checkPastMessages, false);
+    }
+    
+    public DuplicationFilter(int checkPastMessages, boolean noPermissions) {
         playerMessagesStorage = new ConcurrentHashMap<>();
         this.checkPastMessages = checkPastMessages;
+        this.noPermissions = noPermissions;
     }
 
     @Override
     public String applyFilter(BungeeChatAccount sender, String message) throws BlockMessageException {
-        if (PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_DUPLICATE))
+        if (!noPermissions && PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_DUPLICATE))
             return message;
 
         UUID uuid = sender.getUniqueId();
