@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.test.config.lang;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -11,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import dev.aura.bungeechat.config.lang.MessagesTranslator;
+import dev.aura.bungeechat.message.Message;
 
 public class MessagesTranslatorTest {
     private static File tempDir;
@@ -56,5 +58,16 @@ public class MessagesTranslatorTest {
 
         assertTrue("Expected en_US.yml to exist", en_US.exists());
         assertTrue("Expected de_DE.yml to exist", de_DE.exists());
+    }
+
+    @Test
+    public void missingLanguageTest() {
+        MessagesTranslator expected = new MessagesTranslator(tempDir, MessagesTranslator.DEFAULT_LANGUAGE);
+        MessagesTranslator testee = new MessagesTranslator(tempDir, "unknown");
+
+        for (Message message : Message.values()) {
+            assertEquals("Expected default language and missing language to be the same", expected.translate(message),
+                    testee.translate(message));
+        }
     }
 }
