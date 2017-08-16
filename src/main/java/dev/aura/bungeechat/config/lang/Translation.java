@@ -13,7 +13,7 @@ public class Translation {
 
     public Translation(Configuration translation, Optional<Translation> fallback) {
         translationMapping = translation.getKeys().stream().filter(Message::contains)
-                .collect(Collectors.toMap(key -> Message.valueOf(key), key -> translation.getString(key)));
+                .collect(Collectors.toMap(Message::getFromStringPath, translation::getString));
         this.fallback = fallback;
     }
 
