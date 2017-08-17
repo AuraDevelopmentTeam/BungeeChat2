@@ -105,13 +105,13 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().registerListener(this, channelTypeCorrectorListener);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
 
-        Config permissionsManager = Configuration.get().getConfig("PermissionsManager");
+        Config prefixDefaults = Configuration.get().getConfig("PrefixDefaults");
 
         BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();
         HookManager.addHook(storedDataHookName, new StoredDataHook());
-        HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("defaultPrefix"),
-                permissionsManager.getString("defaultSuffix")));
+        HookManager.addHook(defaultHookName, new DefaultHook(prefixDefaults.getString("defaultPrefix"),
+                prefixDefaults.getString("defaultSuffix")));
         ServerAliases.loadAliases();
 
         if (prinLoadScreen) {
