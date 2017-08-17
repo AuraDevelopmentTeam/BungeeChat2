@@ -17,6 +17,7 @@ import com.google.common.io.Files;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigOriginFactory;
 import com.typesafe.config.ConfigParseOptions;
 import com.typesafe.config.ConfigRenderOptions;
 import com.typesafe.config.ConfigSyntax;
@@ -364,7 +365,9 @@ public class Configuration implements Config {
                     .put("AccountDatabase", accountDatabase).put("Formats", formats).put("Modules", modules)
                     .put("PrefixDefaults", permissionsManager).put("ServerAlias", serverAlias).build();
 
-            config = ConfigFactory.parseMap(configMap, "config.yml").withFallback(config.withoutPath("ServerAlias")).resolve();
+            config = ConfigFactory
+                    .parseMap(configMap, ConfigOriginFactory.newFile(OLD_CONFIG_FILE.getPath()).description())
+                    .withFallback(config.withoutPath("ServerAlias")).resolve();
 
             // Rename old file
             Files.move(OLD_CONFIG_FILE, OLD_OLD_CONFIG_FILE);
