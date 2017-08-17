@@ -17,7 +17,7 @@ import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Configuration;
-import dev.aura.bungeechat.config.lang.MessagesTranslator;
+import dev.aura.bungeechat.config.MessagesTranslator;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;

@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.test.config.lang;
+package dev.aura.bungeechat.test.config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dev.aura.bungeechat.config.lang.MessagesTranslator;
+import dev.aura.bungeechat.config.MessagesTranslator;
 import dev.aura.bungeechat.message.Message;
 
 public class MessagesTranslatorTest {
@@ -53,11 +53,11 @@ public class MessagesTranslatorTest {
     public void fileCopyTest() {
         new MessagesTranslator(tempDir, MessagesTranslator.DEFAULT_LANGUAGE);
 
-        File en_US = new File(tempDir, "en_US.yml");
-        File de_DE = new File(tempDir, "de_DE.yml");
+        File en_US = new File(tempDir, "en_US.lang");
+        File de_DE = new File(tempDir, "de_DE.lang");
 
-        assertTrue("Expected en_US.yml to exist", en_US.exists());
-        assertTrue("Expected de_DE.yml to exist", de_DE.exists());
+        assertTrue("Expected en_US.lang to exist", en_US.exists());
+        assertTrue("Expected de_DE.lang to exist", de_DE.exists());
     }
 
     @Test

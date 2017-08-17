@@ -1,0 +1,63 @@
+package dev.aura.bungeechat.config;
+
+import java.io.File;
+import java.util.Optional;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
+import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.util.FileUtils;
+import dev.aura.bungeechat.util.LoggerHelper;
+
+public class MessagesTranslator {
+    public static final String DEFAULT_LANGUAGE = "en_US";
+    private static final String INHERIT = "inherit";
+
+    private final Config defaultLang;
+    private final Config translation;
+
+    private static void copyDefaultLanguageFiles(File dir) {
+        FileUtils.copyResourcesRecursively(MessagesTranslator.class.getResource("/lang"), dir);
+    }
+
+    public MessagesTranslator(File dir, String language) {
+        copyDefaultLanguageFiles(dir);
+
+        defaultLang = loadLanguageConfiguration(dir, DEFAULT_LANGUAGE).get();
+        translation = loadLanguage(dir, language);
+    }
+
+    public Optional<String> translate(Message message) {
+        String path = message.getStringPath();
+
+        if (translation.hasPath(path))
+            return Optional.of(translation.getString(path));
+        else
+            return Optional.empty();
+    }
+
+    private Config loadLanguage(File dir, String language) {
+        Config langConfig = loadLanguageConfiguration(dir, language).orElse(defaultLang);
+
+        if (langConfig.hasPath(INHERIT)) {
+            String inheritLang = langConfig.getString(INHERIT);
+
+            return langConfig.withFallback(loadLanguage(dir, inheritLang));
+        } else
+            return langConfig;
+    }
+
+    private Optional<Config> loadLanguageConfiguration(File dir, String language) {
+        File langaugeFile = new File(dir, language + ".lang");
+
+        try {
+            if (langaugeFile.exists())
+                return Optional.of(ConfigFactory.parseFile(langaugeFile, Configuration.PARSE_OPTIONS));
+        } catch (Exception e) {
+            LoggerHelper.error("Could not load language: " + language, e);
+        }
+
+        return Optional.empty();
+    }
+}
