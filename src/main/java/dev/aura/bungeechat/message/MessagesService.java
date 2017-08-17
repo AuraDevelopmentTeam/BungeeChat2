@@ -39,7 +39,7 @@ public class MessagesService {
         CommandSender sender = BungeecordAccountManager.getCommandSender(senderAcconut).get();
         CommandSender target = BungeecordAccountManager.getCommandSender(targetAcconut).get();
         boolean filterPrivateMessages = BungeecordModuleManager.MESSENGER_MODULE.getModuleSection()
-                .getBoolean("filterMessages");
+                .getBoolean("filterPrivateMessages");
 
         if (targetAcconut.hasIgnored(senderAcconut)
                 && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
