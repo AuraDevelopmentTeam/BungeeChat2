@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
@@ -26,6 +25,7 @@ import com.typesafe.config.ConfigValueFactory;
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.util.LoggerHelper;
+import dev.aura.bungeechat.util.MapUtils;
 import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.Getter;
@@ -356,13 +356,9 @@ public class Configuration implements Config {
                     .put("defaultPrefix", section.getString("defaultPrefix"))
                     .put("defaultSuffix", section.getString("defaultSuffix")).build();
 
-            final net.md_5.bungee.config.Configuration serverAliasSection = oldConfig
-                    .getSection("Settings.ServerAlias");
-            final ImmutableMap<String, String> serverAlias = serverAliasSection.getKeys().stream()
-                    .collect(Collector.of(ImmutableMap.Builder<String, String>::new,
-                            (builder, key) -> builder.put(key, serverAliasSection.getString(key)),
-                            (builder1, builder2) -> builder1.putAll(builder2.build()),
-                            ImmutableMap.Builder<String, String>::build));
+            section = oldConfig.getSection("Settings.ServerAlias");
+            final ImmutableMap<String, String> serverAlias = section.getKeys().stream()
+                    .collect(MapUtils.immutableMapCollector(key -> key, section::getString));
 
             final ImmutableMap<String, Object> configMap = ImmutableMap.<String, Object>builder()
                     .put("AccountDatabase", accountDatabase).put("Formats", formats).put("Modules", modules)
