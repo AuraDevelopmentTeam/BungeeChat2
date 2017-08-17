@@ -33,14 +33,14 @@ public class MessagesService {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_TARGET, BungeeChatContext.HAS_MESSAGE);
 
         Optional<BungeeChatAccount> account = context.getSender();
-        BungeeChatAccount senderAcconut = account.get();
-        BungeeChatAccount targetAcconut = context.getTarget().get();
-        CommandSender sender = BungeecordAccountManager.getCommandSender(senderAcconut).get();
-        CommandSender target = BungeecordAccountManager.getCommandSender(targetAcconut).get();
+        BungeeChatAccount senderAccount = account.get();
+        BungeeChatAccount targetAccount = context.getTarget().get();
+        CommandSender sender = BungeecordAccountManager.getCommandSender(senderAccount).get();
+        CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount).get();
         boolean filterPrivateMessages = BungeecordModuleManager.MESSENGER_MODULE.getModuleSection()
                 .getBoolean("filterMessages");
 
-        if (targetAcconut.hasIgnored(senderAcconut)
+        if (targetAccount.hasIgnored(senderAccount)
                 && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
             MessagesService.sendMessage(sender, Message.HAS_INGORED.get(context));
 
@@ -60,13 +60,13 @@ public class MessagesService {
             if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
                 String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
 
-                sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
-                        && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+                sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAccount.getUniqueId()))
+                        && (!acc.getUniqueId().equals(targetAccount.getUniqueId())) && acc.hasSocialSpyEnabled());
             }
         }
 
         if (BungeecordModuleManager.CHAT_LOGGING_MODULE.getModuleSection().getBoolean("privateMessages")) {
-            ChatLoggingManager.logMessage("PM to " + targetAcconut.getName(), context);
+            ChatLoggingManager.logMessage("PM to " + targetAccount.getName(), context);
         }
     }
 
