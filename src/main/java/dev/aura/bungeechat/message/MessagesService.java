@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
@@ -20,7 +22,6 @@ import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.config.Configuration;
 
 @UtilityClass
 public class MessagesService {
@@ -38,7 +39,7 @@ public class MessagesService {
         CommandSender sender = BungeecordAccountManager.getCommandSender(senderAccount).get();
         CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount).get();
         boolean filterPrivateMessages = BungeecordModuleManager.MESSENGER_MODULE.getModuleSection()
-                .getBoolean("filterMessages");
+                .getBoolean("filterPrivateMessages");
 
         if (targetAccount.hasIgnored(senderAccount)
                 && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
@@ -269,8 +270,7 @@ public class MessagesService {
     }
 
     public static Predicate<BungeeChatAccount> getGlobalPredicate() {
-        final Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
-                .getSection("serverList");
+        final Config section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().atPath("serverList");
 
         if (!section.getBoolean("enabled"))
             return account -> true;

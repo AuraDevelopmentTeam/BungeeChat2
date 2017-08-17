@@ -1,3 +1,13 @@
+Version 2.2.0
+-------------
+
+\* Using new HOCON config instead of YAML. (New config file is called `config.conf`) (Features of HOCON: https://github.com/typesafehub/config#using-hocon-the-json-superset)  
+\* Migrating old config automatically.  
+\* Config migrates automatically when new options are added.  
+\* Config automatically gets formatted on every start and reload.  
+\* Improved message translation system with default translation files.  
+
+
 Version 2.1.6
 -------------
 

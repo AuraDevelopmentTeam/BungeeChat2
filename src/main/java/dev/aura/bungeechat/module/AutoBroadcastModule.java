@@ -2,13 +2,16 @@ package dev.aura.bungeechat.module;
 
 import java.util.concurrent.TimeUnit;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.task.AutomaticBroadcastTask;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
-import net.md_5.bungee.config.Configuration;
 
 public class AutoBroadcastModule extends Module {
+    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+
     private ScheduledTask automaticBroadcastTask;
 
     @Override
@@ -18,14 +21,14 @@ public class AutoBroadcastModule extends Module {
 
     @Override
     public void onEnable() {
-        Configuration section = getModuleSection();
+        Config section = getModuleSection();
 
-        int interval = section.getInt("interval");
-        int delay = Math.min(10, interval / 2);
+        long interval = section.getDuration("interval", TIME_UNIT);
+        long delay = Math.min(10, interval / 2);
 
         automaticBroadcastTask = ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(),
                 new AutomaticBroadcastTask(section.getStringList("messages"), section.getBoolean("random")), delay,
-                interval, TimeUnit.SECONDS);
+                interval, TIME_UNIT);
     }
 
     @Override

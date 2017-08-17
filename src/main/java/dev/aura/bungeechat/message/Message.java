@@ -1,5 +1,9 @@
 package dev.aura.bungeechat.message;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import lombok.Getter;
@@ -80,6 +84,17 @@ public enum Message {
 
     // Update available Message
     UPDATE_AVAILABLE("updateAvailable");
+
+    private static final Map<String, Message> values = Arrays.stream(values())
+            .collect(Collectors.toMap(Message::getStringPath, message -> message));
+
+    public static boolean contains(String message) {
+        return values.containsKey(message);
+    }
+
+    public static Message getFromStringPath(String message) {
+        return values.get(message);
+    }
 
     @Getter
     private final String stringPath;

@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.account.AccountFileStorage;
 import dev.aura.bungeechat.account.AccountSQLStorage;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
@@ -26,7 +28,7 @@ import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
 import dev.aura.bungeechat.command.BungeeChatCommand;
-import dev.aura.bungeechat.config.Config;
+import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.event.BungeeChatEventsListener;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
@@ -45,7 +47,6 @@ import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.config.Configuration;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
     private static final String storedDataHookName = "storedData";
@@ -55,6 +56,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private static BungeeChat instance;
     private String latestVersion = null;
     private File configDir;
+    private File langDir;
     private BungeeChatCommand bungeeChatCommand;
     private BungeecordAccountManager bungeecordAccountManager;
     private ChannelTypeCorrectorListener channelTypeCorrectorListener;
@@ -72,18 +74,19 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public void onEnable(boolean prinLoadScreen) {
-        Config.load();
+        Configuration.load();
+        PlaceHolderUtil.loadConfigSections();
 
         PlaceHolders.registerPlaceholders();
 
-        Configuration accountDataBase = Config.get().getSection("AccountDataBase");
+        Config accountDatabase = Configuration.get().getConfig("AccountDatabase");
 
-        if (accountDataBase.getBoolean("enabled")) {
+        if (accountDatabase.getBoolean("enabled")) {
             try {
                 AccountManager.setAccountStorage(
-                        new AccountSQLStorage(accountDataBase.getString("ip"), accountDataBase.getInt("port"),
-                                accountDataBase.getString("database"), accountDataBase.getString("user"),
-                                accountDataBase.getString("password"), accountDataBase.getString("tablePrefix")));
+                        new AccountSQLStorage(accountDatabase.getString("ip"), accountDatabase.getInt("port"),
+                                accountDatabase.getString("database"), accountDatabase.getString("user"),
+                                accountDatabase.getString("password"), accountDatabase.getString("tablePrefix")));
             } catch (SQLException e) {
                 LoggerHelper.error("Could not connect to specified database. Using file storage", e);
 
@@ -103,13 +106,13 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         ProxyServer.getInstance().getPluginManager().registerListener(this, channelTypeCorrectorListener);
         ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
 
-        Configuration permissionsManager = Config.get().getSection("Settings.PermissionsManager");
+        Config prefixDefaults = Configuration.get().getConfig("PrefixDefaults");
 
         BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();
         HookManager.addHook(storedDataHookName, new StoredDataHook());
-        HookManager.addHook(defaultHookName, new DefaultHook(permissionsManager.getString("defaultPrefix"),
-                permissionsManager.getString("defaultSuffix")));
+        HookManager.addHook(defaultHookName, new DefaultHook(prefixDefaults.getString("defaultPrefix"),
+                prefixDefaults.getString("defaultSuffix")));
         ServerAliases.loadAliases();
 
         if (prinLoadScreen) {
@@ -149,6 +152,15 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
 
         return configDir;
+    }
+
+    public File getLangFolder() {
+        if (langDir == null) {
+            langDir = new File(getConfigFolder(), "lang");
+            langDir.mkdirs();
+        }
+
+        return langDir;
     }
 
     @Override
