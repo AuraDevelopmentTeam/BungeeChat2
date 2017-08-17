@@ -136,7 +136,7 @@ public class Configuration implements Config {
         default:
             // Unknow Version or old version
             // -> Update version
-            config = config.withValue("Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION, "Test"));
+            config = config.withValue("Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
         case "11.0":
             // Up to date
