@@ -4,9 +4,9 @@ import java.util.stream.Stream;
 
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.event.TabCompleteEvent;

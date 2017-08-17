@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.api.enums;
+package dev.aura.bungeechat.permission;
 
 import lombok.Getter;
 
@@ -29,7 +29,7 @@ public enum Permission {
     USE_CHAT_COLOR_LIGHT_PURPLE("chat.color.light_purple"),
     USE_CHAT_COLOR_YELLOW("chat.color.yellow"),
     USE_CHAT_COLOR_WHITE("chat.color.white"),
-    
+
     USE_CHAT_FORMAT_OBFUSCATED("chat.format.obfuscated"),
     USE_CHAT_FORMAT_BOLD("chat.format.bold"),
     USE_CHAT_FORMAT_STRIKETHROUGH("chat.format.strikethrough"),

@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.test;
+package dev.aura.bungeechat;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;

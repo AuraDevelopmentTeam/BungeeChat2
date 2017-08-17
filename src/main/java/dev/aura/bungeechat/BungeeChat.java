@@ -18,9 +18,7 @@ import dev.aura.bungeechat.account.AccountSQLStorage;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.AccountManager;
-import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
@@ -39,7 +37,6 @@ import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.message.PlaceHolders;
 import dev.aura.bungeechat.message.ServerAliases;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
-import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
 import dev.aura.lib.version.Version;
 import lombok.Cleanup;
@@ -161,11 +158,6 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         }
 
         return langDir;
-    }
-
-    @Override
-    public boolean hasPermission(BungeeChatAccount account, Permission permission) {
-        return PermissionManager.hasPermission(account, permission);
     }
 
     @Override

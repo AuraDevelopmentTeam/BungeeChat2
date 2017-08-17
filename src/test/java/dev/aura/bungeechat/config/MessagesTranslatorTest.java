@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.test.config;
+package dev.aura.bungeechat.config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

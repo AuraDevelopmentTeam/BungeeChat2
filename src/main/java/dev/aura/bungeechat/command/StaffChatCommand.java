@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.StaffChatModule;
+import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 

@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.test.filter;
+package dev.aura.bungeechat.filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

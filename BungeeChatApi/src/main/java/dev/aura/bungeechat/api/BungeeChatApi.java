@@ -2,10 +2,8 @@ package dev.aura.bungeechat.api;
 
 import java.io.File;
 
-import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.BuildType;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
@@ -48,21 +46,6 @@ public interface BungeeChatApi {
      * @return The existing config folder
      */
     public File getConfigFolder();
-
-    /**
-     * Method used to check if a user has a certain permission or not.
-     *
-     * @param account
-     *            User to check
-     * @param permission
-     *            Permission to check.<br>
-     *            <small><b>(Note that this argument is of type
-     *            {@link Permission}. So only BungeeChat specific permissions
-     *            can be checked with this!)</b></small>
-     * @return <tt>true</tt> if the user has the permission, <tt>false</tt> if
-     *         not
-     */
-    public boolean hasPermission(BungeeChatAccount account, Permission permission);
 
     /**
      * Send a private message. The context contains the sender, the target and

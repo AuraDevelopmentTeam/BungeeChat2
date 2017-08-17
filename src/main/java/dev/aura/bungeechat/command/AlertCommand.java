@@ -3,13 +3,13 @@ package dev.aura.bungeechat.command;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Context;
 import dev.aura.bungeechat.message.Format;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.module.AlertModule;
+import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;

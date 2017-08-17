@@ -2,7 +2,7 @@ package dev.aura.bungeechat.command;
 
 import java.util.List;
 
-import dev.aura.bungeechat.api.enums.Permission;
+import dev.aura.bungeechat.permission.Permission;
 import net.md_5.bungee.api.plugin.Command;
 
 public abstract class BaseCommand extends Command {

@@ -2,11 +2,11 @@ package dev.aura.bungeechat.listener;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.event.BungeeChatJoinEvent;
 import dev.aura.bungeechat.message.Format;
 import dev.aura.bungeechat.message.MessagesService;
+import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
