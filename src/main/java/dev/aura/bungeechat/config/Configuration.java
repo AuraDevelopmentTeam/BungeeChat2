@@ -102,7 +102,7 @@ public class Configuration implements Config {
             try {
                 Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
 
-                config = fileConfig.withFallback(defaultConfig);
+                config = fileConfig.withFallback(defaultConfig.withoutPath("ServerAlias"));
             } catch (ConfigException e) {
                 LoggerHelper.error("Error while reading config:\n" + e.getLocalizedMessage());
 
@@ -364,7 +364,7 @@ public class Configuration implements Config {
                     .put("AccountDatabase", accountDatabase).put("Formats", formats).put("Modules", modules)
                     .put("PrefixDefaults", permissionsManager).put("ServerAlias", serverAlias).build();
 
-            config = ConfigFactory.parseMap(configMap, "config.yml").withFallback(config).resolve();
+            config = ConfigFactory.parseMap(configMap, "config.yml").withFallback(config.withoutPath("ServerAlias")).resolve();
 
             // Rename old file
             Files.move(OLD_CONFIG_FILE, OLD_OLD_CONFIG_FILE);
