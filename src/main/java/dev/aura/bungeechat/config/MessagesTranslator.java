@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigParseOptions;
+import com.typesafe.config.ConfigRenderOptions;
+import com.typesafe.config.ConfigSyntax;
 
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.util.FileUtils;
@@ -12,6 +15,9 @@ import dev.aura.bungeechat.util.LoggerHelper;
 
 public class MessagesTranslator {
     public static final String DEFAULT_LANGUAGE = "en_US";
+    protected static final ConfigParseOptions PARSE_OPTIONS = ConfigParseOptions.defaults().setAllowMissing(false)
+            .setSyntax(ConfigSyntax.CONF);
+    protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false);
     private static final String INHERIT = "inherit";
 
     private final Config defaultLang;
@@ -53,7 +59,7 @@ public class MessagesTranslator {
 
         try {
             if (langaugeFile.exists())
-                return Optional.of(ConfigFactory.parseFile(langaugeFile, Configuration.PARSE_OPTIONS));
+                return Optional.of(ConfigFactory.parseFile(langaugeFile, PARSE_OPTIONS));
         } catch (Exception e) {
             LoggerHelper.error("Could not load language: " + language, e);
         }

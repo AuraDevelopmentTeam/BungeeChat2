@@ -17,9 +17,6 @@ import com.google.common.io.Files;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigParseOptions;
-import com.typesafe.config.ConfigRenderOptions;
-import com.typesafe.config.ConfigSyntax;
 import com.typesafe.config.ConfigValueFactory;
 
 import dev.aura.bungeechat.BungeeChat;
@@ -42,9 +39,6 @@ public class Configuration implements Config {
     protected static final File CONFIG_FILE = new File(BungeeChat.getInstance().getConfigFolder(), CONFIG_FILE_NAME);
     protected static final File OLD_CONFIG_FILE = new File(CONFIG_FILE.getParentFile(), OLD_CONFIG_FILE_NAME);
     protected static final File OLD_OLD_CONFIG_FILE = new File(CONFIG_FILE.getParentFile(), OLD_OLD_CONFIG_FILE_NAME);
-    protected static final ConfigParseOptions PARSE_OPTIONS = ConfigParseOptions.defaults().setAllowMissing(false)
-            .setSyntax(ConfigSyntax.CONF);
-    protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false);
     @Getter(value = AccessLevel.PROTECTED, lazy = true)
     private static final String header = loadHeader();
 
@@ -95,12 +89,13 @@ public class Configuration implements Config {
     }
 
     protected void loadConfig() {
-        Config defaultConfig = ConfigFactory.parseReader(new InputStreamReader(
-                BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME), StandardCharsets.UTF_8), PARSE_OPTIONS);
+        Config defaultConfig = ConfigFactory
+                .parseReader(new InputStreamReader(BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME),
+                        StandardCharsets.UTF_8), MessagesTranslator.PARSE_OPTIONS);
 
         if (CONFIG_FILE.exists()) {
             try {
-                Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
+                Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, MessagesTranslator.PARSE_OPTIONS);
 
                 config = fileConfig.withFallback(defaultConfig.withoutPath("ServerAlias"));
             } catch (ConfigException e) {
@@ -123,7 +118,7 @@ public class Configuration implements Config {
         try {
             @Cleanup
             PrintWriter writer = new PrintWriter(CONFIG_FILE, StandardCharsets.UTF_8.name());
-            String renderedConfig = config.root().render(RENDER_OPTIONS);
+            String renderedConfig = config.root().render(MessagesTranslator.RENDER_OPTIONS);
             renderedConfig = getHeader() + renderedConfig;
 
             writer.print(renderedConfig);
