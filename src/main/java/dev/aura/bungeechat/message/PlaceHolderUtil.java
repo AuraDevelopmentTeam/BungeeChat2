@@ -87,7 +87,7 @@ public class PlaceHolderUtil {
                 loadMessageBase();
             }
 
-            return messageBase.translate(message).orElse(message.getStringPath());
+            return messageBase.translateWithFallback(message);
         } catch (RuntimeException e) {
             return message.getStringPath();
         }

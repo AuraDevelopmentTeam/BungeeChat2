@@ -66,8 +66,8 @@ public class MessagesTranslatorTest {
         MessagesTranslator testee = new MessagesTranslator(tempDir, "unknown");
 
         for (Message message : Message.values()) {
-            assertEquals("Expected default language and missing language to be the same", expected.translate(message),
-                    testee.translate(message));
+            assertEquals("Expected default language and missing language to be the same",
+                    expected.translateWithFallback(message), testee.translateWithFallback(message));
         }
     }
 }

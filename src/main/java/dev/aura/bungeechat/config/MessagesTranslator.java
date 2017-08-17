@@ -31,7 +31,7 @@ public class MessagesTranslator {
         copyDefaultLanguageFiles(dir);
 
         defaultLang = loadLanguageConfiguration(dir, DEFAULT_LANGUAGE).get();
-        translation = loadLanguage(dir, language);
+        translation = loadLanguage(dir, language).withFallback(defaultLang).resolve();
     }
 
     public Optional<String> translate(Message message) {
@@ -43,15 +43,20 @@ public class MessagesTranslator {
             return Optional.empty();
     }
 
+    public String translateWithFallback(Message message) {
+        return translate(message).orElse(message.getStringPath());
+    }
+
     private Config loadLanguage(File dir, String language) {
         Config langConfig = loadLanguageConfiguration(dir, language).orElse(defaultLang);
 
         if (langConfig.hasPath(INHERIT)) {
             String inheritLang = langConfig.getString(INHERIT);
 
-            return langConfig.withFallback(loadLanguage(dir, inheritLang));
-        } else
-            return langConfig;
+            langConfig = langConfig.withFallback(loadLanguage(dir, inheritLang));
+        }
+
+        return langConfig;
     }
 
     private Optional<Config> loadLanguageConfiguration(File dir, String language) {
