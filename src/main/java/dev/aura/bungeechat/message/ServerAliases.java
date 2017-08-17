@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValueType;
 
 import dev.aura.bungeechat.config.Configuration;
 import lombok.experimental.UtilityClass;
@@ -24,11 +23,6 @@ public class ServerAliases {
     public static void loadAliases() {
         Config section = Configuration.get().getConfig("ServerAlias");
 
-        aliasMapping = section.entrySet().stream().filter(entry -> {
-            ConfigValueType valueType = entry.getValue().valueType();
-
-            return (valueType != ConfigValueType.LIST) && (valueType != ConfigValueType.OBJECT)
-                    && (valueType != ConfigValueType.NULL);
-        }).collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue().unwrapped().toString()));
+        aliasMapping = section.root().keySet().stream().collect(Collectors.toMap(key -> key, section::getString));
     }
 }
