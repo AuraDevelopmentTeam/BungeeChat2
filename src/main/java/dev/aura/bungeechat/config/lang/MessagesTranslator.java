@@ -2,13 +2,13 @@ package dev.aura.bungeechat.config.lang;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import dev.aura.bungeechat.util.FileUtils;
 import dev.aura.bungeechat.util.LoggerHelper;
+import lombok.Cleanup;
 import lombok.experimental.Delegate;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -48,11 +48,13 @@ public class MessagesTranslator {
         File langaugeFile = new File(dir, language + ".yml");
 
         try {
-            if (langaugeFile.exists())
-                return Optional.of(ConfigurationProvider.getProvider(YamlConfiguration.class)
-                        .load(new InputStreamReader(new FileInputStream(langaugeFile), StandardCharsets.UTF_8)));
-        } catch (FileNotFoundException e) {
-            LoggerHelper.error("Could not load language: " + language);
+            if (langaugeFile.exists()) {
+                @Cleanup
+                InputStreamReader reader = new InputStreamReader(new FileInputStream(langaugeFile),
+                        StandardCharsets.UTF_8);
+
+                return Optional.of(ConfigurationProvider.getProvider(YamlConfiguration.class).load(reader));
+            }
         } catch (Exception e) {
             LoggerHelper.error("Could not load language: " + language, e);
         }
