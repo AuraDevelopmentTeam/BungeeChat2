@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -171,10 +172,16 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
         LoggerHelper.info(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD
                 + " ----------------");
-        LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + " & " + AUTHOR_BRAINSTONE);
+        LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + ChatColor.WHITE + " & "
+                + ChatColor.GREEN + AUTHOR_BRAINSTONE);
         LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION_STR);
         LoggerHelper.info(
                 ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
+        LoggerHelper
+                .info(ChatColor.YELLOW + "Contributors: " + ChatColor.GREEN + Arrays.stream(BungeeChatApi.CONTRIBUTORS)
+                        .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
+        LoggerHelper.info(ChatColor.YELLOW + "Donators: " + ChatColor.GREEN + Arrays.stream(BungeeChatApi.DONATORS)
+                .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
 
         if (!isLatestVersion()) {
             LoggerHelper.info(ChatColor.YELLOW + "There is an update avalible. You can download version "

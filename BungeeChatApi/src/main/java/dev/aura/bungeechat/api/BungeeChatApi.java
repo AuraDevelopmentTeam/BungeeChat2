@@ -25,9 +25,11 @@ public interface BungeeChatApi {
     public static final int BUILD = Integer.parseInt("@build@");
     public static final String URL = "https://www.spigotmc.org/resources/bungee-chat.12592";
     public static final String AUTHOR_SHAWN = "shawn_ian";
-    public static final String AUTHOR_BRAINSTONE = "The_BrainStone";
+    public static final String AUTHOR_BRAINSTONE = "BrainStone";
     public static final String AUTHOR_RYADA = "Ryada";
     public static final String[] AUTHORS = new String[] { AUTHOR_SHAWN, AUTHOR_BRAINSTONE };
+    public static final String[] CONTRIBUTORS = new String[] { AUTHOR_RYADA, "Luck", "CryLegend" };
+    public static final String[] DONATORS = new String[] { "Breantique" };
     public static final double CONFIG_VERSION = 10.1;
     public static final int PLUGIN_ID = 12592;
 
