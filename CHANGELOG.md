@@ -7,6 +7,7 @@ Version 2.2.0
 \* Config automatically gets formatted on every start and reload.  
 \* Improved message translation system with default translation files.  
 \* Added contributors and donators to the startup banner.  
+\* Fixed ignoring.  
 
 
 Version 2.1.6
