@@ -43,7 +43,7 @@ notInGlobalServer: "&cGlobal Chat is not enabled on this server..."
 messageYourself: "&cYou can not send a private message to yourself..."
 enableMessager: "&eYou have &aenabled&e messaging!"
 disableMessager: "&eYou have &cdisabled&e messaging"
-noReply: "&cYou have nobody to reply."
+noReply: "&cThere is no one to reply to."
 replyOffline: "&cThe player you were chatting with is no longer online."
 hasMessagerDisabled: "&c%name% has messaging disabled!"
 
@@ -62,7 +62,7 @@ clearedGlobal: "&e%name% has cleared the chat globally."
 ####################################################################################################
 # Mute Messages
 ####################################################################################################
-muted: "&cSorry but you can not talk because you are muted until %muted_until%!"
+muted: "&cSorry but you can not talk, you have been muted until %muted_until%!"
 unmuteNotMuted: "&cThis player is not muted!"
 muteIsMuted: "This player is already muted!"
 unmute: "&eThe player &c%name% &ehas been unmuted!"
@@ -93,10 +93,10 @@ addIgnore: "&eYou have ignored %name%!"
 removeIgnore: "&eYou have un-ignored %name%!"
 alreadyIgnored: "&eYou have are already ignoring this player!"
 ignoreYourself: "&cYou can not ignore yourself!"
-unignoreYourself: "&cYou can not unignore yourself!"
+unignoreYourself: "&cYou can not un-ignore yourself!"
 notIgnored: "&cYou have not ignored this user!"
 ignoreList: "&eOnline users you ignore: &b%message%&e."
-ignoreNobody: "&eYou are ignoring &anobody&e that is online!"
+ignoreNobody: "&eYou are not ignoring &aanyone&e that is online!"
 
 ####################################################################################################
 # Filter Messages
@@ -109,7 +109,7 @@ antiDuplication: "&cPlease do not spam messages!"
 ####################################################################################################
 enableChatlock: "&eChatting has been disabled!"
 disableChatlock: "&eChatting has been enabled!"
-chatIsLocked: "&cYou may not talk now, the chat has been locked!"
+chatIsLocked: "&cYou can not talk now, the chat has been locked!"
 
 ####################################################################################################
 # Prefix/Suffix Messages
