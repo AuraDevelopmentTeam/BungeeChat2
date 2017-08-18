@@ -26,6 +26,7 @@ dependencies {
     
     shadowRelocate "com.typesafe:config:${hocon_version}"
     
+    testCompile "commons-io:commons-io:2.5"
     testRuntime "mysql:mysql-connector-java:6.0.6"
 }
 

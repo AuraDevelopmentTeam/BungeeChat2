@@ -5,10 +5,14 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dev.aura.bungeechat.BungeeChat;
+import dev.aura.bungeechat.config.Configuration;
 
 public class BungeeChatTest {
     private static BungeeChat bungeeChat;
@@ -16,6 +20,14 @@ public class BungeeChatTest {
     @BeforeClass
     public static void initBungeeChat() {
         bungeeChat = new BungeeChat();
+        BungeeChat.instance = bungeeChat;
+        
+        Configuration.load();
+    }
+    
+    @AfterClass
+    public static void deinitBungeeChat() throws IOException {
+        FileUtils.deleteDirectory(bungeeChat.getConfigFolder());
     }
 
     @Test

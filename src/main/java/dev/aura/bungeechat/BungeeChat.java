@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private static final String defaultHookName = "default";
     private static final String errorVersion = "error";
     @Getter
-    private static BungeeChat instance;
+    protected static BungeeChat instance;
     private String latestVersion = null;
     private File configDir;
     private File langDir;
@@ -108,9 +109,12 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         BungeecordModuleManager.registerPluginModules();
         ModuleManager.enableModules();
         HookManager.addHook(storedDataHookName, new StoredDataHook());
-        HookManager.addHook(defaultHookName, new DefaultHook(prefixDefaults.getString("defaultPrefix"),
-                prefixDefaults.getString("defaultSuffix")));
+        HookManager.addHook(defaultHookName,
+                new DefaultHook(prefixDefaults.getString("defaultPrefix"), prefixDefaults.getString("defaultSuffix")));
         ServerAliases.loadAliases();
+
+        // Refresh Cache and cache version
+        getLatestVersion(true);
 
         if (prinLoadScreen) {
             MetricManager.sendMetrics(this);
@@ -144,7 +148,15 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     @Override
     public File getConfigFolder() {
         if (configDir == null) {
-            configDir = new File(getProxy().getPluginsFolder(), "BungeeChat");
+            File pluginsFolder;
+
+            if (getProxy() == null) {
+                pluginsFolder = new File(System.getProperty("java.io.tmpdir"));
+            } else {
+                pluginsFolder = getProxy().getPluginsFolder();
+            }
+
+            configDir = new File(pluginsFolder, "BungeeChat");
             configDir.mkdirs();
         }
 
@@ -152,6 +164,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public File getLangFolder() {
+        if (getProxy() == null)
+            throw new NullPointerException();
+
         if (langDir == null) {
             langDir = new File(getConfigFolder(), "lang");
             langDir.mkdirs();
@@ -171,31 +186,58 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     private void loadScreen() {
-        // Refresh Cache and cache version
-        getLatestVersion(true);
+        StartupBannerSize size = StartupBannerSize
+                .optionalValueOf(Configuration.get().getString("Miscellaneous.startupBannerSize"))
+                .orElse(StartupBannerSize.NORMAL);
 
-        LoggerHelper.info(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD
-                + " ----------------");
-        LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + ChatColor.WHITE + " & "
-                + ChatColor.GREEN + AUTHOR_BRAINSTONE);
+        if (size == StartupBannerSize.NONE)
+            return;
+
+        if (size != StartupBannerSize.SHORT) {
+            LoggerHelper.info(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD
+                    + " ----------------");
+            LoggerHelper.info(ChatColor.YELLOW + "Authors: " + ChatColor.GREEN + AUTHOR_SHAWN + ChatColor.WHITE + " & "
+                    + ChatColor.GREEN + AUTHOR_BRAINSTONE);
+        }
+
         LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION_STR);
-        LoggerHelper.info(
-                ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
-        LoggerHelper
-                .info(ChatColor.YELLOW + "Contributors: " + ChatColor.GREEN + Arrays.stream(BungeeChatApi.CONTRIBUTORS)
-                        .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
-        LoggerHelper.info(ChatColor.YELLOW + "Donators: " + ChatColor.GREEN + Arrays.stream(BungeeChatApi.DONATORS)
-                .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
+
+        if (size == StartupBannerSize.LONG) {
+            LoggerHelper.info(ChatColor.YELLOW + "Modules:");
+
+            ModuleManager.getAvailableModulesStream().map(module -> {
+                if (module.isEnabled())
+                    return "\t" + ChatColor.GREEN + "On  - " + module.getName();
+                else
+                    return "\t" + ChatColor.RED + "Off - " + module.getName();
+            }).forEachOrdered(LoggerHelper::info);
+        } else {
+            LoggerHelper.info(
+                    ChatColor.YELLOW + "Modules: " + ChatColor.GREEN + BungeecordModuleManager.getActiveModuleString());
+        }
+
+        if (size != StartupBannerSize.SHORT) {
+            LoggerHelper.info(
+                    ChatColor.YELLOW + "Contributors: " + ChatColor.GREEN + Arrays.stream(BungeeChatApi.CONTRIBUTORS)
+                            .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
+            LoggerHelper.info(ChatColor.YELLOW + "Donators: " + ChatColor.GREEN + Arrays.stream(BungeeChatApi.DONATORS)
+                    .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
+        }
 
         if (!isLatestVersion()) {
             LoggerHelper.info(ChatColor.YELLOW + "There is an update avalible. You can download version "
                     + ChatColor.GREEN + getLatestVersion() + ChatColor.YELLOW + " on the plugin page at " + URL + " !");
         }
 
-        LoggerHelper.info(ChatColor.GOLD + "---------------------------------------------");
+        if (size != StartupBannerSize.SHORT) {
+            LoggerHelper.info(ChatColor.GOLD + "---------------------------------------------");
+        }
     }
 
     private String queryLatestVersion() {
+        if (!Configuration.get().getBoolean("Miscellaneous.checkForUpdates"))
+            return VERSION_STR;
+
         try {
             @Cleanup("disconnect")
             HttpsURLConnection con = (HttpsURLConnection) new URL("https://www.spigotmc.org/api/general.php")
@@ -204,7 +246,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
             con.setRequestMethod("POST");
             con.getOutputStream().write(
                     ("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=" + PLUGIN_ID)
-                            .getBytes("UTF-8"));
+                            .getBytes(StandardCharsets.UTF_8));
 
             con.connect();
 
@@ -241,5 +283,18 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     public boolean isLatestVersion() {
         return VERSION.compareTo(new Version(getLatestVersion())) >= 0;
+    }
+
+    private enum StartupBannerSize {
+        NONE, SHORT, NORMAL, LONG;
+
+        public static Optional<StartupBannerSize> optionalValueOf(String value) {
+            for (StartupBannerSize element : values()) {
+                if (element.name().equalsIgnoreCase(value))
+                    return Optional.of(element);
+            }
+
+            return Optional.empty();
+        }
     }
 }

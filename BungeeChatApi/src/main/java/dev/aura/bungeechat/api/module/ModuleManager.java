@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import lombok.Getter;
+
 public class ModuleManager {
+    @Getter
     protected static List<BungeeChatModule> availableModules = new LinkedList<>();
     protected static List<BungeeChatModule> activeModules = null;
 
@@ -23,6 +26,10 @@ public class ModuleManager {
 
     public static boolean isModuleActive(BungeeChatModule module) throws UnsupportedOperationException {
         return getActiveModules().contains(module);
+    }
+
+    public static Stream<BungeeChatModule> getAvailableModulesStream() throws UnsupportedOperationException {
+        return getAvailableModules().stream();
     }
 
     public static Stream<BungeeChatModule> getActiveModulesStream() throws UnsupportedOperationException {
