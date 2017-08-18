@@ -164,6 +164,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     public File getLangFolder() {
+        // TODO Remove ~~kebab~~ this dirty hack!
         if (getProxy() == null)
             throw new NullPointerException();
 
