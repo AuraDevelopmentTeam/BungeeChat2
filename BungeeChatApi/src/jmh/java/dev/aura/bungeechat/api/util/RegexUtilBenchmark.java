@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.api.jmh.util;
+package dev.aura.bungeechat.api.util;
 
 import java.util.Random;
 import java.util.regex.Matcher;
