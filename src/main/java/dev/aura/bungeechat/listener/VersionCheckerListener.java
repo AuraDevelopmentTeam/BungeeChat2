@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
-import dev.aura.bungeechat.module.VersionCheckerModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.RequiredArgsConstructor;
@@ -21,23 +20,21 @@ public class VersionCheckerListener implements Listener {
     private static final long FIVE_MINUTES = TimeUnit.MINUTES.toMillis(5);
 
     private long lastCheck = System.currentTimeMillis();
-    private final VersionCheckerModule module;
+    private final boolean checkOnAdminLogin;
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PostLoginEvent e) {
         ProxiedPlayer player = e.getPlayer();
 
         if (PermissionManager.hasPermission(player, Permission.CHECK_VERSION)) {
-            ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(),
-                    new VersionCheckerTask(player, module.getModuleSection().getBoolean("checkOnAdminLogin")), 1,
-                    TimeUnit.SECONDS);
+            ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(), new VersionCheckerTask(player),
+                    1, TimeUnit.SECONDS);
         }
     }
 
     @RequiredArgsConstructor
     private class VersionCheckerTask implements Runnable {
         private final ProxiedPlayer player;
-        private final boolean checkOnAdminLogin;
 
         @Override
         public void run() {

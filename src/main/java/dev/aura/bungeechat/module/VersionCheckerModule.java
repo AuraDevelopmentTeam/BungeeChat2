@@ -14,7 +14,7 @@ public class VersionCheckerModule extends Module {
 
     @Override
     public void onEnable() {
-        versionCheckerListener = new VersionCheckerListener(this);
+        versionCheckerListener = new VersionCheckerListener(getModuleSection().getBoolean("checkOnAdminLogin"));
 
         ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), versionCheckerListener);
     }
