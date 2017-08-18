@@ -21,7 +21,7 @@ task generateBenchmarkReport(type: Zip, dependsOn: tasks.jmh) {
     tasks.jmh.finalizedBy generateBenchmarkReport
 }
 
-clean.dependsOn generateBenchmarkReport
+clean.dependsOn cleanGenerateBenchmarkReport
 
 apply from: "../GradleCommon/common.gradle"
 
