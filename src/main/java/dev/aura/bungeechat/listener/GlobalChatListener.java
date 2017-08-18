@@ -57,7 +57,7 @@ public class GlobalChatListener implements Listener {
             return;
         }
 
-        Config section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().atPath("symbol");
+        Config section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("symbol");
 
         if (section.getBoolean("enabled")) {
             String symbol = section.getString("symbol");

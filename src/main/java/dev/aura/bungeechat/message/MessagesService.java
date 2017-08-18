@@ -270,7 +270,7 @@ public class MessagesService {
     }
 
     public static Predicate<BungeeChatAccount> getGlobalPredicate() {
-        final Config section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().atPath("serverList");
+        final Config section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
 
         if (!section.getBoolean("enabled"))
             return account -> true;
