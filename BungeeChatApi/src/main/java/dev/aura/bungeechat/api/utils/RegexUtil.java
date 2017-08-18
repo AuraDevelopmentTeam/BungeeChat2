@@ -10,9 +10,7 @@ import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -270,8 +268,6 @@ public class RegexUtil {
      * A Helper class for leet speak patterns.<br>
      * It produces a regex that can be used for matching.
      */
-    @EqualsAndHashCode(exclude = { "letterPattern" })
-    @ToString(exclude = { "letterPattern" })
     public static class LeetSpeakPattern {
         @Getter
         private final String letter;

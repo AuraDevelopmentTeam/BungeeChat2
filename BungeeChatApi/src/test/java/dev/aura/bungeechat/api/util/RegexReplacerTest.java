@@ -28,7 +28,7 @@ public class RegexReplacerTest {
 
         assertEquals("Two pattern strings not equal", pattern.getPatternStr(), string.getPatternStr());
         assertEquals("Two replacement strings not equal", pattern.getReplacement(), string.getReplacement());
-        assertEquals("Two objects not equal", pattern, string);
+        assertEquals("Two patterns not equal", pattern.getPattern().toString(), string.getPattern().toString());
     }
 
     @Test
@@ -41,6 +41,12 @@ public class RegexReplacerTest {
         final String replaced = REPLACEMENT_SIMPLE;
         final String notReplaced = in;
 
+        assertEquals("caseSensitive original", notReplaced, caseSensitive.apply(in));
+        assertEquals("caseSensitive reflagged", replaced, caseSensitive.apply(in, Pattern.CASE_INSENSITIVE));
+        assertEquals("caseInsensitive original", replaced, caseInsensitive.apply(in));
+        assertEquals("caseInsensitive reflagged", notReplaced, caseInsensitive.apply(in, 0));
+
+        // Repeat to check cache
         assertEquals("caseSensitive original", notReplaced, caseSensitive.apply(in));
         assertEquals("caseSensitive reflagged", replaced, caseSensitive.apply(in, Pattern.CASE_INSENSITIVE));
         assertEquals("caseInsensitive original", replaced, caseInsensitive.apply(in));

@@ -5,12 +5,9 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@Data
-@EqualsAndHashCode(exclude = { "pattern", "defaultFlags", "patternCache" })
+@Getter
 public class RegexReplacer {
     private final String patternStr;
     private final Pattern pattern;
