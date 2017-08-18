@@ -112,28 +112,37 @@ public class TimeUtil {
      *
      * @param stringedTime
      *            The time as string to convert
-     * @return double The time as double
+     * @return double The time as double in milliseconds
      */
+    // TODO improve logic
     public static double convertStringTimeToDouble(String stringedTime) {
-        double timeamount = 0;
+        long factor = 1;
+        String timeToParse = stringedTime;
 
         if (stringedTime.contains("y")) {
-            timeamount = Double.valueOf(stringedTime.replaceAll("y", "")) * TimeUnit.DAYS.toMillis(365);
+            factor = TimeUnit.DAYS.toMillis(365);
+            timeToParse = stringedTime.replaceAll("y", "");
         } else if (stringedTime.contains("mo")) {
-            timeamount = Double.valueOf(stringedTime.replaceAll("mo", "")) * TimeUnit.DAYS.toMillis(30);
+            factor = TimeUnit.DAYS.toMillis(30);
+            timeToParse = stringedTime.replaceAll("mo", "");
         } else if (stringedTime.contains("w")) {
-            timeamount = Double.valueOf(stringedTime.replaceAll("w", "")) * TimeUnit.DAYS.toMillis(7);
+            factor = TimeUnit.DAYS.toMillis(7);
+            timeToParse = stringedTime.replaceAll("w", "");
         } else if (stringedTime.contains("d")) {
-            timeamount = Double.valueOf(stringedTime.replaceAll("d", "")) * TimeUnit.DAYS.toMillis(1);
+            factor = TimeUnit.DAYS.toMillis(1);
+            timeToParse = stringedTime.replaceAll("d", "");
         } else if (stringedTime.contains("h")) {
-            timeamount = Double.valueOf(stringedTime.replaceAll("h", "")) * TimeUnit.HOURS.toMillis(1);
+            factor = TimeUnit.HOURS.toMillis(1);
+            timeToParse = stringedTime.replaceAll("h", "");
         } else if (stringedTime.contains("m")) {
-            timeamount = Double.valueOf(stringedTime.replaceAll("m", "")) * TimeUnit.MINUTES.toMillis(1);
+            factor = TimeUnit.MINUTES.toMillis(1);
+            timeToParse = stringedTime.replaceAll("m", "");
         } else if (stringedTime.contains("s")) {
-            timeamount = Double.valueOf(stringedTime.replaceAll("s", "")) * TimeUnit.SECONDS.toMillis(1);
+            factor = TimeUnit.SECONDS.toMillis(1);
+            timeToParse = stringedTime.replaceAll("s", "");
         }
 
-        return timeamount;
+        return Double.parseDouble(timeToParse) * factor;
     }
 
 }

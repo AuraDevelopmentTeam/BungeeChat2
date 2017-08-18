@@ -6,7 +6,7 @@ import net.md_5.bungee.api.ProxyServer;
 
 public class VersionCheckerModule extends Module {
     private VersionCheckerListener versionCheckerListener;
-    
+
     @Override
     public String getName() {
         return "VersionChecker";
@@ -14,7 +14,7 @@ public class VersionCheckerModule extends Module {
 
     @Override
     public void onEnable() {
-        versionCheckerListener = new VersionCheckerListener(this);
+        versionCheckerListener = new VersionCheckerListener(getModuleSection().getBoolean("checkOnAdminLogin"));
 
         ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), versionCheckerListener);
     }

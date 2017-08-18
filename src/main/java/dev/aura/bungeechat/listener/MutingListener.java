@@ -5,7 +5,6 @@ import java.util.List;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
@@ -47,10 +46,7 @@ public class MutingListener implements Listener {
         } else {
             final ChannelType channel = account.getChannelType();
 
-            if (((channel == ChannelType.LOCAL)
-                    && !ModuleManager.isModuleActive(BungeecordModuleManager.LOCAL_CHAT_MODULE)
-                    && BungeecordModuleManager.MUTING_MODULE.getModuleSection().getBoolean("ignoreBukkitLocalChat"))
-                    || (channel == ChannelType.STAFF))
+            if (channel == ChannelType.STAFF)
                 return;
 
             e.setCancelled(true);

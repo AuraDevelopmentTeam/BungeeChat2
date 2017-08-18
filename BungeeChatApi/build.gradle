@@ -26,9 +26,24 @@ clean.dependsOn generateBenchmarkReport
 apply from: "../GradleCommon/common.gradle"
 
 repositories {
-    // Additional repositories
+    maven {
+        name "AuraDevelopmentTeam"
+        url "https://maven.jnc.world"
+    }
 }
 
 dependencies {
     jmh "net.moznion:random-string:1.1.0"
+
+    compile "dev.aura.lib.version:VersionLib:${versionLib_version}"
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.5
+            }
+        }
+    }
 }

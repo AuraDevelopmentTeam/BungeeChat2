@@ -3,10 +3,9 @@ package dev.aura.bungeechat.listener;
 import java.util.concurrent.TimeUnit;
 
 import dev.aura.bungeechat.BungeeChat;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
-import dev.aura.bungeechat.module.VersionCheckerModule;
+import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.ProxyServer;
@@ -21,15 +20,16 @@ public class VersionCheckerListener implements Listener {
     private static final long FIVE_MINUTES = TimeUnit.MINUTES.toMillis(5);
 
     private long lastCheck = System.currentTimeMillis();
-    private final VersionCheckerModule module;
+    private final boolean checkOnAdminLogin;
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PostLoginEvent e) {
         ProxiedPlayer player = e.getPlayer();
 
         if (PermissionManager.hasPermission(player, Permission.CHECK_VERSION)) {
-            ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(),
-                    new VersionCheckerTask(player, module.getModuleSection().getBoolean("checkOnAdminLogin")), 1,
+            BungeeChat instance = BungeeChat.getInstance();
+
+            ProxyServer.getInstance().getScheduler().schedule(instance, new VersionCheckerTask(player, instance), 1,
                     TimeUnit.SECONDS);
         }
     }
@@ -37,18 +37,16 @@ public class VersionCheckerListener implements Listener {
     @RequiredArgsConstructor
     private class VersionCheckerTask implements Runnable {
         private final ProxiedPlayer player;
-        private final boolean checkOnAdminLogin;
+        private final BungeeChat instance;
 
         @Override
         public void run() {
-            BungeeChat instance = BungeeChat.getInstance();
-
             if (checkOnAdminLogin || ((lastCheck + FIVE_MINUTES) < System.currentTimeMillis())) {
                 instance.getLatestVersion(true);
                 lastCheck = System.currentTimeMillis();
             }
 
-            if (!instance.isLatestVersion()) {
+            if (!instance.isLatestVersion() && player.isConnected()) {
                 MessagesService.sendMessage(player, Message.UPDATE_AVAILABLE.get(player, instance.getLatestVersion()));
             }
         }

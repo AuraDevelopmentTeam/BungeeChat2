@@ -1,8 +1,9 @@
 package dev.aura.bungeechat.module;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.filter.SwearWordsFilter;
-import net.md_5.bungee.config.Configuration;
 
 public class AntiSwearModule extends Module {
     @Override
@@ -12,7 +13,7 @@ public class AntiSwearModule extends Module {
 
     @Override
     public void onEnable() {
-        Configuration section = getModuleSection();
+        Config section = getModuleSection();
 
         FilterManager.addFilter(getName(),
                 new SwearWordsFilter(section.getStringList("words"), section.getString("replacement"),

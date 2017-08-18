@@ -1,3 +1,34 @@
+Version 2.2.0
+-------------
+
+\* Using new HOCON config instead of YAML. (New config file is called `config.conf`) (Features of HOCON: https://github.com/typesafehub/config#using-hocon-the-json-superset)  
+\* Migrating old config automatically.  
+\* Config migrates automatically when new options are added.  
+\* Config automatically gets formatted on every start and reload.  
+\* Improved message translation system with default translation files.  
+\* Added contributors and donators to the startup banner.  
+\* Fixed ignoring.  
+
+
+Version 2.1.6
+-------------
+
+\* Fixed bug with update checker.  
+
+
+Version 2.1.5
+-------------
+
+\* Fixed leave message not showing after a reload.  
+\* Added AdvancedBan to list of known mute plugins.  
+\* Fixed no permission message being displayed instead of anti advertise.  
+\* Anti-Advertise is now case insensitive.  
+\* Fixed blocked PMs being shown in socialSpy.  
+\* Using wildcardStrings for filteredCommands.  
+\* Using better version comparison library.  
+\* Internal improvements.  
+
+
 Version 2.1.4
 -------------
 

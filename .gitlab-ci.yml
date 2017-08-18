@@ -6,9 +6,6 @@ variables:
   COVERAGE_REPORTS: "$CI_PROJECT_DIR/*-CoverageReport.zip"
   JAVADOCS: "$CI_PROJECT_DIR/*-javadoc.jar"
   GRADLE_OPTS: >
-    -Dorg.gradle.project.signing.keyId="$keyId"
-    -Dorg.gradle.project.signing.password="$password"
-    -Dorg.gradle.project.signing.secretKeyRingFile="$secretKeyRingFile"
     -Dorg.gradle.project.branchName="$CI_COMMIT_REF_NAME"
 
 cache:
@@ -17,6 +14,7 @@ cache:
 
 before_script:
   - shopt -s globstar
+  - shopt -s nullglob
 
 stages:
 - build
@@ -36,12 +34,23 @@ build:
 test:
   stage: test
   script:
-  - ./gradlew --console=plain check
-  coverage: "/Covered (\\d{1,3}\\.\\d{2}%) of instructions for all projects\\./"
+  - ./gradlew --continue --console=plain test
   when: on_success
   artifacts:
+    when: always
     paths:
     - $TEST_REPORTS
+
+coverage:
+  stage: test
+  script:
+  - ./gradlew --continue --console=plain coverage
+  coverage: "/Covered (\\d{1,3}\\.\\d{2}%) of instructions for all projects\\./"
+  allow_failure: true
+  when: on_success
+  artifacts:
+    when: always
+    paths:
     - $COVERAGE_REPORTS
 
 benchmark:
@@ -57,20 +66,30 @@ benchmark:
 deploy:
   stage: deploy
   script:
-  - ./gradlew --console=plain uploadArchives
+  - ./gradlew --console=plain uploadArchives uploadArchivesToMavenCentral
   when: always
   only:
   - tags
+  
+sendCoverage:
+  stage: deploy
+  dependencies:
+  - coverage
+  script:
+  - ./gradlew --console=plain sendCoverageToCodacy
+  when: always
 
 pages:
   stage: deploy
   dependencies:
   - build
   - test
+  - coverage
   script:
+  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $COVERAGE_REPORTS; do dir=public/coverage/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
-  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
+  when: always
   artifacts:
     paths:
     - public

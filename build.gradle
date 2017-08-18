@@ -25,6 +25,10 @@ apply from: "GradleCommon/common.gradle"
 
 repositories {
     maven {
+        name "AuraDevelopmentTeam"
+        url "https://maven.jnc.world"
+    }
+    maven {
         name "jitpack.io"
         url "https://jitpack.io"
     }
@@ -36,10 +40,25 @@ repositories {
 
 dependencies {
     shadow (project(":BungeeChatApi")) {
-        transitive = false
+        exclude module: "lombok"
     }
     
     compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    
+    shadowRelocate "com.typesafe:config:${hocon_version}"
+    
+    testCompile "commons-io:commons-io:2.5"
+    testRuntime "mysql:mysql-connector-java:6.0.6"
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.4
+            }
+        }
+    }
 }

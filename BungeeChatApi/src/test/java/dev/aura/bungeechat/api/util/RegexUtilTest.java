@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.api.test.util;
+package dev.aura.bungeechat.api.util;
 
 import static org.junit.Assert.assertTrue;
 

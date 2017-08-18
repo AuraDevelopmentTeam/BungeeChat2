@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.api.test.filter;
+package dev.aura.bungeechat.api.filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -11,12 +11,6 @@ import org.junit.Test;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.api.enums.Permission;
-import dev.aura.bungeechat.api.enums.ServerType;
-import dev.aura.bungeechat.api.filter.BlockMessageException;
-import dev.aura.bungeechat.api.filter.BungeeChatFilter;
-import dev.aura.bungeechat.api.filter.FilterManager;
-import dev.aura.bungeechat.api.filter.FunctionFilter;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
@@ -28,21 +22,13 @@ public class FilterManagerTest {
     public static void setupApi() {
         BungeeChatInstaceHolder.setInstance(new BungeeChatApi() {
             @Override
-            public ServerType getServerType() {
-                return ServerType.BUNGEECORD;
-            }
-
-            @Override
             public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextError {
+                // Nothing
             }
 
             @Override
             public void sendChannelMessage(BungeeChatContext context, ChannelType channel) throws InvalidContextError {
-            }
-
-            @Override
-            public boolean hasPermission(BungeeChatAccount account, Permission permission) {
-                return true;
+                // Nothing
             }
 
             @Override

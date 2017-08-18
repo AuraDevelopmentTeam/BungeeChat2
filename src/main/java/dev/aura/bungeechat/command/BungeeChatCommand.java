@@ -12,10 +12,10 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.message.Message;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.LoggerHelper;
 import net.md_5.bungee.api.ChatColor;
@@ -120,10 +120,10 @@ public class BungeeChatCommand extends BaseCommand {
 
         if (instance.isLatestVersion()) {
             MessagesService.sendMessage(sender,
-                    prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION);
+                    prefix + ChatColor.GRAY + "Version: " + ChatColor.GREEN + BungeeChatApi.VERSION_STR);
         } else {
             MessagesService.sendMessage(sender,
-                    prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION);
+                    prefix + ChatColor.GRAY + "Version: " + ChatColor.RED + BungeeChatApi.VERSION_STR);
             MessagesService.sendMessage(sender,
                     prefix + ChatColor.GRAY + "Newest Version: " + ChatColor.GREEN + latestVersion);
         }

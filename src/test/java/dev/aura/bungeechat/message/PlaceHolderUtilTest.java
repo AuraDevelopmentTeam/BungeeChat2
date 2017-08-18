@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.test.message;
+package dev.aura.bungeechat.message;
 
 import static org.junit.Assert.assertEquals;
 

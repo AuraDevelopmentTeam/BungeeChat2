@@ -1,5 +1,7 @@
 package dev.aura.bungeechat.listener;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
@@ -10,7 +12,6 @@ import dev.aura.bungeechat.module.BungeecordModuleManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
@@ -56,7 +57,7 @@ public class GlobalChatListener implements Listener {
             return;
         }
 
-        Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getSection("symbol");
+        Config section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("symbol");
 
         if (section.getBoolean("enabled")) {
             String symbol = section.getString("symbol");

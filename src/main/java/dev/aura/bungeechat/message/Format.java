@@ -7,19 +7,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Format {
     ALERT("alert"),
-    SOCIAL_SPY("socialSpy"),
-    LOCAL_SPY("localSpy"),
+    CHAT_LOGGING_CONSOLE("chatLoggingConsole"),
+    CHAT_LOGGING_FILE("chatLoggingFile"),
     GLOBAL_CHAT("globalChat"),
-    MESSAGE_SENDER("messageSender"),
-    MESSAGE_TARGET("messageTarget"),
-    STAFF_CHAT("staffChat"),
-    LOCAL_CHAT("localChat"),
+    HELP_OP("helpOp"),
     JOIN_MESSAGE("joinMessage"),
     LEAVE_MESSAGE("leaveMessage"),
-    HELP_OP("helpOp"),
+    LOCAL_CHAT("localChat"),
+    LOCAL_SPY("localSpy"),
+    MESSAGE_SENDER("messageSender"),
+    MESSAGE_TARGET("messageTarget"),
+    MOTD("motd"),
     SERVER_SWITCH("serverSwitch"),
-    CHAT_LOGGING_CONSOLE("chatLoggingConsole"),
-    CHAT_LOGGING_FILE("chatLoggingFile");
+    SOCIAL_SPY("socialSpy"),
+    STAFF_CHAT("staffChat"),
+    WELCOME_MESSAGE("welcomeMessage");
 
     @Getter
     private final String stringPath;

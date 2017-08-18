@@ -7,9 +7,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import dev.aura.bungeechat.api.BungeeChatApi;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.api.enums.ServerType;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -19,19 +17,14 @@ public class HookManager {
     public static final int ACCOUNT_PREFIX_PRIORITY = 300;
 
     private static Map<String, BungeeChatHook> hooks = new LinkedHashMap<>();
-    private static final boolean validSide = BungeeChatApi.getInstance().getServerType() == ServerType.BUNGEECORD;
 
     public static void addHook(String name, BungeeChatHook hook) throws UnsupportedOperationException {
-        checkSide();
-
         hooks.put(name, hook);
 
         sortHooks();
     }
 
     public static BungeeChatHook removeHook(String name) throws UnsupportedOperationException {
-        checkSide();
-
         BungeeChatHook out = hooks.remove(name);
 
         sortHooks();
@@ -40,8 +33,6 @@ public class HookManager {
     }
 
     public String getPrefix(BungeeChatAccount account) {
-        checkSide();
-
         Optional<String> out;
 
         for (BungeeChatHook hook : hooks.values()) {
@@ -55,8 +46,6 @@ public class HookManager {
     }
 
     public String getSuffix(BungeeChatAccount account) {
-        checkSide();
-
         Optional<String> out;
 
         for (BungeeChatHook hook : hooks.values()) {
@@ -70,14 +59,7 @@ public class HookManager {
     }
 
     public String getFullname(BungeeChatAccount account) {
-        checkSide();
-
         return getPrefix(account) + account.getName() + getSuffix(account);
-    }
-
-    private static void checkSide() throws UnsupportedOperationException {
-        if (!validSide)
-            throw new UnsupportedOperationException("This operation is only allowed on the BungeeCord!");
     }
 
     private static void sortHooks() {

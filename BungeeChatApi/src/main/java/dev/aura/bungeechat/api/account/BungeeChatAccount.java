@@ -33,7 +33,7 @@ public interface BungeeChatAccount {
     }
 
     default public boolean hasIgnored(BungeeChatAccount account) {
-        return this.hasIgnored(getUniqueId());
+        return this.hasIgnored(account.getUniqueId());
     }
 
     public String getName();
@@ -87,13 +87,13 @@ public interface BungeeChatAccount {
     public void addIgnore(UUID uuid);
 
     default public void addIgnore(BungeeChatAccount account) {
-        this.addIgnore(getUniqueId());
+        this.addIgnore(account.getUniqueId());
     }
 
     public void removeIgnore(UUID uuid);
 
     default public void removeIgnore(BungeeChatAccount account) {
-        this.removeIgnore(getUniqueId());
+        this.removeIgnore(account.getUniqueId());
     }
 
     public void setMutedUntil(Timestamp mutedUntil);

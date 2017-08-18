@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import com.typesafe.config.Config;
+
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.api.enums.Permission;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.api.module.ModuleManager;
@@ -17,10 +18,10 @@ import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.config.Configuration;
 
 @UtilityClass
 public class MessagesService {
@@ -33,14 +34,14 @@ public class MessagesService {
         context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_TARGET, BungeeChatContext.HAS_MESSAGE);
 
         Optional<BungeeChatAccount> account = context.getSender();
-        BungeeChatAccount senderAcconut = account.get();
-        BungeeChatAccount targetAcconut = context.getTarget().get();
-        CommandSender sender = BungeecordAccountManager.getCommandSender(senderAcconut).get();
-        CommandSender target = BungeecordAccountManager.getCommandSender(targetAcconut).get();
+        BungeeChatAccount senderAccount = account.get();
+        BungeeChatAccount targetAccount = context.getTarget().get();
+        CommandSender sender = BungeecordAccountManager.getCommandSender(senderAccount).get();
+        CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount).get();
         boolean filterPrivateMessages = BungeecordModuleManager.MESSENGER_MODULE.getModuleSection()
-                .getBoolean("filterMessages");
+                .getBoolean("filterPrivateMessages");
 
-        if (targetAcconut.hasIgnored(senderAcconut)
+        if (targetAccount.hasIgnored(senderAccount)
                 && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
             MessagesService.sendMessage(sender, Message.HAS_INGORED.get(context));
 
@@ -56,17 +57,17 @@ public class MessagesService {
             String messageTarget = preProcessMessage(context, account, Format.MESSAGE_TARGET, filterPrivateMessages,
                     true).get();
             MessagesService.sendMessage(target, messageTarget);
-        }
 
-        if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
-            String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
+            if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
+                String socialSpyMessage = preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
 
-            sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAcconut.getUniqueId()))
-                    && (!acc.getUniqueId().equals(targetAcconut.getUniqueId())) && acc.hasSocialSpyEnabled());
+                sendToMatchingPlayers(socialSpyMessage, acc -> (!acc.getUniqueId().equals(senderAccount.getUniqueId()))
+                        && (!acc.getUniqueId().equals(targetAccount.getUniqueId())) && acc.hasSocialSpyEnabled());
+            }
         }
 
         if (BungeecordModuleManager.CHAT_LOGGING_MODULE.getModuleSection().getBoolean("privateMessages")) {
-            ChatLoggingManager.logMessage("PM to " + targetAcconut.getName(), context);
+            ChatLoggingManager.logMessage("PM to " + targetAccount.getName(), context);
         }
     }
 
@@ -269,12 +270,12 @@ public class MessagesService {
     }
 
     public static Predicate<BungeeChatAccount> getGlobalPredicate() {
-        final Configuration section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection()
-                .getSection("serverList");
+        final Config section = BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
 
         if (!section.getBoolean("enabled"))
             return account -> true;
         else {
+            // TODO: Use wildcard string
             List<String> allowedServers = section.getStringList("list");
 
             return account -> allowedServers.contains(account.getServerName());
