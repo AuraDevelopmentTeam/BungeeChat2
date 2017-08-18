@@ -10,7 +10,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class JoinMessageListener implements Listener {
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(BungeeChatJoinEvent e) {
         ProxiedPlayer player = e.getPlayer();
 
