@@ -27,25 +27,26 @@ public class VersionCheckerListener implements Listener {
         ProxiedPlayer player = e.getPlayer();
 
         if (PermissionManager.hasPermission(player, Permission.CHECK_VERSION)) {
-            ProxyServer.getInstance().getScheduler().schedule(BungeeChat.getInstance(), new VersionCheckerTask(player),
-                    1, TimeUnit.SECONDS);
+            BungeeChat instance = BungeeChat.getInstance();
+
+            ProxyServer.getInstance().getScheduler().schedule(instance, new VersionCheckerTask(player, instance), 1,
+                    TimeUnit.SECONDS);
         }
     }
 
     @RequiredArgsConstructor
     private class VersionCheckerTask implements Runnable {
         private final ProxiedPlayer player;
+        private final BungeeChat instance;
 
         @Override
         public void run() {
-            BungeeChat instance = BungeeChat.getInstance();
-
             if (checkOnAdminLogin || ((lastCheck + FIVE_MINUTES) < System.currentTimeMillis())) {
                 instance.getLatestVersion(true);
                 lastCheck = System.currentTimeMillis();
             }
 
-            if (!instance.isLatestVersion()) {
+            if (!instance.isLatestVersion() && player.isConnected()) {
                 MessagesService.sendMessage(player, Message.UPDATE_AVAILABLE.get(player, instance.getLatestVersion()));
             }
         }
