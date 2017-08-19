@@ -22,7 +22,7 @@ public class DuplicationFilter implements BungeeChatFilter {
     public DuplicationFilter(int checkPastMessages) {
         this(checkPastMessages, false);
     }
-    
+
     public DuplicationFilter(int checkPastMessages, boolean noPermissions) {
         playerMessagesStorage = new ConcurrentHashMap<>();
         this.checkPastMessages = checkPastMessages;
@@ -43,7 +43,7 @@ public class DuplicationFilter implements BungeeChatFilter {
         Queue<String> playerMessages = playerMessagesStorage.get(uuid);
 
         if (playerMessages.contains(message))
-            throw new BlockMessageException(Message.ANTI_DUPLICATION.get(sender, message));
+            throw new ExtendedBlockMessageException(Message.ANTI_DUPLICATION, sender, message);
         else {
             if (playerMessages.size() == checkPastMessages) {
                 playerMessages.remove();

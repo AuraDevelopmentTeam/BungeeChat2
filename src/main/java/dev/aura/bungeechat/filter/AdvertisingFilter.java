@@ -57,7 +57,7 @@ public class AdvertisingFilter implements BungeeChatFilter {
             matchOk = whitelisted.test(match);
 
             if (!matchOk)
-                throw new BlockMessageException(Message.ANTI_ADVERTISE.get(sender, message));
+                throw new ExtendedBlockMessageException(Message.ANTI_ADVERTISE, sender, message);
         }
 
         return message;

@@ -23,7 +23,7 @@ public class ChatLockFilter implements BungeeChatFilter {
                         || lockedServers.contains(sender.getServerName())))
             return message;
         else
-            throw new BlockMessageException(Message.CHAT_IS_DISABLED.get(sender, message));
+            throw new ExtendedBlockMessageException(Message.CHAT_IS_DISABLED, sender, message);
     }
 
     @Override

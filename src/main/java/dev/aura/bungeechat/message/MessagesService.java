@@ -93,7 +93,7 @@ public class MessagesService {
             sendHelpMessage(context);
             break;
         default:
-            // TODO? Maybe do nothing? Throw an Exception?
+            // Ignore
             break;
         }
     }
