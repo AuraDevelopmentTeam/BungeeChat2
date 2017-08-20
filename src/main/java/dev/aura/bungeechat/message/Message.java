@@ -88,6 +88,9 @@ public enum Message {
     private static final Map<String, Message> values = Arrays.stream(values())
             .collect(Collectors.toMap(Message::getStringPath, message -> message));
 
+    @Getter
+    private final String stringPath;
+
     public static boolean contains(String message) {
         return values.containsKey(message);
     }
@@ -95,9 +98,6 @@ public enum Message {
     public static Message getFromStringPath(String message) {
         return values.get(message);
     }
-
-    @Getter
-    private final String stringPath;
 
     public String get() {
         return PlaceHolderUtil.getFullMessage(this);
