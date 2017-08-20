@@ -56,13 +56,14 @@ public class TestHelper {
 
     public static void deinitBungeeChat() throws IOException {
         FileUtils.deleteDirectory(bungeeChat.getConfigFolder());
+        bungeeChat.getConfigFolder().mkdirs();
     }
 
     public static class DummyProxyServer extends ProxyServer {
         @Getter
         private PluginManager pluginManager;
         @Getter
-        private File pluginsFolder = new File(System.getProperty("java.io.tmpdir"));
+        private File pluginsFolder = new File(System.getProperty("java.io.tmpdir"), "BungeeChatTest");
         @Getter
         private Logger logger = Logger.getLogger("DummyProxyServer");
 
