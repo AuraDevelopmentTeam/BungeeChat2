@@ -7,27 +7,23 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import dev.aura.bungeechat.config.Configuration;
 
 public class BungeeChatTest {
     private static BungeeChat bungeeChat;
 
     @BeforeClass
     public static void initBungeeChat() {
-        bungeeChat = new BungeeChat();
-        BungeeChat.instance = bungeeChat;
-        
-        Configuration.load();
+        TestHelper.initBungeeChat();
+
+        bungeeChat = BungeeChat.getInstance();
     }
-    
+
     @AfterClass
     public static void deinitBungeeChat() throws IOException {
-        FileUtils.deleteDirectory(bungeeChat.getConfigFolder());
+        TestHelper.deinitBungeeChat();
     }
 
     @Test

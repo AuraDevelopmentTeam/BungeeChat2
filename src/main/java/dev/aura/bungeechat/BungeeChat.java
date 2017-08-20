@@ -148,15 +148,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     @Override
     public File getConfigFolder() {
         if (configDir == null) {
-            File pluginsFolder;
-
-            if (getProxy() == null) {
-                pluginsFolder = new File(System.getProperty("java.io.tmpdir"));
-            } else {
-                pluginsFolder = getProxy().getPluginsFolder();
-            }
-
-            configDir = new File(pluginsFolder, "BungeeChat");
+            configDir = new File(getProxy().getPluginsFolder(), "BungeeChat");
             configDir.mkdirs();
         }
 
