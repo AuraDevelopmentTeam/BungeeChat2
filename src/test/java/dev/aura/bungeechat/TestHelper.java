@@ -63,7 +63,8 @@ public class TestHelper {
         @Getter
         private PluginManager pluginManager;
         @Getter
-        private File pluginsFolder = new File(System.getProperty("java.io.tmpdir"), "BungeeChatTest");
+        private File pluginsFolder = new File(System.getProperty("java.io.tmpdir"),
+                "BungeeChatTest/" + UUID.randomUUID());
         @Getter
         private Logger logger = Logger.getLogger("DummyProxyServer");
 
