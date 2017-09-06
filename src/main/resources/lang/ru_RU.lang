@@ -25,101 +25,101 @@
 ####################################################################################################
 # Inheritiance
 ####################################################################################################
-#inherit: en_US
+#inherit: ru_RU
 
 ####################################################################################################
 # Channel Type Messages
 ####################################################################################################
-enableGlobal: "&eYou are now talking in &bglobal chat&e!"
-enableStaffchat: "&eYou are now talking in &astaff chat&e!"
-enableLocal: "&eYou are now talking in &clocal chat&e!"
-globalIsDefault: "&eGlobal chat is already the default chatmode!"
-backToLocal: "&cThe feature linked to the channel you were talking in has been disabled or your permissions have been removed! You are now talking in local chat."
-notInGlobalServer: "&cGlobal Chat is not enabled on this server..."
+enableGlobal: "&eТеперь вы говорите в &bглобальном чате&e!"
+enableStaffchat: "&eТеперь вы говорите в &aчате персонала&e!"
+enableLocal: "&eТеперь вы говорите в &cлокальном чате&e!"
+globalIsDefault: "&eГлобальный чат уже установлен как стандартный тип чата!"
+backToLocal: "&cТип чата, в котором вы разговаривали, отключен или у вас забрали разрешение на него! Теперь вы говорите в локальном чате."
+notInGlobalServer: "&cГлобальный чат выключен на этом сервере..."
 
 ####################################################################################################
 # Messenger Messages
 ####################################################################################################
-messageYourself: "&cYou can not send a private message to yourself..."
-enableMessager: "&eYou have &aenabled&e messaging!"
-disableMessager: "&eYou have &cdisabled&e messaging"
-noReply: "&cYou have nobody to reply."
-replyOffline: "&cThe player you were chatting with is no longer online."
-hasMessagerDisabled: "&c%name% has messaging disabled!"
+messageYourself: "&cВы не можете отправить личное сообщение самому себе..."
+enableMessager: "&eВы &aвключили&e личные сообщения!"
+disableMessager: "&eВы &cвыключили&e личные сообщения!"
+noReply: "&cВы ни с кем не разговаривали, чтобы ответить ему."
+replyOffline: "&cИгрок, с которым вы разговаривали, не в сети."
+hasMessagerDisabled: "&c%name% выключил личные сообщения!"
 
 ####################################################################################################
 # Vanish Messages
 ####################################################################################################
-enableVanish: "&eYou have &aenabled&e hide mode!"
-disableVanish: "&eYou have &cdisabled&e hide mode!"
+enableVanish: "&eВы &aвключили&e невидимку!"
+disableVanish: "&eВы &cвыключили&e невидимку!"
 
 ####################################################################################################
 # Clear Chat Messages
 ####################################################################################################
-clearedLocal: "&e%name% has cleared the chat locally."
-clearedGlobal: "&e%name% has cleared the chat globally."
+clearedLocal: "&e%name% очистил локальный чат."
+clearedGlobal: "&e%name% очистил глобальный чат."
 
 ####################################################################################################
 # Mute Messages
 ####################################################################################################
-muted: "&cSorry but you can not talk because you are muted until %muted_until%!"
-unmuteNotMuted: "&cThis player is not muted!"
-muteIsMuted: "This player is already muted!"
-unmute: "&eThe player &c%name% &ehas been unmuted!"
-mute: "&eThe player &c%name% &ehas been muted!"
-tempmute: "&eThe player &c%name% &ehas been muted until %muted_until%"
+muted: "&cИзвините, но вы не можете говорить, потому что вы получили мут до %muted_until%!"
+unmuteNotMuted: "&cЭтот игрок не имеет мута!"
+muteIsMuted: "Этот игрок уже имеет мут!"
+unmute: "&eУ игрока &c%name% &eснят мут!"
+mute: "&eИгроку &c%name% &eбыл выдан мут!"
+tempmute: "&eИгрок &c%name% &eполучил временный мут до %muted_until%"
 
 ####################################################################################################
 # Spy Messages
 ####################################################################################################
-enableSocialSpy: "&eSocialSpy has been &aenabled&e!"
-disableSocialSpy: "&eSocialSpy has been &cdisabled&e!"
-enableLocalSpy: "&eLocalSpy has been &aenabled&e!"
-disableLocalSpy: "&eLocalSpy has been &cdisabled&e!"
+enableSocialSpy: "&eШпион ЛС был &aвключен&e!"
+disableSocialSpy: "&eШпион ЛС был &cвыключен&e!"
+enableLocalSpy: "&eЛокальный шпион был &aвключен&e!"
+disableLocalSpy: "&eЛокальный шпион был &cвыключен&e!"
 
 ####################################################################################################
 # Error Messages
 ####################################################################################################
-notPlayer: "&cYou need to be a player to use this command!"
-playerNotFound: "&cCould not find that player..."
-incorrectUsage: "&cIncorrect usage! Use this command like this: %command%"
-noPermission: "&cYou do not have the permissions to perform this action!"
+notPlayer: "&cВы должны быть игроком для использования этой комманды!"
+playerNotFound: "&cИгрок не найден..."
+incorrectUsage: "&cНеправильное использование! Правильно: %command%"
+noPermission: "&cУ вас недостаточно прав для этого!"
 
 ####################################################################################################
 # Ignore Messages
 ####################################################################################################
-hasIgnored: "&c%target_name% is ignoring you..."
-addIgnore: "&eYou have ignored %name%!"
-removeIgnore: "&eYou have un-ignored %name%!"
-alreadyIgnored: "&eYou have are already ignoring this player!"
-ignoreYourself: "&cYou can not ignore yourself!"
-unignoreYourself: "&cYou can not unignore yourself!"
-notIgnored: "&cYou have not ignored this user!"
-ignoreList: "&eOnline users you ignore: &b%message%&e."
-ignoreNobody: "&eYou are ignoring &anobody&e that is online!"
+hasIgnored: "&c%target_name% кинул вас в ЧС..."
+addIgnore: "&eВы кинули в ЧС игрока %name%!"
+removeIgnore: "&eВы убрали из ЧС игрока %name%!"
+alreadyIgnored: "&eВы уже кинули этого игрока в ЧС!"
+ignoreYourself: "&cВы не можете кинуть в ЧС самого себя!"
+unignoreYourself: "&cВы не можете убрать из ЧС самого себя!"
+notIgnored: "&cЭтот игрок не находится у вас в ЧС!"
+ignoreList: "&eОнлайн игроки, находящиеся в ЧС: &b%message%&e."
+ignoreNobody: "&eВ сети &aникого&e нет, кого вы кинули в ЧС!"
 
 ####################################################################################################
 # Filter Messages
 ####################################################################################################
-antiAdvertise: "&cPlease do not advertise!"
-antiDuplication: "&cPlease do not spam messages!"
+antiAdvertise: "&cПожалуйста, ничего не рекламируйте!"
+antiDuplication: "&cПожалуйста, не спамьте!"
 
 ####################################################################################################
 # ChatLock Messages
 ####################################################################################################
-enableChatlock: "&eChatting has been disabled!"
-disableChatlock: "&eChatting has been enabled!"
-chatIsLocked: "&cYou may not talk now, the chat has been locked!"
+enableChatlock: "&eЧат был выключен!"
+disableChatlock: "&eЧат был включен!"
+chatIsLocked: "&cВы не можете сейчас писать в чат, потому что он выключен!"
 
 ####################################################################################################
 # Prefix/Suffix Messages
 ####################################################################################################
-prefixRemoved: "&ePrefix of %name% has been removed!"
-prefixSet: "&ePrefix of %name% has been set to %prefix%."
-suffixRemoved: "&eSuffix of %name% has been removed!"
-suffixSet: "&eSuffix of %name% has been set to %suffix%."
+prefixRemoved: "&eПрефикс для %name% был удалён!"
+prefixSet: "&eПрефикс для %name% был изменён на %prefix%."
+suffixRemoved: "&eСуффикс для %name% был удалён!"
+suffixSet: "&eСуффикс для %name% был изменён на %suffix%."
 
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aAn update for Bungee Chat is available! Version &6%message%&a. Download it at: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aОбнаружена новая верся для Bungee Chat! Версия &6%message%&a. Скачать: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
