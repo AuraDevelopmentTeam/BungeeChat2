@@ -185,7 +185,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         if (size != StartupBannerSize.SHORT) {
             LoggerHelper.info(ChatColor.GOLD + "---------------- " + ChatColor.AQUA + "Bungee Chat" + ChatColor.GOLD
                     + " ----------------");
-            LoggerHelper.info(ChatColor.YELLOW + "Autho: " + ChatColor.GREEN + AUTHOR_BRAINSTONE);
+            LoggerHelper.info(ChatColor.YELLOW + "Author: " + ChatColor.GREEN + AUTHOR_BRAINSTONE);
         }
 
         LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION_STR);
