@@ -109,9 +109,10 @@ public class BungeeChatCommand extends BaseCommand {
 
         checkForUpdates(sender);
         MessagesService.sendMessage(sender,
-                prefix + ChatColor.GRAY + "Coded by " + ChatColor.GOLD + BungeeChatApi.AUTHOR_SHAWN + ChatColor.GRAY
-                        + " and " + ChatColor.GOLD + BungeeChatApi.AUTHOR_BRAINSTONE + ChatColor.GRAY
-                        + ", with help from " + ChatColor.GOLD + BungeeChatApi.AUTHOR_RYADA + ChatColor.GRAY + ".");
+                prefix + ChatColor.GRAY + "Coded by " + ChatColor.GOLD + BungeeChatApi.AUTHOR_BRAINSTONE
+                        + ChatColor.GRAY + ", with help from " + ChatColor.GOLD + BungeeChatApi.AUTHOR_SHAWN
+                        + ChatColor.GRAY + " and " + ChatColor.GOLD + BungeeChatApi.AUTHOR_RYADA + ChatColor.GRAY
+                        + ".");
     }
 
     private void checkForUpdates(CommandSender sender) {
