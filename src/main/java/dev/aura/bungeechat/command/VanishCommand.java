@@ -14,7 +14,7 @@ public class VanishCommand extends BaseCommand {
     public VanishCommand(VanishModule vanisherModule) {
         super("bvanish", vanisherModule.getModuleSection().getStringList("aliases"));
     }
-    
+
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH)) {
