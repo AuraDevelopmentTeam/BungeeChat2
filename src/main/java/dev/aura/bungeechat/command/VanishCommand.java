@@ -14,7 +14,7 @@ public class VanishCommand extends BaseCommand {
     public VanishCommand(VanishModule vanisherModule) {
         super("bvanish", vanisherModule.getModuleSection().getStringList("aliases"));
     }
-
+    
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH)) {
@@ -23,15 +23,15 @@ public class VanishCommand extends BaseCommand {
             } else {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
                 if(args.length > 0) {
-                	if(args[0].equalsIgnoreCase("on")) {
-                		player.setVanished(true);
-                	} else if (args[0].equalsIgnoreCase("off")){
-                		player.setVanished(false);
-                	} else {
-                		player.toggleVanished();
-                	}
+                    if(args[0].equalsIgnoreCase("on")) {
+                        player.setVanished(true);
+                    } else if (args[0].equalsIgnoreCase("off")){
+                        player.setVanished(false);
+                    } else {
+                        player.toggleVanished();
+                    }
                 } else {
-                	player.toggleVanished();
+                    player.toggleVanished();
                 }
 
                 if (player.isVanished()) {
