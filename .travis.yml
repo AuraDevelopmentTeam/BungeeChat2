@@ -3,8 +3,7 @@ jdk:
   - oraclejdk8
   - openjdk8
 git:
-  depth: 3
+  depth: 10000
 
-before_install:
-  - chmod +x gradlew
+install: true
 script: "./gradlew build --refresh-dependencies"
