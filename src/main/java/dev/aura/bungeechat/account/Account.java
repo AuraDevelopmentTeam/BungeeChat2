@@ -8,6 +8,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
+import dev.aura.bungeechat.permission.Permission;
+import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.DummyPlayer;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -84,11 +86,19 @@ public class Account implements BungeeChatAccount {
 
     @Override
     public boolean hasSocialSpyEnabled() {
+        if (socialSpy && !PermissionManager.hasPermission(this, Permission.COMMAND_SOCIALSPY)) {
+            setSocialSpy(false);
+        }
+
         return socialSpy;
     }
 
     @Override
     public boolean hasLocalSpyEnabled() {
+        if (localSpy && !PermissionManager.hasPermission(this, Permission.COMMAND_LOCALSPY)) {
+            setLocalSpy(false);
+        }
+
         return localSpy;
     }
 
