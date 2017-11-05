@@ -1,9 +1,12 @@
-package dev.aura.bungeechat.event;
+package dev.aura.bungeechat.listener;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import dev.aura.bungeechat.event.BungeeChatJoinEvent;
+import dev.aura.bungeechat.event.BungeeChatLeaveEvent;
+import dev.aura.bungeechat.event.BungeeChatServerSwitchEvent;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;

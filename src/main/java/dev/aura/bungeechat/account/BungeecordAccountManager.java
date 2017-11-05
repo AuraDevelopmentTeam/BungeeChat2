@@ -12,12 +12,12 @@ import java.util.concurrent.ConcurrentMap;
 import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.event.BungeeChatJoinEvent;
+import dev.aura.bungeechat.event.BungeeChatLeaveEvent;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
-import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
@@ -92,12 +92,12 @@ public class BungeecordAccountManager extends AccountManager implements Listener
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerConnect(PostLoginEvent event) {
+    public void onPlayerConnect(BungeeChatJoinEvent event) {
         loadAccount(event.getPlayer().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerDisconnect(PlayerDisconnectEvent event) {
+    public void onPlayerDisconnect(BungeeChatLeaveEvent event) {
         unloadAccount(event.getPlayer().getUniqueId());
     }
 
