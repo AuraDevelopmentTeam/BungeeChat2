@@ -4,12 +4,15 @@
 
 .gradle/
 build/
+run/
 gradle-app.setting
 
 # Test reports
 *-TestReport*
 # Coverage reports
 *-CoverageReport*
+# Spotbugs reports
+*-SpotbugsReport*
 
 
 #################
