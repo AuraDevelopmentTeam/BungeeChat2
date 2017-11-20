@@ -21,12 +21,13 @@ public class RegexUtilTest {
             }
         }
     }
-    
+
     @Test
     public void leetSpeakWildcard() {
         for (RegexUtil.LeetSpeakPattern leet : RegexUtil.LEET_PATTERNS.values()) {
             String letter = leet.getLetter();
-            Pattern pattern = RegexUtil.parseWildcardToPattern(leet.getLetter(), Pattern.CASE_INSENSITIVE, false, true, false, false);
+            Pattern pattern = RegexUtil.parseWildcardToPattern(leet.getLetter(), Pattern.CASE_INSENSITIVE, false, true,
+                    false, false);
 
             for (String replacement : leet.getLeetAlternatives()) {
                 assertTrue("Replacement \"" + replacement + "\" doesn't match as a alternative for " + letter + "!",
@@ -34,6 +35,6 @@ public class RegexUtilTest {
             }
         }
     }
-    
+
     // TODO: More tests!
 }

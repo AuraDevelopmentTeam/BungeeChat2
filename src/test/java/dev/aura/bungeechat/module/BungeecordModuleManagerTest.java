@@ -14,7 +14,7 @@ public class BungeecordModuleManagerTest {
     public static void initBungeeChat() {
         TestHelper.initBungeeChat();
     }
-    
+
     @AfterClass
     public static void deinitBungeeChat() throws IOException {
         TestHelper.deinitBungeeChat();

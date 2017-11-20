@@ -56,7 +56,7 @@ public class ConsoleAccount implements BungeeChatAccount {
     public boolean hasSocialSpyEnabled() {
         return false;
     }
-    
+
     @Override
     public boolean hasLocalSpyEnabled() {
         return false;
@@ -116,7 +116,7 @@ public class ConsoleAccount implements BungeeChatAccount {
     public void setSocialSpy(boolean socialSpy) {
         // Do nothing
     }
-    
+
     @Override
     public void setLocalSpy(boolean localSpy) {
         // Do nothing

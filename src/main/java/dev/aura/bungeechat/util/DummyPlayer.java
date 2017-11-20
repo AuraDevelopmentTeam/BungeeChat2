@@ -22,7 +22,7 @@ import net.md_5.bungee.api.connection.Server;
 @RequiredArgsConstructor
 public class DummyPlayer implements ProxiedPlayer {
     private final UUID uuid;
-    
+
     @Override
     public InetSocketAddress getAddress() {
         return null;

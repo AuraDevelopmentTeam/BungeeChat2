@@ -22,10 +22,10 @@ public class VanishCommand extends BaseCommand {
                 MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
             } else {
                 BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
-                if(args.length > 0) {
-                    if(args[0].equalsIgnoreCase("on")) {
+                if (args.length > 0) {
+                    if (args[0].equalsIgnoreCase("on")) {
                         player.setVanished(true);
-                    } else if (args[0].equalsIgnoreCase("off")){
+                    } else if (args[0].equalsIgnoreCase("off")) {
                         player.setVanished(false);
                     } else {
                         player.toggleVanished();

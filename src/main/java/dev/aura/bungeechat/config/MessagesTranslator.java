@@ -17,7 +17,8 @@ public class MessagesTranslator {
     public static final String DEFAULT_LANGUAGE = "en_US";
     protected static final ConfigParseOptions PARSE_OPTIONS = ConfigParseOptions.defaults().setAllowMissing(false)
             .setSyntax(ConfigSyntax.CONF);
-    protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false);
+    protected static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults().setOriginComments(false)
+            .setJson(false);
     private static final String INHERIT = "inherit";
 
     private final Config defaultLang;
