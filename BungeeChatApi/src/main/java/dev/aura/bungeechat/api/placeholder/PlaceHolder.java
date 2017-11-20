@@ -5,8 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+@EqualsAndHashCode(of = "placeholder")
 public class PlaceHolder implements BungeeChatPlaceHolder {
     @Getter
     private final String placeholder;
@@ -52,7 +54,7 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
                 replacement = replacementSupplier.get(context);
             } catch (RuntimeException e) {
                 e.printStackTrace();
-                
+
                 replacement = "";
             }
 
@@ -72,12 +74,6 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
     @Override
     public String getName() {
         return getPlaceholder();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof BungeeChatPlaceHolder && placeholder.equals(((BungeeChatPlaceHolder) obj).getName());
-
     }
 
     public PlaceHolder[] createAliases(String... aliases) {

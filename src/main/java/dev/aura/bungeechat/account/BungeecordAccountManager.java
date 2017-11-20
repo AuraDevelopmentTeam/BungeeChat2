@@ -44,7 +44,7 @@ public class BungeecordAccountManager extends AccountManager implements Listener
     }
 
     public static void loadAccount(UUID uuid) {
-        AccountInfo loadedAccount = accountStorage.load(uuid);
+        AccountInfo loadedAccount = getAccountStorage().load(uuid);
 
         accounts.put(uuid, loadedAccount.getAccount());
         nativeObjects.put(uuid, getCommandSenderFromAccount(loadedAccount.getAccount()));

@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.api.utils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -272,8 +273,7 @@ public class RegexUtil {
         @Getter
         private final String letter;
         private final Pattern letterPattern;
-        @Getter
-        private final String[] leetAlternatives;
+        private final List<String> leetAlternatives;
         @Getter
         private final String pattern;
         @Getter
@@ -282,7 +282,7 @@ public class RegexUtil {
         public LeetSpeakPattern(String letter, String... leetAlternatives) {
             this.letter = letter;
             this.letterPattern = Pattern.compile(escapeRegex(letter), Pattern.CASE_INSENSITIVE);
-            this.leetAlternatives = leetAlternatives;
+            this.leetAlternatives = Arrays.asList(leetAlternatives);
 
             List<String> processingList = new LinkedList<>();
 
@@ -291,6 +291,10 @@ public class RegexUtil {
 
             pattern = processingList.stream().map(RegexUtil::escapeRegex).collect(Collectors.joining("|", "(?:", ")"));
             escapedPattern = Matcher.quoteReplacement(pattern);
+        }
+
+        public List<String> getLeetAlternatives() {
+            return Collections.unmodifiableList(leetAlternatives);
         }
 
         public String apply(String input) {

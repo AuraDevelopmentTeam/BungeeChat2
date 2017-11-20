@@ -14,8 +14,9 @@ import lombok.Getter;
 public class AccountManager {
     @Getter
     protected static final BungeeChatAccount consoleAccount = new ConsoleAccount();
-    protected static ConcurrentMap<UUID, BungeeChatAccount> accounts = new ConcurrentHashMap<>();
-    protected static BungeeChatAccountStorage accountStorage;
+    protected static final ConcurrentMap<UUID, BungeeChatAccount> accounts = new ConcurrentHashMap<>();
+    @Getter
+    private static BungeeChatAccountStorage accountStorage;
 
     public static void setAccountStorage(BungeeChatAccountStorage accountStorage) {
         AccountManager.accountStorage = accountStorage;

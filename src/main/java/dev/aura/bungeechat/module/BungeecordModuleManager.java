@@ -66,7 +66,7 @@ public class BungeecordModuleManager extends ModuleManager {
 
     public static void registerPluginModules() {
         if (!modulesAdded) {
-            availableModules.addAll(0, getLocalModules());
+            getAvailableModules().addAll(0, getLocalModules());
 
             modulesAdded = true;
         }
