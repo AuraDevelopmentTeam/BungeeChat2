@@ -91,7 +91,7 @@ public class BungeecordAccountManager extends AccountManager implements Listener
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerConnect(BungeeChatJoinEvent event) {
         loadAccount(event.getPlayer().getUniqueId());
     }
