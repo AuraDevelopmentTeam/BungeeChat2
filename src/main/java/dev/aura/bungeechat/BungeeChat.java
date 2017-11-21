@@ -40,8 +40,10 @@ import dev.aura.bungeechat.message.ServerAliases;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.util.LoggerHelper;
 import dev.aura.lib.version.Version;
+import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.Getter;
+import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -51,6 +53,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     private static final String defaultHookName = "default";
     private static final String errorVersion = "error";
     @Getter
+    @Setter(AccessLevel.PRIVATE)
     protected static BungeeChat instance;
     private String latestVersion = null;
     private File configDir;
@@ -62,7 +65,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     @Override
     public void onLoad() {
-        instance = this;
+        setInstance(this);
         BungeeChatInstaceHolder.setInstance(instance);
     }
 
@@ -75,7 +78,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         Configuration.load();
         PlaceHolderUtil.loadConfigSections();
 
-        PlaceHolders.registerPlaceholders();
+        PlaceHolders.registerPlaceHolders();
 
         Config accountDatabase = Configuration.get().getConfig("AccountDatabase");
 

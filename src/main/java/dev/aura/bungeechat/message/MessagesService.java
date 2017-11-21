@@ -22,6 +22,7 @@ import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
 
 @UtilityClass
 public class MessagesService {
@@ -286,11 +287,10 @@ public class MessagesService {
         return account -> serverName.equals(account.getServerName());
     }
 
-    @SuppressWarnings("deprecation")
     public static void sendMessage(CommandSender recipient, String message) {
         if ((message == null) || message.isEmpty())
             return;
 
-        recipient.sendMessage(message);
+        recipient.sendMessage(TextComponent.fromLegacyText(message));
     }
 }

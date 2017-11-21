@@ -10,7 +10,7 @@ import dev.aura.bungeechat.message.PlaceHolders;
 public class PlaceholdersTest {
     @Test
     public void registerPlaceholdersTest() {
-        PlaceHolders.registerPlaceholders();
+        PlaceHolders.registerPlaceHolders();
 
         assertEquals("Placeholders count is incorrect", 47L, PlaceHolderManager.getPlaceholderStream().count());
     }

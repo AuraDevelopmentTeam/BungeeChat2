@@ -16,9 +16,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class PlaceHolders {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final String dateFormat = "yyyy-MM-dd HH:mm:ss";
 
-    public static void registerPlaceholders() {
+    public static void registerPlaceHolders() {
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%timestamp%", context -> TimeUtil.getLongTimeStamp()));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%time%", context -> TimeUtil.getTimeStamp()));
         PlaceHolderManager
@@ -59,8 +59,8 @@ public class PlaceHolders {
                 .registerPlaceholder(new PlaceHolder("%serverip%", context -> context.getSender().get().getServerIP(),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_serverip%"));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%muted_until%",
-                context -> dateFormat.format(context.getSender().get().getMutedUntil()), BungeeChatContext.HAS_SENDER)
-                        .createAliases("%sender_muted_until%"));
+                context -> getDateFormat().format(context.getSender().get().getMutedUntil()),
+                BungeeChatContext.HAS_SENDER).createAliases("%sender_muted_until%"));
         PlaceHolderManager.registerPlaceholder(
                 new PlaceHolder("%server_online%", context -> getLocalPlayerCount(context.getSender().get()),
                         BungeeChatContext.HAS_SENDER).createAliases("%sender_server_online%"));
@@ -87,7 +87,8 @@ public class PlaceHolders {
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_serverip%",
                 context -> context.getTarget().get().getServerIP(), BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_muted_until%",
-                context -> dateFormat.format(context.getSender().get().getMutedUntil()), BungeeChatContext.HAS_TARGET));
+                context -> getDateFormat().format(context.getSender().get().getMutedUntil()),
+                BungeeChatContext.HAS_TARGET));
         PlaceHolderManager.registerPlaceholder(new PlaceHolder("%target_server_online%",
                 context -> getLocalPlayerCount(context.getTarget().get()), BungeeChatContext.HAS_TARGET));
 
@@ -110,5 +111,9 @@ public class PlaceHolders {
 
     private static String getTotalPlayerCount() {
         return Integer.toString(ProxyServer.getInstance().getPlayers().size());
+    }
+
+    private static SimpleDateFormat getDateFormat() {
+        return new SimpleDateFormat(dateFormat);
     }
 }
