@@ -16,7 +16,9 @@ repositories {
 }
 
 dependencies {
-    shadow project(":BungeeChatApi")
+    shadow (project(":BungeeChatApi")) {
+        exclude module: "lombok"
+    }
     
     compile "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
