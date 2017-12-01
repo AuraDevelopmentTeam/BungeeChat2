@@ -83,6 +83,7 @@ playerNotFound: "&cCould not find that player..."
 incorrectUsage: "&cIncorrect usage! Use this command like this: %command%"
 noPermission: "&cYou do not have the permissions to perform this action!"
 messageBlank: "&cThe message cannot be blank!"
+unknownServer: "&cUnknown Server"
 
 ####################################################################################################
 # Ignore Messages

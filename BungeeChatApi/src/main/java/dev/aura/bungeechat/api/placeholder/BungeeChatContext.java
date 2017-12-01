@@ -123,8 +123,14 @@ public class BungeeChatContext {
   public BungeeChatContext(BungeeChatAccount sender, BungeeChatAccount target, String message) {
     this(sender, target);
 
-    this.message = Optional.ofNullable(message);
-  }
+        this.message = Optional.ofNullable(message);
+    }
+
+    public BungeeChatContext(BungeeChatAccount sender, String message, String server) {
+    	this(sender, message);
+
+    	this.server = Optional.ofNullable(server);
+    }
 
   public BungeeChatContext(BungeeChatAccount sender, String message, String server) {
     this(sender, message);
@@ -200,19 +206,19 @@ public class BungeeChatContext {
     setMessage(Optional.ofNullable(message));
   }
 
-  @Tolerate
-  public void setChannel(String channel) {
-    setChannel(Optional.ofNullable(channel));
-  }
+    @Tolerate
+    public void setChannel(String channel) {
+        setChannel(Optional.ofNullable(channel));
+    }
 
-  @Tolerate
-  public void setServer(String server) {
-    setServer(Optional.ofNullable(server));
-  }
+    @Tolerate
+    public void setServer(String server) {
+    	setServer(Optional.ofNullable(server));
+    }
 
-  // Fill the requirementsNameCache
-  static {
-    final int modifers = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
+    // Fill the requirementsNameCache
+    static {
+        final int modifers = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
 
     for (Field field : BungeeChatContext.class.getDeclaredFields()) {
       try {
