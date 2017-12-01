@@ -75,12 +75,14 @@ public class BungeeChatContext {
     private Optional<BungeeChatAccount> target;
     private Optional<String> message;
     private Optional<String> channel;
+    private Optional<String> server;
 
     public BungeeChatContext() {
         sender = Optional.empty();
         target = Optional.empty();
         message = Optional.empty();
         channel = Optional.empty();
+        server = Optional.empty();
     }
 
     public BungeeChatContext(BungeeChatAccount sender) {
@@ -111,6 +113,12 @@ public class BungeeChatContext {
         this(sender, target);
 
         this.message = Optional.ofNullable(message);
+    }
+    
+    public BungeeChatContext(BungeeChatAccount sender, String message, String server) {
+    	this(sender, message);
+    	
+    	this.server = Optional.ofNullable(server);
     }
 
     /**
@@ -165,6 +173,10 @@ public class BungeeChatContext {
     public boolean hasChannel() {
         return channel.isPresent();
     }
+    
+    public boolean hasServer() {
+    	return server.isPresent();
+    }
 
     @Tolerate
     public void setSender(BungeeChatAccount sender) {
@@ -184,6 +196,11 @@ public class BungeeChatContext {
     @Tolerate
     public void setChannel(String channel) {
         setChannel(Optional.ofNullable(channel));
+    }
+    
+    @Tolerate
+    public void setServer(String server) {
+    	setServer(Optional.ofNullable(server));
     }
 
     // Fill the requirementsNameCache

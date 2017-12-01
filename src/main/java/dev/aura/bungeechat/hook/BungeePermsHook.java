@@ -7,6 +7,7 @@ import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.util.LoggerHelper;
 import net.alpenblock.bungeeperms.BungeePerms;
+import net.alpenblock.bungeeperms.Group;
 import net.alpenblock.bungeeperms.PermissionsManager;
 import net.alpenblock.bungeeperms.User;
 
@@ -23,8 +24,31 @@ public class BungeePermsHook implements BungeeChatHook {
 
         if (!user.isPresent())
             return Optional.empty();
-
+        
+        if (permissionManager.getMainGroup(user.get()) == null) {
+        	Group defaultGroup = getDefaultPlayerGroup();
+        	if (defaultGroup == null) {
+        		return Optional.empty();
+        	}
+        	return Optional.ofNullable(defaultGroup.getPrefix());
+        }
+        
         return Optional.ofNullable(permissionManager.getMainGroup(user.get()).getPrefix());
+    }
+    
+    private Group getDefaultPlayerGroup() {
+    	if (permissionManager.getDefaultGroups().isEmpty()) {
+    		return null;
+    	}
+    	
+    	Group defaultGroup = permissionManager.getDefaultGroups().get(0);
+    	for (int i = 1; i < permissionManager.getDefaultGroups().size(); ++i) {
+    		if (permissionManager.getDefaultGroups().get(i).getWeight() < defaultGroup.getWeight()) {
+    			defaultGroup = permissionManager.getDefaultGroups().get(i);
+            }
+    	}
+    	
+    	return defaultGroup;
     }
 
     @Override
@@ -33,7 +57,15 @@ public class BungeePermsHook implements BungeeChatHook {
 
         if (!user.isPresent())
             return Optional.empty();
-
+        
+        if (permissionManager.getMainGroup(user.get()) == null) {
+        	Group defaultGroup = getDefaultPlayerGroup();
+        	if (defaultGroup == null) {
+        		return Optional.empty();
+        	}
+        	return Optional.ofNullable(defaultGroup.getSuffix());
+        }
+        
         return Optional.ofNullable(permissionManager.getMainGroup(user.get()).getSuffix());
     }
 
