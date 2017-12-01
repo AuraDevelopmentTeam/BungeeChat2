@@ -55,6 +55,7 @@ public enum Message {
     PLAYER_NOT_FOUND("playerNotFound"),
     INCORRECT_USAGE("incorrectUsage"),
     NO_PERMISSION("noPermission"),
+    UNKNOWN_SERVER("unknownServer"),
 
     // Ignore Messages
     HAS_INGORED("hasIgnored"),
