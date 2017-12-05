@@ -332,12 +332,7 @@ public class Configuration implements Config {
             section = modulesSection.getSection("WelcomeMessage");
             final ImmutableMap<String, Object> moduleWelcomeMessage = ImmutableMap.<String, Object>builder()
                     .put("enabled", section.getBoolean("enabled")).build();
-            
-            section = modulesSection.getSection("LocalTo");
-            final ImmutableMap<String, Object> moduleLocalTo = ImmutableMap.<String, Object>builder()
-                    .put("aliases", section.getStringList("aliases")).put("enabled", section.getBoolean("enabled"))
-                    .build();
-            
+
             final ImmutableMap<String, Object> modules = ImmutableMap.<String, Object>builder()
                     .put("Alert", moduleAlert).put("AntiAdvertising", moduleAntiAdvertising)
                     .put("AntiDuplication", moduleAntiDuplication).put("AntiSwear", moduleAntiSwear)
@@ -345,7 +340,7 @@ public class Configuration implements Config {
                     .put("ChatLogging", moduleChatLogging).put("ClearChat", moduleClearChat)
                     .put("GlobalChat", moduleGlobalChat).put("HelpOp", moduleHelpOp).put("Ignoring", moduleIgnoring)
                     .put("JoinMessage", moduleJoinMessage).put("LeaveMessage", moduleLeaveMessage)
-                    .put("LocalChat", moduleLocalChat).put("LocalTo", moduleLocalTo).put("MOTD", moduleMOTD).put("Messenger", moduleMessenger)
+                    .put("LocalChat", moduleLocalChat).put("MOTD", moduleMOTD).put("Messenger", moduleMessenger)
                     .put("Muting", moduleMuting).put("ServerSwitchMessages", moduleServerSwitchMessages)
                     .put("Spy", moduleSpy).put("StaffChat", moduleStaffChat).put("TabCompletion", moduleTabCompletion)
                     .put("Vanish", moduleVanish).put("VersionChecker", moduleVersionChecker)

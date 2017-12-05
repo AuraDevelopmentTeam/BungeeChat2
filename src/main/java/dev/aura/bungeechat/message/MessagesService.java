@@ -122,13 +122,7 @@ public class MessagesService {
 
         Optional<BungeeChatAccount> account = context.getSender();
         Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
-        String localServerName;
-        
-        if (context.hasServer()) {
-        	localServerName = context.getServer().get();
-        } else {
-        	localServerName = context.getSender().get().getServerName();
-        }
+        String localServerName = context.hasServer() ? context.getServer().get() : context.getSender().get().getServerName();
         
         Predicate<BungeeChatAccount> isLocal = getLocalPredicate(localServerName);
 
