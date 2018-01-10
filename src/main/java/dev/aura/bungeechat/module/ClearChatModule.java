@@ -5,22 +5,24 @@ import dev.aura.bungeechat.command.ClearChatCommand;
 import net.md_5.bungee.api.ProxyServer;
 
 public class ClearChatModule extends Module {
-    private ClearChatCommand clearChatCommand;
+  private ClearChatCommand clearChatCommand;
 
-    @Override
-    public String getName() {
-        return "ClearChat";
-    }
+  @Override
+  public String getName() {
+    return "ClearChat";
+  }
 
-    @Override
-    public void onEnable() {
-        clearChatCommand = new ClearChatCommand(this);
+  @Override
+  public void onEnable() {
+    clearChatCommand = new ClearChatCommand(this);
 
-        ProxyServer.getInstance().getPluginManager().registerCommand(BungeeChat.getInstance(), clearChatCommand);
-    }
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(BungeeChat.getInstance(), clearChatCommand);
+  }
 
-    @Override
-    public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterCommand(clearChatCommand);
-    }
+  @Override
+  public void onDisable() {
+    ProxyServer.getInstance().getPluginManager().unregisterCommand(clearChatCommand);
+  }
 }

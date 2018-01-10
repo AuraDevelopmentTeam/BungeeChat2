@@ -6,43 +6,43 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BungeeChatTest {
-    private static BungeeChat bungeeChat;
+  private static BungeeChat bungeeChat;
 
-    @BeforeClass
-    public static void initBungeeChat() {
-        TestHelper.initBungeeChat();
+  @BeforeClass
+  public static void initBungeeChat() {
+    TestHelper.initBungeeChat();
 
-        bungeeChat = BungeeChat.getInstance();
-    }
+    bungeeChat = BungeeChat.getInstance();
+  }
 
-    @AfterClass
-    public static void deinitBungeeChat() throws IOException {
-        TestHelper.deinitBungeeChat();
-    }
+  @AfterClass
+  public static void deinitBungeeChat() throws IOException {
+    TestHelper.deinitBungeeChat();
+  }
 
-    @Test
-    public void cacheTest() {
-        String expected = bungeeChat.getLatestVersion(true);
+  @Test
+  public void cacheTest() {
+    String expected = bungeeChat.getLatestVersion(true);
 
-        assertSame("Caching should return same object", expected, bungeeChat.getLatestVersion());
-        assertNotSame("No caching should not return same object", expected, bungeeChat.getLatestVersion(true));
-    }
+    assertSame("Caching should return same object", expected, bungeeChat.getLatestVersion());
+    assertNotSame(
+        "No caching should not return same object", expected, bungeeChat.getLatestVersion(true));
+  }
 
-    @Test
-    public void isLatestTest() {
-        assertTrue("Version should not be \"error\"be latest", bungeeChat.isLatestVersion());
-    }
+  @Test
+  public void isLatestTest() {
+    assertTrue("Version should not be \"error\"be latest", bungeeChat.isLatestVersion());
+  }
 
-    @Test
-    public void queryTest() {
-        String result = bungeeChat.getLatestVersion(true);
+  @Test
+  public void queryTest() {
+    String result = bungeeChat.getLatestVersion(true);
 
-        assertFalse("Version should not be \"error\"", "error".equals(result));
-    }
+    assertFalse("Version should not be \"error\"", "error".equals(result));
+  }
 }

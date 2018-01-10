@@ -9,13 +9,12 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class LeaveMessageListener implements Listener {
-    @EventHandler
-    public void onPlayerLeave(BungeeChatLeaveEvent e) {
-        ProxiedPlayer player = e.getPlayer();
+  @EventHandler
+  public void onPlayerLeave(BungeeChatLeaveEvent e) {
+    ProxiedPlayer player = e.getPlayer();
 
-        if (!PermissionManager.hasPermission(player, Permission.MESSAGE_LEAVE))
-            return;
+    if (!PermissionManager.hasPermission(player, Permission.MESSAGE_LEAVE)) return;
 
-        MessagesService.sendLeaveMessage(player);
-    }
+    MessagesService.sendLeaveMessage(player);
+  }
 }

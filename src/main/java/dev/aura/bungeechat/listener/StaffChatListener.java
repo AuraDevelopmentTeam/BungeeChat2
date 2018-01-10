@@ -12,25 +12,22 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class StaffChatListener implements Listener {
-    private final boolean passToClientServer = BungeecordModuleManager.STAFF_CHAT_MODULE.getModuleSection()
-            .getBoolean("passToClientServer");
+  private final boolean passToClientServer =
+      BungeecordModuleManager.STAFF_CHAT_MODULE.getModuleSection().getBoolean("passToClientServer");
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerChat(ChatEvent e) {
-        if (e.isCancelled())
-            return;
-        if (!(e.getSender() instanceof ProxiedPlayer))
-            return;
+  @EventHandler(priority = EventPriority.HIGHEST)
+  public void onPlayerChat(ChatEvent e) {
+    if (e.isCancelled()) return;
+    if (!(e.getSender() instanceof ProxiedPlayer)) return;
 
-        ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
-        String message = e.getMessage();
+    ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
+    String message = e.getMessage();
 
-        if (ChatUtils.isCommand(message))
-            return;
+    if (ChatUtils.isCommand(message)) return;
 
-        if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF) {
-            e.setCancelled(!passToClientServer);
-            MessagesService.sendStaffMessage(sender, message);
-        }
+    if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF) {
+      e.setCancelled(!passToClientServer);
+      MessagesService.sendStaffMessage(sender, message);
     }
+  }
 }

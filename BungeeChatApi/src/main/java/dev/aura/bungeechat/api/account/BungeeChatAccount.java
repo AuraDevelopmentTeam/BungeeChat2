@@ -1,120 +1,119 @@
 package dev.aura.bungeechat.api.account;
 
+import dev.aura.bungeechat.api.enums.AccountType;
+import dev.aura.bungeechat.api.enums.ChannelType;
 import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import dev.aura.bungeechat.api.enums.AccountType;
-import dev.aura.bungeechat.api.enums.ChannelType;
-
 public interface BungeeChatAccount {
-    public UUID getUniqueId();
+  public UUID getUniqueId();
 
-    default public AccountType getAccountType() {
-        return AccountType.PLAYER;
-    }
+  public default AccountType getAccountType() {
+    return AccountType.PLAYER;
+  }
 
-    public ChannelType getChannelType();
+  public ChannelType getChannelType();
 
-    public boolean isVanished();
+  public boolean isVanished();
 
-    public boolean hasMessangerEnabled();
+  public boolean hasMessangerEnabled();
 
-    public boolean hasSocialSpyEnabled();
+  public boolean hasSocialSpyEnabled();
 
-    public boolean hasLocalSpyEnabled();
+  public boolean hasLocalSpyEnabled();
 
-    public BlockingQueue<UUID> getIgnored();
+  public BlockingQueue<UUID> getIgnored();
 
-    default public boolean hasIgnored(UUID uuid) {
-        return getIgnored().contains(uuid);
-    }
+  public default boolean hasIgnored(UUID uuid) {
+    return getIgnored().contains(uuid);
+  }
 
-    default public boolean hasIgnored(BungeeChatAccount account) {
-        return this.hasIgnored(account.getUniqueId());
-    }
+  public default boolean hasIgnored(BungeeChatAccount account) {
+    return this.hasIgnored(account.getUniqueId());
+  }
 
-    public String getName();
+  public String getName();
 
-    default public String getDisplayName() {
-        return getName();
-    }
+  public default String getDisplayName() {
+    return getName();
+  }
 
-    public int getPing();
+  public int getPing();
 
-    public String getServerName();
+  public String getServerName();
 
-    public String getServerIP();
+  public String getServerIP();
 
-    public Timestamp getMutedUntil();
+  public Timestamp getMutedUntil();
 
-    default public boolean isMuted() {
-        return getMutedUntil().after(new Timestamp(System.currentTimeMillis()));
-    }
+  public default boolean isMuted() {
+    return getMutedUntil().after(new Timestamp(System.currentTimeMillis()));
+  }
 
-    public Optional<String> getStoredPrefix();
+  public Optional<String> getStoredPrefix();
 
-    public Optional<String> getStoredSuffix();
+  public Optional<String> getStoredSuffix();
 
-    public void setChannelType(ChannelType channelType);
+  public void setChannelType(ChannelType channelType);
 
-    public void setVanished(boolean vanished);
+  public void setVanished(boolean vanished);
 
-    public void setMessanger(boolean messanger);
+  public void setMessanger(boolean messanger);
 
-    public void setSocialSpy(boolean socialSpy);
+  public void setSocialSpy(boolean socialSpy);
 
-    public void setLocalSpy(boolean localSpy);
+  public void setLocalSpy(boolean localSpy);
 
-    default public void toggleVanished() {
-        setVanished(!isVanished());
-    }
+  public default void toggleVanished() {
+    setVanished(!isVanished());
+  }
 
-    default public void toggleMessanger() {
-        setMessanger(!hasMessangerEnabled());
-    }
+  public default void toggleMessanger() {
+    setMessanger(!hasMessangerEnabled());
+  }
 
-    default public void toggleSocialSpy() {
-        setSocialSpy(!hasSocialSpyEnabled());
-    }
+  public default void toggleSocialSpy() {
+    setSocialSpy(!hasSocialSpyEnabled());
+  }
 
-    default public void toggleLocalSpy() {
-        setLocalSpy(!hasLocalSpyEnabled());
-    }
+  public default void toggleLocalSpy() {
+    setLocalSpy(!hasLocalSpyEnabled());
+  }
 
-    public void addIgnore(UUID uuid);
+  public void addIgnore(UUID uuid);
 
-    default public void addIgnore(BungeeChatAccount account) {
-        this.addIgnore(account.getUniqueId());
-    }
+  public default void addIgnore(BungeeChatAccount account) {
+    this.addIgnore(account.getUniqueId());
+  }
 
-    public void removeIgnore(UUID uuid);
+  public void removeIgnore(UUID uuid);
 
-    default public void removeIgnore(BungeeChatAccount account) {
-        this.removeIgnore(account.getUniqueId());
-    }
+  public default void removeIgnore(BungeeChatAccount account) {
+    this.removeIgnore(account.getUniqueId());
+  }
 
-    public void setMutedUntil(Timestamp mutedUntil);
+  public void setMutedUntil(Timestamp mutedUntil);
 
-    default public void setMutedUntil(long mutedUntilMillis) {
-        setMutedUntil(new Timestamp(mutedUntilMillis));
-    }
+  public default void setMutedUntil(long mutedUntilMillis) {
+    setMutedUntil(new Timestamp(mutedUntilMillis));
+  }
 
-    default void mutePermanetly() {
-        setMutedUntil(Timestamp.valueOf("9999-12-31 23:59:59"));
-    }
+  default void mutePermanetly() {
+    setMutedUntil(Timestamp.valueOf("9999-12-31 23:59:59"));
+  }
 
-    default void muteFor(long amount, TimeUnit timeUnit) {
-        setMutedUntil(System.currentTimeMillis() + timeUnit.toMillis(amount));
-    }
+  default void muteFor(long amount, TimeUnit timeUnit) {
+    setMutedUntil(System.currentTimeMillis() + timeUnit.toMillis(amount));
+  }
 
-    default void unmute() {
-        setMutedUntil(0L);
-    }
+  default void unmute() {
+    setMutedUntil(0L);
+  }
 
-    public void setStoredPrefix(Optional<String> newPrefix);
+  public void setStoredPrefix(Optional<String> newPrefix);
 
-    public void setStoredSuffix(Optional<String> newSuffix);
+  public void setStoredSuffix(Optional<String> newSuffix);
 }

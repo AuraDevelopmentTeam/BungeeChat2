@@ -5,22 +5,24 @@ import dev.aura.bungeechat.command.HelpOpCommand;
 import net.md_5.bungee.api.ProxyServer;
 
 public class HelpOpModule extends Module {
-    private HelpOpCommand helpOpCommand;
+  private HelpOpCommand helpOpCommand;
 
-    @Override
-    public String getName() {
-        return "HelpOp";
-    }
+  @Override
+  public String getName() {
+    return "HelpOp";
+  }
 
-    @Override
-    public void onEnable() {
-        helpOpCommand = new HelpOpCommand(this);
+  @Override
+  public void onEnable() {
+    helpOpCommand = new HelpOpCommand(this);
 
-        ProxyServer.getInstance().getPluginManager().registerCommand(BungeeChat.getInstance(), helpOpCommand);
-    }
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(BungeeChat.getInstance(), helpOpCommand);
+  }
 
-    @Override
-    public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterCommand(helpOpCommand);
-    }
+  @Override
+  public void onDisable() {
+    ProxyServer.getInstance().getPluginManager().unregisterCommand(helpOpCommand);
+  }
 }

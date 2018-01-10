@@ -14,15 +14,14 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class MOTDListener implements Listener {
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerJoin(BungeeChatJoinEvent e) {
-        ProxiedPlayer player = e.getPlayer();
+  @EventHandler(priority = EventPriority.NORMAL)
+  public void onPlayerJoin(BungeeChatJoinEvent e) {
+    ProxiedPlayer player = e.getPlayer();
 
-        if (!PermissionManager.hasPermission(player, Permission.MESSAGE_MOTD))
-            return;
+    if (!PermissionManager.hasPermission(player, Permission.MESSAGE_MOTD)) return;
 
-        BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(player).get();
+    BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(player).get();
 
-        MessagesService.sendMessage(player, Format.MOTD.get(new BungeeChatContext(bungeeChatAccount)));
-    }
+    MessagesService.sendMessage(player, Format.MOTD.get(new BungeeChatContext(bungeeChatAccount)));
+  }
 }

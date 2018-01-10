@@ -5,22 +5,24 @@ import dev.aura.bungeechat.listener.ServerSwitchListener;
 import net.md_5.bungee.api.ProxyServer;
 
 public class ServerSwitchModule extends Module {
-    private ServerSwitchListener serverSwitchListener;
+  private ServerSwitchListener serverSwitchListener;
 
-    @Override
-    public String getName() {
-        return "ServerSwitchMessages";
-    }
+  @Override
+  public String getName() {
+    return "ServerSwitchMessages";
+  }
 
-    @Override
-    public void onEnable() {
-        serverSwitchListener = new ServerSwitchListener();
+  @Override
+  public void onEnable() {
+    serverSwitchListener = new ServerSwitchListener();
 
-        ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), serverSwitchListener);
-    }
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerListener(BungeeChat.getInstance(), serverSwitchListener);
+  }
 
-    @Override
-    public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterListener(serverSwitchListener);
-    }
+  @Override
+  public void onDisable() {
+    ProxyServer.getInstance().getPluginManager().unregisterListener(serverSwitchListener);
+  }
 }

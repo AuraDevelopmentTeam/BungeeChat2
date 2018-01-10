@@ -1,11 +1,11 @@
 package dev.aura.bungeechat.api.module;
 
 public interface BungeeChatModule {
-    public String getName();
+  public String getName();
 
-    public boolean isEnabled();
+  public boolean isEnabled();
 
-    public void onEnable();
+  public void onEnable();
 
-    public void onDisable();
+  public void onDisable();
 }

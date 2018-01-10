@@ -1,7 +1,6 @@
 package dev.aura.bungeechat.module;
 
 import com.typesafe.config.Config;
-
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import dev.aura.bungeechat.chatlog.ConsoleLogger;
@@ -10,47 +9,49 @@ import dev.aura.bungeechat.listener.ChatLoggingListener;
 import net.md_5.bungee.api.ProxyServer;
 
 public class ChatLoggingModule extends Module {
-    private ChatLoggingListener chatLoggingListener;
+  private ChatLoggingListener chatLoggingListener;
 
-    private ConsoleLogger consoleLogger;
-    private FileLogger fileLogger;
+  private ConsoleLogger consoleLogger;
+  private FileLogger fileLogger;
 
-    @Override
-    public String getName() {
-        return "ChatLogging";
+  @Override
+  public String getName() {
+    return "ChatLogging";
+  }
+
+  @Override
+  public void onEnable() {
+    Config section = getModuleSection();
+
+    if (section.getBoolean("console")) {
+      consoleLogger = new ConsoleLogger();
+
+      ChatLoggingManager.addLogger(consoleLogger);
+    }
+    if (section.getBoolean("file")) {
+      fileLogger = new FileLogger(section.getString("logFile"));
+
+      ChatLoggingManager.addLogger(fileLogger);
     }
 
-    @Override
-    public void onEnable() {
-        Config section = getModuleSection();
+    ChatLoggingManager.loadFilteredCommands(section.getStringList("filteredCommands"));
 
-        if (section.getBoolean("console")) {
-            consoleLogger = new ConsoleLogger();
+    chatLoggingListener = new ChatLoggingListener();
 
-            ChatLoggingManager.addLogger(consoleLogger);
-        }
-        if (section.getBoolean("file")) {
-            fileLogger = new FileLogger(section.getString("logFile"));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerListener(BungeeChat.getInstance(), chatLoggingListener);
+  }
 
-            ChatLoggingManager.addLogger(fileLogger);
-        }
+  @Override
+  public void onDisable() {
+    ProxyServer.getInstance().getPluginManager().unregisterListener(chatLoggingListener);
 
-        ChatLoggingManager.loadFilteredCommands(section.getStringList("filteredCommands"));
-
-        chatLoggingListener = new ChatLoggingListener();
-
-        ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), chatLoggingListener);
+    if (chatLoggingListener != null) {
+      ChatLoggingManager.removeLogger(consoleLogger);
     }
-
-    @Override
-    public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterListener(chatLoggingListener);
-
-        if (chatLoggingListener != null) {
-            ChatLoggingManager.removeLogger(consoleLogger);
-        }
-        if (fileLogger != null) {
-            ChatLoggingManager.removeLogger(fileLogger);
-        }
+    if (fileLogger != null) {
+      ChatLoggingManager.removeLogger(fileLogger);
     }
+  }
 }

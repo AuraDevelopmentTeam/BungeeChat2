@@ -11,25 +11,25 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class SocialSpyCommand extends BaseCommand {
-    public SocialSpyCommand(SpyModule socialSpyModule) {
-        super("socialspy", socialSpyModule.getModuleSection().getStringList("aliases.socialspy"));
-    }
+  public SocialSpyCommand(SpyModule socialSpyModule) {
+    super("socialspy", socialSpyModule.getModuleSection().getStringList("aliases.socialspy"));
+  }
 
-    @Override
-    public void execute(CommandSender sender, String[] args) {
-        if (PermissionManager.hasPermission(sender, Permission.COMMAND_SOCIALSPY)) {
-            if (!(sender instanceof ProxiedPlayer)) {
-                MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
-            } else {
-                BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
-                player.toggleSocialSpy();
+  @Override
+  public void execute(CommandSender sender, String[] args) {
+    if (PermissionManager.hasPermission(sender, Permission.COMMAND_SOCIALSPY)) {
+      if (!(sender instanceof ProxiedPlayer)) {
+        MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
+      } else {
+        BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+        player.toggleSocialSpy();
 
-                if (player.hasSocialSpyEnabled()) {
-                    MessagesService.sendMessage(sender, Message.ENABLE_SOCIAL_SPY.get(player));
-                } else {
-                    MessagesService.sendMessage(sender, Message.DISABLE_SOCIAL_SPY.get(player));
-                }
-            }
+        if (player.hasSocialSpyEnabled()) {
+          MessagesService.sendMessage(sender, Message.ENABLE_SOCIAL_SPY.get(player));
+        } else {
+          MessagesService.sendMessage(sender, Message.DISABLE_SOCIAL_SPY.get(player));
         }
+      }
     }
+  }
 }

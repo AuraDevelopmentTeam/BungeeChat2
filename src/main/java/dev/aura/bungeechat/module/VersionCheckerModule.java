@@ -5,22 +5,25 @@ import dev.aura.bungeechat.listener.VersionCheckerListener;
 import net.md_5.bungee.api.ProxyServer;
 
 public class VersionCheckerModule extends Module {
-    private VersionCheckerListener versionCheckerListener;
+  private VersionCheckerListener versionCheckerListener;
 
-    @Override
-    public String getName() {
-        return "VersionChecker";
-    }
+  @Override
+  public String getName() {
+    return "VersionChecker";
+  }
 
-    @Override
-    public void onEnable() {
-        versionCheckerListener = new VersionCheckerListener(getModuleSection().getBoolean("checkOnAdminLogin"));
+  @Override
+  public void onEnable() {
+    versionCheckerListener =
+        new VersionCheckerListener(getModuleSection().getBoolean("checkOnAdminLogin"));
 
-        ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), versionCheckerListener);
-    }
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerListener(BungeeChat.getInstance(), versionCheckerListener);
+  }
 
-    @Override
-    public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterListener(versionCheckerListener);
-    }
+  @Override
+  public void onDisable() {
+    ProxyServer.getInstance().getPluginManager().unregisterListener(versionCheckerListener);
+  }
 }

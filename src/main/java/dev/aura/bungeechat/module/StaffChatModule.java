@@ -6,26 +6,30 @@ import dev.aura.bungeechat.listener.StaffChatListener;
 import net.md_5.bungee.api.ProxyServer;
 
 public class StaffChatModule extends Module {
-    private StaffChatCommand staffChatCommand;
-    private StaffChatListener staffChatListener;
+  private StaffChatCommand staffChatCommand;
+  private StaffChatListener staffChatListener;
 
-    @Override
-    public String getName() {
-        return "StaffChat";
-    }
+  @Override
+  public String getName() {
+    return "StaffChat";
+  }
 
-    @Override
-    public void onEnable() {
-        staffChatCommand = new StaffChatCommand(this);
-        staffChatListener = new StaffChatListener();
+  @Override
+  public void onEnable() {
+    staffChatCommand = new StaffChatCommand(this);
+    staffChatListener = new StaffChatListener();
 
-        ProxyServer.getInstance().getPluginManager().registerCommand(BungeeChat.getInstance(), staffChatCommand);
-        ProxyServer.getInstance().getPluginManager().registerListener(BungeeChat.getInstance(), staffChatListener);
-    }
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(BungeeChat.getInstance(), staffChatCommand);
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerListener(BungeeChat.getInstance(), staffChatListener);
+  }
 
-    @Override
-    public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterCommand(staffChatCommand);
-        ProxyServer.getInstance().getPluginManager().unregisterListener(staffChatListener);
-    }
+  @Override
+  public void onDisable() {
+    ProxyServer.getInstance().getPluginManager().unregisterCommand(staffChatCommand);
+    ProxyServer.getInstance().getPluginManager().unregisterListener(staffChatListener);
+  }
 }

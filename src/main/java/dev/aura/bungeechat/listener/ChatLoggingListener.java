@@ -11,18 +11,17 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class ChatLoggingListener implements Listener {
-    @EventHandler(priority = EventPriority.LOW)
-    public void onPlayerChat(ChatEvent e) {
-        if (e.isCancelled())
-            return;
-        if (!(e.getSender() instanceof ProxiedPlayer))
-            return;
+  @EventHandler(priority = EventPriority.LOW)
+  public void onPlayerChat(ChatEvent e) {
+    if (e.isCancelled()) return;
+    if (!(e.getSender() instanceof ProxiedPlayer)) return;
 
-        BungeeChatAccount sender = BungeecordAccountManager.getAccount((ProxiedPlayer) e.getSender()).get();
-        String message = e.getMessage();
+    BungeeChatAccount sender =
+        BungeecordAccountManager.getAccount((ProxiedPlayer) e.getSender()).get();
+    String message = e.getMessage();
 
-        if (ChatUtils.isCommand(message)) {
-            ChatLoggingManager.logCommand(sender, message);
-        }
+    if (ChatUtils.isCommand(message)) {
+      ChatLoggingManager.logCommand(sender, message);
     }
+  }
 }

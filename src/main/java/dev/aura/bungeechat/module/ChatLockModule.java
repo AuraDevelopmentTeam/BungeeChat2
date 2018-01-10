@@ -9,27 +9,30 @@ import lombok.experimental.Delegate;
 import net.md_5.bungee.api.ProxyServer;
 
 public class ChatLockModule extends Module {
-    private ChatLockCommand chatLockCommand;
-    @Delegate(excludes = BungeeChatFilter.class)
-    private ChatLockFilter chatLockFilter;
+  private ChatLockCommand chatLockCommand;
 
-    @Override
-    public String getName() {
-        return "ChatLock";
-    }
+  @Delegate(excludes = BungeeChatFilter.class)
+  private ChatLockFilter chatLockFilter;
 
-    @Override
-    public void onEnable() {
-        chatLockCommand = new ChatLockCommand(this);
-        chatLockFilter = new ChatLockFilter();
+  @Override
+  public String getName() {
+    return "ChatLock";
+  }
 
-        ProxyServer.getInstance().getPluginManager().registerCommand(BungeeChat.getInstance(), chatLockCommand);
-        FilterManager.addFilter(getName(), chatLockFilter);
-    }
+  @Override
+  public void onEnable() {
+    chatLockCommand = new ChatLockCommand(this);
+    chatLockFilter = new ChatLockFilter();
 
-    @Override
-    public void onDisable() {
-        ProxyServer.getInstance().getPluginManager().unregisterCommand(chatLockCommand);
-        FilterManager.removeFilter(getName());
-    }
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(BungeeChat.getInstance(), chatLockCommand);
+    FilterManager.addFilter(getName(), chatLockFilter);
+  }
+
+  @Override
+  public void onDisable() {
+    ProxyServer.getInstance().getPluginManager().unregisterCommand(chatLockCommand);
+    FilterManager.removeFilter(getName());
+  }
 }

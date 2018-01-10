@@ -12,15 +12,15 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class WelcomeMessageListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(BungeeChatJoinEvent e) {
-        ProxiedPlayer player = e.getPlayer();
+  @EventHandler(priority = EventPriority.HIGHEST)
+  public void onPlayerJoin(BungeeChatJoinEvent e) {
+    ProxiedPlayer player = e.getPlayer();
 
-        BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(player).get();
+    BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(player).get();
 
-        if (!BungeecordAccountManager.isNew(bungeeChatAccount.getUniqueId()))
-            return;
+    if (!BungeecordAccountManager.isNew(bungeeChatAccount.getUniqueId())) return;
 
-        MessagesService.sendToMatchingPlayers(Format.WELCOME_MESSAGE.get(new BungeeChatContext(bungeeChatAccount)));
-    }
+    MessagesService.sendToMatchingPlayers(
+        Format.WELCOME_MESSAGE.get(new BungeeChatContext(bungeeChatAccount)));
+  }
 }

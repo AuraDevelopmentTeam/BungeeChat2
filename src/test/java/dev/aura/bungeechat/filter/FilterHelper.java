@@ -11,27 +11,27 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FilterHelper {
-    private final Message expectedMessage;
+  private final Message expectedMessage;
 
-    public void assertException(BungeeChatFilter filter, String text) {
-        try {
-            filter.applyFilter(AccountManager.getConsoleAccount(), text);
+  public void assertException(BungeeChatFilter filter, String text) {
+    try {
+      filter.applyFilter(AccountManager.getConsoleAccount(), text);
 
-            fail("Expected exception!");
-        } catch (ExtendedBlockMessageException e) {
-            assertEquals("Exception Message is wrong", expectedMessage, e.getMessageType());
-        } catch (BlockMessageException e) {
-            fail("ExtendedBlockMessageException expected! (" + e.getMessage() + ')');
-        }
+      fail("Expected exception!");
+    } catch (ExtendedBlockMessageException e) {
+      assertEquals("Exception Message is wrong", expectedMessage, e.getMessageType());
+    } catch (BlockMessageException e) {
+      fail("ExtendedBlockMessageException expected! (" + e.getMessage() + ')');
     }
+  }
 
-    public void assertNoException(BungeeChatFilter filter, String text) {
-        try {
-            String result = filter.applyFilter(AccountManager.getConsoleAccount(), text);
+  public void assertNoException(BungeeChatFilter filter, String text) {
+    try {
+      String result = filter.applyFilter(AccountManager.getConsoleAccount(), text);
 
-            assertEquals("Message should not have been filtered", text, result);
-        } catch (BlockMessageException e) {
-            fail("No exception expected! (" + e.getMessage() + ')');
-        }
+      assertEquals("Message should not have been filtered", text, result);
+    } catch (BlockMessageException e) {
+      fail("No exception expected! (" + e.getMessage() + ')');
     }
+  }
 }
