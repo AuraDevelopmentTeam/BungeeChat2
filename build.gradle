@@ -28,8 +28,9 @@ dependencies {
     
     shadowRelocate "com.typesafe:config:${hocon_version}"
     
+    testCompile "ch.vorburger.mariaDB4j:mariaDB4j:2.2.3"
     testCompile "commons-io:commons-io:2.6"
-    testRuntime "mysql:mysql-connector-java:6.0.6"
+    testRuntime "org.mariadb.jdbc:mariadb-java-client:2.0.3"
 }
 
 jacocoTestCoverageVerification {
