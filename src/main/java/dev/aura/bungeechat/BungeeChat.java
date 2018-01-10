@@ -275,7 +275,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
       int responseCode = con.getResponseCode();
       @Cleanup
-      BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+      BufferedReader reader =
+          new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 
       if (responseCode != 200) {
         LoggerHelper.warning(

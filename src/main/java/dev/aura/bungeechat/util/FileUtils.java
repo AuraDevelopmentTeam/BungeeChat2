@@ -22,9 +22,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FileUtils {
   public static boolean copyFile(final File toCopy, final File destFile) {
-    try {
-      return FileUtils.copyStream(new FileInputStream(toCopy), new FileOutputStream(destFile));
-    } catch (final FileNotFoundException e) {
+    try (final InputStream inStream = new FileInputStream(toCopy);
+        final OutputStream outStream = new FileOutputStream(destFile)) {
+      return FileUtils.copyStream(inStream, outStream);
+    } catch (final IOException e) {
       e.printStackTrace();
     }
 

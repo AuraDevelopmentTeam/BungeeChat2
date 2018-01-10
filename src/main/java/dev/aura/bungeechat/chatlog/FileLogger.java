@@ -5,9 +5,12 @@ import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.message.Format;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +22,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
   private final String logFile;
   private String oldFile = "";
   private File saveTo;
-  private FileWriter fw;
+  private Writer fw;
   private PrintWriter pw;
 
   @Override
@@ -49,7 +52,7 @@ public class FileLogger implements ChatLogger, AutoCloseable {
         saveTo.createNewFile();
       }
 
-      fw = new FileWriter(saveTo, true);
+      fw = new OutputStreamWriter(new FileOutputStream(saveTo, true), StandardCharsets.UTF_8);
       pw = new PrintWriter(fw);
     } catch (IOException e) {
       e.printStackTrace();

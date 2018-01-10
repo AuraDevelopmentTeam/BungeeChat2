@@ -5,6 +5,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.util.LoggerHelper;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.nio.ByteBuffer;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -165,37 +166,40 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
       // loadAccount
       loadAccount.setBytes(1, uuidBytes);
 
-      @Cleanup ResultSet resultLoadAccount = loadAccount.executeQuery();
-      loadAccount.clearParameters();
+      try (ResultSet resultLoadAccount = loadAccount.executeQuery()) {
+        loadAccount.clearParameters();
 
-      if (!resultLoadAccount.next()) return new AccountInfo(new Account(uuid), true, true);
+        if (!resultLoadAccount.next()) return new AccountInfo(new Account(uuid), true, true);
 
-      // getIgnores
-      getIgnores.setBytes(1, uuidBytes);
+        // getIgnores
+        getIgnores.setBytes(1, uuidBytes);
 
-      @Cleanup ResultSet resultGetIgnores = getIgnores.executeQuery();
-      getIgnores.clearParameters();
+        try (ResultSet resultGetIgnores = getIgnores.executeQuery()) {
+          getIgnores.clearParameters();
 
-      BlockingQueue<UUID> ignores = new LinkedBlockingQueue<>();
+          BlockingQueue<UUID> ignores = new LinkedBlockingQueue<>();
 
-      while (resultGetIgnores.next()) {
-        ignores.add(getUUIDFromBytes(resultGetIgnores.getBytes(tableIgnoresColumnIgnores)));
+          while (resultGetIgnores.next()) {
+            ignores.add(getUUIDFromBytes(resultGetIgnores.getBytes(tableIgnoresColumnIgnores)));
+          }
+
+          return new AccountInfo(
+              new Account(
+                  uuid,
+                  ChannelType.valueOf(resultLoadAccount.getString(tableAccountsColumnChannelType)),
+                  resultLoadAccount.getBoolean(tableAccountsColumnVanished),
+                  resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
+                  resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy),
+                  resultLoadAccount.getBoolean(tableAccountsColumnLocalSpy),
+                  ignores,
+                  resultLoadAccount.getTimestamp(tableAccountsColumnMutedUntil),
+                  Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
+                  Optional.ofNullable(
+                      resultLoadAccount.getString(tableAccountsColumnStoredSuffix))),
+              true,
+              false);
+        }
       }
-
-      return new AccountInfo(
-          new Account(
-              uuid,
-              ChannelType.valueOf(resultLoadAccount.getString(tableAccountsColumnChannelType)),
-              resultLoadAccount.getBoolean(tableAccountsColumnVanished),
-              resultLoadAccount.getBoolean(tableAccountsColumnMessenger),
-              resultLoadAccount.getBoolean(tableAccountsColumnSocialSpy),
-              resultLoadAccount.getBoolean(tableAccountsColumnLocalSpy),
-              ignores,
-              resultLoadAccount.getTimestamp(tableAccountsColumnMutedUntil),
-              Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredPrefix)),
-              Optional.ofNullable(resultLoadAccount.getString(tableAccountsColumnStoredSuffix))),
-          true,
-          false);
     } catch (SQLException e) {
       LoggerHelper.error("Could not load user " + uuid + " from database!", e);
 
@@ -224,25 +228,25 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     return connection.createStatement();
   }
 
-  private PreparedStatement getPreparedStatement(String statement) throws SQLException {
+  private PreparedStatement getPreparedStatement(final String statement) throws SQLException {
     return connection.prepareStatement(statement);
   }
 
   @SuppressWarnings("unused")
-  private ResultSet executeQuery(String query) throws SQLException {
+  private ResultSet executeQuery(final String query) throws SQLException {
     @Cleanup Statement statement = getStatement();
 
     return statement.executeQuery(query);
   }
 
-  private boolean executeStatement(String query) throws SQLException {
+  private boolean executeStatement(final String query) throws SQLException {
     @Cleanup Statement statement = getStatement();
 
     return statement.execute(query);
   }
 
   @SuppressWarnings("unused")
-  private int executeUpdate(String query) throws SQLException {
+  private int executeUpdate(final String query) throws SQLException {
     @Cleanup Statement statement = getStatement();
 
     return statement.executeUpdate(query);
@@ -255,14 +259,18 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     return name;
   }
 
+  @SuppressFBWarnings(
+    value = "SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE",
+    justification = "Names are variable."
+  )
   private void prepareTables() {
     try {
-      String channelTypeEnum =
+      final String channelTypeEnum =
           Arrays.stream(ChannelType.values())
               .map(ChannelType::name)
               .collect(Collectors.joining("','", " ENUM('", "')"));
 
-      String createAccountsTable =
+      final String createAccountsTable =
           "CREATE TABLE IF NOT EXISTS "
               + tableAccounts
               + " ("
@@ -289,7 +297,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
               + " TEXT, PRIMARY KEY ("
               + tableAccountsColumnUUID
               + ")) DEFAULT CHARSET=utf8";
-      String createIgnoresTable =
+      final String createIgnoresTable =
           "CREATE TABLE IF NOT EXISTS "
               + tableIgnores
               + " ("
@@ -325,9 +333,13 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     }
   }
 
+  @SuppressFBWarnings(
+    value = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
+    justification = "Names are variable."
+  )
   private void prepareStatements() {
     try {
-      String saveAccountStr =
+      final String saveAccountStr =
           "INSERT INTO "
               + tableAccounts
               + " ("
@@ -387,7 +399,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
               + " = VALUES("
               + tableAccountsColumnStoredSuffix
               + ")";
-      String loadAccountStr =
+      final String loadAccountStr =
           "SELECT "
               + tableAccountsColumnChannelType
               + ", "
@@ -409,9 +421,9 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
               + " WHERE "
               + tableAccountsColumnUUID
               + " = ? LIMIT 1";
-      String deleteIgnoresStr =
+      final String deleteIgnoresStr =
           "DELETE FROM " + tableIgnores + " WHERE " + tableIgnoresColumnUser + " = ?";
-      String addIgnoreStr =
+      final String addIgnoreStr =
           "INSERT INTO "
               + tableIgnores
               + " ("
@@ -419,7 +431,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
               + ", "
               + tableIgnoresColumnIgnores
               + ") VALUES (?, ?)";
-      String getIgnoresStr =
+      final String getIgnoresStr =
           "SELECT "
               + tableIgnoresColumnIgnores
               + " FROM "

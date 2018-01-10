@@ -2,14 +2,18 @@ package dev.aura.bungeechat.util;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
+@SuppressFBWarnings( // TODO: Remove when fixed in SpotBugs
+  value = "RV_RETURN_VALUE_IGNORED",
+  justification = "Return values can be safely ignored as they are for chaining only."
+)
 public class MapUtils {
   /**
    * A variant of {@link Collectors#toMap(Function, Function)} for immutable maps.
