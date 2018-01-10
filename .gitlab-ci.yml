@@ -59,6 +59,13 @@ coverage:
     paths:
     - $COVERAGE_REPORTS
 
+checkFormatting:
+  stage: test
+  script:
+  - ./gradlew --continue --console=plain spotlessCheck
+  allow_failure: true
+  when: on_success
+
 spotbugs:
   stage: test
   script:
@@ -69,6 +76,17 @@ spotbugs:
     when: always
     paths:
     - $SPOTBUGS_REPORTS
+
+deploySnapshot:
+  stage: deploy
+  dependencies:
+  - build
+  script:
+  - ./gradlew --console=plain uploadArchives
+  retry: 2
+  when: always
+  except:
+  - tags
 
 deploy:
   stage: deploy
