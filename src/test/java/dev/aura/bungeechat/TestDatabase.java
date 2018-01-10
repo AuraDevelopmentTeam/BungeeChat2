@@ -19,10 +19,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 
 @UtilityClass
-@SuppressFBWarnings( // TODO: Remove when fixed in SpotBugs
-  value = "RV_RETURN_VALUE_IGNORED",
-  justification = "Return values can be safely ignored as they are for chaining only."
-)
 public class TestDatabase {
   private static final String baseDir = SystemUtils.JAVA_IO_TMPDIR + "/MariaDB4j/base/";
   private static final String localhost = "localhost";
@@ -31,6 +27,10 @@ public class TestDatabase {
   @Getter private static int port;
 
   @SneakyThrows(ManagedProcessException.class)
+  @SuppressFBWarnings( // TODO: Remove when fixed in SpotBugs
+    value = "RV_RETURN_VALUE_IGNORED",
+    justification = "Return values can be safely ignored as they are for chaining only."
+  )
   public static void startDatabase() {
     final int limit = 100;
     int count = 0;
@@ -73,6 +73,7 @@ public class TestDatabase {
     }
   }
 
+  @SuppressFBWarnings(value = "DMI_CONSTANT_DB_PASSWORD", justification = "Hardcoding for tests.")
   public static Connection getDatabaseInstance() throws SQLException {
     return DriverManager.getConnection("jdbc:mysql://" + host + "/test", "test", "test");
   }

@@ -1,5 +1,6 @@
 package dev.aura.bungeechat;
 
+import com.google.common.base.Preconditions;
 import dev.aura.bungeechat.config.Configuration;
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +56,8 @@ public class TestHelper {
 
   public static void deinitBungeeChat() throws IOException {
     FileUtils.deleteDirectory(bungeeChat.getConfigFolder());
-    bungeeChat.getConfigFolder().mkdirs();
+    Preconditions.checkState(
+        bungeeChat.getConfigFolder().mkdirs(), "Could not create config folder");
   }
 
   public static class DummyProxyServer extends ProxyServer {

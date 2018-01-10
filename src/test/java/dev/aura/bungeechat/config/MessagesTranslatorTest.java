@@ -3,7 +3,9 @@ package dev.aura.bungeechat.config;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.google.common.base.Preconditions;
 import dev.aura.bungeechat.message.Message;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,10 +16,19 @@ import org.junit.Test;
 public class MessagesTranslatorTest {
   private static File tempDir;
 
+  @SuppressFBWarnings(
+    value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE",
+    justification =
+        "If deleting fails there is no point in doing anything. Files just get delete to prevent buildup on disk"
+  )
   private static void cleanTempDir() {
     if (tempDir.exists()) {
-      for (File f : tempDir.listFiles()) {
-        f.delete();
+      final File[] files = tempDir.listFiles();
+
+      if (files != null) {
+        for (File f : files) {
+          f.delete();
+        }
       }
 
       tempDir.delete();
@@ -32,13 +43,11 @@ public class MessagesTranslatorTest {
   @AfterClass
   public static void tearDownClass() {
     cleanTempDir();
-
-    tempDir.delete();
   }
 
   @Before
   public void setUp() {
-    tempDir.mkdirs();
+    Preconditions.checkState(tempDir.mkdirs(), "Could not create temp folder");
   }
 
   @After
