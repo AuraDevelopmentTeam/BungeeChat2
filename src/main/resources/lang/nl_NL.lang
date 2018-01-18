@@ -30,59 +30,97 @@ inherit: en_US
 ####################################################################################################
 # Channel Type Messages
 ####################################################################################################
-
+enableGlobal: "&eJe praat nu in de &bglobale chat&e!"
+enableStaffchat: "&eJe praat nu in de &astaff chat&e!"
+enableLocal: "&eJe praat nu in de &clokale chat&e!"
+globalIsDefault: "&eGlobale chat is al de standaard chatsoort!"
+backToLocal: "&cHet onderdeel verbonden aan het kanaal waarin je sprak is nu uitgeschakeld of je hebt geen bevoegdheden meer. Je praat nu in de lokale chat."
+notInGlobalServer: "&cGlobale Chat staat niet aan op deze server..."
 
 ####################################################################################################
 # Messenger Messages
 ####################################################################################################
-
+messageYourself: "&cJe kunt geen priv?-bericht naar jezelf sturen..."
+enableMessager: "&eJe hebt priv?-berichten nu &aaan&e staan!"
+disableMessager: "&eJe hebt priv?-berichten nu &cuit&e staan!"
+noReply: "&cEr is niemand om te beantwoorden."
+replyOffline: "&cDe speler waarmee je in gesprek was is nu offline."
+hasMessagerDisabled: "&c%name% heeft priv?-berichten uit staan!"
 
 ####################################################################################################
 # Vanish Messages
 ####################################################################################################
-
+enableVanish: "&eJe hebt verbergmodus &aaan&e staan!"
+disableVanish: "&eJe hebt verbergmodus &cuit&e staan!"
 
 ####################################################################################################
 # Clear Chat Messages
 ####################################################################################################
-
+clearedLocal: "&e%name% heeft de chat lokaal leeggemaakt."
+clearedGlobal: "&e%name% heeft de chat globaal leeggemaakt."
 
 ####################################################################################################
 # Mute Messages
 ####################################################################################################
-
+muted: "&cSorry, maar je kunt niet praten tot %muted_until%!"
+unmuteNotMuted: "&cDeze speler is niet gedempt!"
+muteIsMuted: "Deze speler is al gedempt!"
+unmute: "&eDe speler &c%name% &ekan weer praten!"
+mute: "&eDe speler &c%name% &eis nu gedempt!"
+tempmute: "&eDe speler &c%name% &eis gedempt tot %muted_until%"
 
 ####################################################################################################
 # Spy Messages
 ####################################################################################################
-
+enableSocialSpy: "&eSocialSpy staat nu &aaan&e!"
+disableSocialSpy: "&eSocialSpy staat nu &cuit&e!"
+enableLocalSpy: "&eLocalSpy staat nu &aaan&e!"
+disableLocalSpy: "&eLocalSpy staat nu &cuit&e!"
 
 ####################################################################################################
 # Error Messages
 ####################################################################################################
-
+notPlayer: "&cJe moet een speler zijn om dit te kunnen doen!"
+playerNotFound: "&cKan speler niet vinden..."
+incorrectUsage: "&cOnjuist gebruik! Gebruik het commando op deze manier: %command%"
+noPermission: "&cJe hebt geen bevoegdheden om dit te doen!"
 
 ####################################################################################################
 # Ignore Messages
 ####################################################################################################
-
+hasIgnored: "&c%target_name% negeert jou..."
+addIgnore: "&eJe negeert nu %name%!"
+removeIgnore: "&eJe negeert %name% nu niet meer!"
+alreadyIgnored: "&eJe negeert deze speler al!"
+ignoreYourself: "&cJe kunt jezelf niet negeren!"
+unignoreYourself: "&cJe kunt jezelf niet on-negeren!"
+notIgnored: "&cJe negeert deze speler niet!"
+ignoreList: "&eOnline gebruikers die jij negeert: &b%message%&e."
+ignoreNobody: "&eJe negeert nu &aniemand&e die online is!"
 
 ####################################################################################################
 # Filter Messages
 ####################################################################################################
-
+antiAdvertise: "&cAdverteer niet alstublieft!"
+antiDuplication: "&cSpam geen berichten alstublieft!"
 
 ####################################################################################################
 # ChatLock Messages
 ####################################################################################################
-
+enableChatlock: "&eDe chat is nu op slot!"
+disableChatlock: "&eDe chat is nu niet meer op slot!"
+chatIsLocked: "&cJe kunt niet praten nu, de chat is op slot!"
 
 ####################################################################################################
 # Prefix/Suffix Messages
 ####################################################################################################
-
+prefixRemoved: "&eDe prefix van %name% is verwijderd!"
+prefixSet: "&eDe prefix van %name% is nu %prefix%."
+suffixRemoved: "&eDe suffix van %name% is verwijderd!"
+suffixSet: "&eDe suffix van %name% is nu %suffix%."
 
 ####################################################################################################
 # Update available Message
 ####################################################################################################
+updateAvailable: "&aEr is een update voor Bungee Chat beschikbaar! Versie &6%message%&a. Download hem op: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
 
