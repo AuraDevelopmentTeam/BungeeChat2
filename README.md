@@ -62,7 +62,7 @@ Please include the following:
 
 If you want a new feature added, go ahead an open a [new issue](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/new), remove the existing form and
 describe your feature the best you can. The more details you provide the easier it will be implementing it.  
-You can also talk to us on [Discord](https://dicord.me/bungeechat).
+You can also talk to us on [Discord][Discord].
 
 ## Developing with our Plugin
 
@@ -103,7 +103,7 @@ Bungee Chat 2 is licensed under the [GNU General Public License v3.0](https://ww
 ### Getting Support
 
 If you need help with anything, want to discuss issues or suggestions, or just want to say hi, you can visit our
-[Discord Server (https://discord.me/bungeechat)](https://discord.me/bungeechat).
+[Discord Server (https://discord.me/bungeechat)][Discord].
 
 ### Supporting us!
 
@@ -111,7 +111,9 @@ Thanks for scrolling down so far!
 We are developing this plugin (and others!) as well as providing constant support for all our plugins free of charge so that as many people as possible can use
 it! Since it is still a lot of work we would really appreciate it if you could support us on [Patreon](https://www.patreon.com/AuraDev)!
 
-<p align="center"><a href="https://www.patreon.com/bePatron?u=6416598"><img alt="Become a Patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"></a></p>
+<p align="center">
+	<a href="https://www.patreon.com/bePatron?u=6416598"><img alt="Become a Patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"></a>
+</p>
 
 ## Random Quote
 
@@ -119,3 +121,6 @@ it! Since it is still a lot of work we would really appreciate it if you could s
 > shifting idea of what their problem is.
 >
 > — <cite>Jeff Atwood</cite>
+
+
+[discord]: https://discord.me/bungeechat
