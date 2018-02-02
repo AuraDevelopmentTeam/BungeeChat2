@@ -82,13 +82,11 @@ public class Configuration implements Config {
               new InputStreamReader(
                   BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME),
                   StandardCharsets.UTF_8));
-      String line = reader.readLine();
 
-      while (line.startsWith("#")) {
-        header.append(line).append('\n');
-
+      do {
         line = reader.readLine();
-      }
+        header.append(line).append('\n');
+      } while (line.startsWith("#"));
     } catch (IOException e) {
       LoggerHelper.error("Error loading file header", e);
     }
