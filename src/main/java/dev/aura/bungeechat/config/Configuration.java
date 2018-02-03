@@ -82,6 +82,7 @@ public class Configuration implements Config {
               new InputStreamReader(
                   BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME),
                   StandardCharsets.UTF_8));
+      String line;
 
       do {
         line = reader.readLine();
