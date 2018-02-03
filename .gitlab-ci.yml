@@ -12,7 +12,7 @@ variables:
     -Dorg.gradle.project.branchName="$CI_COMMIT_REF_NAME"
 
 cache:
-  key: "$CI_COMMIT_REF_NAME/$CI_COMMIT_SHA"
+  key: "$CI_COMMIT_REF_NAME $CI_COMMIT_SHA"
   untracked: true
 
 before_script:
