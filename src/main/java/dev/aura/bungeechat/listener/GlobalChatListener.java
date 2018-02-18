@@ -27,14 +27,14 @@ public class GlobalChatListener implements Listener {
 
     ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
     String message = e.getMessage();
-    BungeeChatAccount accout = BungeecordAccountManager.getAccount(sender).get();
+    BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
 
     if (ChatUtils.isCommand(message)) return;
 
-    if (accout.getChannelType() == ChannelType.STAFF) return;
+    if (account.getChannelType() == ChannelType.STAFF) return;
 
     if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
-      if (MessagesService.getGlobalPredicate().test(accout)) {
+      if (MessagesService.getGlobalPredicate().test(account)) {
         e.setCancelled(!passToClientServer);
         MessagesService.sendGlobalMessage(sender, message);
         return;
@@ -42,7 +42,7 @@ public class GlobalChatListener implements Listener {
     }
 
     if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL) {
-      if (!MessagesService.getGlobalPredicate().test(accout)) {
+      if (!MessagesService.getGlobalPredicate().test(account)) {
         MessagesService.sendMessage(sender, Message.NOT_IN_GLOBAL_SERVER.get());
 
         return;
@@ -61,7 +61,7 @@ public class GlobalChatListener implements Listener {
       String symbol = section.getString("symbol");
 
       if (message.startsWith(symbol) && !symbol.equals("/")) {
-        if (!MessagesService.getGlobalPredicate().test(accout)) {
+        if (!MessagesService.getGlobalPredicate().test(account)) {
           MessagesService.sendMessage(sender, Message.NOT_IN_GLOBAL_SERVER.get());
 
           return;
