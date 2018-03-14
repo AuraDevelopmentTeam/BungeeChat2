@@ -9,6 +9,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @SuppressFBWarnings( // TODO: Remove when fixed in SpotBugs
   value = "RV_RETURN_VALUE_IGNORED",
