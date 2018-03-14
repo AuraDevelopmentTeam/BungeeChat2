@@ -17,6 +17,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
+import net.md_5.bungee.api.score.Scoreboard;
 
 @RequiredArgsConstructor
 public class DummyPlayer implements ProxiedPlayer {
@@ -244,5 +245,10 @@ public class DummyPlayer implements ProxiedPlayer {
   @Override
   public Map<String, String> getModList() {
     return new HashMap<>();
+  }
+
+  @Override
+  public Scoreboard getScoreboard() {
+    return new Scoreboard();
   }
 }
