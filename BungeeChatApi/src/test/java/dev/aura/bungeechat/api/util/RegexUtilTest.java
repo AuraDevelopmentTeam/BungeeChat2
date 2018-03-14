@@ -141,5 +141,24 @@ public class RegexUtilTest {
     }
   }
 
+  @Test
+  public void punctuation() {
+    final Pattern pattern = RegexUtil.parseWildcardToPattern("xxx");
+
+    assertTrue(pattern.matcher("xxx").find());
+    assertTrue(pattern.matcher("xxx ").find());
+    assertTrue(pattern.matcher("xxx!").find());
+    assertTrue(pattern.matcher(" xxx").find());
+    assertTrue(pattern.matcher("!xxx").find());
+    assertTrue(pattern.matcher(" xxx ").find());
+    assertTrue(pattern.matcher(" xxx!").find());
+    assertTrue(pattern.matcher("!xxx ").find());
+    assertTrue(pattern.matcher("!xxx!").find());
+
+    assertFalse(pattern.matcher("xx").find());
+    assertFalse(pattern.matcher("xxxZ").find());
+    assertFalse(pattern.matcher("Zxxx").find());
+  }
+
   // TODO: More tests!
 }

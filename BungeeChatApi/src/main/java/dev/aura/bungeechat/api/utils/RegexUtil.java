@@ -277,8 +277,8 @@ public class RegexUtil {
       stream = stream.map(WILDCARD_STAR::apply).map(WILDCARD_QUESTIONMARK::apply);
 
       String delimiter = ignoreSpaces ? "\\s*" : "";
-      String start = freeMatching ? "" : "(?<=^|\\s)";
-      String end = freeMatching ? "" : "(?=\\s|$)";
+      String start = freeMatching ? "" : "(?<=^|\\s|\\p{Punct})";
+      String end = freeMatching ? "" : "(?=\\p{Punct}|\\s|$)";
 
       return Pattern.compile(stream.collect(Collectors.joining(delimiter, start, end)), flags);
     }
