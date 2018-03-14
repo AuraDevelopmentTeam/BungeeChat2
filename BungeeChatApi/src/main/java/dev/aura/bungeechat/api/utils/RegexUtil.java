@@ -17,7 +17,7 @@ import lombok.experimental.UtilityClass;
 public class RegexUtil {
   private static Pattern TOKENIZER =
       Pattern.compile(
-          "(?<![^\\\\]\\\\)(?<!\\\\x)(?<!\\\\x\\{)(?<!\\\\x\\{[0-9a-f])(?<!\\\\x\\{[0-9a-f]{2})(?<!\\\\x\\{[0-9a-f]{3})(?<!\\\\x\\{[0-9a-f]{4})",
+          "(?<!^\\\\)(?<![^\\\\]\\\\)(?<!\\\\x)(?<!\\\\x\\{)(?<!\\\\x\\{[0-9a-f])(?<!\\\\x\\{[0-9a-f]{2})(?<!\\\\x\\{[0-9a-f]{3})(?<!\\\\x\\{[0-9a-f]{4})",
           Pattern.CASE_INSENSITIVE);
   private static RegexReplacer REGEX_ESCAPER =
       new RegexReplacer("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0");
