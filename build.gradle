@@ -10,6 +10,10 @@ allprojects {
             name "jitpack.io"
             url "https://jitpack.io"
         }
+        maven {
+            name "luck-repo"
+            url "https://repo.lucko.me/"
+        }
     }
 }
 
