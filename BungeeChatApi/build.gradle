@@ -1,14 +1,8 @@
 apply from: "../GradleCommon/common.gradle"
 
-repositories {
-    maven {
-        name "AuraDevelopmentTeam"
-        url "https://maven.jnc.world"
-    }
-}
-
 dependencies {
-    compile "dev.aura.lib.version:VersionLib:${versionLib_version}"
+    //compile "dev.aura.lib.version:VersionLib:${versionLib_version}"
+    compile 'com.github.AuraDevelopmentTeam:VersionLib:v1.0.3'
 }
 
 jacocoTestCoverageVerification {
