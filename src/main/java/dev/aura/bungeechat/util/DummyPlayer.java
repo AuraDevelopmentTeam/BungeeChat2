@@ -1,12 +1,5 @@
 package dev.aura.bungeechat.util;
 
-import java.net.InetSocketAddress;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ChatMessageType;
@@ -17,7 +10,11 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
+import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.score.Scoreboard;
+
+import java.net.InetSocketAddress;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class DummyPlayer implements ProxiedPlayer {
@@ -137,8 +134,18 @@ public class DummyPlayer implements ProxiedPlayer {
   }
 
   @Override
+  public void connect(ServerInfo target, ServerConnectEvent.Reason reason) {
+
+  }
+
+  @Override
   public void connect(ServerInfo target, Callback<Boolean> callback) {
     // Nothing
+  }
+
+  @Override
+  public void connect(ServerInfo target, Callback<Boolean> callback, ServerConnectEvent.Reason reason) {
+
   }
 
   @Override
