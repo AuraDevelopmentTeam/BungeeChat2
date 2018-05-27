@@ -5,6 +5,9 @@ variables:
   ARTIFACTS1: "$CI_PROJECT_DIR/*.jar*"
   ARTIFACTS2: "$CI_PROJECT_DIR/*.zip*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
+#  JACOCO_DATA: "$CI_PROJECT_DIR/**/build/jacoco/*"
+  JACOCO_DATA1: "$CI_PROJECT_DIR/build/jacoco/*"
+  JACOCO_DATA2: "$CI_PROJECT_DIR/*/build/jacoco/*"
   COVERAGE_REPORTS: "$CI_PROJECT_DIR/*-CoverageReport.zip"
   SPOTBUGS_REPORTS: "$CI_PROJECT_DIR/*-SpotbugsReport.zip"
   JAVADOCS: "$CI_PROJECT_DIR/*-javadoc.jar"
@@ -22,6 +25,7 @@ before_script:
 stages:
 - build
 - test
+- report
 - deploy
 
 build:
@@ -46,9 +50,21 @@ test:
     when: always
     paths:
     - $TEST_REPORTS
+#    - $JACOCO_DATA
+    - $JACOCO_DATA1
+    - $JACOCO_DATA2
+
+checkFormatting:
+  stage: test
+  script:
+  - ./gradlew --continue --console=plain spotlessCheck
+  allow_failure: true
+  when: on_success
 
 coverage:
-  stage: test
+  stage: report
+  dependencies:
+  - test
   script:
   - ./gradlew --continue --console=plain -x test coverage
   coverage: "/Covered (\\d{1,3}\\.\\d{2}%) of instructions for all projects\\./"
@@ -59,15 +75,8 @@ coverage:
     paths:
     - $COVERAGE_REPORTS
 
-checkFormatting:
-  stage: test
-  script:
-  - ./gradlew --continue --console=plain spotlessCheck
-  allow_failure: true
-  when: on_success
-
 spotbugs:
-  stage: test
+  stage: report
   script:
   - ./gradlew --continue --console=plain spotbugs
   allow_failure: true
@@ -115,10 +124,10 @@ pages:
   - coverage
   - spotbugs
   script:
-  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
-  - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
-  - for file in $COVERAGE_REPORTS; do dir=public/coverage/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
-  - for file in $SPOTBUGS_REPORTS; do dir=public/spotbugs/$(basename $file | cut -d- -f1); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | rev | cut -d- -f-3 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $COVERAGE_REPORTS; do dir=public/coverage/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $SPOTBUGS_REPORTS; do dir=public/spotbugs/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   when: always
   artifacts:
     paths:
