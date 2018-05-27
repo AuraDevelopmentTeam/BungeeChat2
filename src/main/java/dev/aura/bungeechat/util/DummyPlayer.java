@@ -138,8 +138,18 @@ public class DummyPlayer implements ProxiedPlayer {
   }
 
   @Override
-  public void connect(ServerInfo target, Callback<Boolean> callback) {
+  public void connect(ServerInfo target, Reason reason) {
     // Nothing
+  }
+
+  @Override
+  public void connect(ServerInfo target, Callback<Boolean> callback) {
+    callback.done(false, null);
+  }
+
+  @Override
+  public void connect(ServerInfo target, Callback<Boolean> callback, Reason reason) {
+    callback.done(false, null);
   }
 
   @Override
@@ -251,15 +261,5 @@ public class DummyPlayer implements ProxiedPlayer {
   @Override
   public Scoreboard getScoreboard() {
     return new Scoreboard();
-  }
-
-  @Override
-  public void connect(ServerInfo target, Reason reason) {
-    // Nothing
-  }
-
-  @Override
-  public void connect(ServerInfo target, Callback<Boolean> callback, Reason reason) {
-    callback.done(false, null);
   }
 }
