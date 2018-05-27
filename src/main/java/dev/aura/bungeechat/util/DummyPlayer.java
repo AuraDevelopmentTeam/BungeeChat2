@@ -17,6 +17,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
+import net.md_5.bungee.api.event.ServerConnectEvent.Reason;
 import net.md_5.bungee.api.score.Scoreboard;
 
 @RequiredArgsConstructor
@@ -250,5 +251,15 @@ public class DummyPlayer implements ProxiedPlayer {
   @Override
   public Scoreboard getScoreboard() {
     return new Scoreboard();
+  }
+
+  @Override
+  public void connect(ServerInfo target, Reason reason) {
+    // Nothing
+  }
+
+  @Override
+  public void connect(ServerInfo target, Callback<Boolean> callback, Reason reason) {
+    callback.done(false, null);
   }
 }

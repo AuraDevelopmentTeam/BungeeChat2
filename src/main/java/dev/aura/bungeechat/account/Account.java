@@ -28,7 +28,8 @@ public class Account implements BungeeChatAccount {
 
   @Getter(lazy = true)
   private final ProxiedPlayer proxiedPlayer =
-      (ProxiedPlayer) BungeecordAccountManager.getCommandSender(this).orElse(new DummyPlayer(uuid));
+      (ProxiedPlayer)
+          BungeecordAccountManager.getCommandSender(this).orElseGet(() -> new DummyPlayer(uuid));
 
   private ChannelType channelType;
   private boolean vanished;
