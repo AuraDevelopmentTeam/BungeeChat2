@@ -7,13 +7,12 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import java.util.List;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-
-import java.util.List;
 
 public class LocalChatListener implements Listener {
   private final boolean passToClientServer =
@@ -21,7 +20,7 @@ public class LocalChatListener implements Listener {
   private final boolean passTransparently =
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getBoolean("passTransparently");
   private final Config serverListSection =
-          BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
+      BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
   private final boolean serverListDisabled = !serverListSection.getBoolean("enabled");
   private final List<String> passthruServers = serverListSection.getStringList("list");
 
@@ -38,7 +37,9 @@ public class LocalChatListener implements Listener {
 
     if (account.getChannelType() == ChannelType.LOCAL) {
       // Check we send to this server
-      e.setCancelled(!(passToClientServer && (serverListDisabled || passthruServers.contains(account.getServerName()))));
+      e.setCancelled(
+          !(passToClientServer
+              && (serverListDisabled || passthruServers.contains(account.getServerName()))));
       // Was just cancelled, or we want to process all local chat regardless
       if (e.isCancelled() || !passTransparently) MessagesService.sendLocalMessage(sender, message);
     }
