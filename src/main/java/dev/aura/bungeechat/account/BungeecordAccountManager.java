@@ -22,13 +22,13 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class BungeecordAccountManager extends AccountManager implements Listener {
-  protected static ConcurrentMap<UUID, CommandSender> nativeObjects = new ConcurrentHashMap<>();
-  protected static List<UUID> newPlayers = new LinkedList<>();
+  private static final ConcurrentMap<UUID, CommandSender> nativeObjects = new ConcurrentHashMap<>();
+  private static final List<UUID> newPlayers = new LinkedList<>();
 
   public static Optional<BungeeChatAccount> getAccount(CommandSender player) {
     if (player instanceof ProxiedPlayer) return getAccount(((ProxiedPlayer) player).getUniqueId());
-    else if (player instanceof CommandSender) return Optional.of(consoleAccount);
-    else return Optional.empty();
+    else if (player == null) return Optional.empty();
+    else return Optional.of(consoleAccount);
   }
 
   public static Optional<CommandSender> getCommandSender(UUID uuid) {

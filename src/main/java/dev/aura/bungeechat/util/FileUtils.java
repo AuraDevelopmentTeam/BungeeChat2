@@ -44,10 +44,11 @@ public class FileUtils {
       return FileUtils.copyFile(toCopy, new File(destDir, toCopy.getName()));
     else {
       final File newDestDir = skipFirstDir ? destDir : new File(destDir, toCopy.getName());
+      File[] listedFiles = toCopy.listFiles();
 
-      if (!newDestDir.exists() && !newDestDir.mkdir()) return false;
+      if ((!newDestDir.exists() && !newDestDir.mkdir()) || (listedFiles == null)) return false;
 
-      for (final File child : toCopy.listFiles()) {
+      for (final File child : listedFiles) {
         if (!FileUtils.copyFilesRecusively(child, newDestDir, false)) return false;
       }
     }

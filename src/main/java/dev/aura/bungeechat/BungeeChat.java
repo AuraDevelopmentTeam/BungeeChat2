@@ -1,5 +1,6 @@
 package dev.aura.bungeechat;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.typesafe.config.Config;
 import dev.aura.bungeechat.account.AccountFileStorage;
 import dev.aura.bungeechat.account.AccountSQLStorage;
@@ -29,6 +30,7 @@ import dev.aura.bungeechat.util.LoggerHelper;
 import dev.aura.lib.version.Version;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -52,7 +54,8 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
   @Getter
   @Setter(AccessLevel.PRIVATE)
-  protected static BungeeChat instance;
+  @VisibleForTesting
+  static BungeeChat instance;
 
   private String latestVersion = null;
   private File configDir;
@@ -159,7 +162,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
   public File getConfigFolder() {
     if (configDir == null) {
       configDir = new File(getProxy().getPluginsFolder(), "BungeeChat");
-      configDir.mkdirs();
+
+      if (!configDir.exists() && !configDir.mkdirs())
+        throw new RuntimeException(new IOException("Could not create " + configDir));
     }
 
     return configDir;
@@ -168,7 +173,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
   public File getLangFolder() {
     if (langDir == null) {
       langDir = new File(getConfigFolder(), "lang");
-      langDir.mkdirs();
+
+      if (!langDir.exists() && !langDir.mkdirs())
+        throw new RuntimeException(new IOException("Could not create " + langDir));
     }
 
     return langDir;

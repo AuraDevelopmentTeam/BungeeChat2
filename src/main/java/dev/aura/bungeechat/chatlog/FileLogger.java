@@ -48,8 +48,8 @@ public class FileLogger implements ChatLogger, AutoCloseable {
       saveTo = new File(pluginDir, newFile);
       Optional.ofNullable(saveTo.getParentFile()).ifPresent(File::mkdirs);
 
-      if (!saveTo.exists()) {
-        saveTo.createNewFile();
+      if (!saveTo.exists() && !saveTo.createNewFile()) {
+        throw new IOException("Could not create " + saveTo);
       }
 
       fw = new OutputStreamWriter(new FileOutputStream(saveTo, true), StandardCharsets.UTF_8);

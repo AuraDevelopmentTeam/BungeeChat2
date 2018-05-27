@@ -18,7 +18,12 @@ public class ReplyCommand extends BaseCommand {
 
   public ReplyCommand(MessengerModule messengerModule) {
     super("reply", messengerModule.getModuleSection().getStringList("aliases.reply"));
-    replies = new HashMap<>();
+
+    if (replies == null) {
+      replies = new HashMap<>();
+    } else {
+      replies.clear();
+    }
   }
 
   protected static void setReply(CommandSender sender, CommandSender target) {

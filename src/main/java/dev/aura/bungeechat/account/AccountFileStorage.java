@@ -21,9 +21,10 @@ import lombok.Cleanup;
 public class AccountFileStorage implements BungeeChatAccountStorage {
   private static final String FILE_EXTENSION = ".sav";
 
-  private static File getUserDataDir() {
+  private static File getUserDataDir() throws IOException {
     File folder = new File(BungeeChat.getInstance().getConfigFolder(), "userdata");
-    folder.mkdirs();
+
+    if (!folder.exists() && !folder.mkdirs()) throw new IOException("Could not create " + folder);
 
     return folder;
   }
@@ -33,8 +34,8 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
     try {
       File accountFile = new File(getUserDataDir(), account.getUniqueId() + FILE_EXTENSION);
 
-      if (!accountFile.exists()) {
-        accountFile.createNewFile();
+      if (!accountFile.exists() && !accountFile.createNewFile()) {
+        throw new IOException("Could not create " + accountFile);
       }
 
       @Cleanup FileOutputStream saveFile = new FileOutputStream(accountFile);
