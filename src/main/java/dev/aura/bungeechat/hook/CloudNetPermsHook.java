@@ -6,6 +6,7 @@ import de.dytanic.cloudnet.lib.player.permission.PermissionGroup;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CloudNetPermsHook implements BungeeChatHook {
@@ -17,18 +18,19 @@ public class CloudNetPermsHook implements BungeeChatHook {
 
   @Override
   public Optional<String> getPrefix(BungeeChatAccount account) {
-    return Optional.ofNullable(getPermissionGroup(account).get().getPrefix());
+    return getPermissionGroup(account).map(PermissionGroup::getPrefix).filter(Objects::nonNull);
   }
 
   @Override
   public Optional<String> getSuffix(BungeeChatAccount account) {
-    return Optional.ofNullable(getPermissionGroup(account).get().getSuffix());
+    return getPermissionGroup(account).map(PermissionGroup::getSuffix).filter(Objects::nonNull);
   }
 
   private Optional<PermissionGroup> getPermissionGroup(BungeeChatAccount account) {
     CloudPlayer player = api.getOnlinePlayer(account.getUniqueId());
     PermissionGroup permissionGroup =
         player.getPermissionEntity().getHighestPermissionGroup(api.getPermissionPool());
+
     return Optional.ofNullable(permissionGroup);
   }
 

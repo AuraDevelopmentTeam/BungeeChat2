@@ -29,9 +29,9 @@ dependencies {
     compile("net.alpenblock:BungeePerms:${bungeeperms_version}") {
         transitive = false
     }
-    compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
-    compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
     compile "de.dytanic.cloudnet:cloudnet-api:${cloudnetapi_version}"
+    compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     
     shadowRelocate "com.typesafe:config:${hocon_version}"
     

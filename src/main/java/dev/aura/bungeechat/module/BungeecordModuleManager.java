@@ -14,9 +14,9 @@ import net.md_5.bungee.api.ChatColor;
 public class BungeecordModuleManager extends ModuleManager {
   // PermissionHookModules
   public static final BungeePermsModule BUNGEE_PERMS_MODULE = new BungeePermsModule();
+  public static final CloudNetPermsModule CLOUD_NET_PERMS_MODULE = new CloudNetPermsModule();
   public static final LuckPermsModule LUCK_PERMS_MODULE = new LuckPermsModule();
   public static final PowerfulPermsModule POWERFUL_PERMS_MODULE = new PowerfulPermsModule();
-  public static final CloudNetPermsModule CLOUD_NET_PERMS_MODULE = new CloudNetPermsModule();
 
   // Normal Modules
   public static final AlertModule ALERT_MODULE = new AlertModule();
