@@ -208,7 +208,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
               + "Bungee Chat"
               + ChatColor.GOLD
               + " ----------------");
-      LoggerHelper.info(ChatColor.YELLOW + "Author: " + ChatColor.GREEN + AUTHOR_BRAINSTONE);
+      LoggerHelper.info(getPeopleMessage("Authors", BungeeChatApi.AUTHORS));
     }
 
     LoggerHelper.info(ChatColor.YELLOW + "Version: " + ChatColor.GREEN + VERSION_STR);
@@ -232,18 +232,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     }
 
     if (size != StartupBannerSize.SHORT) {
-      LoggerHelper.info(
-          ChatColor.YELLOW
-              + "Contributors: "
-              + ChatColor.GREEN
-              + Arrays.stream(BungeeChatApi.CONTRIBUTORS)
-                  .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
-      LoggerHelper.info(
-          ChatColor.YELLOW
-              + "Donators: "
-              + ChatColor.GREEN
-              + Arrays.stream(BungeeChatApi.DONATORS)
-                  .collect(Collectors.joining(BungeecordModuleManager.MODULE_CONCATENATOR)));
+      LoggerHelper.info(getPeopleMessage("Contributors", BungeeChatApi.CONTRIBUTORS));
+      LoggerHelper.info(getPeopleMessage("Translators", BungeeChatApi.TRANSLATORS));
+      LoggerHelper.info(getPeopleMessage("Donators", BungeeChatApi.DONATORS));
     }
 
     if (!isLatestVersion()) {
@@ -261,6 +252,15 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     if (size != StartupBannerSize.SHORT) {
       LoggerHelper.info(ChatColor.GOLD + "---------------------------------------------");
     }
+  }
+
+  private String getPeopleMessage(String name, String... people) {
+    return Arrays.stream(people)
+        .collect(
+            Collectors.joining(
+                BungeecordModuleManager.MODULE_CONCATENATOR,
+                ChatColor.YELLOW + name + ": " + ChatColor.GREEN,
+                ""));
   }
 
   private String queryLatestVersion() {
