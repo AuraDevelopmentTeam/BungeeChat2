@@ -3,6 +3,7 @@ package dev.aura.bungeechat.module;
 import dev.aura.bungeechat.api.module.BungeeChatModule;
 import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.module.perms.BungeePermsModule;
+import dev.aura.bungeechat.module.perms.CloudNetPermsModule;
 import dev.aura.bungeechat.module.perms.LuckPermsModule;
 import dev.aura.bungeechat.module.perms.PowerfulPermsModule;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ public class BungeecordModuleManager extends ModuleManager {
   public static final BungeePermsModule BUNGEE_PERMS_MODULE = new BungeePermsModule();
   public static final LuckPermsModule LUCK_PERMS_MODULE = new LuckPermsModule();
   public static final PowerfulPermsModule POWERFUL_PERMS_MODULE = new PowerfulPermsModule();
+  public static final CloudNetPermsModule CLOUD_NET_PERMS_MODULE = new CloudNetPermsModule();
 
   // Normal Modules
   public static final AlertModule ALERT_MODULE = new AlertModule();
