@@ -6,7 +6,6 @@ import de.dytanic.cloudnet.lib.player.permission.PermissionGroup;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
-
 import java.util.Optional;
 
 public class CloudNetPermsHook implements BungeeChatHook {
