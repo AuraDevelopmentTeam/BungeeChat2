@@ -91,7 +91,7 @@ deploySnapshot:
   dependencies:
   - build
   script:
-  - ./gradlew --console=plain uploadArchives
+  - ./gradlew --console=plain releaseSnapshot
   retry: 2
   when: always
   except:
@@ -102,7 +102,7 @@ deploy:
   dependencies:
   - build
   script:
-  - ./gradlew --console=plain uploadArchives uploadArchivesToMavenCentral
+  - ./gradlew --console=plain release
   retry: 2
   when: always
   only:
