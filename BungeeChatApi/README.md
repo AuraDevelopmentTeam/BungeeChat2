@@ -36,7 +36,7 @@ You can download all builds from:
 
 - Maven:
   - Releases: https://maven.project-creative.de/repository/auradev-releases/
-	- Snapshots: https://maven.project-creative.de/repository/auradev-snapshots/
+  - Snapshots: https://maven.project-creative.de/repository/auradev-snapshots/
 
 ## Wiki
 

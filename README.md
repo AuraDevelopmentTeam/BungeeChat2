@@ -35,7 +35,7 @@ You can download all builds from:
 - SpigotMC: https://www.spigotmc.org/resources/bungee-chat.12592/
 - Maven:
   - Releases: https://maven.project-creative.de/repository/auradev-releases/
-	- Snapshots: https://maven.project-creative.de/repository/auradev-snapshots/
+  - Snapshots: https://maven.project-creative.de/repository/auradev-snapshots/
 
 ## Wiki
 
