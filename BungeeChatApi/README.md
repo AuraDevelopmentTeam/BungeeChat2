@@ -79,7 +79,7 @@ version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` w
         <repository>
             <id>AuraDevelopmentTeam/id>
             <url>https://maven.project-creative.de/repository/auradev-releases/</url>
-						<!--<url>https://maven.project-creative.de/repository/auradev-snapshots/</url>-->
+            <!--<url>https://maven.project-creative.de/repository/auradev-snapshots/</url>-->
         </repository>
     </repositories>
 
@@ -98,7 +98,7 @@ version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` w
         maven {
             name "AuraDevelopmentTeam"
             url "https://maven.project-creative.de/repository/auradev-releases/"
-						// url "https://maven.project-creative.de/repository/auradev-snapshots/"
+            // url "https://maven.project-creative.de/repository/auradev-snapshots/"
         }
     }
 
