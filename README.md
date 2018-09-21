@@ -1,13 +1,13 @@
 # [Bungee Chat](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
 [![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://www.spigotmc.org/resources/bungee-chat.12592/history)
-[![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines)
-[![Coverage Report](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/coverage.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines)
+[![Build Status](https://gitlab.project-creative.de/AuraDev/BungeeChat2/badges/master/build.svg)](https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines)
+[![Coverage Report](https://gitlab.project-creative.de/AuraDev/BungeeChat2/badges/master/coverage.svg)](https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 [![Issue Stats](https://img.shields.io/issuestats/i/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
 [![Pull Requests Stats](https://img.shields.io/issuestats/p/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/pulls)
 [![License](https://img.shields.io/github/license/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/LICENSE)
-[![Supports Minecraft 1.7 - 1.12](https://img.shields.io/badge/supports_minecraft-1.7_--_1.12-brightgreen.svg)](https://www.spigotmc.org/threads/392/)
+[![Supports Minecraft 1.7 - 1.13](https://img.shields.io/badge/supports_minecraft-1.7_--_1.13-brightgreen.svg)](https://www.spigotmc.org/threads/392/)
 
 [![Bungee Chat Thread](https://proxy.spigotmc.org/e0e5c022701e9b3f55bdfee19e0a5d226f5c53ab?url=http%3A%2F%2Fi.imgur.com%2F9hHniVP.png)](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
@@ -33,7 +33,9 @@ A new way to send private, global or help messages and to do much more with chat
 You can download all builds from:
 
 - SpigotMC: https://www.spigotmc.org/resources/bungee-chat.12592/
-- Personal Maven: https://maven.jnc.world/dev/aura/bungeechat/BungeeChat/
+- Maven:
+  - Releases: https://maven.project-creative.de/repository/auradev-releases/
+	- Snapshots: https://maven.project-creative.de/repository/auradev-snapshots/
 
 ## Wiki
 
@@ -84,7 +86,7 @@ So you want to add support or even develop an add-on for our plugin then you can
 Between each official release there are several bleeding edge development builds, which you can also use. But be aware that they might contain unfinished
 features and therefore won't work properly.
 
-You can find the builds here: https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines
+You can find the builds here: https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines
 
 On the right is a download symbol, click that a dropdown will open. Select "build". Then you'll download a zip file containing all atrifacts including the
 plugin jar.

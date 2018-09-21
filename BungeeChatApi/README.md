@@ -1,12 +1,13 @@
 # Bungee Chat API
 
 [![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://www.spigotmc.org/resources/bungee-chat.12592/history)
-[![Build Status](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/build.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines)
-[![Coverage Report](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/badges/master/coverage.svg)](https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines)
+[![Build Status](https://gitlab.project-creative.de/AuraDev/BungeeChat2/badges/master/build.svg)](https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines)
+[![Coverage Report](https://gitlab.project-creative.de/AuraDev/BungeeChat2/badges/master/coverage.svg)](https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 [![Issue Stats](https://img.shields.io/issuestats/i/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
+[![Pull Requests Stats](https://img.shields.io/issuestats/p/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/pulls)
 [![License](https://img.shields.io/github/license/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/LICENSE)
-[![Supports Minecraft 1.7 - 1.12](https://img.shields.io/badge/supports_minecraft-1.7_--_1.12-brightgreen.svg)](https://www.spigotmc.org/threads/392/)
+[![Supports Minecraft 1.7 - 1.13](https://img.shields.io/badge/supports_minecraft-1.7_--_1.13-brightgreen.svg)](https://www.spigotmc.org/threads/392/)
 
 [![Bungee Chat Thread](https://proxy.spigotmc.org/e0e5c022701e9b3f55bdfee19e0a5d226f5c53ab?url=http%3A%2F%2Fi.imgur.com%2F9hHniVP.png)](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
@@ -33,7 +34,9 @@ The API for Bungee Chat!
 
 You can download all builds from:
 
-- Personal Maven: https://maven.jnc.world/dev/aura/bungeechat/BungeeChatApi/
+- Maven:
+  - Releases: https://maven.project-creative.de/repository/auradev-releases/
+	- Snapshots: https://maven.project-creative.de/repository/auradev-snapshots/
 
 ## Wiki
 
@@ -69,16 +72,17 @@ You can also talk to us on [Discord](https://dicord.me/bungeechat).
 
 So you want to add support or even develop an add-on for our plugin then you can easily add our API to your development environment! All releases beginning from
 version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` with the appropriate version!)
- 
+
 ### Maven
 
     <repositories>
         <repository>
             <id>AuraDevelopmentTeam/id>
-            <url>https://maven.jnc.world</url>
+            <url>https://maven.project-creative.de/repository/auradev-releases/</url>
+						<!--<url>https://maven.project-creative.de/repository/auradev-snapshots/</url>-->
         </repository>
     </repositories>
-    
+
     <dependencies>
         <dependency>
             <groupId>dev.aura.bungeechat</groupId>
@@ -93,7 +97,8 @@ version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` w
     repositories {
         maven {
             name "AuraDevelopmentTeam"
-            url "https://maven.jnc.world"
+            url "https://maven.project-creative.de/repository/auradev-releases/"
+						// url "https://maven.project-creative.de/repository/auradev-snapshots/"
         }
     }
 
@@ -116,7 +121,7 @@ version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` w
 Between each official release there are several bleeding edge development builds, which you can also use. But be aware that they might contain unfinished
 features and therefore won't work properly.
 
-You can find the builds here: https://gitlab.brainstonemod.com/AuraDev/BungeeChat/pipelines
+You can find the builds here: https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines
 
 On the right is a download symbol, click that a dropdown will open. Select "build". Then you'll download a zip file containing all atrifacts including the API
 jar.
