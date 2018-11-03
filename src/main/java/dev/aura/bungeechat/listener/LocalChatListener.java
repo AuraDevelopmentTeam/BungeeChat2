@@ -49,6 +49,7 @@ public class LocalChatListener implements Listener {
       if (e.isCancelled() || !passTransparently) {
         MessagesService.sendLocalMessage(sender, message);
       }
+      // still log and spy after transparently sent messages
       if (passTransparently && logTransparentLocal) {
         MessagesService.sendTransparentMessage(new Context(sender, message));
       }
