@@ -171,21 +171,13 @@ public class MessagesService {
   public static void sendMulticastMessage(BungeeChatContext context, List<String> servers)
       throws InvalidContextError {
     context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
-    // Optional<BungeeChatAccount> account = context.getSender();
     Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
     String localServerName =
         context.hasServer() ? context.getServer().get() : context.getSender().get().getServerName();
     Predicate<BungeeChatAccount> isDestination = getServerPredicate(servers);
     Predicate<BungeeChatAccount> isNotLocal = getLocalPredicate(localServerName).negate();
 
-    // ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
-
     sendToMatchingPlayers(finalMessage, isNotLocal, isDestination);
-
-    /*if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
-      String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
-      sendToMatchingPlayers(localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal);
-    }*/
   }
 
   public static void sendStaffMessage(CommandSender sender, String message)

@@ -352,6 +352,7 @@ public class Configuration implements Config {
           ImmutableMap.<String, Object>builder()
               .put("enabled", section.getBoolean("enabled"))
               .build();
+
       section = modulesSection.getSection("Messenger");
       final ImmutableMap<String, Object> moduleMessengerAliases =
           ImmutableMap.<String, Object>builder()
