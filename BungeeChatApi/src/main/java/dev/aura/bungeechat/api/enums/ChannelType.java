@@ -9,5 +9,6 @@ public enum ChannelType {
   GLOBAL,
   LOCAL,
   STAFF,
-  HELP
+  HELP,
+  MULTICAST
 }

@@ -134,7 +134,8 @@ public class MessagesService {
 
     Optional<BungeeChatAccount> account = context.getSender();
     Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
-    String localServerName = context.getSender().get().getServerName();
+    String localServerName =
+        context.hasServer() ? context.getServer().get() : context.getSender().get().getServerName();
     Predicate<BungeeChatAccount> isLocal = getLocalPredicate(localServerName);
 
     sendToMatchingPlayers(finalMessage, isLocal);
@@ -147,6 +148,36 @@ public class MessagesService {
 
       sendToMatchingPlayers(localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal);
     }
+  }
+
+  public static void sendTransparentMessage(BungeeChatContext context) throws InvalidContextError {
+    context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
+
+    Optional<BungeeChatAccount> account = context.getSender();
+    String localServerName =
+        context.hasServer() ? context.getServer().get() : context.getSender().get().getServerName();
+    Predicate<BungeeChatAccount> isLocal = getLocalPredicate(localServerName);
+
+    ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
+
+    if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
+      String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
+      Predicate<BungeeChatAccount> isNotLocal = isLocal.negate();
+
+      sendToMatchingPlayers(localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal);
+    }
+  }
+
+  public static void sendMulticastMessage(BungeeChatContext context, List<String> servers)
+      throws InvalidContextError {
+    context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
+    Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
+    String localServerName =
+        context.hasServer() ? context.getServer().get() : context.getSender().get().getServerName();
+    Predicate<BungeeChatAccount> isDestination = getServerPredicate(servers);
+    Predicate<BungeeChatAccount> isNotLocal = getLocalPredicate(localServerName).negate();
+
+    sendToMatchingPlayers(finalMessage, isNotLocal, isDestination);
   }
 
   public static void sendStaffMessage(CommandSender sender, String message)
@@ -313,6 +344,10 @@ public class MessagesService {
 
       return account -> allowedServers.contains(account.getServerName());
     }
+  }
+
+  public static Predicate<BungeeChatAccount> getServerPredicate(List<String> servers) {
+    return account -> servers.contains(account.getServerName());
   }
 
   public static Predicate<BungeeChatAccount> getLocalPredicate(String serverName) {

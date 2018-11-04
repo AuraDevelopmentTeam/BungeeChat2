@@ -38,6 +38,12 @@ public class Context extends BungeeChatContext {
     setMessage(message);
   }
 
+  public Context(CommandSender player, String message, String server) {
+    this(player, message);
+
+    setServer(server);
+  }
+
   public Context(CommandSender sender, CommandSender target) {
     super(
         BungeecordAccountManager.getAccount(sender).get(),

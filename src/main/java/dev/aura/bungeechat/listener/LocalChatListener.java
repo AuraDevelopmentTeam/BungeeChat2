@@ -5,6 +5,7 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
+import dev.aura.bungeechat.message.Context;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import java.util.List;
@@ -19,6 +20,10 @@ public class LocalChatListener implements Listener {
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getBoolean("passToClientServer");
   private final boolean passTransparently =
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getBoolean("passTransparently");
+  private final boolean logTransparentLocal =
+      BungeecordModuleManager.LOCAL_CHAT_MODULE
+          .getModuleSection()
+          .getBoolean("logTransparentLocal");
   private final Config serverListSection =
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
   private final boolean serverListDisabled = !serverListSection.getBoolean("enabled");
@@ -41,7 +46,13 @@ public class LocalChatListener implements Listener {
           !(passToClientServer
               && (serverListDisabled || passthruServers.contains(account.getServerName()))));
       // Was just cancelled, or we want to process all local chat regardless
-      if (e.isCancelled() || !passTransparently) MessagesService.sendLocalMessage(sender, message);
+      if (e.isCancelled() || !passTransparently) {
+        MessagesService.sendLocalMessage(sender, message);
+      }
+      // still log and spy after transparently sent messages
+      if (passTransparently && logTransparentLocal) {
+        MessagesService.sendTransparentMessage(new Context(sender, message));
+      }
     }
   }
 }
