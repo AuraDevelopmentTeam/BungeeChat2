@@ -91,7 +91,7 @@ deploySnapshot:
   dependencies:
   - build
   script:
-  - ./gradlew --console=plain releaseSnapshot
+  - ./gradlew --console=plain uploadArchives
   retry: 2
   when: always
   except:
