@@ -10,6 +10,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.ServerConnectRequest;
 import net.md_5.bungee.api.SkinConfiguration;
 import net.md_5.bungee.api.Title;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -261,5 +262,10 @@ public class DummyPlayer implements ProxiedPlayer {
   @Override
   public Scoreboard getScoreboard() {
     return new Scoreboard();
+  }
+
+  @Override
+  public void connect(ServerConnectRequest request) {
+    // Nothing
   }
 }

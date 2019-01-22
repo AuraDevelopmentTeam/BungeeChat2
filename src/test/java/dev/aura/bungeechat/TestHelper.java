@@ -144,11 +144,6 @@ public class TestHelper {
     }
 
     @Override
-    public void start() throws Exception {
-      // Nothing
-    }
-
-    @Override
     public void registerChannel(String channel) {
       // Nothing
     }
