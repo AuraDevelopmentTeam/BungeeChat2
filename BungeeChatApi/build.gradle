@@ -1,8 +1,7 @@
 apply from: "../GradleCommon/common.gradle"
 
 dependencies {
-    //compile "dev.aura.lib.version:VersionLib:${versionLib_version}"
-    compile 'com.github.AuraDevelopmentTeam:VersionLib:v1.0.3'
+    compile "dev.aura.lib.version:VersionLib:${versionLib_version}"
 }
 
 jacocoTestCoverageVerification {

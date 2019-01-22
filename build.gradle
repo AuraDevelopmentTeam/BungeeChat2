@@ -2,10 +2,10 @@ apply from: "GradleCommon/common.gradle"
 
 allprojects {
     repositories {
-        /*maven {
+        maven {
             name "AuraDevelopmentTeam"
-            url "https://maven.jnc.world"
-        }*/
+            url "https://maven.project-creative.de/repository/auradev-releases/"
+        }
         maven {
             name "jitpack.io"
             url "https://jitpack.io"
@@ -26,18 +26,18 @@ dependencies {
         exclude module: "lombok"
     }
     
-    compile("net.alpenblock:BungeePerms:${bungeeperms_version}") {
+    compileOnly("net.alpenblock:BungeePerms:${bungeeperms_version}") {
         transitive = false
     }
-    compile "de.dytanic.cloudnet:cloudnet-api:${cloudnetapi_version}"
-    compile "me.lucko.luckperms:luckperms-api:${luckperms_version}"
-    compile "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
+    compileOnly "de.dytanic.cloudnet:cloudnet-api:${cloudnetapi_version}"
+    compileOnly "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    compileOnly "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
     
     shadowRelocate "com.typesafe:config:${hocon_version}"
     
     testCompile "ch.vorburger.mariaDB4j:mariaDB4j:2.3.0"
     testCompile "commons-io:commons-io:2.6"
-    testRuntime "org.mariadb.jdbc:mariadb-java-client:2.2.4"
+    testRuntime "org.mariadb.jdbc:mariadb-java-client:2.3.0"
 }
 
 jacocoTestCoverageVerification {
