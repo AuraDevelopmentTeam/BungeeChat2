@@ -2,7 +2,7 @@ package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.message.Context;
 import dev.aura.bungeechat.message.Format;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.module.AlertModule;
@@ -24,7 +24,7 @@ public class AlertCommand extends BaseCommand {
     if (PermissionManager.hasPermission(sender, Permission.COMMAND_ALERT)) {
       if (args.length < 1) {
         MessagesService.sendMessage(
-            sender, Message.INCORRECT_USAGE.get(sender, "/alert <message>"));
+            sender, Messages.INCORRECT_USAGE.get(sender, "/alert <message>"));
       } else {
         String finalMessage =
             PlaceHolderUtil.transformAltColorCodes(

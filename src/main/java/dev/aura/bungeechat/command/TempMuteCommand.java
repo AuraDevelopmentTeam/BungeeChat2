@@ -4,7 +4,7 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.utils.TimeUtil;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MutingModule;
 import dev.aura.bungeechat.permission.Permission;
@@ -22,19 +22,19 @@ public class TempMuteCommand extends BaseCommand {
     if (PermissionManager.hasPermission(sender, Permission.COMMAND_TEMPMUTE)) {
       if (args.length < 2) {
         MessagesService.sendMessage(
-            sender, Message.INCORRECT_USAGE.get(sender, "/tempmute <player> <time>"));
+            sender, Messages.INCORRECT_USAGE.get(sender, "/tempmute <player> <time>"));
       } else {
         Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[0]);
 
         if (!targetAccount.isPresent()) {
-          MessagesService.sendMessage(sender, Message.PLAYER_NOT_FOUND.get());
+          MessagesService.sendMessage(sender, Messages.PLAYER_NOT_FOUND.get());
           return;
         }
 
         CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
 
         if (targetAccount.get().isMuted()) {
-          MessagesService.sendMessage(sender, Message.MUTE_IS_MUTED.get());
+          MessagesService.sendMessage(sender, Messages.MUTE_IS_MUTED.get());
           return;
         }
 
@@ -42,7 +42,7 @@ public class TempMuteCommand extends BaseCommand {
             currentTime = System.currentTimeMillis();
         java.sql.Timestamp timeStamp = new java.sql.Timestamp((long) (currentTime + timeAmount));
         targetAccount.get().setMutedUntil(timeStamp);
-        MessagesService.sendMessage(sender, Message.TEMPMUTE.get(target));
+        MessagesService.sendMessage(sender, Messages.TEMPMUTE.get(target));
       }
     }
   }

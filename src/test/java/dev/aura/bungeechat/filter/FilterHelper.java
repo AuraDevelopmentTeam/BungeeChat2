@@ -6,12 +6,12 @@ import static org.junit.Assert.fail;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FilterHelper {
-  private final Message expectedMessage;
+  private final Messages expectedMessage;
 
   public void assertException(BungeeChatFilter filter, String text) {
     try {

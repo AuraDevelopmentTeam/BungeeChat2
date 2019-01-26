@@ -45,7 +45,7 @@ public class MessagesService {
 
     if (targetAccount.hasIgnored(senderAccount)
         && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
-      MessagesService.sendMessage(sender, Message.HAS_INGORED.get(context));
+      MessagesService.sendMessage(sender, Messages.HAS_INGORED.get(context));
 
       return;
     }

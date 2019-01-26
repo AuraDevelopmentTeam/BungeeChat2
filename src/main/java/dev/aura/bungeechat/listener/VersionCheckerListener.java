@@ -1,7 +1,7 @@
 package dev.aura.bungeechat.listener;
 
 import dev.aura.bungeechat.BungeeChat;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
@@ -48,7 +48,7 @@ public class VersionCheckerListener implements Listener {
 
       if (!instance.isLatestVersion() && player.isConnected()) {
         MessagesService.sendMessage(
-            player, Message.UPDATE_AVAILABLE.get(player, instance.getLatestVersion()));
+            player, Messages.UPDATE_AVAILABLE.get(player, instance.getLatestVersion()));
       }
     }
   }

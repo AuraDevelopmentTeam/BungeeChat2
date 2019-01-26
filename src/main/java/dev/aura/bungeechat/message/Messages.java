@@ -2,6 +2,7 @@ package dev.aura.bungeechat.message;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
+import dev.aura.lib.messagestranslator.Message;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.CommandSender;
 
 @RequiredArgsConstructor
-public enum Message {
+public enum Messages implements Message {
   // Channel Type Messages
   ENABLE_GLOBAL("enableGlobal"),
   ENABLE_STAFFCHAT("enableStaffchat"),
@@ -85,8 +86,9 @@ public enum Message {
   // Update available Message
   UPDATE_AVAILABLE("updateAvailable");
 
-  private static final Map<String, Message> values =
-      Arrays.stream(values()).collect(Collectors.toMap(Message::getStringPath, message -> message));
+  private static final Map<String, Messages> values =
+      Arrays.stream(values())
+          .collect(Collectors.toMap(Messages::getStringPath, message -> message));
 
   @Getter private final String stringPath;
 
@@ -94,7 +96,7 @@ public enum Message {
     return values.containsKey(message);
   }
 
-  public static Message getFromStringPath(String message) {
+  public static Messages getFromStringPath(String message) {
     return values.get(message);
   }
 

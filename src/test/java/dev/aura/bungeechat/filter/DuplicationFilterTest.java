@@ -5,12 +5,12 @@ import static org.junit.Assert.assertEquals;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.filter.FilterManager;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import org.junit.Test;
 
 public class DuplicationFilterTest {
   private static BungeeChatFilter FILTER = new DuplicationFilter(2, true);
-  private static final FilterHelper filterHelper = new FilterHelper(Message.ANTI_DUPLICATION);
+  private static final FilterHelper filterHelper = new FilterHelper(Messages.ANTI_DUPLICATION);
 
   @Test
   public void complexTest() {

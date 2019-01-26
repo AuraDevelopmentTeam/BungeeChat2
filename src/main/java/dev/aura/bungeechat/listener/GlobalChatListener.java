@@ -5,7 +5,7 @@ import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.utils.ChatUtils;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -43,7 +43,7 @@ public class GlobalChatListener implements Listener {
 
     if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL) {
       if (!MessagesService.getGlobalPredicate().test(account)) {
-        MessagesService.sendMessage(sender, Message.NOT_IN_GLOBAL_SERVER.get());
+        MessagesService.sendMessage(sender, Messages.NOT_IN_GLOBAL_SERVER.get());
 
         return;
       }
@@ -62,7 +62,7 @@ public class GlobalChatListener implements Listener {
 
       if (message.startsWith(symbol) && !symbol.equals("/")) {
         if (!MessagesService.getGlobalPredicate().test(account)) {
-          MessagesService.sendMessage(sender, Message.NOT_IN_GLOBAL_SERVER.get());
+          MessagesService.sendMessage(sender, Messages.NOT_IN_GLOBAL_SERVER.get());
 
           return;
         }

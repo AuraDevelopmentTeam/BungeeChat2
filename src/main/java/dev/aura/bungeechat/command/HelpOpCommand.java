@@ -1,6 +1,6 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.HelpOpModule;
 import dev.aura.bungeechat.permission.Permission;
@@ -19,7 +19,7 @@ public class HelpOpCommand extends BaseCommand {
     if (PermissionManager.hasPermission(sender, Permission.COMMAND_HELPOP)) {
       if (args.length < 1) {
         MessagesService.sendMessage(
-            sender, Message.INCORRECT_USAGE.get(sender, "/helpop <message>"));
+            sender, Messages.INCORRECT_USAGE.get(sender, "/helpop <message>"));
       } else {
         String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 

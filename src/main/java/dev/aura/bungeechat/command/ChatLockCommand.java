@@ -2,7 +2,7 @@ package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.module.ChatLockModule;
@@ -22,12 +22,12 @@ public class ChatLockCommand extends BaseCommand {
   public void execute(CommandSender sender, String[] args) {
     if (PermissionManager.hasPermission(sender, Permission.COMMAND_CHAT_LOCK)) {
       if (!(sender instanceof ProxiedPlayer)) {
-        MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
+        MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
       } else {
         BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
 
         if (args.length < 1) {
-          MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(player, USAGE));
+          MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(player, USAGE));
         } else {
           final ChatLockModule chatLock = BungeecordModuleManager.CHAT_LOCK_MODULE;
           final boolean clear = (args.length >= 2) && args[1].equalsIgnoreCase("clear");
@@ -37,7 +37,7 @@ public class ChatLockCommand extends BaseCommand {
           if (args[0].equalsIgnoreCase("global")) {
             if (chatLock.isGlobalChatLockEnabled()) {
               chatLock.disableGlobalChatLock();
-              MessagesService.sendMessage(sender, Message.DISABLE_CHATLOCK.get(player));
+              MessagesService.sendMessage(sender, Messages.DISABLE_CHATLOCK.get(player));
             } else {
               chatLock.enableGlobalChatLock();
 
@@ -46,14 +46,14 @@ public class ChatLockCommand extends BaseCommand {
               }
 
               MessagesService.sendToMatchingPlayers(
-                  Message.ENABLE_CHATLOCK.get(player), MessagesService.getGlobalPredicate());
+                  Messages.ENABLE_CHATLOCK.get(player), MessagesService.getGlobalPredicate());
             }
           } else if (args[0].equalsIgnoreCase("local")) {
             String serverName = player.getServerName();
 
             if (chatLock.isLocalChatLockEnabled(serverName)) {
               chatLock.disableLocalChatLock(serverName);
-              MessagesService.sendMessage(sender, Message.DISABLE_CHATLOCK.get(player));
+              MessagesService.sendMessage(sender, Messages.DISABLE_CHATLOCK.get(player));
             } else {
               chatLock.enableLocalChatLock(serverName);
 
@@ -62,11 +62,11 @@ public class ChatLockCommand extends BaseCommand {
               }
 
               MessagesService.sendToMatchingPlayers(
-                  Message.ENABLE_CHATLOCK.get(player),
+                  Messages.ENABLE_CHATLOCK.get(player),
                   MessagesService.getLocalPredicate(serverName));
             }
           } else {
-            MessagesService.sendMessage(sender, Message.INCORRECT_USAGE.get(player, USAGE));
+            MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(player, USAGE));
           }
         }
       }

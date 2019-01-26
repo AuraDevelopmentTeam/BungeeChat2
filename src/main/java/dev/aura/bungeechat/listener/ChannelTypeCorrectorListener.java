@@ -4,7 +4,7 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.module.ModuleManager;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.Permission;
@@ -35,7 +35,7 @@ public class ChannelTypeCorrectorListener implements Listener {
                 || !PermissionManager.hasPermission(player, Permission.COMMAND_STAFFCHAT)))) {
       e.setCancelled(true);
       bungeeChatAccountOptional.get().setChannelType(ChannelType.LOCAL);
-      MessagesService.sendMessage(player, Message.BACK_TO_LOCAL.get());
+      MessagesService.sendMessage(player, Messages.BACK_TO_LOCAL.get());
     }
   }
 }

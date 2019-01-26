@@ -2,7 +2,7 @@ package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.VanishModule;
 import dev.aura.bungeechat.permission.Permission;
@@ -19,7 +19,7 @@ public class VanishCommand extends BaseCommand {
   public void execute(CommandSender sender, String[] args) {
     if (PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH)) {
       if (!(sender instanceof ProxiedPlayer)) {
-        MessagesService.sendMessage(sender, Message.NOT_A_PLAYER.get());
+        MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
       } else {
         BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
         if (args.length > 0) {
@@ -35,9 +35,9 @@ public class VanishCommand extends BaseCommand {
         }
 
         if (player.isVanished()) {
-          MessagesService.sendMessage(sender, Message.ENABLE_VANISH.get());
+          MessagesService.sendMessage(sender, Messages.ENABLE_VANISH.get());
         } else {
-          MessagesService.sendMessage(sender, Message.DISABLE_VANISH.get());
+          MessagesService.sendMessage(sender, Messages.DISABLE_VANISH.get());
         }
       }
     }

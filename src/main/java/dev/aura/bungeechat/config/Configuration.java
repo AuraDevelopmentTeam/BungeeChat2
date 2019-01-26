@@ -5,6 +5,9 @@ import com.google.common.io.Files;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigParseOptions;
+import com.typesafe.config.ConfigRenderOptions;
+import com.typesafe.config.ConfigSyntax;
 import com.typesafe.config.ConfigValueFactory;
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.BungeeChatApi;
@@ -36,6 +39,10 @@ import net.md_5.bungee.config.YamlConfiguration;
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Configuration implements Config {
+  protected static final ConfigParseOptions PARSE_OPTIONS =
+      ConfigParseOptions.defaults().setAllowMissing(false).setSyntax(ConfigSyntax.CONF);
+  protected static final ConfigRenderOptions RENDER_OPTIONS =
+      ConfigRenderOptions.defaults().setOriginComments(false).setJson(false);
   protected static final String CONFIG_FILE_NAME = "config.conf";
   protected static final String OLD_CONFIG_FILE_NAME = "config.yml";
   protected static final String OLD_OLD_CONFIG_FILE_NAME = "config.old.yml";
@@ -104,11 +111,11 @@ public class Configuration implements Config {
             new InputStreamReader(
                 BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME),
                 StandardCharsets.UTF_8),
-            MessagesTranslator.PARSE_OPTIONS);
+            PARSE_OPTIONS);
 
     if (CONFIG_FILE.exists()) {
       try {
-        Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, MessagesTranslator.PARSE_OPTIONS);
+        Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
 
         config = fileConfig.withFallback(defaultConfig.withoutPath("ServerAlias"));
       } catch (ConfigException e) {
@@ -130,7 +137,7 @@ public class Configuration implements Config {
   protected void saveConfig() {
     try {
       @Cleanup PrintWriter writer = new PrintWriter(CONFIG_FILE, StandardCharsets.UTF_8.name());
-      String renderedConfig = config.root().render(MessagesTranslator.RENDER_OPTIONS);
+      String renderedConfig = config.root().render(RENDER_OPTIONS);
       renderedConfig = getHeader() + renderedConfig;
 
       writer.print(renderedConfig);

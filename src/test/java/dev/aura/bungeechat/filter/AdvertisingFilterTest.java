@@ -5,14 +5,14 @@ import static org.junit.Assert.assertEquals;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.filter.FilterManager;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import java.util.Arrays;
 import org.junit.Test;
 
 public class AdvertisingFilterTest {
   private static final BungeeChatFilter FILTER =
       new AdvertisingFilter(Arrays.asList("www.google.com", "*.net"), true);
-  private static final FilterHelper filterHelper = new FilterHelper(Message.ANTI_ADVERTISE);
+  private static final FilterHelper filterHelper = new FilterHelper(Messages.ANTI_ADVERTISE);
 
   @Test
   public void consoleTest() throws BlockMessageException {

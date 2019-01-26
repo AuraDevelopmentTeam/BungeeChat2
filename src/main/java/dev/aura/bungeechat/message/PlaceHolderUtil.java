@@ -8,9 +8,9 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.config.Configuration;
-import dev.aura.bungeechat.config.MessagesTranslator;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.lib.messagestranslator.MessagesTranslator;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +76,7 @@ public class PlaceHolderUtil {
     File dir = BungeeChat.getInstance().getLangFolder();
     String language = Configuration.get().getString(LANGUAGE);
 
-    messageBase = new MessagesTranslator(dir, language);
+    messageBase = new MessagesTranslator(dir, language, BungeeChat.getInstance());
   }
 
   public static String getFormat(Format format) {
@@ -91,7 +91,7 @@ public class PlaceHolderUtil {
     }
   }
 
-  public static String getMessage(Message message) {
+  public static String getMessage(Messages message) {
     try {
       if (messageBase == null) {
         loadMessageBase();
@@ -107,11 +107,11 @@ public class PlaceHolderUtil {
     return formatMessage(getFormat(format), context);
   }
 
-  public static String getFullMessage(Message message) {
+  public static String getFullMessage(Messages message) {
     return formatMessage(getMessage(message), new BungeeChatContext());
   }
 
-  public static String getFullMessage(Message message, BungeeChatContext context) {
+  public static String getFullMessage(Messages message, BungeeChatContext context) {
     return formatMessage(getMessage(message), context);
   }
 

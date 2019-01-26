@@ -4,7 +4,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
 import dev.aura.bungeechat.api.filter.FilterManager;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import java.util.ArrayDeque;
@@ -42,7 +42,7 @@ public class DuplicationFilter implements BungeeChatFilter {
     Queue<String> playerMessages = playerMessagesStorage.get(uuid);
 
     if (playerMessages.contains(message))
-      throw new ExtendedBlockMessageException(Message.ANTI_DUPLICATION, sender, message);
+      throw new ExtendedBlockMessageException(Messages.ANTI_DUPLICATION, sender, message);
     else {
       if (playerMessages.size() == checkPastMessages) {
         playerMessages.remove();

@@ -3,7 +3,7 @@ package dev.aura.bungeechat.command;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
-import dev.aura.bungeechat.message.Message;
+import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.StaffChatModule;
 import dev.aura.bungeechat.permission.Permission;
@@ -25,10 +25,10 @@ public class StaffChatCommand extends BaseCommand {
 
         if (player.getChannelType() == ChannelType.STAFF) {
           player.setChannelType(ChannelType.LOCAL);
-          MessagesService.sendMessage(sender, Message.ENABLE_LOCAL.get());
+          MessagesService.sendMessage(sender, Messages.ENABLE_LOCAL.get());
         } else {
           player.setChannelType(ChannelType.STAFF);
-          MessagesService.sendMessage(sender, Message.ENABLE_STAFFCHAT.get());
+          MessagesService.sendMessage(sender, Messages.ENABLE_STAFFCHAT.get());
         }
       } else {
         String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
