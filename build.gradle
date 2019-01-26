@@ -32,8 +32,11 @@ dependencies {
     compileOnly "de.dytanic.cloudnet:cloudnet-api:${cloudnetapi_version}"
     compileOnly "me.lucko.luckperms:luckperms-api:${luckperms_version}"
     compileOnly "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
-    
+
     shadowRelocate "com.typesafe:config:${hocon_version}"
+    shadow("dev.aura.lib.messagestranslator:MessagesTranslator:${messagesTranslator_version}") {
+        transitive = false
+    }
     
     testCompile "ch.vorburger.mariaDB4j:mariaDB4j:2.3.0"
     testCompile "commons-io:commons-io:2.6"
