@@ -64,7 +64,7 @@ Please include the following:
 
 If you want a new feature added, go ahead an open a [new issue](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/new), remove the existing form and
 describe your feature the best you can. The more details you provide the easier it will be implementing it.  
-You can also talk to us on [Discord](https://dicord.me/bungeechat).
+You can also talk to us on [Discord](https://discord.me/bungeechat).
 
 ## Developing with our Plugin
 
