@@ -3,6 +3,7 @@ package dev.aura.bungeechat.hook;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
+import java.util.Objects;
 import java.util.Optional;
 import me.lucko.luckperms.LuckPerms;
 import me.lucko.luckperms.api.Contexts;
@@ -19,32 +20,22 @@ public class LuckPermsHook implements BungeeChatHook {
 
   @Override
   public Optional<String> getPrefix(BungeeChatAccount account) {
-    Optional<MetaData> metaData = getMetaData(account);
-
-    if (!metaData.isPresent()) return Optional.empty();
-
-    return Optional.ofNullable(metaData.get().getPrefix());
+    return getMetaData(account).map(MetaData::getPrefix).filter(Objects::nonNull);
   }
 
   @Override
   public Optional<String> getSuffix(BungeeChatAccount account) {
-    Optional<MetaData> metaData = getMetaData(account);
-
-    if (!metaData.isPresent()) return Optional.empty();
-
-    return Optional.ofNullable(metaData.get().getSuffix());
+    return getMetaData(account).map(MetaData::getSuffix).filter(Objects::nonNull);
   }
 
   private Optional<MetaData> getMetaData(BungeeChatAccount account) {
-    Optional<User> user = api.getUserSafe(account.getUniqueId());
+    final Optional<User> user = api.getUserSafe(account.getUniqueId());
+    final Optional<Contexts> contexts = user.flatMap(api::getContextForUser);
 
-    if (!user.isPresent()) return Optional.empty();
-
-    Optional<Contexts> contexts = api.getContextForUser(user.get());
-
-    if (!contexts.isPresent()) return Optional.empty();
-
-    return Optional.ofNullable(user.get().getCachedData().getMetaData(contexts.get()));
+    return user.filter(xxx -> contexts.isPresent())
+        .map(User::getCachedData)
+        .map(data -> data.getMetaData(contexts.get()))
+        .filter(Objects::nonNull);
   }
 
   @Override
