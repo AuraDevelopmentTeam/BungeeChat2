@@ -56,8 +56,12 @@ public class HookManager {
     return "";
   }
 
-  public String getFullname(BungeeChatAccount account) {
+  public String getFullName(BungeeChatAccount account) {
     return getPrefix(account) + account.getName() + getSuffix(account);
+  }
+
+  public String getFullDisplayName(BungeeChatAccount account) {
+    return getPrefix(account) + account.getDisplayName() + getSuffix(account);
   }
 
   private static void sortHooks() {
