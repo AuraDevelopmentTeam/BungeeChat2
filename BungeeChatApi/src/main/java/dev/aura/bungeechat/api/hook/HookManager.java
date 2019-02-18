@@ -17,14 +17,13 @@ public class HookManager {
 
   private static Map<String, BungeeChatHook> hooks = new LinkedHashMap<>();
 
-  public static void addHook(String name, BungeeChatHook hook)
-      throws UnsupportedOperationException {
+  public static void addHook(String name, BungeeChatHook hook) {
     hooks.put(name, hook);
 
     sortHooks();
   }
 
-  public static BungeeChatHook removeHook(String name) throws UnsupportedOperationException {
+  public static BungeeChatHook removeHook(String name) {
     BungeeChatHook out = hooks.remove(name);
 
     sortHooks();
