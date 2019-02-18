@@ -34,7 +34,7 @@ dependencies {
     compileOnly "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
 
     shadowRelocate "com.typesafe:config:${hocon_version}"
-    shadow("dev.aura.lib.messagestranslator:MessagesTranslator:${messagesTranslator_version}") {
+    shadowRelocate("dev.aura.lib.messagestranslator:MessagesTranslator:${messagesTranslator_version}") {
         transitive = false
     }
     
