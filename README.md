@@ -1,8 +1,8 @@
 # [Bungee Chat](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
 [![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://www.spigotmc.org/resources/bungee-chat.12592/history)
-[![Build Status](https://gitlab.project-creative.de/AuraDev/BungeeChat2/badges/master/build.svg)](https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines)
-[![Coverage Report](https://gitlab.project-creative.de/AuraDev/BungeeChat2/badges/master/coverage.svg)](https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines)
+[![Build Status](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/badges/master/build.svg)](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines)
+[![Coverage Report](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/badges/master/coverage.svg)](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
 [![Issue Stats](https://img.shields.io/issuestats/i/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
 [![Pull Requests Stats](https://img.shields.io/issuestats/p/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/pulls)
@@ -34,8 +34,8 @@ You can download all builds from:
 
 - SpigotMC: https://www.spigotmc.org/resources/bungee-chat.12592/
 - Maven:
-  - Releases: https://maven.project-creative.de/repository/auradev-releases/
-  - Snapshots: https://maven.project-creative.de/repository/auradev-snapshots/
+  - Releases: https://maven.aura-dev.team/repository/auradev-releases/
+  - Snapshots: https://maven.aura-dev.team/repository/auradev-snapshots/
 
 ## Wiki
 
@@ -86,7 +86,7 @@ So you want to add support or even develop an add-on for our plugin then you can
 Between each official release there are several bleeding edge development builds, which you can also use. But be aware that they might contain unfinished
 features and therefore won't work properly.
 
-You can find the builds here: https://gitlab.project-creative.de/AuraDev/BungeeChat2/pipelines
+You can find the builds here: https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines
 
 On the right is a download symbol, click that a dropdown will open. Select "build". Then you'll download a zip file containing all atrifacts including the
 plugin jar.

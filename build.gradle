@@ -3,10 +3,6 @@ apply from: "GradleCommon/common.gradle"
 allprojects {
     repositories {
         maven {
-            name "AuraDevelopmentTeam"
-            url "https://maven.project-creative.de/repository/auradev-releases/"
-        }
-        maven {
             name "jitpack.io"
             url "https://jitpack.io"
         }
