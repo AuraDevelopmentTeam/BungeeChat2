@@ -11,6 +11,7 @@ import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.lib.messagestranslator.MessagesTranslator;
+import dev.aura.lib.messagestranslator.PluginMessagesTranslator;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class PlaceHolderUtil {
     File dir = BungeeChat.getInstance().getLangFolder();
     String language = Configuration.get().getString(LANGUAGE);
 
-    messageBase = new MessagesTranslator(dir, language, BungeeChat.getInstance(), "@id@");
+    messageBase = new PluginMessagesTranslator(dir, language, BungeeChat.getInstance(), "@id@");
   }
 
   public static String getFormat(Format format) {

@@ -36,7 +36,7 @@ dependencies {
     
     testCompile "ch.vorburger.mariaDB4j:mariaDB4j:2.3.0"
     testCompile "commons-io:commons-io:2.6"
-    testRuntime "org.mariadb.jdbc:mariadb-java-client:2.3.0"
+    testRuntime "org.mariadb.jdbc:mariadb-java-client:2.4.1"
 }
 
 jacocoTestCoverageVerification {
