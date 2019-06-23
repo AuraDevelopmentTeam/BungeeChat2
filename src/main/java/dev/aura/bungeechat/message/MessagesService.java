@@ -225,7 +225,12 @@ public class MessagesService {
 
     String finalMessage = Format.JOIN_MESSAGE.get(context);
 
-    sendToMatchingPlayers(finalMessage);
+    // This condition checks if the player is present and vanished
+    if (context.getSender().filter(BungeeChatAccount::isVanished).isPresent()) {
+      sendToMatchingPlayers(finalMessage, getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
+    } else {
+      sendToMatchingPlayers(finalMessage);
+    }
 
     context.setMessage(finalMessage);
     ChatLoggingManager.logMessage("JOIN", context);
@@ -240,7 +245,12 @@ public class MessagesService {
 
     String finalMessage = Format.LEAVE_MESSAGE.get(context);
 
-    sendToMatchingPlayers(finalMessage);
+    // This condition checks if the player is present and vanished
+    if (context.getSender().filter(BungeeChatAccount::isVanished).isPresent()) {
+      sendToMatchingPlayers(finalMessage, getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
+    } else {
+      sendToMatchingPlayers(finalMessage);
+    }
 
     context.setMessage(finalMessage);
     ChatLoggingManager.logMessage("LEAVE", context);
@@ -255,7 +265,12 @@ public class MessagesService {
 
     String finalMessage = Format.SERVER_SWITCH.get(context);
 
-    sendToMatchingPlayers(finalMessage);
+    // This condition checks if the player is present and vanished
+    if (context.getSender().filter(BungeeChatAccount::isVanished).isPresent()) {
+      sendToMatchingPlayers(finalMessage, getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
+    } else {
+      sendToMatchingPlayers(finalMessage);
+    }
 
     context.setMessage(finalMessage);
     ChatLoggingManager.logMessage("SWITCH", context);
@@ -352,6 +367,10 @@ public class MessagesService {
 
   public static Predicate<BungeeChatAccount> getLocalPredicate(String serverName) {
     return account -> serverName.equals(account.getServerName());
+  }
+
+  public static Predicate<BungeeChatAccount> getPermissionPredicate(Permission permission) {
+    return account -> PermissionManager.hasPermission(account, permission);
   }
 
   public static void sendMessage(CommandSender recipient, String message) {
