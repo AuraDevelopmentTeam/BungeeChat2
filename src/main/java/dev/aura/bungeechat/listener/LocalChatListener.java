@@ -8,6 +8,8 @@ import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.Context;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.permission.Permission;
+import dev.aura.bungeechat.permission.PermissionManager;
 import java.util.List;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -43,6 +45,12 @@ public class LocalChatListener implements Listener {
     if (ChatUtils.isCommand(message)) return;
 
     if (account.getChannelType() == ChannelType.LOCAL) {
+
+      if (!PermissionManager.hasPermission(sender, Permission.COMMAND_LOCALCHAT)) {
+        e.setCancelled(true);
+        return;
+      }
+
       // Check we send to this server
       e.setCancelled(
           !(passToBackendServer

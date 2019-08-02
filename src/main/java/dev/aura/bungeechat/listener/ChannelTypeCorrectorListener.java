@@ -33,9 +33,12 @@ public class ChannelTypeCorrectorListener implements Listener {
         || (c.equals(ChannelType.STAFF)
             && (!ModuleManager.isModuleActive(BungeecordModuleManager.STAFF_CHAT_MODULE)
                 || !PermissionManager.hasPermission(player, Permission.COMMAND_STAFFCHAT)))) {
+
       e.setCancelled(true);
-      bungeeChatAccountOptional.get().setChannelType(ChannelType.LOCAL);
-      MessagesService.sendMessage(player, Messages.BACK_TO_LOCAL.get());
+      if (PermissionManager.hasPermission(player, Permission.COMMAND_LOCALCHAT)) {
+        bungeeChatAccountOptional.get().setChannelType(ChannelType.LOCAL);
+        MessagesService.sendMessage(player, Messages.BACK_TO_LOCAL.get());
+      }
     }
   }
 }
