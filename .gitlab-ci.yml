@@ -8,6 +8,7 @@ variables:
 #  JACOCO_DATA: "$CI_PROJECT_DIR/**/build/jacoco/*"
   JACOCO_DATA1: "$CI_PROJECT_DIR/build/jacoco/*"
   JACOCO_DATA2: "$CI_PROJECT_DIR/*/build/jacoco/*"
+  JACOCO_DATA3: "$CI_PROJECT_DIR/*/*/build/jacoco/*"
   COVERAGE_REPORTS: "$CI_PROJECT_DIR/*-CoverageReport.zip"
   SPOTBUGS_REPORTS: "$CI_PROJECT_DIR/*-SpotbugsReport.zip"
   JAVADOCS: "$CI_PROJECT_DIR/*-javadoc.jar"
@@ -30,6 +31,8 @@ stages:
 
 build:
   stage: build
+  cache:
+    policy: push
   script:
   - ./gradlew --console=plain assemble
   - cp $ORIG_ARTIFACTS1 $ORIG_ARTIFACTS2 .
@@ -42,6 +45,8 @@ build:
 
 test:
   stage: test
+  cache:
+    policy: pull-push
   script:
   - ./gradlew --continue --console=plain test
   retry: 2
@@ -53,9 +58,12 @@ test:
 #    - $JACOCO_DATA
     - $JACOCO_DATA1
     - $JACOCO_DATA2
+    - $JACOCO_DATA3
 
 checkFormatting:
   stage: test
+  cache:
+    policy: pull
   script:
   - ./gradlew --continue --console=plain spotlessCheck
   allow_failure: true
@@ -63,6 +71,8 @@ checkFormatting:
 
 coverage:
   stage: report
+  cache:
+    policy: pull
   dependencies:
   - test
   script:
@@ -77,6 +87,8 @@ coverage:
 
 spotbugs:
   stage: report
+  cache:
+    policy: pull
   script:
   - ./gradlew --continue --console=plain spotbugs
   allow_failure: true
@@ -88,6 +100,8 @@ spotbugs:
 
 deploySnapshot:
   stage: deploy
+  cache:
+    policy: pull
   dependencies:
   - build
   script:
@@ -99,6 +113,8 @@ deploySnapshot:
 
 deploy:
   stage: deploy
+  cache:
+    policy: pull
   dependencies:
   - build
   script:
@@ -110,6 +126,8 @@ deploy:
   
 sendCoverage:
   stage: deploy
+  cache:
+    policy: pull
   dependencies:
   - coverage
   script:
@@ -118,6 +136,8 @@ sendCoverage:
 
 pages:
   stage: deploy
+  cache:
+    policy: pull
   dependencies:
   - build
   - test
