@@ -13,6 +13,10 @@ allprojects {
         maven {
             name "jitpack.io"
             url "https://jitpack.io"
+            content {
+                includeGroupByRegex? "com\\.github\\..*"
+                excludeGroup "com.github.alexarchambault.case-app_2.11"
+            }
         }
     }
 }
