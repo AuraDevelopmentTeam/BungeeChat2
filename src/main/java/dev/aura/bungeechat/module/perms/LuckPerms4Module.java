@@ -8,12 +8,12 @@ import dev.aura.bungeechat.util.ClassUtil;
 public class LuckPerms4Module extends PermissionPluginModule {
   @Override
   public String getName() {
-    return "LuckPerms";
+    return "LuckPerms4";
   }
 
   @Override
   public boolean isEnabled() {
-    return super.isEnabled()
+    return isPluginPresent("LuckPerms")
         && ClassUtil.doesClassExist("me.lucko.luckperms.LuckPerms")
         && !BungeecordModuleManager.LUCK_PERMS_5_MODULE.isEnabled();
   }
