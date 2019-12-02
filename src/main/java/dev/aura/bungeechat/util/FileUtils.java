@@ -13,14 +13,19 @@ import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import lombok.Generated;
 import lombok.experimental.UtilityClass;
 
 /**
  * Taken from https://stackoverflow.com/a/3348150/1996022<br>
  * All credit goes to the original author. Only minimal modifications have been made.
+ *
+ * <p>Marked generated to ignore coverage as this code is confirmed to work
  */
+@Generated
 @UtilityClass
 public class FileUtils {
+  @Generated
   public static boolean copyFile(final File toCopy, final File destFile) {
     try (final InputStream inStream = new FileInputStream(toCopy);
         final OutputStream outStream = new FileOutputStream(destFile)) {
@@ -32,10 +37,12 @@ public class FileUtils {
     return false;
   }
 
+  @Generated
   public static boolean copyFilesRecusively(final File toCopy, final File destDir) {
     return copyFilesRecusively(toCopy, destDir, true);
   }
 
+  @Generated
   public static boolean copyFilesRecusively(
       final File toCopy, final File destDir, boolean skipFirstDir) {
     assert destDir.isDirectory();
@@ -56,6 +63,7 @@ public class FileUtils {
     return true;
   }
 
+  @Generated
   public static boolean copyJarResourcesRecursively(
       final JarURLConnection jarConnection, final File destDir) throws IOException {
     final JarFile jarFile = jarConnection.getJarFile();
@@ -84,6 +92,7 @@ public class FileUtils {
     return true;
   }
 
+  @Generated
   public static boolean copyResourcesRecursively(final URL originUrl, final File destination) {
     try {
       final URLConnection urlConnection = originUrl.openConnection();
@@ -98,6 +107,7 @@ public class FileUtils {
     return false;
   }
 
+  @Generated
   private static boolean copyStream(final InputStream is, final File f) {
     try {
       return FileUtils.copyStream(is, new FileOutputStream(f));
@@ -108,6 +118,7 @@ public class FileUtils {
     return false;
   }
 
+  @Generated
   private static boolean copyStream(final InputStream is, final OutputStream os) {
     try {
       final byte[] buf = new byte[1024];
@@ -130,10 +141,12 @@ public class FileUtils {
     return false;
   }
 
+  @Generated
   private static boolean ensureDirectoryExists(final File f) {
     return f.exists() || f.mkdirs();
   }
 
+  @Generated
   private static String removeStart(String str, String remove) {
     if (isEmpty(str) || isEmpty(remove)) return str;
 
@@ -142,6 +155,7 @@ public class FileUtils {
     return str;
   }
 
+  @Generated
   private static boolean isEmpty(CharSequence cs) {
     return (cs == null) || (cs.length() == 0);
   }
