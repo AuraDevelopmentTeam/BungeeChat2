@@ -12,7 +12,7 @@ public class LuckPerms5Module extends PermissionPluginModule {
 
   @Override
   public boolean isEnabled() {
-    return isPluginPresent("LuckPerms") && ClassUtil.doesClassExist("me.lucko.luckperms.LuckPerms");
+    return isPluginPresent("LuckPerms") && ClassUtil.doesClassExist("net.luckperms.api.LuckPerms");
   }
 
   @Override
