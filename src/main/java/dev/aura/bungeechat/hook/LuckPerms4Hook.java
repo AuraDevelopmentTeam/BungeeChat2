@@ -11,10 +11,10 @@ import me.lucko.luckperms.api.LuckPermsApi;
 import me.lucko.luckperms.api.User;
 import me.lucko.luckperms.api.caching.MetaData;
 
-public class LuckPermsHook implements BungeeChatHook {
+public class LuckPerms4Hook implements BungeeChatHook {
   private final LuckPermsApi api;
 
-  public LuckPermsHook() {
+  public LuckPerms4Hook() {
     api = LuckPerms.getApi();
   }
 

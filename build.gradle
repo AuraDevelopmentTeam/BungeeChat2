@@ -28,7 +28,8 @@ dependencies {
         transitive = false
     }
     compileOnly "de.dytanic.cloudnet:cloudnet-api-bridge:${cloudnetapi_version}"
-    compileOnly "me.lucko.luckperms:luckperms-api:${luckperms_version}"
+    compileOnly "me.lucko.luckperms:luckperms-api:${luckperms4_version}"
+    compileOnly "net.luckperms:api:${luckperms5_version}"
     compileOnly "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"
 
     shadowRelocate "com.typesafe:config:${hocon_version}"
