@@ -8,9 +8,8 @@ import java.util.Optional;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.cacheddata.CachedMetaData;
-import net.luckperms.api.context.ImmutableContextSet;
+import net.luckperms.api.context.ContextManager;
 import net.luckperms.api.model.user.User;
-import net.luckperms.api.query.QueryMode;
 import net.luckperms.api.query.QueryOptions;
 
 public class LuckPerms5Hook implements BungeeChatHook {
@@ -33,12 +32,9 @@ public class LuckPerms5Hook implements BungeeChatHook {
   private Optional<CachedMetaData> getMetaData(BungeeChatAccount account) {
     final Optional<User> user =
         Optional.ofNullable(api.getUserManager().getUser(account.getUniqueId()));
-    final Optional<ImmutableContextSet> contexts =
-        user.flatMap(api.getContextManager()::getContext);
 
-    return user.filter(xxx -> contexts.isPresent())
-        .map(User::getCachedData)
-        .map(data -> data.getMetaData(getQueryOptions(contexts.get())))
+    return user.map(User::getCachedData)
+        .map(data -> data.getMetaData(getQueryOptions(user)))
         .filter(Objects::nonNull);
   }
 
@@ -47,7 +43,10 @@ public class LuckPerms5Hook implements BungeeChatHook {
     return HookManager.PERMISSION_PLUGIN_PREFIX_PRIORITY;
   }
 
-  private static QueryOptions getQueryOptions(ImmutableContextSet contexts) {
-    return QueryOptions.builder(QueryMode.CONTEXTUAL).context(contexts).build();
+  private QueryOptions getQueryOptions(Optional<User> user) {
+    final ContextManager contextManager = api.getContextManager();
+
+    return user.flatMap(contextManager::getQueryOptions)
+        .orElseGet(contextManager::getStaticQueryOptions);
   }
 }
