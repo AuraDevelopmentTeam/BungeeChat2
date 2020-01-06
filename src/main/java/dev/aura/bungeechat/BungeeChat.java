@@ -269,14 +269,11 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     try {
       @Cleanup("disconnect")
       HttpsURLConnection con =
-          (HttpsURLConnection) new URL("https://www.spigotmc.org/api/general.php").openConnection();
+          (HttpsURLConnection)
+              new URL("https://api.spigotmc.org/legacy/update.php?resource=" + PLUGIN_ID)
+                  .openConnection();
       con.setDoOutput(true);
-      con.setRequestMethod("POST");
-      con.getOutputStream()
-          .write(
-              ("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource="
-                      + PLUGIN_ID)
-                  .getBytes(StandardCharsets.UTF_8));
+      con.setRequestMethod("GET");
 
       con.connect();
 
