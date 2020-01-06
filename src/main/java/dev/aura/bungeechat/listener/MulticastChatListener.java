@@ -25,8 +25,7 @@ public class MulticastChatListener implements Listener {
 
   @SuppressWarnings("unchecked")
   private final List<List<String>> serverGroups =
-      serverLists
-          .stream()
+      serverLists.stream()
           .map(configValue -> (List<String>) configValue.unwrapped())
           .collect(Collectors.toList());
 

@@ -34,8 +34,7 @@ public class AdvertisingFilter implements BungeeChatFilter {
 
   public AdvertisingFilter(List<String> whitelisted, boolean noPermissions) {
     this.whitelisted =
-        whitelisted
-            .stream()
+        whitelisted.stream()
             .map(
                 wildcard ->
                     RegexUtil.parseWildcardToPattern(

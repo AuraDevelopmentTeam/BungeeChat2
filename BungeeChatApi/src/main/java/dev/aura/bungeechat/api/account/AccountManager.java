@@ -40,9 +40,7 @@ public class AccountManager {
   }
 
   public static List<BungeeChatAccount> getPlayerAccounts() {
-    return accounts
-        .values()
-        .stream()
+    return accounts.values().stream()
         .filter(account -> account.getAccountType() == AccountType.PLAYER)
         .collect(Collectors.toList());
   }
@@ -50,9 +48,7 @@ public class AccountManager {
   public static List<BungeeChatAccount> getAccountsForPartialName(String partialName) {
     final String lowercasePartialName = partialName.toLowerCase();
 
-    return accounts
-        .values()
-        .stream()
+    return accounts.values().stream()
         .filter(
             account ->
                 account.getName().toLowerCase().startsWith(lowercasePartialName)

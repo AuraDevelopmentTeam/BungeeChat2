@@ -65,9 +65,7 @@ public class HookManager {
 
   private static void sortHooks() {
     hooks =
-        hooks
-            .entrySet()
-            .stream()
+        hooks.entrySet().stream()
             .sorted(Collections.reverseOrder(Entry.comparingByValue()))
             .collect(
                 Collectors.toMap(

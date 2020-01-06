@@ -22,8 +22,7 @@ public class SwearWordsFilter implements BungeeChatFilter {
       boolean ignoreSpaces,
       boolean ignoreDuplicateLetters) {
     this.swearWords =
-        swearWords
-            .stream()
+        swearWords.stream()
             .map(
                 word ->
                     RegexUtil.parseWildcardToPattern(

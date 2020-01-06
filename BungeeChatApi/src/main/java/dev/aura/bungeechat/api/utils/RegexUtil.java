@@ -306,8 +306,7 @@ public class RegexUtil {
       processingList.addAll(Arrays.asList(leetAlternatives));
 
       pattern =
-          processingList
-              .stream()
+          processingList.stream()
               .map(RegexUtil::escapeRegex)
               .collect(Collectors.joining("|", "(?:", ")"));
       escapedPattern = Matcher.quoteReplacement(pattern);

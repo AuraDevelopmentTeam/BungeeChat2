@@ -36,9 +36,7 @@ public class IgnoreCommand extends BaseCommand {
 
         if (args[0].equalsIgnoreCase("list")) {
           List<Optional<BungeeChatAccount>> ignored =
-              player
-                  .getIgnored()
-                  .stream()
+              player.getIgnored().stream()
                   .map(AccountManager::getAccount)
                   .filter(Optional::isPresent)
                   .collect(Collectors.toList());
@@ -47,8 +45,7 @@ public class IgnoreCommand extends BaseCommand {
             MessagesService.sendMessage(sender, Messages.IGNORE_NOBODY.get(player));
           } else {
             String list =
-                ignored
-                    .stream()
+                ignored.stream()
                     .map(account -> account.get().getName())
                     .collect(Collectors.joining(", "));
 

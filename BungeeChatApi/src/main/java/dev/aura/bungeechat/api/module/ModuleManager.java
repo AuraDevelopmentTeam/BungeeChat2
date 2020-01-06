@@ -17,8 +17,7 @@ public class ModuleManager {
   public static List<BungeeChatModule> getActiveModules() throws UnsupportedOperationException {
     if (activeModules.isEmpty()) {
       activeModules.addAll(
-          availableModules
-              .stream()
+          availableModules.stream()
               .filter(BungeeChatModule::isEnabled)
               .collect(Collectors.toList()));
     }

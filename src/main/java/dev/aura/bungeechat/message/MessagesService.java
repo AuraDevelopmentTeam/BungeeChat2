@@ -339,8 +339,7 @@ public class MessagesService {
     Predicate<BungeeChatAccount> playerFiler =
         Arrays.stream(playerFilters).reduce(Predicate::and).orElse(acc -> true);
 
-    AccountManager.getPlayerAccounts()
-        .stream()
+    AccountManager.getPlayerAccounts().stream()
         .filter(playerFiler)
         .forEach(
             account ->

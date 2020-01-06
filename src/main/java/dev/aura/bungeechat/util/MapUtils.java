@@ -12,9 +12,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @SuppressFBWarnings( // TODO: Remove when fixed in SpotBugs
-  value = "RV_RETURN_VALUE_IGNORED",
-  justification = "Return values can be safely ignored as they are for chaining only."
-)
+    value = "RV_RETURN_VALUE_IGNORED",
+    justification = "Return values can be safely ignored as they are for chaining only.")
 public class MapUtils {
   /**
    * A variant of {@link Collectors#toMap(Function, Function)} for immutable maps.

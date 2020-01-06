@@ -128,9 +128,7 @@ public class PlaceHolderUtil {
     BungeeChatAccount permsAccount = account.orElseGet(() -> AccountManager.getConsoleAccount());
 
     Integer key =
-        colorCodeMap
-            .keySet()
-            .stream()
+        colorCodeMap.keySet().stream()
             .map(perm -> PermissionManager.hasPermission(permsAccount, perm))
             .reduce(0, (in, bool) -> (in << 1) | (bool.booleanValue() ? 1 : 0), (a, b) -> b);
 
@@ -140,9 +138,7 @@ public class PlaceHolderUtil {
       } else {
         Pattern pattern =
             Pattern.compile(
-                colorCodeMap
-                    .entrySet()
-                    .stream()
+                colorCodeMap.entrySet().stream()
                     .filter(entry -> PermissionManager.hasPermission(permsAccount, entry.getKey()))
                     .map(entry -> entry.getValue().toString())
                     .collect(

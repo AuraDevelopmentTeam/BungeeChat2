@@ -260,9 +260,8 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
   }
 
   @SuppressFBWarnings(
-    value = "SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE",
-    justification = "Names are variable."
-  )
+      value = "SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE",
+      justification = "Names are variable.")
   private void prepareTables() {
     try {
       final String channelTypeEnum =
@@ -334,9 +333,8 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
   }
 
   @SuppressFBWarnings(
-    value = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
-    justification = "Names are variable."
-  )
+      value = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
+      justification = "Names are variable.")
   private void prepareStatements() {
     try {
       final String saveAccountStr =

@@ -43,9 +43,7 @@ public class FilterManager {
 
   private static void sortFilters() {
     filters =
-        filters
-            .entrySet()
-            .stream()
+        filters.entrySet().stream()
             .sorted(Collections.reverseOrder(Entry.comparingByValue()))
             .collect(
                 Collectors.toMap(

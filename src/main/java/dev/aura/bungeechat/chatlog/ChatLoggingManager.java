@@ -58,8 +58,7 @@ public class ChatLoggingManager {
 
   public static void loadFilteredCommands(List<String> commands) {
     filteredCommands =
-        commands
-            .stream()
+        commands.stream()
             .map(command -> RegexUtil.parseWildcardToPattern(command))
             .collect(Collectors.toList());
   }

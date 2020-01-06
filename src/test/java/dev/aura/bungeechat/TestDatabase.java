@@ -28,9 +28,8 @@ public class TestDatabase {
 
   @SneakyThrows(ManagedProcessException.class)
   @SuppressFBWarnings( // TODO: Remove when fixed in SpotBugs
-    value = "RV_RETURN_VALUE_IGNORED",
-    justification = "Return values can be safely ignored as they are for chaining only."
-  )
+      value = "RV_RETURN_VALUE_IGNORED",
+      justification = "Return values can be safely ignored as they are for chaining only.")
   public static void startDatabase() {
     final int limit = 100;
     int count = 0;
