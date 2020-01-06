@@ -132,6 +132,7 @@ sendCoverage:
   - coverage
   script:
   - ./gradlew --console=plain sendCoverageToCodacy
+  retry: 2
   when: always
 
 pages:
