@@ -12,7 +12,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class StaffChatListener implements Listener {
-  private final boolean passToClientServer =
+  private final boolean passToBackendServer =
       BungeecordModuleManager.STAFF_CHAT_MODULE
           .getModuleSection()
           .getBoolean("passToBackendServer");
@@ -28,7 +28,7 @@ public class StaffChatListener implements Listener {
     if (ChatUtils.isCommand(message)) return;
 
     if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.STAFF) {
-      e.setCancelled(!passToClientServer);
+      e.setCancelled(!passToBackendServer);
       MessagesService.sendStaffMessage(sender, message);
     }
   }

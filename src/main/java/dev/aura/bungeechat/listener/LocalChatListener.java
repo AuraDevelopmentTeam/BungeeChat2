@@ -16,7 +16,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class LocalChatListener implements Listener {
-  private final boolean passToClientServer =
+  private final boolean passToBackendServer =
       BungeecordModuleManager.LOCAL_CHAT_MODULE
           .getModuleSection()
           .getBoolean("passToBackendServer");
@@ -45,7 +45,7 @@ public class LocalChatListener implements Listener {
     if (account.getChannelType() == ChannelType.LOCAL) {
       // Check we send to this server
       e.setCancelled(
-          !(passToClientServer
+          !(passToBackendServer
               && (serverListDisabled || passthruServers.contains(account.getServerName()))));
       // Was just cancelled, or we want to process all local chat regardless
       if (e.isCancelled() || !passTransparently) {
