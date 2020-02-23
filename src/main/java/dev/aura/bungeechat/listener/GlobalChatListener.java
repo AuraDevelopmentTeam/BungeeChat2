@@ -18,7 +18,7 @@ public class GlobalChatListener implements Listener {
   private final boolean passToClientServer =
       BungeecordModuleManager.GLOBAL_CHAT_MODULE
           .getModuleSection()
-          .getBoolean("passToClientServer");
+          .getBoolean("passToBackendServer");
 
   @EventHandler(priority = EventPriority.HIGH)
   public void onPlayerChat(ChatEvent e) {

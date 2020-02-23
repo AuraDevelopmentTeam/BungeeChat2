@@ -17,7 +17,9 @@ import net.md_5.bungee.event.EventPriority;
 
 public class LocalChatListener implements Listener {
   private final boolean passToClientServer =
-      BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getBoolean("passToClientServer");
+      BungeecordModuleManager.LOCAL_CHAT_MODULE
+          .getModuleSection()
+          .getBoolean("passToBackendServer");
   private final boolean passTransparently =
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getBoolean("passTransparently");
   private final boolean logTransparentLocal =

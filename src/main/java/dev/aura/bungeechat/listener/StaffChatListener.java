@@ -13,7 +13,9 @@ import net.md_5.bungee.event.EventPriority;
 
 public class StaffChatListener implements Listener {
   private final boolean passToClientServer =
-      BungeecordModuleManager.STAFF_CHAT_MODULE.getModuleSection().getBoolean("passToClientServer");
+      BungeecordModuleManager.STAFF_CHAT_MODULE
+          .getModuleSection()
+          .getBoolean("passToBackendServer");
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerChat(ChatEvent e) {
