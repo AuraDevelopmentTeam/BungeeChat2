@@ -152,6 +152,17 @@ public class Configuration implements Config {
     }
 
     switch (String.format(Locale.ROOT, "%.1f", config.getDouble("Version"))) {
+      case "11.0":
+        // Rename "passToClientServer" to "passToBackendServer"
+        for (String basePath :
+            new String[] {"Modules.GlobalChat", "Modules.LocalChat", "Modules.StaffChat"}) {
+          final String newPath = basePath + ".passToBackendServer";
+          final String oldPath = basePath + ".passToClientServer";
+
+          // Remove old path first to reduce the amount of data that needs to be copied
+          config = config.withoutPath(oldPath).withValue(newPath, config.getValue(oldPath));
+        }
+
       default:
         // Unknow Version or old version
         // -> Update version
@@ -159,7 +170,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.0":
+      case "11.1":
         // Up to date
         // -> No action needed
     }
