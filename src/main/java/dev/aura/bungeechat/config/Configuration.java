@@ -5,9 +5,11 @@ import com.google.common.io.Files;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigObject;
 import com.typesafe.config.ConfigParseOptions;
 import com.typesafe.config.ConfigRenderOptions;
 import com.typesafe.config.ConfigSyntax;
+import com.typesafe.config.ConfigValue;
 import com.typesafe.config.ConfigValueFactory;
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.api.BungeeChatApi;
@@ -23,7 +25,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Cleanup;
@@ -104,6 +112,23 @@ public class Configuration implements Config {
     return header.toString();
   }
 
+  private static Collection<String> getPaths(ConfigValue config) {
+    if (config instanceof ConfigObject) {
+      return ((ConfigObject) config)
+          .entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
+    } else {
+      return Collections.emptyList();
+    }
+  }
+
+  private static List<String> getComment(Config config, String path) {
+    return getComment(config.getValue(path));
+  }
+
+  private static List<String> getComment(ConfigValue config) {
+    return config.origin().comments();
+  }
+
   protected void loadConfig() {
     Config defaultConfig =
         ConfigFactory.parseReader(
@@ -129,6 +154,7 @@ public class Configuration implements Config {
     config = config.resolve();
 
     convertOldConfig();
+    copyComments(defaultConfig);
 
     saveConfig();
   }
@@ -509,6 +535,34 @@ public class Configuration implements Config {
       LoggerHelper.info("Migration successful!");
     } catch (Exception e) {
       LoggerHelper.error("There has been an error while migrating the old YAML config file!", e);
+    }
+  }
+
+  private void copyComments(Config defaultConfig) {
+    final Queue<String> paths = new LinkedList<>(getPaths(config.root()));
+
+    while (!paths.isEmpty()) {
+      final String path = paths.poll();
+      final ConfigValue currentConfig = config.getValue(path);
+
+      // Add new paths to path list
+      paths.addAll(
+          getPaths(currentConfig).stream()
+              .map(newPath -> path + '.' + newPath)
+              .collect(Collectors.toList()));
+
+      // If the current value has a comment we will not override it
+      if (!getComment(currentConfig).isEmpty()) continue;
+
+      final List<String> comments = getComment(defaultConfig, path);
+
+      // If the default config has no comments we can't set any
+      if (comments.isEmpty()) continue;
+
+      // Set comment
+      config =
+          config.withValue(
+              path, currentConfig.withOrigin(currentConfig.origin().withComments(comments)));
     }
   }
 }
