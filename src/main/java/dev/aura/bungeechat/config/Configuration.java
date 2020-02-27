@@ -122,7 +122,7 @@ public class Configuration implements Config {
   }
 
   private static List<String> getComment(Config config, String path) {
-    return getComment(config.getValue(path));
+    return config.hasPath(path) ? getComment(config.getValue(path)) : Collections.emptyList();
   }
 
   private static List<String> getComment(ConfigValue config) {
