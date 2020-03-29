@@ -8,6 +8,8 @@ import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.permission.Permission;
+import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -63,7 +65,11 @@ public class GlobalChatListener implements Listener {
       if (message.startsWith(symbol) && !symbol.equals("/")) {
         if (!MessagesService.getGlobalPredicate().test(account)) {
           MessagesService.sendMessage(sender, Messages.NOT_IN_GLOBAL_SERVER.get());
+          return;
+        }
 
+        if (!(PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL))) {
+          e.setCancelled(true);
           return;
         }
 
