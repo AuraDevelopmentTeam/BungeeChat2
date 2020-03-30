@@ -73,7 +73,7 @@ public class GlobalChatListener implements Listener {
           return;
         }
 
-        if(message.equals(symbol)) {
+        if (message.equals(symbol)) {
           MessagesService.sendMessage(sender, Messages.MESSAGE_BLANK.get());
           e.setCancelled(true);
           return;

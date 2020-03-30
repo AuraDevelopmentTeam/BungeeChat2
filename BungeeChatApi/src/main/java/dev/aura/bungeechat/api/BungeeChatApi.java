@@ -22,7 +22,9 @@ public interface BungeeChatApi {
   public static final String AUTHOR_SHAWN = "shawn_ian";
   public static final String[] AUTHORS = new String[] {AUTHOR_BRAINSTONE, AUTHOR_SHAWN};
   public static final String[] CONTRIBUTORS =
-      new String[] {"AwesomestGamer","MineTech13", "Brianetta", "CryLegend", "gb2233", "n0dai", "Luck"};
+      new String[] {
+        "AwesomestGamer", "MineTech13", "Brianetta", "CryLegend", "gb2233", "n0dai", "Luck"
+      };
   public static final String[] TRANSLATORS =
       new String[] {"Maxime_74", "DardBrinza", "gb2233", "Garixer", "povsister"};
   public static final String[] DONATORS = new String[] {"Breantique"};
