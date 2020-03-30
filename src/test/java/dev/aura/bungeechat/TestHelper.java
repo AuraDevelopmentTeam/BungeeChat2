@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
@@ -225,6 +226,12 @@ public class TestHelper {
 
     @Override
     public Title createTitle() {
+      return null;
+    }
+
+    @Override
+    public ServerInfo constructServerInfo(
+        String name, SocketAddress address, String motd, boolean restricted) {
       return null;
     }
   }

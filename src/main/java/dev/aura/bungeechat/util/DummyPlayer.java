@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.util;
 
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -267,5 +268,10 @@ public class DummyPlayer implements ProxiedPlayer {
   @Override
   public void connect(ServerConnectRequest request) {
     // Nothing
+  }
+
+  @Override
+  public SocketAddress getSocketAddress() {
+    return new InetSocketAddress("localhost", 12345);
   }
 }

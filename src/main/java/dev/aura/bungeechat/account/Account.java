@@ -169,7 +169,7 @@ public class Account implements BungeeChatAccount {
   @Override
   public String getServerIP() {
     try {
-      return getServerInfo().getAddress().toString();
+      return getServerInfo().getSocketAddress().toString();
     } catch (NullPointerException e) {
       return "unknown";
     }
