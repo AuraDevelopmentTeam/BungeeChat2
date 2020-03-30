@@ -41,6 +41,12 @@ public class BungeeChatContext {
    * @see BungeeChatContext#require(Predicate...)
    */
   public static final Predicate<BungeeChatContext> HAS_CHANNEL = BungeeChatContext::hasChannel;
+  /**
+   * Predefined Predicate to check if a context has a server.
+   *
+   * @see BungeeChatContext#require(Predicate...)
+   */
+  public static final Predicate<BungeeChatContext> HAS_SERVER = BungeeChatContext::hasServer;
 
   /**
    * Predefined Predicate to check if a context does not have a sender.
@@ -59,13 +65,19 @@ public class BungeeChatContext {
    *
    * @see BungeeChatContext#require(Predicate...)
    */
-  public static final Predicate<BungeeChatContext> HAS_NO_MESSAGE = HAS_CHANNEL.negate();
+  public static final Predicate<BungeeChatContext> HAS_NO_MESSAGE = HAS_MESSAGE.negate();
   /**
    * Predefined Predicate to check if a context does not have a channel.
    *
    * @see BungeeChatContext#require(Predicate...)
    */
-  public static final Predicate<BungeeChatContext> HAS_NO_CHANNEL = HAS_MESSAGE.negate();
+  public static final Predicate<BungeeChatContext> HAS_NO_CHANNEL = HAS_CHANNEL.negate();
+  /**
+   * Predefined Predicate to check if a context does not have a server.
+   *
+   * @see BungeeChatContext#require(Predicate...)
+   */
+  public static final Predicate<BungeeChatContext> HAS_NO_SERVER = HAS_SERVER.negate();
 
   private static final Map<Predicate<BungeeChatContext>, String> requirementsNameCache =
       new HashMap<>(8);

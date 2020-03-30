@@ -14,7 +14,7 @@ public class ServerSwitchListener implements Listener {
     ProxiedPlayer player = e.getPlayer();
 
     if (PermissionManager.hasPermission(player, Permission.MESSAGE_SWITCH)) {
-      MessagesService.sendSwitchMessage(player);
+      MessagesService.sendSwitchMessage(player, e.getFrom());
     }
   }
 }

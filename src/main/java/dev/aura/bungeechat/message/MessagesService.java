@@ -21,6 +21,7 @@ import java.util.function.Predicate;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.config.ServerInfo;
 
 @UtilityClass
 public class MessagesService {
@@ -256,12 +257,21 @@ public class MessagesService {
     ChatLoggingManager.logMessage("LEAVE", context);
   }
 
-  public static void sendSwitchMessage(CommandSender sender) throws InvalidContextError {
-    sendSwitchMessage(new Context(sender));
+  public static void sendSwitchMessage(CommandSender sender, ServerInfo server)
+      throws InvalidContextError {
+    sendSwitchMessage(sender, server.getName());
+  }
+
+  public static void sendSwitchMessage(CommandSender sender, String server)
+      throws InvalidContextError {
+    final Context context = new Context(sender);
+    context.setServer(server);
+
+    sendSwitchMessage(context);
   }
 
   public static void sendSwitchMessage(BungeeChatContext context) throws InvalidContextError {
-    context.require(BungeeChatContext.HAS_SENDER);
+    context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_SERVER);
 
     String finalMessage = Format.SERVER_SWITCH.get(context);
 
