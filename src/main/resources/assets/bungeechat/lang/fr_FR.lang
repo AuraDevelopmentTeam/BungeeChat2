@@ -84,6 +84,7 @@ notPlayer: "&cVous devez être un joueur pour utiliser cette commande !"
 playerNotFound: "&cImpossible de trouver le joueur..."
 incorrectUsage: "&cUtilisation incorrecte ! Utilisez cette syntaxe: %command%"
 noPermission: "&cVous n'avez pas les permissions pour effectuer cette action !"
+messageBlank: "&cLe message ne peux pas être vide !"
 
 ####################################################################################################
 # Ignore Messages
