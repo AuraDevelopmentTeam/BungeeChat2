@@ -73,6 +73,12 @@ public class GlobalChatListener implements Listener {
           return;
         }
 
+        if(message.equals("!")) {
+          MessagesService.sendMessage(sender, Messages.MESSAGE_BLANK.get());
+          e.setCancelled(true);
+          return;
+        }
+
         e.setCancelled(!passToBackendServer);
         MessagesService.sendGlobalMessage(sender, message.replaceFirst(symbol, ""));
       }

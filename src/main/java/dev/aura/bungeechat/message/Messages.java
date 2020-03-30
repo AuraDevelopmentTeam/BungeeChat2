@@ -67,6 +67,7 @@ public enum Messages implements Message {
   NOT_IGNORED("notIgnored"),
   IGNORE_LIST("ignoreList"),
   IGNORE_NOBODY("ignoreNobody"),
+  MESSAGE_BLANK("messageBlank"),
 
   // Filter Messages
   ANTI_ADVERTISE("antiAdvertise"),
