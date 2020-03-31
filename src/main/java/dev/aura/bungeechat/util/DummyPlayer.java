@@ -27,8 +27,14 @@ public class DummyPlayer implements ProxiedPlayer {
   private final UUID uuid;
 
   @Override
+  @Deprecated
   public InetSocketAddress getAddress() {
     return null;
+  }
+
+  @Override
+  public SocketAddress getSocketAddress() {
+    return new InetSocketAddress("localhost", 12345);
   }
 
   @Override
@@ -268,10 +274,5 @@ public class DummyPlayer implements ProxiedPlayer {
   @Override
   public void connect(ServerConnectRequest request) {
     // Nothing
-  }
-
-  @Override
-  public SocketAddress getSocketAddress() {
-    return new InetSocketAddress("localhost", 12345);
   }
 }

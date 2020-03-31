@@ -38,16 +38,20 @@ public class TestHelper {
   public static void initBungeeChat() {
     if (!hasInitRun) {
       proxyServer = new DummyProxyServer();
+      PluginDescription desc = new PluginDescription();
 
       ProxyServer.setInstance(proxyServer);
 
-      bungeeChat = new BungeeChat();
-      BungeeChat.instance = bungeeChat;
+      bungeeChat = new BungeeChat(proxyServer, desc);
 
-      Method init =
-          Plugin.class.getDeclaredMethod("init", ProxyServer.class, PluginDescription.class);
-      init.setAccessible(true);
-      init.invoke(bungeeChat, proxyServer, new PluginDescription());
+      if (bungeeChat.getProxy() == null) {
+        Method init =
+            Plugin.class.getDeclaredMethod("init", ProxyServer.class, PluginDescription.class);
+        init.setAccessible(true);
+        init.invoke(bungeeChat, proxyServer, desc);
+      }
+
+      bungeeChat.onLoad();
 
       hasInitRun = true;
     }

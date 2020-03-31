@@ -11,6 +11,6 @@ public class PlaceholdersTest {
     PlaceHolders.registerPlaceHolders();
 
     assertEquals(
-        "Placeholders count is incorrect", 50L, PlaceHolderManager.getPlaceholderStream().count());
+        "Placeholders count is incorrect", 53L, PlaceHolderManager.getPlaceholderStream().count());
   }
 }

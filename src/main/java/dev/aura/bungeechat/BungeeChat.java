@@ -46,6 +46,7 @@ import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.plugin.PluginDescription;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
   private static final String storedDataHookName = "storedData";
@@ -64,6 +65,15 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
   private BungeecordAccountManager bungeecordAccountManager;
   private ChannelTypeCorrectorListener channelTypeCorrectorListener;
   private BungeeChatEventsListener bungeeChatEventsListener;
+
+  public BungeeChat() {
+    super();
+  }
+
+  /** For unit tests only! */
+  protected BungeeChat(ProxyServer proxy, PluginDescription description) {
+    super(proxy, description);
+  }
 
   @Override
   public void onLoad() {
