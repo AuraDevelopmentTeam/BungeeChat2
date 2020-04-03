@@ -175,7 +175,7 @@ public class PlaceHolders {
     PlaceHolderManager.registerPlaceholder(
         new PlaceHolder(
                 "%message%",
-                context -> PlaceHolderUtil.escapeAltColorCodes(context.getMessage().get()),
+                context -> PlaceHolderUtil.escape(context.getMessage().get()),
                 BungeeChatContext.HAS_MESSAGE)
             .createAliases("%command%"));
     PlaceHolderManager.registerPlaceholder(

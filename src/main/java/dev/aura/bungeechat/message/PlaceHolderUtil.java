@@ -58,6 +58,8 @@ public class PlaceHolderUtil {
           .put(Permission.USE_CHAT_FORMAT_RESET, 'r')
           .build();
   private static final Map<Integer, Optional<Pattern>> patternCache = new HashMap<>();
+  private static final char placeholderChar = '%';
+  private static final String placeholderString = String.valueOf(placeholderChar);
 
   public static void clearConfigSections() {
     formatsBase = null;
@@ -163,5 +165,13 @@ public class PlaceHolderUtil {
 
   public static String escapeAltColorCodes(String message) {
     return message.replace(altColorString, altColorString + altColorString);
+  }
+
+  public static String escapePlaceholders(String message) {
+    return message.replace(placeholderString, placeholderString + placeholderString);
+  }
+
+  public static String escape(String message) {
+    return escapeAltColorCodes(escapePlaceholders(message));
   }
 }
