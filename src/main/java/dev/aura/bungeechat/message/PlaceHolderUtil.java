@@ -58,7 +58,7 @@ public class PlaceHolderUtil {
           .put(Permission.USE_CHAT_FORMAT_RESET, 'r')
           .build();
   private static final Map<Integer, Optional<Pattern>> patternCache = new HashMap<>();
-  private static final char placeholderChar = '%';
+  private static final char placeholderChar = PlaceHolderManager.placeholderChar;
   private static final String placeholderString = String.valueOf(placeholderChar);
 
   public static void clearConfigSections() {
