@@ -31,8 +31,18 @@ public class AccountManager {
   public static Optional<BungeeChatAccount> getAccount(String name) {
     List<BungeeChatAccount> accounts = getAccountsForPartialName(name);
 
-    if (accounts.size() == 1) return Optional.of(accounts.get(0));
-    else return Optional.empty();
+    if (accounts.size() == 1) {
+      // See if a partial match is enough to identify one player
+      return Optional.of(accounts.get(0));
+    } else {
+      // If there are several, we need to make sure the full name or UUID matches
+      return accounts.stream()
+          .filter(
+              account ->
+                  name.equalsIgnoreCase(account.getName())
+                      || name.equalsIgnoreCase(account.getUniqueId().toString()))
+          .findFirst();
+    }
   }
 
   public static List<BungeeChatAccount> getAccounts() {
