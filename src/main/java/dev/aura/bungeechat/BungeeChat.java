@@ -1,6 +1,7 @@
 package dev.aura.bungeechat;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
 import dev.aura.bungeechat.account.AccountFileStorage;
 import dev.aura.bungeechat.account.AccountSQLStorage;
@@ -27,6 +28,7 @@ import dev.aura.bungeechat.message.PlaceHolders;
 import dev.aura.bungeechat.message.ServerAliases;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.util.LoggerHelper;
+import dev.aura.bungeechat.util.MapUtils;
 import dev.aura.lib.version.Version;
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,6 +38,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.net.ssl.HttpsURLConnection;
@@ -92,18 +95,26 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
     PlaceHolders.registerPlaceHolders();
 
-    Config accountDatabase = Configuration.get().getConfig("AccountDatabase");
+    final Config accountDatabase = Configuration.get().getConfig("AccountDatabase");
+    final Config databaseCredentials = accountDatabase.getConfig("credentials");
+    final Config connectionProperties = accountDatabase.getConfig("properties");
+    final ImmutableMap<String, String> connectionPropertiesMap =
+        connectionProperties.entrySet().stream()
+            .collect(
+                MapUtils.immutableMapCollector(
+                    Map.Entry::getKey, entry -> entry.getValue().toString()));
 
     if (accountDatabase.getBoolean("enabled")) {
       try {
         AccountManager.setAccountStorage(
             new AccountSQLStorage(
-                accountDatabase.getString("ip"),
-                accountDatabase.getInt("port"),
-                accountDatabase.getString("database"),
-                accountDatabase.getString("user"),
-                accountDatabase.getString("password"),
-                accountDatabase.getString("tablePrefix")));
+                databaseCredentials.getString("ip"),
+                databaseCredentials.getInt("port"),
+                databaseCredentials.getString("database"),
+                databaseCredentials.getString("user"),
+                databaseCredentials.getString("password"),
+                databaseCredentials.getString("tablePrefix"),
+                connectionPropertiesMap));
       } catch (SQLException e) {
         LoggerHelper.error("Could not connect to specified database. Using file storage", e);
 

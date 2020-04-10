@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.google.common.collect.ImmutableMap;
 import dev.aura.bungeechat.TestDatabase;
 import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
@@ -13,6 +14,8 @@ import dev.aura.bungeechat.api.enums.ChannelType;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,6 +29,11 @@ public class AccountSQLStorageTest {
   private static final String password = "test";
   private static final String username = "test";
   private static final String tablePrefix = "bungeechat_";
+  private static final ImmutableMap<String, String> defaultOptions =
+      ImmutableMap.<String, String>builder()
+          .put("useUnicode", "true")
+          .put("characterEncoding", "utf8")
+          .build();
 
   private Connection connection;
 
@@ -50,10 +58,29 @@ public class AccountSQLStorageTest {
   }
 
   @Test
+  public void optionsMapToStringTest() {
+    final Map<String, String> modifiedOptions = new LinkedHashMap<>(defaultOptions);
+    modifiedOptions.put("connectTimeout", "10");
+
+    assertEquals(
+        "connectTimeout=0&socketTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=utf8",
+        AccountSQLStorage.optionsMapToString(defaultOptions));
+    assertEquals(
+        "connectTimeout=10&socketTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=utf8",
+        AccountSQLStorage.optionsMapToString(modifiedOptions));
+  }
+
+  @Test
   public void connectionTest() {
     try {
       new AccountSQLStorage(
-          "localhost", TestDatabase.getPort(), database, username, password, tablePrefix);
+          "localhost",
+          TestDatabase.getPort(),
+          database,
+          username,
+          password,
+          tablePrefix,
+          defaultOptions);
     } catch (SQLException e) {
       fail("No SQL exception expected: " + e.getLocalizedMessage());
     }
@@ -76,7 +103,13 @@ public class AccountSQLStorageTest {
     try {
       BungeeChatAccountStorage accountStorage =
           new AccountSQLStorage(
-              "localhost", TestDatabase.getPort(), database, username, password, tablePrefix);
+              "localhost",
+              TestDatabase.getPort(),
+              database,
+              username,
+              password,
+              tablePrefix,
+              defaultOptions);
       UUID testUUID = UUID.randomUUID();
 
       AccountInfo accountInfo = accountStorage.load(testUUID);

@@ -1,12 +1,16 @@
 package dev.aura.bungeechat.account;
 
+import com.google.common.annotations.VisibleForTesting;
 import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.util.LoggerHelper;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -21,6 +27,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 import lombok.Cleanup;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 
 public class AccountSQLStorage implements BungeeChatAccountStorage {
   private final Connection connection;
@@ -63,17 +70,34 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     return new UUID(mostSigBits, leastSigBits);
   }
 
+  @VisibleForTesting
+  static String optionsMapToString(Map<String, String> options) {
+    final Map<String, String> allOptions = new LinkedHashMap<>();
+    allOptions.put("connectTimeout", "0");
+    allOptions.put("socketTimeout", "0");
+    allOptions.put("autoReconnect", "true");
+    allOptions.putAll(options);
+
+    return allOptions.entrySet().stream()
+        .map(entry -> urlEncode(entry.getKey()) + '=' + urlEncode(entry.getValue()))
+        .collect(Collectors.joining("&"));
+  }
+
+  @SneakyThrows(UnsupportedEncodingException.class)
+  private static String urlEncode(String message) {
+    return URLEncoder.encode(message, StandardCharsets.UTF_8.name());
+  }
+
   public AccountSQLStorage(
-      String ip, int port, String database, String username, String password, String tablePrefix)
+      String ip,
+      int port,
+      String database,
+      String username,
+      String password,
+      String tablePrefix,
+      Map<String, String> options)
       throws SQLException {
-    this(
-        ip,
-        port,
-        database,
-        username,
-        password,
-        tablePrefix,
-        "connectTimeout=0&socketTimeout=0&autoReconnect=true");
+    this(ip, port, database, username, password, tablePrefix, optionsMapToString(options));
   }
 
   public AccountSQLStorage(
