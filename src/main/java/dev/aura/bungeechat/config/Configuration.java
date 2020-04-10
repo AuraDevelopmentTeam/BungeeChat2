@@ -364,7 +364,7 @@ public class Configuration implements Config {
               .put("aliases", section.getStringList("aliases"))
               .put("default", section.getBoolean("default"))
               .put("enabled", section.getBoolean("enabled"))
-              .put("passToClientServer", section.getBoolean("passToClientServer"))
+              .put("passToBackendServer", section.getBoolean("passToClientServer"))
               .put("serverList", moduleGlobalChatServerList)
               .put("symbol", moduleGlobalChatSymbol)
               .build();
@@ -399,7 +399,7 @@ public class Configuration implements Config {
       final ImmutableMap<String, Object> moduleLocalChat =
           ImmutableMap.<String, Object>builder()
               .put("enabled", section.getBoolean("enabled"))
-              .put("passToClientServer", section.getBoolean("passToClientServer"))
+              .put("passToBackendServer", section.getBoolean("passToClientServer"))
               .build();
 
       section = modulesSection.getSection("MOTD");
@@ -460,7 +460,7 @@ public class Configuration implements Config {
           ImmutableMap.<String, Object>builder()
               .put("aliases", section.getStringList("aliases"))
               .put("enabled", section.getBoolean("enabled"))
-              .put("passToClientServer", section.getBoolean("passToClientServer"))
+              .put("passToBackendServer", section.getBoolean("passToClientServer"))
               .build();
 
       section = modulesSection.getSection("TabCompletion");
