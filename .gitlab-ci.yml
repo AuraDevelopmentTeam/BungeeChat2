@@ -69,6 +69,15 @@ checkFormatting:
   allow_failure: true
   when: on_success
 
+checkTranslations:
+  stage: test
+  cache:
+    policy: pull
+  script:
+  - ./gradlew --continue --console=plain checkTranslations
+  allow_failure: true
+  when: on_success
+
 coverage:
   stage: report
   cache:
