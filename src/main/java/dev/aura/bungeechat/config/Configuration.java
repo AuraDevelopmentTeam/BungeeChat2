@@ -171,7 +171,11 @@ public class Configuration implements Config {
     }
   }
 
-  @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH", justification = "Fallthrough intended")
+  @SuppressFBWarnings(
+      value = {"SF_SWITCH_FALLTHROUGH", "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"},
+      justification =
+          "Fallthrough intended\n"
+              + "If we can't delete the file, we just ignore it. Really nothing we care about.")
   private void convertOldConfig() {
     if (OLD_CONFIG_FILE.exists()) {
       convertYAMLConfig();
@@ -188,6 +192,19 @@ public class Configuration implements Config {
           // Remove old path first to reduce the amount of data that needs to be copied
           config = config.withoutPath(oldPath).withValue(newPath, config.getValue(oldPath));
         }
+      case "11.1":
+        // Delete old language files
+        final File langDir = BungeeChat.getInstance().getLangFolder();
+        File langFile;
+
+        for (String lang :
+            new String[] {"de_DE", "en_US", "fr_FR", "hu_HU", "nl_NL", "pl_PL", "ru_RU", "zh_CN"}) {
+          langFile = new File(langDir, lang + ".lang");
+
+          if (langFile.exists()) {
+            langFile.delete();
+          }
+        }
 
       default:
         // Unknow Version or old version
@@ -196,7 +213,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.1":
+      case "11.2":
         // Up to date
         // -> No action needed
     }

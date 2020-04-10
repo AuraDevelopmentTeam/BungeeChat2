@@ -79,7 +79,8 @@ public class PlaceHolderUtil {
     File dir = BungeeChat.getInstance().getLangFolder();
     String language = Configuration.get().getString(LANGUAGE);
 
-    messageBase = new PluginMessagesTranslator(dir, language, BungeeChat.getInstance(), BungeeChat.ID);
+    messageBase =
+        new PluginMessagesTranslator(dir, language, BungeeChat.getInstance(), BungeeChat.ID);
   }
 
   public static String getFormat(Format format) {
