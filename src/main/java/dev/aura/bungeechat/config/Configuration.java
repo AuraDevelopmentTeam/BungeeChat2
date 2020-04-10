@@ -352,7 +352,7 @@ public class Configuration implements Config {
       final ImmutableMap<String, Object> moduleGlobalChatServerList =
           ImmutableMap.<String, Object>builder()
               .put("enabled", section.getBoolean("serverList.enabled"))
-              .put("serverList", section.getStringList("serverList.serverList"))
+              .put("list", section.getStringList("serverList.list"))
               .build();
       final ImmutableMap<String, Object> moduleGlobalChatSymbol =
           ImmutableMap.<String, Object>builder()
