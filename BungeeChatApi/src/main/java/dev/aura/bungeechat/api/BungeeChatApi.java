@@ -26,7 +26,7 @@ public interface BungeeChatApi {
         "AwesomestGamer", "MineTech13", "Brianetta", "CryLegend", "gb2233", "n0dai", "Luck"
       };
   public static final String[] TRANSLATORS =
-      new String[] {"Maxime_74", "DardBrinza", "gb2233", "Garixer", "povsister"};
+      new String[] {"Maxime_74", "DardBrinza", "gb2233", "Garixer", "povsister", "Fantasenf"};
   public static final String[] DONATORS = new String[] {"Breantique"};
   public static final double CONFIG_VERSION = 11.1;
   public static final int PLUGIN_ID = 12592;
