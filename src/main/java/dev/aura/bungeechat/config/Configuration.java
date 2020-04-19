@@ -172,9 +172,14 @@ public class Configuration implements Config {
   }
 
   @SuppressFBWarnings(
-      value = {"SF_SWITCH_FALLTHROUGH", "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"},
+      value = {
+        "SF_SWITCH_FALLTHROUGH",
+        "SF_SWITCH_NO_DEFAULT",
+        "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"
+      },
       justification =
           "Fallthrough intended\n"
+              + "Wrong detection by SpotBugs\n"
               + "If we can't delete the file, we just ignore it. Really nothing we care about.")
   private void convertOldConfig() {
     if (OLD_CONFIG_FILE.exists()) {
@@ -183,6 +188,8 @@ public class Configuration implements Config {
 
     switch (String.format(Locale.ROOT, "%.1f", config.getDouble("Version"))) {
       case "11.0":
+        LoggerHelper.info("Performing config migration 11.0 -> 11.1 ...");
+
         // Rename "passToClientServer" to "passToBackendServer"
         for (String basePath :
             new String[] {"Modules.GlobalChat", "Modules.LocalChat", "Modules.StaffChat"}) {
@@ -193,6 +200,8 @@ public class Configuration implements Config {
           config = config.withoutPath(oldPath).withValue(newPath, config.getValue(oldPath));
         }
       case "11.1":
+        LoggerHelper.info("Performing config migration 11.1 -> 11.2 ...");
+
         // Delete old language files
         final File langDir = BungeeChat.getInstance().getLangFolder();
         File langFile;
@@ -205,6 +214,11 @@ public class Configuration implements Config {
             langFile.delete();
           }
         }
+      case "11.2":
+        LoggerHelper.info("Performing config migration 11.2 -> 11.3 ...");
+
+        // Remove config section "Modules.TabCompletion"
+        config = config.withoutPath("Modules.TabCompletion");
 
       default:
         // Unknow Version or old version
@@ -213,7 +227,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.2":
+      case "11.3":
         // Up to date
         // -> No action needed
     }
@@ -463,12 +477,6 @@ public class Configuration implements Config {
               .put("passToBackendServer", section.getBoolean("passToClientServer"))
               .build();
 
-      section = modulesSection.getSection("TabCompletion");
-      final ImmutableMap<String, Object> moduleTabCompletion =
-          ImmutableMap.<String, Object>builder()
-              .put("enabled", section.getBoolean("enabled"))
-              .build();
-
       section = modulesSection.getSection("Vanish");
       final ImmutableMap<String, Object> moduleVanish =
           ImmutableMap.<String, Object>builder()
@@ -511,7 +519,6 @@ public class Configuration implements Config {
               .put("ServerSwitchMessages", moduleServerSwitchMessages)
               .put("Spy", moduleSpy)
               .put("StaffChat", moduleStaffChat)
-              .put("TabCompletion", moduleTabCompletion)
               .put("Vanish", moduleVanish)
               .put("VersionChecker", moduleVersionChecker)
               .put("WelcomeMessage", moduleWelcomeMessage)
@@ -541,7 +548,8 @@ public class Configuration implements Config {
       config =
           ConfigFactory.parseMap(configMap)
               .withFallback(config.withoutPath("ServerAlias"))
-              .resolve();
+              .resolve()
+              .withValue("Version", ConfigValueFactory.fromAnyRef("11.3"));
 
       // Rename old file
       Files.move(OLD_CONFIG_FILE, OLD_OLD_CONFIG_FILE);

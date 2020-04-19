@@ -37,8 +37,6 @@ public enum Permission {
   USE_CHAT_FORMAT_ITALIC("chat.format.italic"),
   USE_CHAT_FORMAT_RESET("chat.format.reset"),
 
-  USE_TAB_COMPLETE("chat.tabcomplete"),
-
   BYPASS_ANTI_ADVERTISEMENT("chat.bypass.antiadvertisement"),
   BYPASS_ANTI_DUPLICATE("chat.bypass.antiduplicate"),
   BYPASS_ANTI_SWEAR("chat.bypass.antiswear"),

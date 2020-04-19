@@ -28,7 +28,7 @@ public interface BungeeChatApi {
   public static final String[] TRANSLATORS =
       new String[] {"Maxime_74", "DardBrinza", "gb2233", "Garixer", "povsister", "Fantasenf"};
   public static final String[] DONATORS = new String[] {"Breantique"};
-  public static final double CONFIG_VERSION = 11.1;
+  public static final double CONFIG_VERSION = 11.3;
   public static final int PLUGIN_ID = 12592;
 
   /**
