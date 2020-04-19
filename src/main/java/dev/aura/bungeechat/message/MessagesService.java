@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.message;
 
+import com.google.common.base.Predicates;
 import com.typesafe.config.Config;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
@@ -12,6 +13,7 @@ import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.chatlog.ChatLoggingManager;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.module.IgnoringModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import java.util.Arrays;
@@ -118,9 +120,10 @@ public class MessagesService {
   public static void sendGlobalMessage(BungeeChatContext context) throws InvalidContextError {
     context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
 
+    Optional<BungeeChatAccount> account = context.getSender();
     Optional<String> finalMessage = preProcessMessage(context, Format.GLOBAL_CHAT);
 
-    sendToMatchingPlayers(finalMessage, getGlobalPredicate());
+    sendToMatchingPlayers(finalMessage, getGlobalPredicate(), getNotIgnoredPredicate(account));
 
     ChatLoggingManager.logMessage(ChannelType.GLOBAL, context);
   }
@@ -138,8 +141,9 @@ public class MessagesService {
     String localServerName =
         context.hasServer() ? context.getServer().get() : context.getSender().get().getServerName();
     Predicate<BungeeChatAccount> isLocal = getLocalPredicate(localServerName);
+    Predicate<BungeeChatAccount> notIgnored = getNotIgnoredPredicate(account);
 
-    sendToMatchingPlayers(finalMessage, isLocal);
+    sendToMatchingPlayers(finalMessage, isLocal, notIgnored);
 
     ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
 
@@ -147,7 +151,8 @@ public class MessagesService {
       String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
       Predicate<BungeeChatAccount> isNotLocal = isLocal.negate();
 
-      sendToMatchingPlayers(localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal);
+      sendToMatchingPlayers(
+          localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal, notIgnored);
     }
   }
 
@@ -380,6 +385,21 @@ public class MessagesService {
 
   public static Predicate<BungeeChatAccount> getPermissionPredicate(Permission permission) {
     return account -> PermissionManager.hasPermission(account, permission);
+  }
+
+  public static Predicate<BungeeChatAccount> getNotIgnoredPredicate(
+      Optional<BungeeChatAccount> sender) {
+    return getNotIgnoredPredicate(sender.get());
+  }
+
+  public static Predicate<BungeeChatAccount> getNotIgnoredPredicate(BungeeChatAccount sender) {
+    final IgnoringModule ignoringModule = BungeecordModuleManager.IGNORING_MODULE;
+
+    return (ignoringModule.isEnabled()
+            && ignoringModule.getModuleSection().getBoolean("ignoreChatMessages")
+            && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE))
+        ? account -> !account.hasIgnored(sender)
+        : Predicates.alwaysTrue();
   }
 
   public static void sendMessage(CommandSender recipient, String message) {

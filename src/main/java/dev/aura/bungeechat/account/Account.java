@@ -2,6 +2,7 @@ package dev.aura.bungeechat.account;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.DummyPlayer;
@@ -118,6 +119,13 @@ public class Account implements BungeeChatAccount {
     }
 
     return localSpy;
+  }
+
+  @Override
+  public BlockingQueue<UUID> getIgnored() {
+    return BungeecordModuleManager.IGNORING_MODULE.isEnabled()
+        ? ignored
+        : new LinkedBlockingQueue<>();
   }
 
   public boolean hasIgnored(ProxiedPlayer player) {

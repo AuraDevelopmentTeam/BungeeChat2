@@ -5,12 +5,14 @@ import dev.aura.bungeechat.api.module.BungeeChatModule;
 import dev.aura.bungeechat.config.Configuration;
 
 public abstract class Module implements BungeeChatModule {
+  public static boolean test_mode = false;
+
   public static final String MODULE_BASE = "Modules";
   public static final String CONFIG_ENABLED = "enabled";
 
   @Override
   public boolean isEnabled() {
-    return getModuleSection().getBoolean(CONFIG_ENABLED);
+    return test_mode ? true : getModuleSection().getBoolean(CONFIG_ENABLED);
   }
 
   public Config getModuleSection() {

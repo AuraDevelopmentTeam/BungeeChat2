@@ -11,6 +11,7 @@ import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.api.enums.ChannelType;
+import dev.aura.bungeechat.module.Module;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,6 +40,8 @@ public class AccountSQLStorageTest {
 
   @BeforeClass
   public static void setUpBeforeClass() {
+    Module.test_mode = true;
+
     TestDatabase.startDatabase();
   }
 
