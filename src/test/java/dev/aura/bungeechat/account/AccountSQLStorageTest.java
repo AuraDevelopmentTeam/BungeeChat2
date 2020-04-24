@@ -40,7 +40,7 @@ public class AccountSQLStorageTest {
 
   @BeforeClass
   public static void setUpBeforeClass() {
-    Module.test_mode = true;
+    Module.setTest_mode(true);
 
     TestDatabase.startDatabase();
   }
