@@ -31,9 +31,11 @@ inherit: en_US
 enableGlobal: "&eDu sprichst nun im &bGlobal Chat&e!"
 enableStaffchat: "&eDu sprichst nun im &aTeam Chat&e!"
 enableLocal: "&eDu sprichst nun im &cLocal Chat&e!"
-globalIsDefault: "&eGlobal Chat ist Standardmäßig aktiviert!"
-backToLocal: "&cThe feature linked to the channel you were talking in has been disabled or your permissions have been removed! You are now talking in local chat."
+globalIsDefault: "&eDer Globale Chat ist der Standardchannel!"
+localIsDefault: "&eDer Lokale Chat ist der Standardchannel!"
+backToDefault: "&cDas mit diesem Channel verknüfte Feature wurde entfernt oder deine Berechtigungen wurden entfernt. Du redest jetzt im Standardchannel"
 notInGlobalServer: "&cDer Globale Chat ist auf diesem Server nicht aktiviert..."
+notInLocalServer: "&cDer Lokale Chat ist auf diesem Server nicht aktiviert..."
 
 ####################################################################################################
 # Messenger Messages
@@ -83,6 +85,7 @@ playerNotFound: "&cKonnte gewünschten Spieler nicht finden..."
 incorrectUsage: "&cFalsche Handhabung! Benutze den Befehl so: %command%"
 noPermission: "&cDu hast nicht das recht um diese Aktion auszuführen!"
 messageBlank: "&cTDie Nachricht darf nicht leer sein!"
+unknownServer: "&cUnbekannter Server"
 
 ####################################################################################################
 # Ignore Messages
