@@ -8,10 +8,13 @@ import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.module.ChatLockModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.bungeechat.util.ServerNameHelper;
+import java.util.Optional;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatLockCommand extends BaseCommand {
-  private static final String USAGE = "/chatlock <local|global> [clear]";
+  private static final String USAGE = "/chatlock <local [server]|global> [clear]";
 
   public ChatLockCommand(ChatLockModule chatLockModule) {
     super("chatlock", chatLockModule.getModuleSection().getStringList("aliases"));
@@ -24,13 +27,13 @@ public class ChatLockCommand extends BaseCommand {
 
     BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
 
-    if (args.length < 1) {
+    if ((args.length < 1) || (args.length > 2)) {
       MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(player, USAGE));
       return;
     }
 
     final ChatLockModule chatLock = BungeecordModuleManager.CHAT_LOCK_MODULE;
-    final boolean clear = (args.length >= 2) && args[1].equalsIgnoreCase("clear");
+    final boolean clear = (args.length >= 2) && args[args.length - 1].equalsIgnoreCase("clear");
     final int emptyLines = clear ? chatLock.getModuleSection().getInt("emptyLinesOnClear") : 0;
 
     if (args[0].equalsIgnoreCase("global")) {
@@ -48,7 +51,20 @@ public class ChatLockCommand extends BaseCommand {
             Messages.ENABLE_CHATLOCK.get(player), MessagesService.getGlobalPredicate());
       }
     } else if (args[0].equalsIgnoreCase("local")) {
-      String serverName = player.getServerName();
+      boolean serverSpecified = args.length == (clear ? 3 : 2);
+
+      if (!serverSpecified && !(sender instanceof ProxiedPlayer)) {
+        MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(player, USAGE));
+        return;
+      }
+
+      Optional<String> optServerName =
+          ServerNameHelper.verifyServerName(
+              serverSpecified ? args[1] : player.getServerName(), sender);
+
+      if (!optServerName.isPresent()) return;
+
+      String serverName = optServerName.get();
 
       if (chatLock.isLocalChatLockEnabled(serverName)) {
         chatLock.disableLocalChatLock(serverName);

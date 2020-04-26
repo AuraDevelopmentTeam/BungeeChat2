@@ -6,11 +6,11 @@ import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.LocalToModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
+import dev.aura.bungeechat.util.ServerNameHelper;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.config.ServerInfo;
 
 public class LocalToCommand extends BaseCommand {
   public LocalToCommand(LocalToModule localToModule) {
@@ -27,23 +27,14 @@ public class LocalToCommand extends BaseCommand {
         return;
       }
 
-      String server = args[0];
-      boolean serverExists = false;
+      Optional<String> optServerName = ServerNameHelper.verifyServerName(args[0], sender);
 
-      for (ServerInfo serverInfo : ProxyServer.getInstance().getServers().values()) {
-        if (serverInfo.getName().equalsIgnoreCase(server)) {
-          serverExists = true;
-          break;
-        }
-      }
+      if (!optServerName.isPresent()) return;
 
-      if (!serverExists) {
-        MessagesService.sendMessage(sender, Messages.UNKNOWN_SERVER.get(sender, server));
-        return;
-      }
+      String serverName = optServerName.get();
 
       String finalMessage = Arrays.stream(args, 1, args.length).collect(Collectors.joining(" "));
-      MessagesService.sendLocalMessage(new Context(sender, finalMessage, server));
+      MessagesService.sendLocalMessage(new Context(sender, finalMessage, serverName));
     }
   }
 }
