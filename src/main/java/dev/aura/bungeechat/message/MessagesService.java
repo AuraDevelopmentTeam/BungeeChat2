@@ -383,6 +383,19 @@ public class MessagesService {
     return account -> serverName.equals(account.getServerName());
   }
 
+  public static Predicate<BungeeChatAccount> getLocalPredicate() {
+    final Config section =
+        BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
+
+    if (!section.getBoolean("enabled")) return account -> true;
+    else {
+      // TODO: Use wildcard string
+      List<String> allowedServers = section.getStringList("list");
+
+      return account -> allowedServers.contains(account.getServerName());
+    }
+  }
+
   public static Predicate<BungeeChatAccount> getPermissionPredicate(Permission permission) {
     return account -> PermissionManager.hasPermission(account, permission);
   }

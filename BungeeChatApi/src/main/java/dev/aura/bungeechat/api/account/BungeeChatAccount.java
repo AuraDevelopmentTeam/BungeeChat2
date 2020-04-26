@@ -17,6 +17,13 @@ public interface BungeeChatAccount {
 
   public ChannelType getChannelType();
 
+  /**
+   * Returns the <b>global</b> default channel type for <b>all players</b>!!
+   *
+   * @return default channel type
+   */
+  public ChannelType getDefaultChannelType();
+
   public boolean isVanished();
 
   public boolean hasMessangerEnabled();
@@ -58,6 +65,13 @@ public interface BungeeChatAccount {
   public Optional<String> getStoredSuffix();
 
   public void setChannelType(ChannelType channelType);
+
+  /**
+   * Sets the <b>global</b> default channel type for <b>all players</b>!!
+   *
+   * @param channelType new default channel type
+   */
+  public void setDefaultChannelType(ChannelType channelType);
 
   public void setVanished(boolean vanished);
 

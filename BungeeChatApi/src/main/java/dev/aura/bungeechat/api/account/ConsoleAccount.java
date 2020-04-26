@@ -38,6 +38,11 @@ public class ConsoleAccount implements BungeeChatAccount {
   }
 
   @Override
+  public ChannelType getDefaultChannelType() {
+    return ChannelType.GLOBAL;
+  }
+
+  @Override
   public boolean isVanished() {
     return true;
   }
@@ -94,6 +99,11 @@ public class ConsoleAccount implements BungeeChatAccount {
 
   @Override
   public void setChannelType(ChannelType channelType) {
+    // Do nothing
+  }
+
+  @Override
+  public void setDefaultChannelType(ChannelType channelType) {
     // Do nothing
   }
 

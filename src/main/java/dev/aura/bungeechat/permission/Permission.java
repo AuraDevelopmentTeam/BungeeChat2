@@ -47,6 +47,8 @@ public enum Permission {
   COMMAND_ALERT("command.alert"),
   COMMAND_GLOBAL("command.global"),
   COMMAND_GLOBAL_TOGGLE("command.global.toggle"),
+  COMMAND_LOCAL("command.local"),
+  COMMAND_LOCAL_TOGGLE("command.local.toggle"),
   COMMAND_STAFFCHAT("command.staffchat"),
   COMMAND_STAFFCHAT_VIEW("command.staffchat.view"),
   COMMAND_HELPOP("command.helpop"),

@@ -14,8 +14,10 @@ public enum Messages implements Message {
   ENABLE_STAFFCHAT("enableStaffchat"),
   ENABLE_LOCAL("enableLocal"),
   GLOBAL_IS_DEFAULT("globalIsDefault"),
-  BACK_TO_LOCAL("backToLocal"),
+  LOCAL_IS_DEFAULT("localIsDefault"),
+  BACK_TO_DEFAULT("backToDefault"),
   NOT_IN_GLOBAL_SERVER("notInGlobalServer"),
+  NOT_IN_LOCAL_SERVER("notInLocalServer"),
 
   // Messenger Messages
   MESSAGE_YOURSELF("messageYourself"),
