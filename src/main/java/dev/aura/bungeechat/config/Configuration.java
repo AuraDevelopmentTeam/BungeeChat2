@@ -497,6 +497,13 @@ public class Configuration implements Config {
               .put("enabled", section.getBoolean("enabled"))
               .build();
 
+      section = modulesSection.getSection("LocalTo");
+      final ImmutableMap<String, Object> moduleLocalTo =
+          ImmutableMap.<String, Object>builder()
+              .put("aliases", section.getStringList("aliases"))
+              .put("enabled", section.getBoolean("enabled"))
+              .build();
+
       final ImmutableMap<String, Object> modules =
           ImmutableMap.<String, Object>builder()
               .put("Alert", moduleAlert)
@@ -522,6 +529,7 @@ public class Configuration implements Config {
               .put("Vanish", moduleVanish)
               .put("VersionChecker", moduleVersionChecker)
               .put("WelcomeMessage", moduleWelcomeMessage)
+              .put("LocalTo", moduleLocalTo)
               .build();
 
       section = oldConfig.getSection("Settings.PermissionsManager");
