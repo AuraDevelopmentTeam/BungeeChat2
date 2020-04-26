@@ -23,11 +23,18 @@ public interface BungeeChatApi {
   public static final String[] AUTHORS = new String[] {AUTHOR_BRAINSTONE, AUTHOR_SHAWN};
   public static final String[] CONTRIBUTORS =
       new String[] {
-        "AwesomestGamer", "MineTech13", "Brianetta", "CryLegend", "gb2233", "n0dai", "Luck"
+        "AwesomestGamer",
+        "Brianetta",
+        "CryLegend",
+        "gb2233",
+        "Hodel1",
+        "Luck",
+        "MineTech13",
+        "n0dai"
       };
   public static final String[] TRANSLATORS =
-      new String[] {"Maxime_74", "DardBrinza", "gb2233", "Garixer", "povsister", "Fantasenf"};
-  public static final String[] DONATORS = new String[] {"Breantique"};
+      new String[] {"DardBrinza", "Fantasenf", "Garixer", "gb2233", "Maxime_74", "povsister"};
+  public static final String[] DONATORS = new String[] {"Breantique", "NickT"};
   public static final double CONFIG_VERSION = 11.3;
   public static final int PLUGIN_ID = 12592;
 

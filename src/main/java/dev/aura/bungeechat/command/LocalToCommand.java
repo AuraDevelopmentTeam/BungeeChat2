@@ -13,7 +13,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 
 public class LocalToCommand extends BaseCommand {
-
   public LocalToCommand(LocalToModule localToModule) {
     super("localto", localToModule.getModuleSection().getStringList("aliases"));
   }
@@ -30,10 +29,10 @@ public class LocalToCommand extends BaseCommand {
 
       String server = args[0];
       boolean serverExists = false;
+
       for (ServerInfo serverInfo : ProxyServer.getInstance().getServers().values()) {
         if (serverInfo.getName().equalsIgnoreCase(server)) {
           serverExists = true;
-          server = serverInfo.getName();
           break;
         }
       }
@@ -43,7 +42,7 @@ public class LocalToCommand extends BaseCommand {
         return;
       }
 
-      String finalMessage = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
+      String finalMessage = Arrays.stream(args, 1, args.length).collect(Collectors.joining(" "));
       MessagesService.sendLocalMessage(new Context(sender, finalMessage, server));
     }
   }
