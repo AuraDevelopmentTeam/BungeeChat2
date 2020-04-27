@@ -10,8 +10,22 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class PermissionManager {
+  public static boolean hasPermissionNoMessage(ProxiedPlayer player, Permission permission) {
+    return player.hasPermission(permission.getStringedPermission());
+  }
+
+  public static boolean hasPermissionNoMessage(CommandSender sender, Permission permission) {
+    return !(sender instanceof ProxiedPlayer)
+        || hasPermissionNoMessage((ProxiedPlayer) sender, permission);
+  }
+
+  public static boolean hasPermissionNoMessage(BungeeChatAccount account, Permission permission) {
+    return hasPermissionNoMessage(
+        BungeecordAccountManager.getCommandSender(account).get(), permission);
+  }
+
   public static boolean hasPermission(ProxiedPlayer player, Permission permission) {
-    if (player.hasPermission(permission.getStringedPermission())) return true;
+    if (hasPermissionNoMessage(player, permission)) return true;
     else {
       if (permission.getWarnOnLackingPermission()) {
         MessagesService.sendMessage(player, Messages.NO_PERMISSION.get(player));

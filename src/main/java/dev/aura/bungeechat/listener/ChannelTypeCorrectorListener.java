@@ -35,7 +35,14 @@ public class ChannelTypeCorrectorListener implements Listener {
             && (!ModuleManager.isModuleActive(BungeecordModuleManager.STAFF_CHAT_MODULE)
                 || !PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT)))) {
       e.setCancelled(true);
-      player.setChannelType(player.getDefaultChannelType());
+
+      ChannelType defaultChannel = player.getDefaultChannelType();
+
+      if (((defaultChannel == ChannelType.GLOBAL)
+              && PermissionManager.hasPermissionNoMessage(sender, Permission.COMMAND_GLOBAL))
+          || ((defaultChannel == ChannelType.LOCAL)
+              && PermissionManager.hasPermissionNoMessage(sender, Permission.COMMAND_LOCAL)))
+        player.setChannelType(defaultChannel);
       MessagesService.sendMessage(sender, Messages.BACK_TO_DEFAULT.get());
     }
   }
