@@ -264,13 +264,13 @@ public class MessagesService {
 
   public static void sendSwitchMessage(CommandSender sender, ServerInfo server)
       throws InvalidContextError {
-    sendSwitchMessage(sender, server.getName());
+    sendSwitchMessage(sender, (server == null) ? null : server.getName());
   }
 
   public static void sendSwitchMessage(CommandSender sender, String server)
       throws InvalidContextError {
     final Context context = new Context(sender);
-    context.setServer(server);
+    if (server != null) context.setServer(server);
 
     sendSwitchMessage(context);
   }

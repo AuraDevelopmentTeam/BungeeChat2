@@ -9,6 +9,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public interface BungeeChatAccount {
+  public static final String unknownServer = "unknown";
+
   public UUID getUniqueId();
 
   public default AccountType getAccountType() {

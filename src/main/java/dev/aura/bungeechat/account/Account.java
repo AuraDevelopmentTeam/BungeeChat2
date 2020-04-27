@@ -178,7 +178,7 @@ public class Account implements BungeeChatAccount {
     try {
       return getServerInfo().getName();
     } catch (NullPointerException e) {
-      return "unknown";
+      return unknownServer;
     }
   }
 
@@ -187,7 +187,7 @@ public class Account implements BungeeChatAccount {
     try {
       return getServerInfo().getSocketAddress().toString();
     } catch (NullPointerException e) {
-      return "unknown";
+      return unknownServer;
     }
   }
 

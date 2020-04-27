@@ -8,9 +8,12 @@ import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.PlaceHolder;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
 import dev.aura.bungeechat.api.utils.TimeUtil;
+import dev.aura.bungeechat.util.ServerNameHelper;
+import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
@@ -96,6 +99,32 @@ public class PlaceHolders {
                 context -> context.getSender().get().getServerIP(),
                 BungeeChatContext.HAS_SENDER)
             .createAliases("sender_serverip", "to_serverip"));
+    PlaceHolderManager.registerPlaceholder(
+        new PlaceHolder(
+            "from_servername",
+            context ->
+                ServerNameHelper.getServerInfo(context.getServer().get())
+                    .map(ServerInfo::getName)
+                    .orElse(BungeeChatAccount.unknownServer),
+            BungeeChatContext.HAS_SERVER));
+    PlaceHolderManager.registerPlaceholder(
+        new PlaceHolder(
+            "from_serveralias",
+            context ->
+                ServerAliases.getServerAlias(
+                    ServerNameHelper.getServerInfo(context.getServer().get())
+                        .map(ServerInfo::getName)
+                        .orElse(BungeeChatAccount.unknownServer)),
+            BungeeChatContext.HAS_SERVER));
+    PlaceHolderManager.registerPlaceholder(
+        new PlaceHolder(
+            "from_serverip",
+            context ->
+                ServerNameHelper.getServerInfo(context.getServer().get())
+                    .map(ServerInfo::getSocketAddress)
+                    .map(SocketAddress::toString)
+                    .orElse(BungeeChatAccount.unknownServer),
+            BungeeChatContext.HAS_SERVER));
     PlaceHolderManager.registerPlaceholder(
         new PlaceHolder(
                 "muted_until",
