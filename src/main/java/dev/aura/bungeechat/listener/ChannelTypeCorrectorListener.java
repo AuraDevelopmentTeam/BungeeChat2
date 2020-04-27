@@ -41,9 +41,10 @@ public class ChannelTypeCorrectorListener implements Listener {
       if (((defaultChannel == ChannelType.GLOBAL)
               && PermissionManager.hasPermissionNoMessage(sender, Permission.COMMAND_GLOBAL))
           || ((defaultChannel == ChannelType.LOCAL)
-              && PermissionManager.hasPermissionNoMessage(sender, Permission.COMMAND_LOCAL)))
+              && PermissionManager.hasPermissionNoMessage(sender, Permission.COMMAND_LOCAL))) {
         player.setChannelType(defaultChannel);
-      MessagesService.sendMessage(sender, Messages.BACK_TO_DEFAULT.get());
+        MessagesService.sendMessage(sender, Messages.BACK_TO_DEFAULT.get());
+      }
     }
   }
 }
