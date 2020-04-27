@@ -1,13 +1,56 @@
 Version 2.2.0
 -------------
 
-\* Using new HOCON config instead of YAML. (New config file is called `config.conf`) (Features of HOCON: https://github.com/typesafehub/config#using-hocon-the-json-superset)  
-\* Migrating old config automatically.  
+This update is **HUGE**!  
+So instead of the typical list I'll try to summarize the biggest changes first and then I'll list everything in detail.  
+Also please be aware that with this update support for version 2.1.6 stops right now. If you need my help, update.
+
+### Huge Changes
+
+\+ Using new HOCON config instead of YAML. Your old config will be migrated and backuped. The new format includes lots of helpful comments, is a lot less prone
+   to incorrect formatting (you don't need to worry about indentation, `:` and `=` are interchangeable, etc.) and the config formats itself.  
+\+ New translation system. This includes default translations that are shipped with the plugin, customizable translations, custom languages and few quality of
+   life changes compared to the old system. **Be sure to read the README files when editing translations!**  
+\* Reworked the channel system. Local chat now is treated the exact same way as global chat in the sense that it has it's own command and permissions.  
+\* Fixed several issues with people relogging too quickly.  
+
+### Full Changelog
+
+\+ Added contributors and donators to the startup banner.  
+\+ Using new HOCON config instead of YAML. (New config file is called `config.conf`) (Features of HOCON:
+   https://github.com/typesafehub/config#using-hocon-the-json-superset)  
+\+ New message translation system with default translation files.  
+\+ Added several new placeholders:  
+  - `%fulldisplayname%`, `%sender_fulldisplayname%`, `%target_fulldisplayname%`
+  - `%to_servername%`, `%to_serveralias%`, `%to_serverip%` (for ServerSwitch Messages)
+  - `%from_servername%`, `%from_serveralias%`, `%from_serverip%` (for ServerSwitch Messages)
+
+\+ Added `/local` command.  
+\+ Added `/localto` command.  
+\+ Added MulticastChat to group local servers together.  
+\+ Added `on`/`off` parameters for `/bvanish`.  
+\+ Added `de_DE`, `fr_FR`, `hu_HU`, `nl_NL`, `pl_PL`, `ru_RU`, `zh_CN` translations (done by their respective translators). If you can update them or add a new
+   language, feel free to [open a Pull Request on GitHub](https://github.com/AuraDevelopmentTeam/BungeeChat2/compare).  
+\+ Added support for CloudNet Permissions Systems.  
+\+ Added more options for passing local chat through the Bungee.  
+\* Migrating old configs (old YAML config and older HOCON config) automatically (This should allow migrations from any version (starting with 2.1.6) to any
+   newer version).  
 \* Config migrates automatically when new options are added.  
 \* Config automatically gets formatted on every start and reload.  
-\* Improved message translation system with default translation files.  
-\* Added contributors and donators to the startup banner.  
-\* Fixed ignoring.  
+\* Renamed some badly named config sections.  
+\* Fixed and improved ignoring.  
+\* Improved placeholder performance.  
+\* Placeholders may now be recursive.  
+\* Fixed AntiSwear, so all combinations are allowed.  
+\* Allowed changing the startup banner size (try it. `long` looks awesome ;) ).  
+\* `/chatlock` and `/clearchat` allow the local server to be specified (and therefor can now be executed by the console too).  
+\* Fixed several issues with people relogging too quickly.  
+\* Updated LuckPerms to v5.  
+\* Updated to BungeeCord 1.15 (backwards compatible with older versions (the new ServerSwitch Message placeholders need 1.15)).  
+\* Reloading now works with all settings.  
+\* Fixed countless other bugs and issues from both the development versions and the 2.1.6 release (I seriously lost track).  
+\- Removed tab complete (all it did was tab complete player names everywhere with maximum priority. Super useless, especially with the 1.13+ improved auto
+   complete).  
 
 
 Version 2.1.6
