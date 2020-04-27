@@ -102,7 +102,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         connectionProperties.entrySet().stream()
             .collect(
                 MapUtils.immutableMapCollector(
-                    Map.Entry::getKey, entry -> entry.getValue().toString()));
+                    Map.Entry::getKey, entry -> entry.getValue().unwrapped().toString()));
 
     if (accountDatabase.getBoolean("enabled")) {
       try {
