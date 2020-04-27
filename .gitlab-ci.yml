@@ -153,7 +153,7 @@ pages:
   - coverage
   - spotbugs
   script:
-  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | rev | cut -d- -f-3 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d. -f1 | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $COVERAGE_REPORTS; do dir=public/coverage/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $SPOTBUGS_REPORTS; do dir=public/spotbugs/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
