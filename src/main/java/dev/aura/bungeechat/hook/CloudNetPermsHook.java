@@ -38,4 +38,8 @@ public class CloudNetPermsHook implements BungeeChatHook {
   public int getPriority() {
     return HookManager.PERMISSION_PLUGIN_PREFIX_PRIORITY;
   }
+
+  public boolean permissionsEnabled() {
+    return api.getPermissionPool().isAvailable();
+  }
 }
