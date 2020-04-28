@@ -1,6 +1,5 @@
 package dev.aura.bungeechat.message;
 
-import com.google.common.base.Predicates;
 import com.typesafe.config.Config;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
@@ -412,7 +411,7 @@ public class MessagesService {
             && ignoringModule.getModuleSection().getBoolean("ignoreChatMessages")
             && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE))
         ? account -> !account.hasIgnored(sender)
-        : Predicates.alwaysTrue();
+        : account -> true;
   }
 
   public static void sendMessage(CommandSender recipient, String message) {
