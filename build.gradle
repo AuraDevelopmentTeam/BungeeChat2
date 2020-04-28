@@ -26,6 +26,8 @@ dependencies {
     
     implementation("net.alpenblock:BungeePerms:${bungeeperms_version}")
     implementation "de.dytanic.cloudnet:cloudnet-api-bridge:${cloudnetapi2_version}"
+    implementation "de.dytanic.cloudnet:cloudnet-cloudperms:${cloudnetapi3_version}"
+    implementation "de.dytanic.cloudnet:cloudnet-driver:${cloudnetapi3_version}"
     implementation "me.lucko.luckperms:luckperms-api:${luckperms4_version}"
     implementation "net.luckperms:api:${luckperms5_version}"
     implementation "com.github.CheeseSoftware:PowerfulPermsAPI:${powerfulperms_version}"

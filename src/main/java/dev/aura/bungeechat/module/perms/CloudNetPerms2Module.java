@@ -2,6 +2,8 @@ package dev.aura.bungeechat.module.perms;
 
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.hook.CloudNetPerms2Hook;
+import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.util.ClassUtil;
 
 public class CloudNetPerms2Module extends PermissionPluginModule {
   private CloudNetPerms2Hook permsHook = null;
@@ -13,7 +15,9 @@ public class CloudNetPerms2Module extends PermissionPluginModule {
 
   @Override
   public boolean isEnabled() {
-    if (!isPluginPresent("CloudNetAPI")) return false;
+    if (!isPluginPresent("CloudNetAPI")
+        || !ClassUtil.doesClassExist("de.dytanic.cloudnet.api.CloudAPI")
+        || BungeecordModuleManager.CLOUD_NET_PERMS3_MODULE.isEnabled()) return false;
 
     permsHook = new CloudNetPerms2Hook();
 
