@@ -28,7 +28,8 @@ public class GlobalChatModule extends Module {
         .getPluginManager()
         .registerListener(BungeeChat.getInstance(), globalChatListener);
 
-    if (getModuleSection().getBoolean("default")) {
+    if (getModuleSection().getBoolean("default")
+        || !BungeecordModuleManager.LOCAL_CHAT_MODULE.isEnabled()) {
       Account.staticSetDefaultChannelType(ChannelType.GLOBAL);
     }
   }
