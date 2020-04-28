@@ -21,6 +21,8 @@ public class ChannelTypeCorrectorListener implements Listener {
   public void onPlayerChat(ChatEvent e) {
     if (e.isCancelled()) return;
     if (ChatUtils.isCommand(e.getMessage())) return;
+    if (!BungeecordModuleManager.GLOBAL_CHAT_MODULE.isEnabled()
+        && !BungeecordModuleManager.LOCAL_CHAT_MODULE.isEnabled()) return;
     if (!(e.getSender() instanceof ProxiedPlayer)) return;
 
     ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
