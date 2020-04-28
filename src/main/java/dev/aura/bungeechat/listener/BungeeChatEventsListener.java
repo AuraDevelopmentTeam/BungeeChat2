@@ -37,7 +37,7 @@ public class BungeeChatEventsListener implements Listener {
       if (joinedPlayers.contains(uuid)) {
         ProxyServer.getInstance()
             .getPluginManager()
-            .callEvent(new BungeeChatServerSwitchEvent(player, e.getFrom()));
+            .callEvent(new BungeeChatServerSwitchEvent(player, e));
       } else {
         joinedPlayers.add(uuid);
 
