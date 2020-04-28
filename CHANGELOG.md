@@ -1,3 +1,14 @@
+Version 2.2.1
+-------------
+
+\+ Added support for CloudNet 3.  
+\* Fixed support for CloudNet 2 (Fixes [#115](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/115)).  
+\* Fixed error when having the ignore bypass permission (Fixes [#116](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/116)).  
+\* Fixed commands being canceled when players don't have permissions to chat (Fixes [#117](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/117)).  
+\* Fixed ServerSwitch backwards compatibility (Fixes [#118](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/118)).  
+\* Fixed build issues.  
+
+
 Version 2.2.0
 -------------
 
