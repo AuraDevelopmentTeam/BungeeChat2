@@ -1,21 +1,21 @@
 package dev.aura.bungeechat.module.perms;
 
 import dev.aura.bungeechat.api.hook.HookManager;
-import dev.aura.bungeechat.hook.CloudNetPermsHook;
+import dev.aura.bungeechat.hook.CloudNetPerms2Hook;
 
-public class CloudNetPermsModule extends PermissionPluginModule {
-  private CloudNetPermsHook permsHook = null;
+public class CloudNetPerms2Module extends PermissionPluginModule {
+  private CloudNetPerms2Hook permsHook = null;
 
   @Override
   public String getName() {
-    return "CloudNetAPI";
+    return "CloudNet2";
   }
 
   @Override
   public boolean isEnabled() {
-    if (!super.isEnabled()) return false;
+    if (!isPluginPresent("CloudNetAPI")) return false;
 
-    permsHook = new CloudNetPermsHook();
+    permsHook = new CloudNetPerms2Hook();
 
     return permsHook.permissionsEnabled();
   }

@@ -9,10 +9,10 @@ import dev.aura.bungeechat.api.hook.HookManager;
 import java.util.Objects;
 import java.util.Optional;
 
-public class CloudNetPermsHook implements BungeeChatHook {
+public class CloudNetPerms2Hook implements BungeeChatHook {
   private final CloudAPI api;
 
-  public CloudNetPermsHook() {
+  public CloudNetPerms2Hook() {
     api = CloudAPI.getInstance();
   }
 
