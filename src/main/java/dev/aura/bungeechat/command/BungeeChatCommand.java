@@ -131,7 +131,7 @@ public class BungeeChatCommand extends BaseCommand {
             + ChatColor.GOLD
             + BungeeChatApi.AUTHOR_BRAINSTONE
             + ChatColor.GRAY
-            + "and "
+            + " and "
             + ChatColor.GOLD
             + BungeeChatApi.AUTHOR_SHAWN
             + ".");

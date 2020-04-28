@@ -299,21 +299,21 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
       con.connect();
 
       int responseCode = con.getResponseCode();
-      @Cleanup
-      BufferedReader reader =
-          new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 
-      if (responseCode != 200) {
-        LoggerHelper.warning(
-            "Invalid response! HTTP code: "
-                + responseCode
-                + " Content:\n"
-                + reader.lines().collect(Collectors.joining("\n")));
+      try (BufferedReader reader =
+          new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
+        if (responseCode != 200) {
+          LoggerHelper.warning(
+              "Invalid response! HTTP code: "
+                  + responseCode
+                  + " Content:\n"
+                  + reader.lines().collect(Collectors.joining("\n")));
 
-        return errorVersion;
+          return errorVersion;
+        }
+
+        return Optional.ofNullable(reader.readLine()).orElse(errorVersion);
       }
-
-      return Optional.ofNullable(reader.readLine()).orElse(errorVersion);
     } catch (Exception ex) {
       LoggerHelper.warning("Could not fetch the latest version!", ex);
 
