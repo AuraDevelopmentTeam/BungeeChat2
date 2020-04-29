@@ -32,8 +32,10 @@ enableGlobal: "&eMost a &bglobális chatet&e használod!"
 enableStaffchat: "&eMost a &astaff chatet&e használod!"
 enableLocal: "&eMost a &chelyi chatet&e használod!"
 globalIsDefault: "&eA globális chat már alapértelmezett!"
-backToLocal: "&cA használt chat csatorna vagy megszűnt vagy jogaid elvették. Átálltál helyi chatre"
+localIsDefault: "&eLocal chat is already the default chatmode!"
+backToDefault: "&cA használt chat csatorna vagy megszűnt vagy jogaid elvették. Átálltál helyi chatre"
 notInGlobalServer: "&cA globális chat ki van kapcsolva a szerveren..."
+notInLocalServer: "&cA helyi chat ki van kapcsolva a szerveren..."
 
 ####################################################################################################
 # Messenger Messages
@@ -82,19 +84,21 @@ notPlayer: "&cEzt a parancsot csak játékosok használhatják!"
 playerNotFound: "&cNem található játékos..."
 incorrectUsage: "&cHelytelen használat! Helyes fomátum: %command%"
 noPermission: "&cNincs jogod ehhez a parancshoz!"
+messageBlank: "&cNem küldhetsz üres üzenetet!"
+unknownServer: "&cIsmeretlen szerver"
 
 ####################################################################################################
 # Ignore Messages
 ####################################################################################################
-hasIgnored: "&c%target_name% mellőz..."
-addIgnore: "&eMostantól mellőzöd %name%-t!"
-removeIgnore: "&eMár nem mellőzöd %name%-t!"
-alreadyIgnored: "&eMár mellőzöd ezt a játékost!"
-ignoreYourself: "&cMagadat nem mellőzheted!"
-unignoreYourself: "&cMagadat nem mellőzheted!"
-notIgnored: "&cEzt a játékost nem mellőzöd!"
-ignoreList: "&eAkiket mellőzöl: &b%message%&e."
-ignoreNobody: "&aSenkit sem&e mellőzöl, aki online!"
+hasIgnored: "&c%target_name% nem látja az üzeneteid..."
+addIgnore: "&eMostantól nem látod %name% üzeneteit!"
+removeIgnore: "&eÚjra látod %name% üzeneteit!"
+alreadyIgnored: "&eEnnek a játékosnak már nem látod az üzeneteit!"
+ignoreYourself: "&cA saját üzenetek láthatósága nem kapcsolható!"
+unignoreYourself: "&cA saját üzenetek láthatósága nem kapcsolható!"
+notIgnored: "&cEnnek a játékosnak látod az üzeneteit!"
+ignoreList: "&eÜzenetek kikapcsolva: &b%message%&e."
+ignoreNobody: "&aMinden online játékos üzeneteit látod!"
 
 ####################################################################################################
 # Filter Messages
