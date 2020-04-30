@@ -1,5 +1,5 @@
 // Copyright © 2017, Project-Creative Dev-Team, All Rights Reserved
-package dev.aura.bungeechat;
+package dev.aura.bungeechat.testhelpers;
 
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.DB;

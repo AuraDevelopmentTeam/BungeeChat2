@@ -2,6 +2,7 @@ package dev.aura.bungeechat.util;
 
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,9 +34,9 @@ public class ServerNameHelper {
   }
 
   public static List<String> getServerNames() {
-    return ProxyServer.getInstance().getServers().values().stream()
-        .map(ServerInfo::getName)
-        .collect(Collectors.toList());
+    List<String> serverNames = new ArrayList<>(ProxyServer.getInstance().getServers().keySet());
+
+    return serverNames;
   }
 
   public static List<String> getMatchingServerNames(String partialName) {

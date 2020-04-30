@@ -6,12 +6,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.google.common.collect.ImmutableMap;
-import dev.aura.bungeechat.TestDatabase;
 import dev.aura.bungeechat.api.account.AccountInfo;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.module.Module;
+import dev.aura.bungeechat.testhelpers.TestDatabase;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.SQLException;

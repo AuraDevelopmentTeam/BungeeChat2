@@ -38,7 +38,11 @@ public class CommandTabCompleteListenerTest {
   private static ProxiedPlayer player2;
 
   private static BaseCommand commandFalse;
+
+  @SuppressWarnings("unused")
   private static BaseCommand commandPlayer1;
+
+  @SuppressWarnings("unused")
   private static BaseCommand commandPlayer2;
 
   private static Map<String, Command> commands;
