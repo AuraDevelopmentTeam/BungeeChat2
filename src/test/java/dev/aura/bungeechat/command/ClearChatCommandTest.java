@@ -50,10 +50,14 @@ public class ClearChatCommandTest extends ServerInfoTest {
     assertEquals(Arrays.asList(), tabComplete("local", "main", "test"));
     assertEquals(Arrays.asList(), tabComplete("global", "main", ""));
     assertEquals(Arrays.asList(), tabComplete("global", "main", "test"));
+    assertEquals(Arrays.asList(), tabComplete("xxx", "main", ""));
+    assertEquals(Arrays.asList(), tabComplete("xxx", "main", "test"));
 
     assertEquals(Arrays.asList(), tabComplete("local", "main", "test", ""));
     assertEquals(Arrays.asList(), tabComplete("local", "main", "test", "test"));
     assertEquals(Arrays.asList(), tabComplete("global", "main", "test", ""));
     assertEquals(Arrays.asList(), tabComplete("global", "main", "test", "test"));
+    assertEquals(Arrays.asList(), tabComplete("xxx", "main", "test", ""));
+    assertEquals(Arrays.asList(), tabComplete("xxx", "main", "test", "test"));
   }
 }

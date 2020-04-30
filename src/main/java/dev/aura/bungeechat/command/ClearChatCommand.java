@@ -11,6 +11,7 @@ import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.ServerNameHelper;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -18,10 +19,11 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ClearChatCommand extends BaseCommand {
+  // package because only neighboring class needs it
+  static final List<String> arg1Completetions = Arrays.asList("local", "global");
+
   private static final String USAGE = "/clearchat <local [server]|global>";
   private static final String EMPTY_LINE = " ";
-
-  private static final String[] arg1Completetions = {"local", "global"};
 
   public ClearChatCommand(ClearChatModule clearChatModule) {
     super("clearchat", clearChatModule.getModuleSection().getStringList("aliases"));
@@ -29,45 +31,44 @@ public class ClearChatCommand extends BaseCommand {
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    if (PermissionManager.hasPermission(sender, Permission.COMMAND_CLEAR_CHAT)) {
-      if ((args.length < 1) || (args.length > 3)) {
-        MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(sender, USAGE));
-      } else {
+    if (!PermissionManager.hasPermission(sender, Permission.COMMAND_CLEAR_CHAT)) return;
 
-        final int lines =
-            BungeecordModuleManager.CLEAR_CHAT_MODULE.getModuleSection().getInt("emptyLines");
-        final BungeeChatAccount bungeeChatAccount =
-            BungeecordAccountManager.getAccount(sender).get();
+    if ((args.length < 1) || (args.length > 3)) {
+      MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(sender, USAGE));
+    } else {
 
-        if (args[0].equalsIgnoreCase("local")) {
-          boolean serverSpecified = args.length == 2;
+      final int lines =
+          BungeecordModuleManager.CLEAR_CHAT_MODULE.getModuleSection().getInt("emptyLines");
+      final BungeeChatAccount bungeeChatAccount = BungeecordAccountManager.getAccount(sender).get();
 
-          if (!serverSpecified && !(sender instanceof ProxiedPlayer)) {
-            MessagesService.sendMessage(
-                sender, Messages.INCORRECT_USAGE.get(bungeeChatAccount, USAGE));
-            return;
-          }
+      if (args[0].equalsIgnoreCase("local")) {
+        boolean serverSpecified = args.length == 2;
 
-          Optional<String> optServerName =
-              ServerNameHelper.verifyServerName(
-                  serverSpecified ? args[1] : bungeeChatAccount.getServerName(), sender);
-
-          if (!optServerName.isPresent()) return;
-
-          String serverName = optServerName.get();
-
-          clearLocalChat(serverName, lines);
-
-          MessagesService.sendToMatchingPlayers(
-              Messages.CLEARED_LOCAL.get(sender), MessagesService.getLocalPredicate(serverName));
-        } else if (args[0].equalsIgnoreCase("global")) {
-          clearGlobalChat(lines);
-
-          MessagesService.sendToMatchingPlayers(
-              Messages.CLEARED_GLOBAL.get(sender), MessagesService.getGlobalPredicate());
-        } else {
-          MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(sender, USAGE));
+        if (!serverSpecified && !(sender instanceof ProxiedPlayer)) {
+          MessagesService.sendMessage(
+              sender, Messages.INCORRECT_USAGE.get(bungeeChatAccount, USAGE));
+          return;
         }
+
+        Optional<String> optServerName =
+            ServerNameHelper.verifyServerName(
+                serverSpecified ? args[1] : bungeeChatAccount.getServerName(), sender);
+
+        if (!optServerName.isPresent()) return;
+
+        String serverName = optServerName.get();
+
+        clearLocalChat(serverName, lines);
+
+        MessagesService.sendToMatchingPlayers(
+            Messages.CLEARED_LOCAL.get(sender), MessagesService.getLocalPredicate(serverName));
+      } else if (args[0].equalsIgnoreCase("global")) {
+        clearGlobalChat(lines);
+
+        MessagesService.sendToMatchingPlayers(
+            Messages.CLEARED_GLOBAL.get(sender), MessagesService.getGlobalPredicate());
+      } else {
+        MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(sender, USAGE));
       }
     }
   }
@@ -77,7 +78,7 @@ public class ClearChatCommand extends BaseCommand {
     final String location = args[0];
 
     if (args.length == 1) {
-      return Arrays.stream(arg1Completetions)
+      return arg1Completetions.stream()
           .filter(completion -> completion.startsWith(location))
           .collect(Collectors.toList());
     } else if ((args.length == 2) && ("local".equals(location))) {
