@@ -85,7 +85,7 @@ playerNotFound: "&cNem található játékos..."
 incorrectUsage: "&cHelytelen használat! Helyes fomátum: %command%"
 noPermission: "&cNincs jogod ehhez a parancshoz!"
 messageBlank: "&cNem küldhetsz üres üzenetet!"
-unknownServer: "&cIsmeretlen szerver \"&b%to_servername%&c\""
+unknownServer: "&cIsmeretlen szerver \"&b%unknown_server%&c\""
 
 ####################################################################################################
 # Ignore Messages

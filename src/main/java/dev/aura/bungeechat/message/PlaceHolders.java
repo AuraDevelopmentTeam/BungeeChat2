@@ -212,7 +212,7 @@ public class PlaceHolders {
                 "message",
                 context -> PlaceHolderUtil.escape(context.getMessage().get()),
                 BungeeChatContext.HAS_MESSAGE)
-            .createAliases("command"));
+            .createAliases("command", "unknown_server"));
     PlaceHolderManager.registerPlaceholder(
         new PlaceHolder("network_online", context -> getTotalPlayerCount()));
   }

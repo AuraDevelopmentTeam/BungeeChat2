@@ -18,7 +18,7 @@ public class PlaceholdersTest {
   @Test
   public void registerPlaceholdersTest() {
     assertEquals(
-        "Placeholders count is incorrect", 56L, PlaceHolderManager.getPlaceholderStream().count());
+        "Placeholders count is incorrect", 57L, PlaceHolderManager.getPlaceholderStream().count());
   }
 
   @Test(timeout = TIMEOUT)

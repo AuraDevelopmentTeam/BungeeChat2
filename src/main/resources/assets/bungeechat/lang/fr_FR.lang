@@ -85,7 +85,7 @@ playerNotFound: "&cImpossible de trouver le joueur..."
 incorrectUsage: "&cUtilisation incorrecte ! Utilisez cette syntaxe: %command%"
 noPermission: "&cVous n'avez pas les permissions pour effectuer cette action !"
 messageBlank: "&cLe message ne peut pas être vide !"
-unknownServer: "&cCe serveur \"&b%to_servername%&c\" n'est pas existant!"
+unknownServer: "&cCe serveur \"&b%unknown_server%&c\" n'est pas existant!"
 
 ####################################################################################################
 # Ignore Messages
