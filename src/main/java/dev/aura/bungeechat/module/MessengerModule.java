@@ -2,14 +2,14 @@ package dev.aura.bungeechat.module;
 
 import dev.aura.bungeechat.BungeeChat;
 import dev.aura.bungeechat.command.MessageCommand;
+import dev.aura.bungeechat.command.MessageToggleCommand;
 import dev.aura.bungeechat.command.ReplyCommand;
-import dev.aura.bungeechat.command.ToggleCommand;
 import net.md_5.bungee.api.ProxyServer;
 
 public class MessengerModule extends Module {
   private MessageCommand messageCommand;
   private ReplyCommand replyCommand;
-  private ToggleCommand toggleCommand;
+  private MessageToggleCommand toggleCommand;
 
   @Override
   public String getName() {
@@ -20,7 +20,7 @@ public class MessengerModule extends Module {
   public void onEnable() {
     messageCommand = new MessageCommand(this);
     replyCommand = new ReplyCommand(this);
-    toggleCommand = new ToggleCommand(this);
+    toggleCommand = new MessageToggleCommand(this);
 
     ProxyServer.getInstance()
         .getPluginManager()

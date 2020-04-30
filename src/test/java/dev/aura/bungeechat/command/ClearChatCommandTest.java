@@ -32,16 +32,19 @@ public class ClearChatCommandTest extends ServerInfoTest {
     assertEquals(Arrays.asList("hub1", "hub2"), tabComplete("local", "h"));
     assertEquals(Arrays.asList("test"), tabComplete("local", "tes"));
     assertEquals(Arrays.asList("main"), tabComplete("local", "main"));
+    assertEquals(Arrays.asList(), tabComplete("local", "xxx"));
 
     assertEquals(Arrays.asList(), tabComplete("global", ""));
     assertEquals(Arrays.asList(), tabComplete("global", "h"));
     assertEquals(Arrays.asList(), tabComplete("global", "tes"));
     assertEquals(Arrays.asList(), tabComplete("global", "main"));
+    assertEquals(Arrays.asList(), tabComplete("global", "xxx"));
 
     assertEquals(Arrays.asList(), tabComplete("xxx", ""));
     assertEquals(Arrays.asList(), tabComplete("xxx", "h"));
     assertEquals(Arrays.asList(), tabComplete("xxx", "tes"));
     assertEquals(Arrays.asList(), tabComplete("xxx", "main"));
+    assertEquals(Arrays.asList(), tabComplete("xxx", "xxx"));
   }
 
   @Test

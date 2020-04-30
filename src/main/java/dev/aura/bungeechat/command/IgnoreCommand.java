@@ -8,6 +8,8 @@ import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.IgnoringModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +17,8 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class IgnoreCommand extends BaseCommand {
+  private static final List<String> arg1Completetions = Arrays.asList("list", "add", "remove");
+
   public IgnoreCommand(IgnoringModule ignoringModule) {
     super("ignore", ignoringModule.getModuleSection().getStringList("aliases"));
   }
@@ -117,5 +121,22 @@ public class IgnoreCommand extends BaseCommand {
       MessagesService.sendMessage(
           sender, Messages.INCORRECT_USAGE.get(sender, "/ignore <list|add|remove> [player]"));
     }
+  }
+
+  @Override
+  public Collection<String> tabComplete(CommandSender sender, String[] args) {
+    final String param1 = args[0];
+
+    if (args.length == 1) {
+      return arg1Completetions.stream()
+          .filter(completion -> completion.startsWith(param1))
+          .collect(Collectors.toList());
+    } else if ((args.length == 2) && ("add".equals(param1) || "remove".equals(param1))) {
+      return BungeecordAccountManager.getAccountsForPartialName(args[1]).stream()
+          .map(BungeeChatAccount::getName)
+          .collect(Collectors.toList());
+    }
+
+    return super.tabComplete(sender, args);
   }
 }

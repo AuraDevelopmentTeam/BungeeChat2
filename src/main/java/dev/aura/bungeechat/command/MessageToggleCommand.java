@@ -10,8 +10,8 @@ import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class ToggleCommand extends BaseCommand {
-  public ToggleCommand(MessengerModule messengerModule) {
+public class MessageToggleCommand extends BaseCommand {
+  public MessageToggleCommand(MessengerModule messengerModule) {
     super("msgtoggle", messengerModule.getModuleSection().getStringList("aliases.msgtoggle"));
   }
 
