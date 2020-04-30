@@ -12,6 +12,7 @@ import dev.aura.bungeechat.util.ServerNameHelper;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -89,15 +90,16 @@ public class ClearChatCommand extends BaseCommand {
   }
 
   public static void clearGlobalChat(int emptyLines) {
-    for (int i = 0; i < emptyLines; i++) {
-      MessagesService.sendToMatchingPlayers(EMPTY_LINE, MessagesService.getGlobalPredicate());
-    }
+    clearChat(emptyLines, MessagesService.getGlobalPredicate());
   }
 
   public static void clearLocalChat(String serverName, int emptyLines) {
+    clearChat(emptyLines, MessagesService.getLocalPredicate(serverName));
+  }
+
+  private static void clearChat(int emptyLines, Predicate<BungeeChatAccount> predicate) {
     for (int i = 0; i < emptyLines; i++) {
-      MessagesService.sendToMatchingPlayers(
-          EMPTY_LINE, MessagesService.getLocalPredicate(serverName));
+      MessagesService.sendToMatchingPlayers(EMPTY_LINE, predicate);
     }
   }
 }
