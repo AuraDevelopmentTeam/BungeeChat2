@@ -9,13 +9,18 @@ import dev.aura.bungeechat.module.ClearChatModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import dev.aura.bungeechat.util.ServerNameHelper;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ClearChatCommand extends BaseCommand {
   private static final String USAGE = "/clearchat <local [server]|global>";
   private static final String EMPTY_LINE = " ";
+
+  private static final String[] arg1Completetions = {"local", "global"};
 
   public ClearChatCommand(ClearChatModule clearChatModule) {
     super("clearchat", clearChatModule.getModuleSection().getStringList("aliases"));
@@ -64,6 +69,23 @@ public class ClearChatCommand extends BaseCommand {
         }
       }
     }
+  }
+
+  @Override
+  public Collection<String> tabComplete(CommandSender sender, String[] args) {
+    final String location = args[0];
+
+    if (args.length == 1) {
+      return Arrays.stream(arg1Completetions)
+          .filter(completion -> completion.startsWith(location))
+          .collect(Collectors.toList());
+    } else if ((args.length == 2) && ("local".equals(location))) {
+      final String serverName = args[1];
+
+      return ServerNameHelper.getMatchingServerNames(serverName);
+    }
+
+    return super.tabComplete(sender, args);
   }
 
   public static void clearGlobalChat(int emptyLines) {
