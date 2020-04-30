@@ -2,8 +2,10 @@ package dev.aura.bungeechat.listener;
 
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.command.BaseCommand;
+import dev.aura.bungeechat.util.LoggerHelper;
 import java.net.SocketAddress;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
@@ -38,8 +40,15 @@ public class CommandTabCompleteListener implements Listener {
     if (!commandHandler.hasPermission(sender)) return;
 
     String[] args = Arrays.copyOfRange(allArgs, 1, allArgs.length);
+    Collection<String> suggestions = null;
 
-    event.getSuggestions().addAll(commandHandler.tabComplete(sender, args));
+    try {
+      suggestions = commandHandler.tabComplete(sender, args);
+    } catch (RuntimeException e) {
+      LoggerHelper.warning("Uncaught error during tabcomplete of /" + command, e);
+    }
+
+    if (suggestions != null) event.getSuggestions().addAll(suggestions);
   }
 
   public void updateBungeeChatCommands() {
