@@ -85,7 +85,7 @@ playerNotFound: "&cKonnte gewünschten Spieler nicht finden..."
 incorrectUsage: "&cFalsche Handhabung! Benutze den Befehl so: %command%"
 noPermission: "&cDu hast nicht das recht um diese Aktion auszuführen!"
 messageBlank: "&cTDie Nachricht darf nicht leer sein!"
-unknownServer: "&cUnbekannter Server"
+unknownServer: "&cUnbekannter Server \"&b%to_servername%&c\""
 
 ####################################################################################################
 # Ignore Messages

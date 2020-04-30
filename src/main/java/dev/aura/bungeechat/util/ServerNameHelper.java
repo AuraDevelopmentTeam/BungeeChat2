@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.util;
 
+import dev.aura.bungeechat.message.Context;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import java.util.Optional;
@@ -24,7 +25,10 @@ public class ServerNameHelper {
     final Optional<String> verifiedServerName = verifyServerName(serverName);
 
     if (!verifiedServerName.isPresent()) {
-      MessagesService.sendMessage(sender, Messages.UNKNOWN_SERVER.get(sender, serverName));
+      final Context context = new Context(sender);
+      context.setServer(serverName);
+
+      MessagesService.sendMessage(sender, Messages.UNKNOWN_SERVER.get(context));
     }
 
     return verifiedServerName;
