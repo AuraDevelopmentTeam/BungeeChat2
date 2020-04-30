@@ -37,8 +37,9 @@ public class BungeecordModuleManager extends ModuleManager {
   public static final JoinMessageModule JOIN_MESSAGE_MODULE = new JoinMessageModule();
   public static final LeaveMessageModule LEAVE_MESSAGE_MODULE = new LeaveMessageModule();
   public static final LocalChatModule LOCAL_CHAT_MODULE = new LocalChatModule();
-  public static final MulticastChatModule MULTICAST_CHAT_MODULE = new MulticastChatModule();
+  public static final LocalToModule LOCAL_TO_MODULE = new LocalToModule();
   public static final MessengerModule MESSENGER_MODULE = new MessengerModule();
+  public static final MulticastChatModule MULTICAST_CHAT_MODULE = new MulticastChatModule();
   public static final MOTDModule MOTD_MODULE = new MOTDModule();
   public static final MutingModule MUTING_MODULE = new MutingModule();
   public static final ServerSwitchModule SERVER_SWITCH_MODULE = new ServerSwitchModule();
@@ -47,7 +48,6 @@ public class BungeecordModuleManager extends ModuleManager {
   public static final VanishModule VANISHER_MODULE = new VanishModule();
   public static final VersionCheckerModule VERSION_CHECKER_MODULE = new VersionCheckerModule();
   public static final WelcomeMessageModule WELCOME_MESSAGE_MODULE = new WelcomeMessageModule();
-  public static final LocalToModule LOCAL_TO_MODULE = new LocalToModule();
   public static final String MODULE_CONCATENATOR = ChatColor.WHITE + ", " + ChatColor.GREEN;
 
   private static boolean modulesAdded = false;
