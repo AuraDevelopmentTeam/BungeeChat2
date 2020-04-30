@@ -21,46 +21,46 @@ public class LocalChatCommand extends BaseCommand {
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    if (PermissionManager.hasPermission(sender, Permission.COMMAND_LOCAL)) {
-      BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
+    if (!(sender instanceof ProxiedPlayer)) {
+      MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
+      return;
+    }
 
-      if (!MessagesService.getLocalPredicate().test(account)
-          && (account.getAccountType() == AccountType.PLAYER)) {
-        MessagesService.sendMessage(sender, Messages.NOT_IN_LOCAL_SERVER.get());
+    if (!PermissionManager.hasPermission(sender, Permission.COMMAND_LOCAL)) return;
 
-        return;
-      }
+    BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
 
-      if (args.length < 1) {
-        if (!(sender instanceof ProxiedPlayer)) {
-          MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
-          return;
-        }
-        if (PermissionManager.hasPermission(sender, Permission.COMMAND_LOCAL_TOGGLE)) {
-          BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+    if (!MessagesService.getLocalPredicate().test(account)
+        && (account.getAccountType() == AccountType.PLAYER)) {
+      MessagesService.sendMessage(sender, Messages.NOT_IN_LOCAL_SERVER.get());
+      return;
+    }
 
-          if (player.getChannelType() == ChannelType.LOCAL) {
-            ChannelType defaultChannelType = player.getDefaultChannelType();
-            player.setChannelType(defaultChannelType);
+    if (args.length < 1) {
+      if (PermissionManager.hasPermission(sender, Permission.COMMAND_LOCAL_TOGGLE)) {
+        BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
 
-            if (defaultChannelType == ChannelType.LOCAL) {
-              MessagesService.sendMessage(sender, Messages.LOCAL_IS_DEFAULT.get());
-            } else {
-              MessagesService.sendMessage(sender, Messages.ENABLE_GLOBAL.get());
-            }
+        if (player.getChannelType() == ChannelType.LOCAL) {
+          ChannelType defaultChannelType = player.getDefaultChannelType();
+          player.setChannelType(defaultChannelType);
+
+          if (defaultChannelType == ChannelType.LOCAL) {
+            MessagesService.sendMessage(sender, Messages.LOCAL_IS_DEFAULT.get());
           } else {
-            player.setChannelType(ChannelType.LOCAL);
-            MessagesService.sendMessage(sender, Messages.ENABLE_LOCAL.get());
+            MessagesService.sendMessage(sender, Messages.ENABLE_GLOBAL.get());
           }
         } else {
-          MessagesService.sendMessage(
-              sender, Messages.INCORRECT_USAGE.get(sender, "/local <message>"));
+          player.setChannelType(ChannelType.LOCAL);
+          MessagesService.sendMessage(sender, Messages.ENABLE_LOCAL.get());
         }
       } else {
-        String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
-
-        MessagesService.sendGlobalMessage(sender, finalMessage);
+        MessagesService.sendMessage(
+            sender, Messages.INCORRECT_USAGE.get(sender, "/local <message>"));
       }
+    } else {
+      String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
+
+      MessagesService.sendGlobalMessage(sender, finalMessage);
     }
   }
 }
