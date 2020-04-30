@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.ChatColor;
@@ -23,6 +25,8 @@ import net.md_5.bungee.api.ProxyServer;
 
 public class BungeeChatCommand extends BaseCommand {
   private final String prefix = ChatColor.BLUE + "Bungee Chat " + ChatColor.DARK_GRAY + "// ";
+  private static final List<String> arg1Completetions =
+      Arrays.asList("modules", "reload", "setprefix", "setsuffix");
 
   public BungeeChatCommand() {
     super("bungeechat");
@@ -135,6 +139,23 @@ public class BungeeChatCommand extends BaseCommand {
             + ChatColor.GOLD
             + BungeeChatApi.AUTHOR_SHAWN
             + ".");
+  }
+
+  @Override
+  public Collection<String> tabComplete(CommandSender sender, String[] args) {
+    final String param1 = args[0];
+
+    if (args.length == 1) {
+      return arg1Completetions.stream()
+          .filter(completion -> completion.startsWith(param1))
+          .collect(Collectors.toList());
+    } else if ((args.length == 2) && ("setprefix".equals(param1) || "setsuffix".equals(param1))) {
+      return BungeecordAccountManager.getAccountsForPartialName(args[1]).stream()
+          .map(BungeeChatAccount::getName)
+          .collect(Collectors.toList());
+    }
+
+    return super.tabComplete(sender, args);
   }
 
   private void checkForUpdates(CommandSender sender) {
