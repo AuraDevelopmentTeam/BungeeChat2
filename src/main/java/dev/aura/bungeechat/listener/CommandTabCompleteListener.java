@@ -27,15 +27,19 @@ public class CommandTabCompleteListener implements Listener {
     if (allArgs.length == 1) return;
     if (!bungeeChatCommands.containsKey(command)) return;
 
+    final BaseCommand commandHandler = bungeeChatCommands.get(command);
     final SocketAddress senderSocketAddress = event.getSender().getSocketAddress();
     CommandSender sender =
         ProxyServer.getInstance().getPlayers().stream()
             .filter(player -> senderSocketAddress.equals(player.getSocketAddress()))
             .findAny()
             .orElse(null);
+
+    if (!commandHandler.hasPermission(sender)) return;
+
     String[] args = Arrays.copyOfRange(allArgs, 1, allArgs.length);
 
-    event.getSuggestions().addAll(bungeeChatCommands.get(command).tabComplete(sender, args));
+    event.getSuggestions().addAll(commandHandler.tabComplete(sender, args));
   }
 
   public void updateBungeeChatCommands() {
