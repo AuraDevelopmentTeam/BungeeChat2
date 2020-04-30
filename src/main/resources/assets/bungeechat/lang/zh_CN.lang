@@ -85,7 +85,7 @@ playerNotFound: "&c无法找到对应玩家..."
 incorrectUsage: "&c命令语法错误! 请参考正确的命令形式: %command%"
 noPermission: "&c你没有相应权限!"
 messageBlank: "&c信息不能是空的!"
-unknownServer: "&c没有这一个名字的服务器!"
+unknownServer: "&c没有叫\"&b%to_servername%&c\"的服务器!"
 
 ####################################################################################################
 # Ignore Messages
