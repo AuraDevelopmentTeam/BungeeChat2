@@ -32,11 +32,10 @@ enableGlobal: "&eVous parlez maintenant dans le chat &bglobal&e !"
 enableStaffchat: "&eVous parlez maintenant dans le chat &astaff&e !"
 enableLocal: "&eVous parlez maintenant dans le chat &clocal&e !"
 globalIsDefault: "&eLe chat global est déjà le chat par défaut !"
-backToLocal: "&cLa chat dans lequel vous parlez a été désactivée ou vos autorisations ont été supprimées! Vous parlez maintenant dans le chat 
-défaut."
 localIsDefault: "&eLa chat local est déjà la chat défaut!"
+backToDefault: "&cLa chat dans lequel vous parlez a été désactivée ou vos autorisations ont été supprimées! Vous parlez maintenant dans le chat défaut."
+notInGlobalServer: "&cLe chat globaln'est pas activé sur ce serveur..."
 notInLocalServer: "&cLa chat local n'est pas activée sur ce serveur..."
-unknownServer: "&cCe serveur n'est pas existant!"
 
 ####################################################################################################
 # Messenger Messages
@@ -86,7 +85,7 @@ playerNotFound: "&cImpossible de trouver le joueur..."
 incorrectUsage: "&cUtilisation incorrecte ! Utilisez cette syntaxe: %command%"
 noPermission: "&cVous n'avez pas les permissions pour effectuer cette action !"
 messageBlank: "&cLe message ne peut pas être vide !"
-notInGlobalServer: "&cLe chat globaln'est pas activé sur ce serveur..."
+unknownServer: "&cCe serveur n'est pas existant!"
 
 ####################################################################################################
 # Ignore Messages

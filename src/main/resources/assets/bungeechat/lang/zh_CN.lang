@@ -33,6 +33,9 @@ enableStaffchat: "&e你已进入 &aStaff聊天频道&e!"
 enableLocal: "&e你已进入 &c本地聊天频道&e!"
 globalIsDefault: "&e跨服聊天频道已经是默认的聊天频道了!"
 localIsDefault: "&e本地聊天平道已经是默认的!"
+backToDefault: "&c聊天频道或者您的允许被删掉了, 所以您被放到默认的聊天频道."
+notInGlobalServer: "&c跨服聊天功能未启用, 请联系管理员..."
+notInLocalServer: "&c这个服务器上不允许用本地聊天!"
 
 ####################################################################################################
 # Messenger Messages
@@ -83,9 +86,6 @@ incorrectUsage: "&c命令语法错误! 请参考正确的命令形式: %command%
 noPermission: "&c你没有相应权限!"
 messageBlank: "&c信息不能是空的!"
 unknownServer: "&c没有这一个名字的服务器!"
-backToDefault: "&c聊天频道或者您的允许被删掉了, 所以您被放到默认的聊天频道."
-notInGlobalServer: "&c跨服聊天功能未启用, 请联系管理员..."
-notInLocalServer: "&c这个服务器上不允许用本地聊天!"
 
 ####################################################################################################
 # Ignore Messages
