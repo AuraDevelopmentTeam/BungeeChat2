@@ -1,7 +1,10 @@
 package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.permission.Permission;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public abstract class BaseCommand extends Command {
@@ -35,5 +38,9 @@ public abstract class BaseCommand extends Command {
 
   public BaseCommand(String name, String permission, String[] aliases) {
     super(name, permission, aliases);
+  }
+
+  public Collection<String> tabComplete(CommandSender sender, String[] args) {
+    return Collections.emptyList();
   }
 }

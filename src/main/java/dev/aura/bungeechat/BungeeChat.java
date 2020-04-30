@@ -22,6 +22,7 @@ import dev.aura.bungeechat.hook.StoredDataHook;
 import dev.aura.bungeechat.hook.metrics.MetricManager;
 import dev.aura.bungeechat.listener.BungeeChatEventsListener;
 import dev.aura.bungeechat.listener.ChannelTypeCorrectorListener;
+import dev.aura.bungeechat.listener.CommandTabCompleteListener;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.message.PlaceHolders;
@@ -68,6 +69,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
   private BungeecordAccountManager bungeecordAccountManager;
   private ChannelTypeCorrectorListener channelTypeCorrectorListener;
   private BungeeChatEventsListener bungeeChatEventsListener;
+  private CommandTabCompleteListener commandTabCompleteListener;
 
   public BungeeChat() {
     super();
@@ -128,6 +130,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     bungeecordAccountManager = new BungeecordAccountManager();
     channelTypeCorrectorListener = new ChannelTypeCorrectorListener();
     bungeeChatEventsListener = new BungeeChatEventsListener();
+    commandTabCompleteListener = new CommandTabCompleteListener();
 
     ProxyServer.getInstance().getPluginManager().registerCommand(this, bungeeChatCommand);
     ProxyServer.getInstance().getPluginManager().registerListener(this, bungeecordAccountManager);
@@ -135,6 +138,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         .getPluginManager()
         .registerListener(this, channelTypeCorrectorListener);
     ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
+    ProxyServer.getInstance().getPluginManager().registerListener(this, commandTabCompleteListener);
 
     Config prefixDefaults = Configuration.get().getConfig("PrefixDefaults");
 
@@ -155,6 +159,9 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
 
       loadScreen();
     }
+
+    // Finally initialize BungeeChat command map
+    commandTabCompleteListener.updateBungeeChatCommands();
   }
 
   @Override
