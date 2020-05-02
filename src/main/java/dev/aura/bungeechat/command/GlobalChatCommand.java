@@ -16,7 +16,10 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class GlobalChatCommand extends BaseCommand {
   public GlobalChatCommand(GlobalChatModule globalChatModule) {
-    super("global", globalChatModule.getModuleSection().getStringList("aliases"));
+    super(
+        "global",
+        Permission.COMMAND_GLOBAL,
+        globalChatModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override

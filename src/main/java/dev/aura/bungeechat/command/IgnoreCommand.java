@@ -20,7 +20,10 @@ public class IgnoreCommand extends BaseCommand {
   private static final List<String> arg1Completetions = Arrays.asList("list", "add", "remove");
 
   public IgnoreCommand(IgnoringModule ignoringModule) {
-    super("ignore", ignoringModule.getModuleSection().getStringList("aliases"));
+    super(
+        "ignore",
+        Permission.COMMAND_IGNORE,
+        ignoringModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override

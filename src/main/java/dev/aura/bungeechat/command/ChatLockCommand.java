@@ -23,7 +23,10 @@ public class ChatLockCommand extends BaseCommand {
   private static final String CLEAR = "clear";
 
   public ChatLockCommand(ChatLockModule chatLockModule) {
-    super("chatlock", chatLockModule.getModuleSection().getStringList("aliases"));
+    super(
+        "chatlock",
+        Permission.COMMAND_CHAT_LOCK,
+        chatLockModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override

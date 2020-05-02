@@ -15,7 +15,10 @@ import net.md_5.bungee.api.CommandSender;
 
 public class UnmuteCommand extends BaseCommand {
   public UnmuteCommand(MutingModule mutingModule) {
-    super("unmute", mutingModule.getModuleSection().getStringList("aliases.unmute"));
+    super(
+        "unmute",
+        Permission.COMMAND_UNMUTE,
+        mutingModule.getModuleSection().getStringList("aliases.unmute"));
   }
 
   @Override

@@ -12,23 +12,26 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageToggleCommand extends BaseCommand {
   public MessageToggleCommand(MessengerModule messengerModule) {
-    super("msgtoggle", messengerModule.getModuleSection().getStringList("aliases.msgtoggle"));
+    super(
+        "msgtoggle",
+        Permission.COMMAND_TOGGLE_MESSAGE,
+        messengerModule.getModuleSection().getStringList("aliases.msgtoggle"));
   }
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    if (PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE)) {
-      if (!(sender instanceof ProxiedPlayer)) {
-        MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
-      } else {
-        BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
-        player.toggleMessanger();
+    if (!PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE)) return;
 
-        if (player.hasMessangerEnabled()) {
-          MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER.get());
-        } else {
-          MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER.get());
-        }
+    if (!(sender instanceof ProxiedPlayer)) {
+      MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
+    } else {
+      BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+      player.toggleMessanger();
+
+      if (player.hasMessangerEnabled()) {
+        MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER.get());
+      } else {
+        MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER.get());
       }
     }
   }

@@ -15,7 +15,10 @@ import net.md_5.bungee.api.CommandSender;
 
 public class MuteCommand extends BaseCommand {
   public MuteCommand(MutingModule mutingModule) {
-    super("mute", mutingModule.getModuleSection().getStringList("aliases.mute"));
+    super(
+        "mute",
+        Permission.COMMAND_MUTE,
+        mutingModule.getModuleSection().getStringList("aliases.mute"));
   }
 
   @Override
@@ -24,24 +27,25 @@ public class MuteCommand extends BaseCommand {
 
     if (args.length < 1) {
       MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(sender, "/mute <player>"));
-    } else {
-      Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[0]);
-
-      if (!targetAccount.isPresent()) {
-        MessagesService.sendMessage(sender, Messages.PLAYER_NOT_FOUND.get());
-        return;
-      }
-
-      CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
-
-      if (targetAccount.get().isMuted()) {
-        MessagesService.sendMessage(sender, Messages.MUTE_IS_MUTED.get());
-        return;
-      }
-
-      targetAccount.get().mutePermanetly();
-      MessagesService.sendMessage(sender, Messages.MUTE.get(target));
+      return;
     }
+
+    Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[0]);
+
+    if (!targetAccount.isPresent()) {
+      MessagesService.sendMessage(sender, Messages.PLAYER_NOT_FOUND.get());
+      return;
+    }
+
+    CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
+
+    if (targetAccount.get().isMuted()) {
+      MessagesService.sendMessage(sender, Messages.MUTE_IS_MUTED.get());
+      return;
+    }
+
+    targetAccount.get().mutePermanetly();
+    MessagesService.sendMessage(sender, Messages.MUTE.get(target));
   }
 
   @Override

@@ -16,7 +16,10 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class LocalChatCommand extends BaseCommand {
   public LocalChatCommand(LocalChatModule localChatModule) {
-    super("local", localChatModule.getModuleSection().getStringList("aliases"));
+    super(
+        "local",
+        Permission.COMMAND_LOCAL,
+        localChatModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override

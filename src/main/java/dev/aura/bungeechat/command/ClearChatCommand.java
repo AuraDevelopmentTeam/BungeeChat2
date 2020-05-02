@@ -26,7 +26,10 @@ public class ClearChatCommand extends BaseCommand {
   private static final String EMPTY_LINE = " ";
 
   public ClearChatCommand(ClearChatModule clearChatModule) {
-    super("clearchat", clearChatModule.getModuleSection().getStringList("aliases"));
+    super(
+        "clearchat",
+        Permission.COMMAND_CLEAR_CHAT,
+        clearChatModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override

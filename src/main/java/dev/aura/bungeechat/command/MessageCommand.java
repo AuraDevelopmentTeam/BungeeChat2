@@ -16,12 +16,16 @@ import net.md_5.bungee.api.CommandSender;
 
 public class MessageCommand extends BaseCommand {
   public MessageCommand(MessengerModule messengerModule) {
-    super("msg", messengerModule.getModuleSection().getStringList("aliases.message"));
+    super(
+        "msg",
+        Permission.COMMAND_MESSAGE,
+        messengerModule.getModuleSection().getStringList("aliases.message"));
   }
 
   @Override
   public void execute(CommandSender sender, String[] args) {
     if (!PermissionManager.hasPermission(sender, Permission.COMMAND_MESSAGE)) return;
+
     if (args.length < 2) {
       MessagesService.sendMessage(
           sender, Messages.INCORRECT_USAGE.get(sender, "/msg <player> <message>"));

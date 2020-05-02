@@ -11,7 +11,10 @@ import net.md_5.bungee.api.CommandSender;
 
 public class HelpOpCommand extends BaseCommand {
   public HelpOpCommand(HelpOpModule helpOpModule) {
-    super("helpop", helpOpModule.getModuleSection().getStringList("aliases"));
+    super(
+        "helpop",
+        Permission.COMMAND_HELPOP,
+        helpOpModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override

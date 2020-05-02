@@ -17,7 +17,10 @@ public class ReplyCommand extends BaseCommand {
   private static HashMap<CommandSender, CommandSender> replies;
 
   public ReplyCommand(MessengerModule messengerModule) {
-    super("reply", messengerModule.getModuleSection().getStringList("aliases.reply"));
+    super(
+        "reply",
+        Permission.COMMAND_MESSAGE,
+        messengerModule.getModuleSection().getStringList("aliases.reply"));
 
     if (replies == null) {
       replies = new HashMap<>();
@@ -37,34 +40,34 @@ public class ReplyCommand extends BaseCommand {
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    if (PermissionManager.hasPermission(sender, Permission.COMMAND_MESSAGE)) {
-      if (args.length < 1) {
-        MessagesService.sendMessage(
-            sender, Messages.INCORRECT_USAGE.get(sender, "/reply <message>"));
-      } else {
-        Optional<BungeeChatAccount> targetAccount =
-            BungeecordAccountManager.getAccount(getReplier(sender));
+    if (!PermissionManager.hasPermission(sender, Permission.COMMAND_MESSAGE)) return;
 
-        if (!targetAccount.isPresent()
-            || (targetAccount.get().isVanished()
-                && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
-          MessagesService.sendMessage(sender, Messages.NO_REPLY.get());
-          return;
-        }
-
-        CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
-
-        if (!targetAccount.get().hasMessangerEnabled()
-            && !PermissionManager.hasPermission(sender, Permission.BYPASS_TOGGLE_MESSAGE)) {
-          MessagesService.sendMessage(sender, Messages.HAS_MESSAGER_DISABLED.get(target));
-          return;
-        }
-
-        String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
-
-        MessagesService.sendPrivateMessage(sender, target, finalMessage);
-        ReplyCommand.setReply(sender, target);
-      }
+    if (args.length < 1) {
+      MessagesService.sendMessage(sender, Messages.INCORRECT_USAGE.get(sender, "/reply <message>"));
+      return;
     }
+
+    Optional<BungeeChatAccount> targetAccount =
+        BungeecordAccountManager.getAccount(getReplier(sender));
+
+    if (!targetAccount.isPresent()
+        || (targetAccount.get().isVanished()
+            && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
+      MessagesService.sendMessage(sender, Messages.NO_REPLY.get());
+      return;
+    }
+
+    CommandSender target = BungeecordAccountManager.getCommandSender(targetAccount.get()).get();
+
+    if (!targetAccount.get().hasMessangerEnabled()
+        && !PermissionManager.hasPermission(sender, Permission.BYPASS_TOGGLE_MESSAGE)) {
+      MessagesService.sendMessage(sender, Messages.HAS_MESSAGER_DISABLED.get(target));
+      return;
+    }
+
+    String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
+
+    MessagesService.sendPrivateMessage(sender, target, finalMessage);
+    ReplyCommand.setReply(sender, target);
   }
 }

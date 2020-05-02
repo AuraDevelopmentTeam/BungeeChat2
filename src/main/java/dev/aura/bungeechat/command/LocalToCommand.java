@@ -15,7 +15,10 @@ import net.md_5.bungee.api.CommandSender;
 
 public class LocalToCommand extends BaseCommand {
   public LocalToCommand(LocalToModule localToModule) {
-    super("localto", localToModule.getModuleSection().getStringList("aliases"));
+    super(
+        "localto",
+        Permission.COMMAND_LOCALTO,
+        localToModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override

@@ -18,7 +18,10 @@ public class VanishCommand extends BaseCommand {
   private static final List<String> arg1Completetions = Arrays.asList("on", "off");
 
   public VanishCommand(VanishModule vanisherModule) {
-    super("bvanish", vanisherModule.getModuleSection().getStringList("aliases"));
+    super(
+        "bvanish",
+        Permission.COMMAND_VANISH,
+        vanisherModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override
@@ -31,6 +34,7 @@ public class VanishCommand extends BaseCommand {
     }
 
     BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+
     if (args.length > 0) {
       if (args[0].equalsIgnoreCase("on")) {
         player.setVanished(true);
