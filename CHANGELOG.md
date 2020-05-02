@@ -1,3 +1,21 @@
+Version 2.2.2
+-------------
+
+\+ Added tab completion for all commands (where it is possible).  
+\+ Added `%unknown_server%` placeholder.  
+\* Make Global default if Local is disabled (Fixes [#119](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/119)).  
+\* New accounts start in the default channel (Fixes [#120](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/120)).  
+\* Disable channel correction if neither local nor global is active (Fixes [#121](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/121)).  
+\* Updated fr_FR.  
+\* Updated hu_HU.  
+\* Updated zh_CN.  
+\* Print unknown server name in unknown server message.  
+\* Prevent console from using `/local`.  
+\* VersionChecker module is disabled if checking for updates is too.  
+\* Commands players don't have permissions to no longer show in tab completion.  
+\* Fixed typos.  
+
+
 Version 2.2.1
 -------------
 
