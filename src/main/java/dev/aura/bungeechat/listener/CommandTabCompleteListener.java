@@ -3,18 +3,23 @@ package dev.aura.bungeechat.listener;
 import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.command.BaseCommand;
 import dev.aura.bungeechat.util.LoggerHelper;
+import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class CommandTabCompleteListener implements Listener {
+  private static boolean useModernMethods = true;
+
   private Map<String, BaseCommand> bungeeChatCommands = null;
 
   @EventHandler
@@ -30,12 +35,7 @@ public class CommandTabCompleteListener implements Listener {
     if (!bungeeChatCommands.containsKey(command)) return;
 
     final BaseCommand commandHandler = bungeeChatCommands.get(command);
-    final SocketAddress senderSocketAddress = event.getSender().getSocketAddress();
-    CommandSender sender =
-        ProxyServer.getInstance().getPlayers().stream()
-            .filter(player -> senderSocketAddress.equals(player.getSocketAddress()))
-            .findAny()
-            .orElse(null);
+    CommandSender sender = getCommandSenderFromEvent(event);
 
     if (!commandHandler.hasPermission(sender)) return;
 
@@ -59,5 +59,27 @@ public class CommandTabCompleteListener implements Listener {
     return ProxyServer.getInstance().getPluginManager().getCommands().stream()
         .filter(entry -> entry.getValue() instanceof BaseCommand)
         .collect(Collectors.toMap(Map.Entry::getKey, entry -> (BaseCommand) entry.getValue()));
+  }
+
+  @SuppressWarnings("deprecation") // For the backwards compatibility
+  private static CommandSender getCommandSenderFromEvent(TabCompleteEvent event) {
+    Stream<ProxiedPlayer> players = ProxyServer.getInstance().getPlayers().stream();
+
+    if (useModernMethods) {
+      try {
+        final SocketAddress senderSocketAddress = event.getSender().getSocketAddress();
+        players = players.filter(player -> senderSocketAddress.equals(player.getSocketAddress()));
+
+      } catch (NoSuchMethodError e) {
+        // If it fails once, we need to use the old method always
+        useModernMethods = false;
+        return getCommandSenderFromEvent(event);
+      }
+    } else {
+      final InetSocketAddress senderInetSocketAddress = event.getSender().getAddress();
+      players = players.filter(player -> senderInetSocketAddress.equals(player.getAddress()));
+    }
+
+    return players.findAny().orElse(null);
   }
 }
