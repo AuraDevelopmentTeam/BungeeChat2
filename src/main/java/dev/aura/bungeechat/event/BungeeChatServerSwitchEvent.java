@@ -20,6 +20,8 @@ import net.md_5.bungee.api.plugin.Event;
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 public class BungeeChatServerSwitchEvent extends Event {
+  private static boolean useModernMethods = true;
+
   /** Player whom the server is for. */
   private final ProxiedPlayer player;
   /** Server the player is switch from. */
@@ -30,9 +32,15 @@ public class BungeeChatServerSwitchEvent extends Event {
   }
 
   private static ServerInfo getServerInfo(ServerSwitchEvent event) {
-    try {
-      return event.getFrom();
-    } catch (NoSuchMethodError e) {
+    if (useModernMethods) {
+      try {
+        return event.getFrom();
+      } catch (NoSuchMethodError e) {
+        // If it fails once, we need to use the old method always
+        useModernMethods = false;
+        return getServerInfo(event);
+      }
+    } else {
       return null;
     }
   }
