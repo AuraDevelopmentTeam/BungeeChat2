@@ -63,7 +63,8 @@ public class CommandTabCompleteListener implements Listener {
 
   @SuppressWarnings("deprecation") // For the backwards compatibility
   private static CommandSender getCommandSenderFromEvent(TabCompleteEvent event) {
-    Stream<ProxiedPlayer> players = ProxyServer.getInstance().getPlayers().stream();
+    final ProxyServer server = ProxyServer.getInstance();
+    Stream<ProxiedPlayer> players = server.getPlayers().stream();
 
     if (useModernMethods) {
       try {
@@ -80,6 +81,6 @@ public class CommandTabCompleteListener implements Listener {
       players = players.filter(player -> senderInetSocketAddress.equals(player.getAddress()));
     }
 
-    return players.findAny().orElse(null);
+    return players.findAny().map(CommandSender.class::cast).orElseGet(server::getConsole);
   }
 }

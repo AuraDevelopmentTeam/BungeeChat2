@@ -150,7 +150,7 @@ public class BungeeChatCommand extends BaseCommand {
           .filter(completion -> completion.startsWith(param1))
           .collect(Collectors.toList());
     } else if ((args.length == 2) && ("setprefix".equals(param1) || "setsuffix".equals(param1))) {
-      return BungeecordAccountManager.getAccountsForPartialName(args[1]).stream()
+      return BungeecordAccountManager.getAccountsForPartialName(args[1], sender).stream()
           .map(BungeeChatAccount::getName)
           .collect(Collectors.toList());
     }

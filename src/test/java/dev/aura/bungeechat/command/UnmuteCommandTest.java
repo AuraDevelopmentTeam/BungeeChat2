@@ -13,7 +13,7 @@ public class UnmuteCommandTest extends AccountManagerTest {
       Mockito.mock(UnmuteCommand.class, Mockito.CALLS_REAL_METHODS);
 
   private static Collection<String> tabComplete(String... args) {
-    return handler.tabComplete(null, args);
+    return handler.tabComplete(console, args);
   }
 
   @Test

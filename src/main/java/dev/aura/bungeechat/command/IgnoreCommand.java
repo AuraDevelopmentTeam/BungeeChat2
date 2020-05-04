@@ -135,7 +135,10 @@ public class IgnoreCommand extends BaseCommand {
           .filter(completion -> completion.startsWith(param1))
           .collect(Collectors.toList());
     } else if ((args.length == 2) && ("add".equals(param1) || "remove".equals(param1))) {
-      return BungeecordAccountManager.getAccountsForPartialName(args[1]).stream()
+      final BungeeChatAccount senderAccount = BungeecordAccountManager.getAccount(sender).get();
+
+      return BungeecordAccountManager.getAccountsForPartialName(args[1], sender).stream()
+          .filter(account -> !senderAccount.equals(account))
           .map(BungeeChatAccount::getName)
           .collect(Collectors.toList());
     }

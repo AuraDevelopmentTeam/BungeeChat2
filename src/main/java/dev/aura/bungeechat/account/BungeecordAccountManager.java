@@ -5,6 +5,8 @@ import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.event.BungeeChatJoinEvent;
 import dev.aura.bungeechat.event.BungeeChatLeaveEvent;
+import dev.aura.bungeechat.permission.Permission;
+import dev.aura.bungeechat.permission.PermissionManager;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -37,6 +40,23 @@ public class BungeecordAccountManager extends AccountManager implements Listener
 
   public static Optional<CommandSender> getCommandSender(BungeeChatAccount account) {
     return getCommandSender(account.getUniqueId());
+  }
+
+  public static List<BungeeChatAccount> getAccountsForPartialName(
+      String partialName, CommandSender player) {
+    List<BungeeChatAccount> accounts = getAccountsForPartialName(partialName);
+
+    if (!PermissionManager.hasPermission(player, Permission.COMMAND_VANISH_VIEW)) {
+      accounts =
+          accounts.stream().filter(account -> !account.isVanished()).collect(Collectors.toList());
+    }
+
+    return accounts;
+  }
+
+  public static List<BungeeChatAccount> getAccountsForPartialName(
+      String partialName, BungeeChatAccount account) {
+    return getAccountsForPartialName(partialName, getCommandSenderFromAccount(account));
   }
 
   public static void loadAccount(UUID uuid) {

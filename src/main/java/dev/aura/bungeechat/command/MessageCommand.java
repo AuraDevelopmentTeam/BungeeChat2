@@ -61,7 +61,10 @@ public class MessageCommand extends BaseCommand {
   @Override
   public Collection<String> tabComplete(CommandSender sender, String[] args) {
     if (args.length == 1) {
-      return BungeecordAccountManager.getAccountsForPartialName(args[0]).stream()
+      final BungeeChatAccount senderAccount = BungeecordAccountManager.getAccount(sender).get();
+
+      return BungeecordAccountManager.getAccountsForPartialName(args[0], sender).stream()
+          .filter(account -> !senderAccount.equals(account))
           .map(BungeeChatAccount::getName)
           .collect(Collectors.toList());
     }

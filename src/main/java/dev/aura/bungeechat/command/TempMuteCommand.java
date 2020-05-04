@@ -3,6 +3,7 @@ package dev.aura.bungeechat.command;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.AccountType;
 import dev.aura.bungeechat.api.utils.TimeUtil;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
@@ -64,7 +65,8 @@ public class TempMuteCommand extends BaseCommand {
   @Override
   public Collection<String> tabComplete(CommandSender sender, String[] args) {
     if (args.length == 1) {
-      return BungeecordAccountManager.getAccountsForPartialName(args[0]).stream()
+      return BungeecordAccountManager.getAccountsForPartialName(args[0], sender).stream()
+          .filter(account -> account.getAccountType() == AccountType.PLAYER)
           .map(BungeeChatAccount::getName)
           .collect(Collectors.toList());
     } else if (args.length == 2) {
