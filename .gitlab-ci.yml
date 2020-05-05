@@ -5,10 +5,10 @@ variables:
   ARTIFACTS1: "$CI_PROJECT_DIR/*.jar*"
   ARTIFACTS2: "$CI_PROJECT_DIR/*.zip*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
-#  TEST_DATA: "$CI_PROJECT_DIR/**/build/test-results/*/*.xml"
-  TEST_DATA1: "$CI_PROJECT_DIR/build/test-results/*/*.xml"
-  TEST_DATA2: "$CI_PROJECT_DIR/*/build/test-results/*/*.xml"
-  TEST_DATA3: "$CI_PROJECT_DIR/*/*/build/test-results/*/*.xml"
+#  TEST_DATA: "$CI_PROJECT_DIR/**/build/test-results/*/TEST-*.xml"
+  TEST_DATA1: "$CI_PROJECT_DIR/build/test-results/*/TEST-*.xml"
+  TEST_DATA2: "$CI_PROJECT_DIR/*/build/test-results/*/TEST-*.xml"
+  TEST_DATA3: "$CI_PROJECT_DIR/*/*/build/test-results/*/TEST-*.xml"
 #  JACOCO_DATA: "$CI_PROJECT_DIR/**/build/jacoco/*"
   JACOCO_DATA1: "$CI_PROJECT_DIR/build/jacoco/*"
   JACOCO_DATA2: "$CI_PROJECT_DIR/*/build/jacoco/*"
@@ -173,6 +173,8 @@ pages:
   - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $COVERAGE_REPORTS; do dir=public/coverage/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $SPOTBUGS_REPORTS; do dir=public/spotbugs/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - GradleCommon/scripts/make_directory_listings.sh
+  - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -fk9 {} \;
   when: always
   artifacts:
     paths:
