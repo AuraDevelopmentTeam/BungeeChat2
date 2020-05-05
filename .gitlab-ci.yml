@@ -64,11 +64,12 @@ test:
     - $JACOCO_DATA1
     - $JACOCO_DATA2
     - $JACOCO_DATA3
-    report:
-#    - $TEST_DATA
-    - $TEST_DATA1
-    - $TEST_DATA2
-    - $TEST_DATA3
+    reports:
+      junit:
+#      - $TEST_DATA
+      - $TEST_DATA1
+      - $TEST_DATA2
+      - $TEST_DATA3
 
 checkFormatting:
   stage: test
