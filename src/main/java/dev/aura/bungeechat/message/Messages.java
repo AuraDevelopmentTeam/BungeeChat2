@@ -3,9 +3,6 @@ package dev.aura.bungeechat.message;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.lib.messagestranslator.Message;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.CommandSender;
@@ -17,8 +14,10 @@ public enum Messages implements Message {
   ENABLE_STAFFCHAT("enableStaffchat"),
   ENABLE_LOCAL("enableLocal"),
   GLOBAL_IS_DEFAULT("globalIsDefault"),
-  BACK_TO_LOCAL("backToLocal"),
+  LOCAL_IS_DEFAULT("localIsDefault"),
+  BACK_TO_DEFAULT("backToDefault"),
   NOT_IN_GLOBAL_SERVER("notInGlobalServer"),
+  NOT_IN_LOCAL_SERVER("notInLocalServer"),
 
   // Messenger Messages
   MESSAGE_YOURSELF("messageYourself"),
@@ -87,19 +86,7 @@ public enum Messages implements Message {
   // Update available Message
   UPDATE_AVAILABLE("updateAvailable");
 
-  private static final Map<String, Messages> values =
-      Arrays.stream(values())
-          .collect(Collectors.toMap(Messages::getStringPath, message -> message));
-
   @Getter private final String stringPath;
-
-  public static boolean contains(String message) {
-    return values.containsKey(message);
-  }
-
-  public static Messages getFromStringPath(String message) {
-    return values.get(message);
-  }
 
   public String get() {
     return PlaceHolderUtil.getFullMessage(this);

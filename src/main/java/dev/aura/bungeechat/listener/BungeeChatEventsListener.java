@@ -23,9 +23,9 @@ public class BungeeChatEventsListener implements Listener {
   public void onPlayerJoin(PostLoginEvent e) {
     UUID uuid = e.getPlayer().getUniqueId();
 
-    if (!joinedPlayers.contains(uuid)) return;
-
-    duplicatePlayers.add(uuid);
+    if (joinedPlayers.contains(uuid)) {
+      duplicatePlayers.add(uuid);
+    }
   }
 
   @EventHandler(priority = EventPriority.HIGHEST)
@@ -37,7 +37,7 @@ public class BungeeChatEventsListener implements Listener {
       if (joinedPlayers.contains(uuid)) {
         ProxyServer.getInstance()
             .getPluginManager()
-            .callEvent(new BungeeChatServerSwitchEvent(player));
+            .callEvent(new BungeeChatServerSwitchEvent(player, e));
       } else {
         joinedPlayers.add(uuid);
 

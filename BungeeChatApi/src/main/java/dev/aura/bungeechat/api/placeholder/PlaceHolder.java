@@ -25,13 +25,6 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
       String placeholder,
       ReplacementSupplier replacementSupplier,
       List<Predicate<? super BungeeChatContext>> requirements) {
-    if (placeholder.charAt(0) != '%') {
-      placeholder = '%' + placeholder;
-    }
-    if (placeholder.charAt(placeholder.length() - 1) != '%') {
-      placeholder = placeholder + '%';
-    }
-
     this.placeholder = placeholder;
     this.replacementSupplier = replacementSupplier;
     this.requirements.addAll(requirements);
@@ -47,22 +40,8 @@ public class PlaceHolder implements BungeeChatPlaceHolder {
   }
 
   @Override
-  public String apply(String message, BungeeChatContext context) {
-    while (message.contains(placeholder)) {
-      String replacement;
-
-      try {
-        replacement = replacementSupplier.get(context);
-      } catch (RuntimeException e) {
-        e.printStackTrace();
-
-        replacement = "";
-      }
-
-      message = message.replace(placeholder, replacement);
-    }
-
-    return message;
+  public String getReplacement(String name, BungeeChatContext context) {
+    return replacementSupplier.get(context);
   }
 
   public void addRequirement(Predicate<? super BungeeChatContext> requirement) {

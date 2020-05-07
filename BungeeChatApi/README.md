@@ -85,7 +85,7 @@ version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` w
 
     <dependencies>
         <dependency>
-            <groupId>dev.aura.bungeechat</groupId>
+            <groupId>dev.aura.bungeechat.api</groupId>
             <artifactId>BungeeChatApi</artifactId>
             <version>{version}</version>
             <scope>provided</scope>
@@ -103,7 +103,7 @@ version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` w
     }
 
     dependencies {
-        provided "dev.aura.bungeechat:BungeeChatApi:{version}"
+        compileOnly "dev.aura.bungeechat.api:BungeeChatApi:{version}"
     }
 
 ## Setting up a Workspace/Compiling from Source

@@ -22,6 +22,9 @@ public class GlobalChatListener implements Listener {
           .getModuleSection()
           .getBoolean("passToBackendServer");
 
+  private final Config symbolSection =
+      BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("symbol");
+
   @EventHandler(priority = EventPriority.HIGH)
   public void onPlayerChat(ChatEvent e) {
     if (e.isCancelled()) return;
@@ -33,34 +36,8 @@ public class GlobalChatListener implements Listener {
 
     if (ChatUtils.isCommand(message)) return;
 
-    if (account.getChannelType() == ChannelType.STAFF) return;
-
-    if (BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getBoolean("default")) {
-      if (MessagesService.getGlobalPredicate().test(account)) {
-        e.setCancelled(!passToBackendServer);
-        MessagesService.sendGlobalMessage(sender, message);
-        return;
-      }
-    }
-
-    if (BungeecordAccountManager.getAccount(sender).get().getChannelType() == ChannelType.GLOBAL) {
-      if (!MessagesService.getGlobalPredicate().test(account)) {
-        MessagesService.sendMessage(sender, Messages.NOT_IN_GLOBAL_SERVER.get());
-
-        return;
-      }
-
-      e.setCancelled(!passToBackendServer);
-      MessagesService.sendGlobalMessage(sender, message);
-
-      return;
-    }
-
-    Config section =
-        BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("symbol");
-
-    if (section.getBoolean("enabled")) {
-      String symbol = section.getString("symbol");
+    if (symbolSection.getBoolean("enabled")) {
+      String symbol = symbolSection.getString("symbol");
 
       if (message.startsWith(symbol) && !symbol.equals("/")) {
         if (!MessagesService.getGlobalPredicate().test(account)) {
@@ -73,7 +50,7 @@ public class GlobalChatListener implements Listener {
           return;
         }
 
-        if(message.equals(symbol)) {
+        if (message.equals(symbol)) {
           MessagesService.sendMessage(sender, Messages.MESSAGE_BLANK.get());
           e.setCancelled(true);
           return;
@@ -83,5 +60,18 @@ public class GlobalChatListener implements Listener {
         MessagesService.sendGlobalMessage(sender, message.replaceFirst(symbol, ""));
       }
     }
+
+    if (account.getChannelType() != ChannelType.GLOBAL) return;
+
+    if (!MessagesService.getGlobalPredicate().test(account)) {
+      MessagesService.sendMessage(sender, Messages.NOT_IN_GLOBAL_SERVER.get());
+
+      return;
+    }
+
+    e.setCancelled(!passToBackendServer);
+    MessagesService.sendGlobalMessage(sender, message);
+
+    return;
   }
 }

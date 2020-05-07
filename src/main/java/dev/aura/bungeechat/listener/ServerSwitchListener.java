@@ -10,11 +10,11 @@ import net.md_5.bungee.event.EventHandler;
 
 public class ServerSwitchListener implements Listener {
   @EventHandler
-  public void onPlayerServerSwitch(BungeeChatServerSwitchEvent e) {
-    ProxiedPlayer player = e.getPlayer();
+  public void onPlayerServerSwitch(BungeeChatServerSwitchEvent event) {
+    ProxiedPlayer player = event.getPlayer();
 
     if (PermissionManager.hasPermission(player, Permission.MESSAGE_SWITCH)) {
-      MessagesService.sendSwitchMessage(player);
+      MessagesService.sendSwitchMessage(player, event.getFrom());
     }
   }
 }

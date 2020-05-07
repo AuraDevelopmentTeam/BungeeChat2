@@ -171,7 +171,16 @@ public class Configuration implements Config {
     }
   }
 
-  @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH", justification = "Fallthrough intended")
+  @SuppressFBWarnings(
+      value = {
+        "SF_SWITCH_FALLTHROUGH",
+        "SF_SWITCH_NO_DEFAULT",
+        "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"
+      },
+      justification =
+          "Fallthrough intended\n"
+              + "Wrong detection by SpotBugs\n"
+              + "If we can't delete the file, we just ignore it. Really nothing we care about.")
   private void convertOldConfig() {
     if (OLD_CONFIG_FILE.exists()) {
       convertYAMLConfig();
@@ -179,6 +188,8 @@ public class Configuration implements Config {
 
     switch (String.format(Locale.ROOT, "%.1f", config.getDouble("Version"))) {
       case "11.0":
+        LoggerHelper.info("Performing config migration 11.0 -> 11.1 ...");
+
         // Rename "passToClientServer" to "passToBackendServer"
         for (String basePath :
             new String[] {"Modules.GlobalChat", "Modules.LocalChat", "Modules.StaffChat"}) {
@@ -188,6 +199,26 @@ public class Configuration implements Config {
           // Remove old path first to reduce the amount of data that needs to be copied
           config = config.withoutPath(oldPath).withValue(newPath, config.getValue(oldPath));
         }
+      case "11.1":
+        LoggerHelper.info("Performing config migration 11.1 -> 11.2 ...");
+
+        // Delete old language files
+        final File langDir = BungeeChat.getInstance().getLangFolder();
+        File langFile;
+
+        for (String lang :
+            new String[] {"de_DE", "en_US", "fr_FR", "hu_HU", "nl_NL", "pl_PL", "ru_RU", "zh_CN"}) {
+          langFile = new File(langDir, lang + ".lang");
+
+          if (langFile.exists()) {
+            langFile.delete();
+          }
+        }
+      case "11.2":
+        LoggerHelper.info("Performing config migration 11.2 -> 11.3 ...");
+
+        // Remove config section "Modules.TabCompletion"
+        config = config.withoutPath("Modules.TabCompletion");
 
       default:
         // Unknow Version or old version
@@ -196,7 +227,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.1":
+      case "11.3":
         // Up to date
         // -> No action needed
     }
@@ -335,7 +366,7 @@ public class Configuration implements Config {
       final ImmutableMap<String, Object> moduleGlobalChatServerList =
           ImmutableMap.<String, Object>builder()
               .put("enabled", section.getBoolean("serverList.enabled"))
-              .put("serverList", section.getStringList("serverList.serverList"))
+              .put("list", section.getStringList("serverList.list"))
               .build();
       final ImmutableMap<String, Object> moduleGlobalChatSymbol =
           ImmutableMap.<String, Object>builder()
@@ -347,7 +378,7 @@ public class Configuration implements Config {
               .put("aliases", section.getStringList("aliases"))
               .put("default", section.getBoolean("default"))
               .put("enabled", section.getBoolean("enabled"))
-              .put("passToClientServer", section.getBoolean("passToClientServer"))
+              .put("passToBackendServer", section.getBoolean("passToClientServer"))
               .put("serverList", moduleGlobalChatServerList)
               .put("symbol", moduleGlobalChatSymbol)
               .build();
@@ -382,7 +413,7 @@ public class Configuration implements Config {
       final ImmutableMap<String, Object> moduleLocalChat =
           ImmutableMap.<String, Object>builder()
               .put("enabled", section.getBoolean("enabled"))
-              .put("passToClientServer", section.getBoolean("passToClientServer"))
+              .put("passToBackendServer", section.getBoolean("passToClientServer"))
               .build();
 
       section = modulesSection.getSection("MOTD");
@@ -443,13 +474,7 @@ public class Configuration implements Config {
           ImmutableMap.<String, Object>builder()
               .put("aliases", section.getStringList("aliases"))
               .put("enabled", section.getBoolean("enabled"))
-              .put("passToClientServer", section.getBoolean("passToClientServer"))
-              .build();
-
-      section = modulesSection.getSection("TabCompletion");
-      final ImmutableMap<String, Object> moduleTabCompletion =
-          ImmutableMap.<String, Object>builder()
-              .put("enabled", section.getBoolean("enabled"))
+              .put("passToBackendServer", section.getBoolean("passToClientServer"))
               .build();
 
       section = modulesSection.getSection("Vanish");
@@ -469,6 +494,13 @@ public class Configuration implements Config {
       section = modulesSection.getSection("WelcomeMessage");
       final ImmutableMap<String, Object> moduleWelcomeMessage =
           ImmutableMap.<String, Object>builder()
+              .put("enabled", section.getBoolean("enabled"))
+              .build();
+
+      section = modulesSection.getSection("LocalTo");
+      final ImmutableMap<String, Object> moduleLocalTo =
+          ImmutableMap.<String, Object>builder()
+              .put("aliases", section.getStringList("aliases"))
               .put("enabled", section.getBoolean("enabled"))
               .build();
 
@@ -494,10 +526,10 @@ public class Configuration implements Config {
               .put("ServerSwitchMessages", moduleServerSwitchMessages)
               .put("Spy", moduleSpy)
               .put("StaffChat", moduleStaffChat)
-              .put("TabCompletion", moduleTabCompletion)
               .put("Vanish", moduleVanish)
               .put("VersionChecker", moduleVersionChecker)
               .put("WelcomeMessage", moduleWelcomeMessage)
+              .put("LocalTo", moduleLocalTo)
               .build();
 
       section = oldConfig.getSection("Settings.PermissionsManager");
@@ -524,7 +556,8 @@ public class Configuration implements Config {
       config =
           ConfigFactory.parseMap(configMap)
               .withFallback(config.withoutPath("ServerAlias"))
-              .resolve();
+              .resolve()
+              .withValue("Version", ConfigValueFactory.fromAnyRef("11.3"));
 
       // Rename old file
       Files.move(OLD_CONFIG_FILE, OLD_OLD_CONFIG_FILE);

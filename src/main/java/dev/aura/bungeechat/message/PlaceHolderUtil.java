@@ -58,6 +58,8 @@ public class PlaceHolderUtil {
           .put(Permission.USE_CHAT_FORMAT_RESET, 'r')
           .build();
   private static final Map<Integer, Optional<Pattern>> patternCache = new HashMap<>();
+  private static final char placeholderChar = PlaceHolderManager.placeholderChar;
+  private static final String placeholderString = String.valueOf(placeholderChar);
 
   public static void clearConfigSections() {
     formatsBase = null;
@@ -77,7 +79,8 @@ public class PlaceHolderUtil {
     File dir = BungeeChat.getInstance().getLangFolder();
     String language = Configuration.get().getString(LANGUAGE);
 
-    messageBase = new PluginMessagesTranslator(dir, language, BungeeChat.getInstance(), "@id@");
+    messageBase =
+        new PluginMessagesTranslator(dir, language, BungeeChat.getInstance(), BungeeChat.ID);
   }
 
   public static String getFormat(Format format) {
@@ -163,5 +166,13 @@ public class PlaceHolderUtil {
 
   public static String escapeAltColorCodes(String message) {
     return message.replace(altColorString, altColorString + altColorString);
+  }
+
+  public static String escapePlaceholders(String message) {
+    return message.replace(placeholderString, placeholderString + placeholderString);
+  }
+
+  public static String escape(String message) {
+    return escapeAltColorCodes(escapePlaceholders(message));
   }
 }

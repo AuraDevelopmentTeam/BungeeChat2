@@ -5,10 +5,15 @@ variables:
   ARTIFACTS1: "$CI_PROJECT_DIR/*.jar*"
   ARTIFACTS2: "$CI_PROJECT_DIR/*.zip*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
+#  TEST_DATA: "$CI_PROJECT_DIR/**/build/test-results/*/TEST-*.xml"
+  TEST_DATA1: "$CI_PROJECT_DIR/build/test-results/*/TEST-*.xml"
+  TEST_DATA2: "$CI_PROJECT_DIR/*/build/test-results/*/TEST-*.xml"
+  TEST_DATA3: "$CI_PROJECT_DIR/*/*/build/test-results/*/TEST-*.xml"
 #  JACOCO_DATA: "$CI_PROJECT_DIR/**/build/jacoco/*"
   JACOCO_DATA1: "$CI_PROJECT_DIR/build/jacoco/*"
   JACOCO_DATA2: "$CI_PROJECT_DIR/*/build/jacoco/*"
   JACOCO_DATA3: "$CI_PROJECT_DIR/*/*/build/jacoco/*"
+  TRANSLATION_REPORTS: "$CI_PROJECT_DIR/**/*.lang.txt"
   COVERAGE_REPORTS: "$CI_PROJECT_DIR/*-CoverageReport.zip"
   SPOTBUGS_REPORTS: "$CI_PROJECT_DIR/*-SpotbugsReport.zip"
   JAVADOCS: "$CI_PROJECT_DIR/*-javadoc.jar"
@@ -59,6 +64,12 @@ test:
     - $JACOCO_DATA1
     - $JACOCO_DATA2
     - $JACOCO_DATA3
+    reports:
+      junit:
+#      - $TEST_DATA
+      - $TEST_DATA1
+      - $TEST_DATA2
+      - $TEST_DATA3
 
 checkFormatting:
   stage: test
@@ -68,6 +79,19 @@ checkFormatting:
   - ./gradlew --continue --console=plain spotlessCheck
   allow_failure: true
   when: on_success
+
+checkTranslations:
+  stage: test
+  cache:
+    policy: pull
+  script:
+  - ./gradlew --continue --console=plain checkTranslations
+  allow_failure: true
+  when: on_success
+  artifacts:
+    when: on_failure
+    paths:
+    - $TRANSLATION_REPORTS
 
 coverage:
   stage: report
@@ -145,10 +169,12 @@ pages:
   - coverage
   - spotbugs
   script:
-  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | rev | cut -d- -f-3 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d. -f1 | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $COVERAGE_REPORTS; do dir=public/coverage/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $SPOTBUGS_REPORTS; do dir=public/spotbugs/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - GradleCommon/scripts/make_directory_listings.sh
+  - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -fk9 {} \;
   when: always
   artifacts:
     paths:

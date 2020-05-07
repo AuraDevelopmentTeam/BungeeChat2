@@ -14,27 +14,36 @@ import net.md_5.bungee.api.CommandSender;
 
 public class StaffChatCommand extends BaseCommand {
   public StaffChatCommand(StaffChatModule staffChatModule) {
-    super("staffchat", staffChatModule.getModuleSection().getStringList("aliases"));
+    super(
+        "staffchat",
+        Permission.COMMAND_STAFFCHAT,
+        staffChatModule.getModuleSection().getStringList("aliases"));
   }
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    if (PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT)) {
-      if (args.length == 0) {
-        BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+    if (!PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT)) return;
 
-        if (player.getChannelType() == ChannelType.STAFF) {
-          player.setChannelType(ChannelType.LOCAL);
+    if (args.length == 0) {
+      BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+
+      if (player.getChannelType() == ChannelType.STAFF) {
+        ChannelType defaultChannelType = player.getDefaultChannelType();
+        player.setChannelType(defaultChannelType);
+
+        if (defaultChannelType == ChannelType.LOCAL) {
           MessagesService.sendMessage(sender, Messages.ENABLE_LOCAL.get());
         } else {
-          player.setChannelType(ChannelType.STAFF);
-          MessagesService.sendMessage(sender, Messages.ENABLE_STAFFCHAT.get());
+          MessagesService.sendMessage(sender, Messages.ENABLE_GLOBAL.get());
         }
       } else {
-        String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
-
-        MessagesService.sendStaffMessage(sender, finalMessage);
+        player.setChannelType(ChannelType.STAFF);
+        MessagesService.sendMessage(sender, Messages.ENABLE_STAFFCHAT.get());
       }
+    } else {
+      String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
+
+      MessagesService.sendStaffMessage(sender, finalMessage);
     }
   }
 }

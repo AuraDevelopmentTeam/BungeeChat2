@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
@@ -37,16 +38,20 @@ public class TestHelper {
   public static void initBungeeChat() {
     if (!hasInitRun) {
       proxyServer = new DummyProxyServer();
+      PluginDescription desc = new PluginDescription();
 
       ProxyServer.setInstance(proxyServer);
 
-      bungeeChat = new BungeeChat();
-      BungeeChat.instance = bungeeChat;
+      bungeeChat = new BungeeChat(proxyServer, desc);
 
-      Method init =
-          Plugin.class.getDeclaredMethod("init", ProxyServer.class, PluginDescription.class);
-      init.setAccessible(true);
-      init.invoke(bungeeChat, proxyServer, new PluginDescription());
+      if (bungeeChat.getProxy() == null) {
+        Method init =
+            Plugin.class.getDeclaredMethod("init", ProxyServer.class, PluginDescription.class);
+        init.setAccessible(true);
+        init.invoke(bungeeChat, proxyServer, desc);
+      }
+
+      bungeeChat.onLoad();
 
       hasInitRun = true;
     }
@@ -225,6 +230,12 @@ public class TestHelper {
 
     @Override
     public Title createTitle() {
+      return null;
+    }
+
+    @Override
+    public ServerInfo constructServerInfo(
+        String name, SocketAddress address, String motd, boolean restricted) {
       return null;
     }
   }

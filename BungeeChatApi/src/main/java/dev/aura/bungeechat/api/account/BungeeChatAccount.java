@@ -9,6 +9,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public interface BungeeChatAccount {
+  public static final String unknownServer = "unknown";
+
   public UUID getUniqueId();
 
   public default AccountType getAccountType() {
@@ -16,6 +18,13 @@ public interface BungeeChatAccount {
   }
 
   public ChannelType getChannelType();
+
+  /**
+   * Returns the <b>global</b> default channel type for <b>all players</b>!!
+   *
+   * @return default channel type
+   */
+  public ChannelType getDefaultChannelType();
 
   public boolean isVanished();
 
@@ -58,6 +67,13 @@ public interface BungeeChatAccount {
   public Optional<String> getStoredSuffix();
 
   public void setChannelType(ChannelType channelType);
+
+  /**
+   * Sets the <b>global</b> default channel type for <b>all players</b>!!
+   *
+   * @param channelType new default channel type
+   */
+  public void setDefaultChannelType(ChannelType channelType);
 
   public void setVanished(boolean vanished);
 

@@ -37,8 +37,6 @@ public enum Permission {
   USE_CHAT_FORMAT_ITALIC("chat.format.italic"),
   USE_CHAT_FORMAT_RESET("chat.format.reset"),
 
-  USE_TAB_COMPLETE("chat.tabcomplete"),
-
   BYPASS_ANTI_ADVERTISEMENT("chat.bypass.antiadvertisement"),
   BYPASS_ANTI_DUPLICATE("chat.bypass.antiduplicate"),
   BYPASS_ANTI_SWEAR("chat.bypass.antiswear"),
@@ -49,6 +47,8 @@ public enum Permission {
   COMMAND_ALERT("command.alert"),
   COMMAND_GLOBAL("command.global"),
   COMMAND_GLOBAL_TOGGLE("command.global.toggle"),
+  COMMAND_LOCAL("command.local"),
+  COMMAND_LOCAL_TOGGLE("command.local.toggle"),
   COMMAND_STAFFCHAT("command.staffchat"),
   COMMAND_STAFFCHAT_VIEW("command.staffchat.view"),
   COMMAND_HELPOP("command.helpop"),
@@ -65,6 +65,7 @@ public enum Permission {
   COMMAND_LOCALSPY("command.localspy"),
   COMMAND_CHAT_LOCK("command.chatlock"),
   COMMAND_CLEAR_CHAT("command.clearchat"),
+  COMMAND_LOCALTO("command.localto"),
 
   MESSAGE_JOIN("message.join"),
   MESSAGE_LEAVE("message.leave"),
