@@ -1,9 +1,13 @@
 package dev.aura.bungeechat.util;
 
+import com.typesafe.config.Config;
+import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
@@ -12,7 +16,9 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 
 @UtilityClass
-public class ServerNameHelper {
+public class ServerNameUtil {
+  private static Map<String, String> aliasMapping = new HashMap<>();
+
   public static Optional<ServerInfo> getServerInfo(String serverName) {
     return ProxyServer.getInstance().getServers().values().stream()
         .filter(server -> serverName.equalsIgnoreCase(server.getName()))
@@ -43,5 +49,21 @@ public class ServerNameHelper {
     return getServerNames().stream()
         .filter(serverName -> serverName.startsWith(partialName))
         .collect(Collectors.toList());
+  }
+
+  public static String getServerAlias(ServerInfo server) {
+    return getServerAlias(server.getName());
+  }
+
+  public static String getServerAlias(String name) {
+    if (aliasMapping.containsKey(name)) return aliasMapping.get(name);
+    else return name;
+  }
+
+  public static void loadAliases() {
+    Config section = Configuration.get().getConfig("ServerAlias");
+
+    aliasMapping =
+        section.root().keySet().stream().collect(Collectors.toMap(key -> key, section::getString));
   }
 }
