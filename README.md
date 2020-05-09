@@ -37,36 +37,36 @@ You can download all builds from:
 
 ## Wiki
 
-We have created a wiki for this plugin to help you with various issues and problems. Check out our
-[Wiki](https://github.com/AuraDevelopmentTeam/BungeeChat2/wiki)!
+We have created a wiki for this plugin to help you with various issues and problems. Check 
+[it](https://github.com/AuraDevelopmentTeam/BungeeChat2/wiki) out!
 
 ## [Issue Reporting](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
 
-If you found a bug or even are experiencing a crash please report it so we can fix it. Please check at first if a bug report for the issue already
-[exits](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues). If not just create a
+If you found a bug or are even experiencing a crash please report it so we can fix it. Please first check if a bug report for the issue already
+[exists](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues). If not just create a
 [new issue](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/new) and fill out the form.
 
 Please include the following:
 
 * Minecraft version
-* Bungee Chat version
+* Bungee Chat version ("latest" is not a version number)!
 * Versions of any plugins potentially related to the issue
 * Any relevant screenshots are greatly appreciated.
 * For crashes:
   * Steps to reproduce
   * proxy.log.1 from the root folder of the server
 
-*(When creating a new issue please follow the template)*
+*(When creating a new issue, please follow the template)*
 
 ## [Feature Requests](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
 
 If you want a new feature added, go ahead an open a [new issue](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/new), remove the existing form and
-describe your feature the best you can. The more details you provide the easier it will be implementing it.  
+describe your feature the best you can. The more details you provide the easier, it will be implementing it.  
 You can also talk to us on [Discord](https://discord.me/bungeechat).
 
 ## Developing with our Plugin
 
-So you want to add support or even develop an add-on for our plugin then you can easily add our API to your development environment, read the
+So you want to add support or even develop an add-on for our plugin? You can easily add our API to your development environment, read the
 [API documentation](https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/BungeeChatApi/README.md).
 
 ## Setting up a Workspace/Compiling from Source
@@ -77,17 +77,15 @@ So you want to add support or even develop an add-on for our plugin then you can
   Run [gradle] in the repository root: `./gradlew installLombok <eclipse|idea>`
 * Build:  
   Run [gradle] in the repository root: `./gradlew build`. The build will be in `build/libs`
-* If obscure Gradle issues are found try running `./gradlew cleanCache clean`
+* If obscure Gradle issues are found, try running `./gradlew cleanCache clean`
 
 ## Development builds
 
-Between each official release there are several bleeding edge development builds, which you can also use. But be aware that they might contain unfinished
-features and therefore won't work properly.
+Between each official release, there are several bleeding edge development builds, which you can also use. But be aware that they might contain unfinished features and therefore won't work properly.
 
 You can find the builds here: https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines
 
-On the right is a download symbol, click that a dropdown will open. Select "build". Then you'll download a zip file containing all atrifacts including the
-plugin jar.
+On the right is a download symbol, click that, a dropdown menu will open. Select "build". Then, you'll download a zip file containing all artifacts including the plugin jar.
 
 ## PGP Signing
 
