@@ -4,16 +4,16 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class FilterManager {
-  public static final int SWEAR_FILTER_PRIORITY = 100;
-  public static final int ADVERTISING_FILTER_PRIORITY = 200;
-  public static final int DUPLICATION_FILTER_PRIORITY = 300;
-  public static final int LOCK_CHAT_FILTER_PRIORITY = 400;
+  public static final int SYMBOL_SUBSTITUTION_PRIORITY = 100;
+  public static final int SWEAR_FILTER_PRIORITY = 200;
+  public static final int ADVERTISING_FILTER_PRIORITY = 300;
+  public static final int DUPLICATION_FILTER_PRIORITY = 400;
+  public static final int LOCK_CHAT_FILTER_PRIORITY = 500;
 
   private static Map<String, BungeeChatFilter> filters = new LinkedHashMap<>();
 
@@ -44,9 +44,9 @@ public class FilterManager {
   private static void sortFilters() {
     filters =
         filters.entrySet().stream()
-            .sorted(Collections.reverseOrder(Entry.comparingByValue()))
+            .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
             .collect(
                 Collectors.toMap(
-                    Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+                    Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
   }
 }
