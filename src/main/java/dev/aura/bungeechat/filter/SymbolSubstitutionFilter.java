@@ -16,20 +16,15 @@ public class SymbolSubstitutionFilter implements BungeeChatFilter {
 
     @Override
     public String applyFilter(BungeeChatAccount sender, String message) throws BlockMessageException {
-        String finalmessage = message;
+        String finalMessage = message;
         for (Map.Entry<String, String> entry : replacementMapping.entrySet()) {
-            finalmessage = message.replace(entry.getKey(), entry.getValue());
+            finalMessage = finalMessage.replace(entry.getKey(), entry.getValue());
         }
-        return finalmessage;
+        return finalMessage;
     }
 
     @Override
     public int getPriority() {
-        return 0;
-    }
-
-    @Override
-    public int compareTo(BungeeChatFilter other) {
         return 0;
     }
 }

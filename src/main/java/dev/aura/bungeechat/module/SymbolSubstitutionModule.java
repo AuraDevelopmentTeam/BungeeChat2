@@ -2,6 +2,7 @@ package dev.aura.bungeechat.module;
 
 
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigObject;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.module.Module;
 import dev.aura.bungeechat.filter.SymbolSubstitutionFilter;
@@ -21,9 +22,10 @@ public class SymbolSubstitutionModule extends Module {
 
     @Override
     public void onEnable() {
-        Config section = getModuleSection().getConfig("replacements");
+        Config section = getModuleSection();
         replacementMapping =
-                section.root().keySet().stream().collect(Collectors.toMap(key -> key, section::getString));
+                section.getObject("replacements").keySet().stream().collect(Collectors.toMap(key -> key, section::getString));
+        System.out.println(section.getObject("replacements").keySet());
         SymbolSubstitutionFilter symbolSubstitutionFilter = new SymbolSubstitutionFilter(replacementMapping);
         FilterManager.addFilter(getName(), symbolSubstitutionFilter);
     }
