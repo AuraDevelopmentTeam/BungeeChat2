@@ -64,6 +64,10 @@ public class ServerNameUtil {
     Config section = Configuration.get().getConfig("ServerAlias");
 
     aliasMapping =
-        section.root().keySet().stream().collect(Collectors.toMap(key -> key, section::getString));
+        section.root().entrySet().stream()
+            .collect(
+                Collectors.toMap(
+                    Map.Entry::getKey, entry -> entry.getValue().unwrapped().toString()));
+    ;
   }
 }
