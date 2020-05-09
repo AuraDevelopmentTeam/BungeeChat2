@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class AlertCommand extends BaseCommand {
   public AlertCommand(AlertModule alertModule) {
@@ -19,7 +20,6 @@ public class AlertCommand extends BaseCommand {
         "alert", Permission.COMMAND_ALERT, alertModule.getModuleSection().getStringList("aliases"));
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void execute(CommandSender sender, String[] args) {
     if (PermissionManager.hasPermission(sender, Permission.COMMAND_ALERT)) {
@@ -32,7 +32,7 @@ public class AlertCommand extends BaseCommand {
                 Arrays.stream(args).collect(Collectors.joining(" ")));
         String format = Format.ALERT.get(new Context(sender, finalMessage));
 
-        ProxyServer.getInstance().broadcast(format);
+        ProxyServer.getInstance().broadcast(TextComponent.fromLegacyText(format));
       }
     }
   }
