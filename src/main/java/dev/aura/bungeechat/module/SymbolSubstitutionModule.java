@@ -1,6 +1,5 @@
 package dev.aura.bungeechat.module;
 
-import com.typesafe.config.Config;
 import dev.aura.bungeechat.api.filter.FilterManager;
 import dev.aura.bungeechat.filter.SymbolSubstitutionFilter;
 import java.util.Map;
@@ -14,9 +13,8 @@ public class SymbolSubstitutionModule extends Module {
 
   @Override
   public void onEnable() {
-    Config replacements = getModuleSection().getConfig("replacements");
     Map<String, String> replacementMapping =
-        replacements.root().entrySet().stream()
+        getModuleSection().getObject("replacements").entrySet().stream()
             .collect(
                 Collectors.toMap(
                     Map.Entry::getKey, entry -> entry.getValue().unwrapped().toString()));
