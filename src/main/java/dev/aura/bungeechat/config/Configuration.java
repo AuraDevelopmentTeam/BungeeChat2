@@ -594,7 +594,8 @@ public class Configuration implements Config {
 
       // No point in handling those cases.
       // We don't have any settings with comments that contain either in the default config anyways.
-      if ((path.indexOf(':')) != -1 || (path.indexOf('=') != -1)) continue;
+      if ((path.indexOf(':') != -1) || (path.indexOf('=') != -1) || (path.indexOf('.') != -1))
+        continue;
 
       final ConfigValue currentConfig = config.getValue(path);
 
