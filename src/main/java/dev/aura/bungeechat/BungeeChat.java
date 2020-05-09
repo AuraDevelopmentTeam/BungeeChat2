@@ -26,10 +26,10 @@ import dev.aura.bungeechat.listener.CommandTabCompleteListener;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.message.PlaceHolders;
-import dev.aura.bungeechat.message.ServerAliases;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.util.LoggerHelper;
 import dev.aura.bungeechat.util.MapUtils;
+import dev.aura.bungeechat.util.ServerNameUtil;
 import dev.aura.lib.version.Version;
 import java.io.BufferedReader;
 import java.io.File;
@@ -149,7 +149,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
         defaultHookName,
         new DefaultHook(
             prefixDefaults.getString("defaultPrefix"), prefixDefaults.getString("defaultSuffix")));
-    ServerAliases.loadAliases();
+    ServerNameUtil.loadAliases();
 
     // Refresh Cache and cache version
     getLatestVersion(true);

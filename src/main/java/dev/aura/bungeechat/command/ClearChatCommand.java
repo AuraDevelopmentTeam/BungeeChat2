@@ -8,7 +8,7 @@ import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.module.ClearChatModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
-import dev.aura.bungeechat.util.ServerNameHelper;
+import dev.aura.bungeechat.util.ServerNameUtil;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -54,7 +54,7 @@ public class ClearChatCommand extends BaseCommand {
         }
 
         Optional<String> optServerName =
-            ServerNameHelper.verifyServerName(
+            ServerNameUtil.verifyServerName(
                 serverSpecified ? args[1] : bungeeChatAccount.getServerName(), sender);
 
         if (!optServerName.isPresent()) return;
@@ -87,7 +87,7 @@ public class ClearChatCommand extends BaseCommand {
     } else if ((args.length == 2) && ("local".equals(location))) {
       final String serverName = args[1];
 
-      return ServerNameHelper.getMatchingServerNames(serverName);
+      return ServerNameUtil.getMatchingServerNames(serverName);
     }
 
     return super.tabComplete(sender, args);

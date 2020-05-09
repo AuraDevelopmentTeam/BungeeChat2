@@ -6,7 +6,7 @@ import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.LocalToModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
-import dev.aura.bungeechat.util.ServerNameHelper;
+import dev.aura.bungeechat.util.ServerNameUtil;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class LocalToCommand extends BaseCommand {
       return;
     }
 
-    Optional<String> optServerName = ServerNameHelper.verifyServerName(args[0], sender);
+    Optional<String> optServerName = ServerNameUtil.verifyServerName(args[0], sender);
 
     if (!optServerName.isPresent()) return;
 
@@ -44,7 +44,7 @@ public class LocalToCommand extends BaseCommand {
   @Override
   public Collection<String> tabComplete(CommandSender sender, String[] args) {
     if (args.length == 1) {
-      return ServerNameHelper.getMatchingServerNames(args[0]);
+      return ServerNameUtil.getMatchingServerNames(args[0]);
     }
 
     return super.tabComplete(sender, args);
