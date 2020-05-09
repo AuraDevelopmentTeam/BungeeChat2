@@ -19,8 +19,6 @@ public class SymbolSubstitutionModule extends Module {
         replacements.root().keySet().stream()
             .collect(Collectors.toMap(key -> key, replacements::getString));
 
-    System.out.println(replacements.root().keySet());
-
     FilterManager.addFilter(getName(), new SymbolSubstitutionFilter(replacementMapping));
   }
 
