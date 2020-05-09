@@ -129,6 +129,21 @@ public class Configuration implements Config {
     return config.origin().comments();
   }
 
+  private static Config withRemovedMappings(Config config, String path) {
+    return config
+        .withoutPath(path)
+        .withValue(path, ConfigValueFactory.fromMap(Collections.emptyMap()));
+  }
+
+  private static Config removeBuiltInMappings(Config config) {
+    Config newConfig = config;
+
+    newConfig = withRemovedMappings(newConfig, "ServerAlias");
+    newConfig = withRemovedMappings(newConfig, "Modules.SymbolSubstitution.replacements");
+
+    return newConfig;
+  }
+
   protected void loadConfig() {
     Config defaultConfig =
         ConfigFactory.parseReader(
@@ -141,7 +156,7 @@ public class Configuration implements Config {
       try {
         Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
 
-        config = fileConfig.withFallback(defaultConfig.withoutPath("ServerAlias"));
+        config = fileConfig.withFallback(removeBuiltInMappings(defaultConfig));
       } catch (ConfigException e) {
         LoggerHelper.error("Error while reading config:\n" + e.getLocalizedMessage());
 
@@ -555,7 +570,7 @@ public class Configuration implements Config {
 
       config =
           ConfigFactory.parseMap(configMap)
-              .withFallback(config.withoutPath("ServerAlias"))
+              .withFallback(removeBuiltInMappings(config))
               .resolve()
               .withValue("Version", ConfigValueFactory.fromAnyRef("11.3"));
 
@@ -576,6 +591,11 @@ public class Configuration implements Config {
 
     while (!paths.isEmpty()) {
       final String path = paths.poll();
+
+      // No point in handling those cases.
+      // We don't have any settings with comments that contain either in the default config anyways.
+      if ((path.indexOf(':')) != -1 || (path.indexOf('=') != -1)) continue;
+
       final ConfigValue currentConfig = config.getValue(path);
 
       // Add new paths to path list

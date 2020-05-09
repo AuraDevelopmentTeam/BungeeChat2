@@ -16,8 +16,10 @@ public class SymbolSubstitutionModule extends Module {
   public void onEnable() {
     Config replacements = getModuleSection().getConfig("replacements");
     Map<String, String> replacementMapping =
-        replacements.root().keySet().stream()
-            .collect(Collectors.toMap(key -> key, replacements::getString));
+        replacements.root().entrySet().stream()
+            .collect(
+                Collectors.toMap(
+                    Map.Entry::getKey, entry -> entry.getValue().unwrapped().toString()));
 
     FilterManager.addFilter(getName(), new SymbolSubstitutionFilter(replacementMapping));
   }
