@@ -3,6 +3,7 @@ package dev.aura.bungeechat.filter;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
+import dev.aura.bungeechat.api.filter.FilterManager;
 import java.util.Map;
 
 public class SymbolSubstitutionFilter implements BungeeChatFilter {
@@ -25,6 +26,6 @@ public class SymbolSubstitutionFilter implements BungeeChatFilter {
 
   @Override
   public int getPriority() {
-    return 0;
+    return FilterManager.SYMBOL_SUBSTITUTION_PRIORITY;
   }
 }
