@@ -45,7 +45,8 @@ public class BungeecordModuleManager extends ModuleManager {
   public static final ServerSwitchModule SERVER_SWITCH_MODULE = new ServerSwitchModule();
   public static final SpyModule SPY_MODULE = new SpyModule();
   public static final StaffChatModule STAFF_CHAT_MODULE = new StaffChatModule();
-  public static final SymbolSubstitutionModule SYMBOL_SUBSTITUTION_MODULE = new SymbolSubstitutionModule();
+  public static final SymbolSubstitutionModule SYMBOL_SUBSTITUTION_MODULE =
+      new SymbolSubstitutionModule();
   public static final VanishModule VANISHER_MODULE = new VanishModule();
   public static final VersionCheckerModule VERSION_CHECKER_MODULE = new VersionCheckerModule();
   public static final WelcomeMessageModule WELCOME_MESSAGE_MODULE = new WelcomeMessageModule();

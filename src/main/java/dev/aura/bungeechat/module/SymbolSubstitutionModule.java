@@ -1,37 +1,31 @@
 package dev.aura.bungeechat.module;
 
-
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigObject;
 import dev.aura.bungeechat.api.filter.FilterManager;
-import dev.aura.bungeechat.module.Module;
 import dev.aura.bungeechat.filter.SymbolSubstitutionFilter;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SymbolSubstitutionModule extends Module {
+  @Override
+  public String getName() {
+    return "SymbolSubstitution";
+  }
 
-    private static Map<String, String> replacementMapping = new HashMap<>();
+  @Override
+  public void onEnable() {
+    Config replacements = getModuleSection().getConfig("replacements");
+    Map<String, String> replacementMapping =
+        replacements.root().keySet().stream()
+            .collect(Collectors.toMap(key -> key, replacements::getString));
 
-    @Override
-    public String getName() {
-        return "SymbolSubstitution";
-    }
+    System.out.println(replacements.root().keySet());
 
-    @Override
-    public void onEnable() {
-        Config section = getModuleSection();
-        replacementMapping =
-                section.getObject("replacements").keySet().stream().collect(Collectors.toMap(key -> key, section::getString));
-        System.out.println(section.getObject("replacements").keySet());
-        SymbolSubstitutionFilter symbolSubstitutionFilter = new SymbolSubstitutionFilter(replacementMapping);
-        FilterManager.addFilter(getName(), symbolSubstitutionFilter);
-    }
+    FilterManager.addFilter(getName(), new SymbolSubstitutionFilter(replacementMapping));
+  }
 
-    @Override
-    public void onDisable() {
-        FilterManager.removeFilter(getName());
-    }
+  @Override
+  public void onDisable() {
+    FilterManager.removeFilter(getName());
+  }
 }
