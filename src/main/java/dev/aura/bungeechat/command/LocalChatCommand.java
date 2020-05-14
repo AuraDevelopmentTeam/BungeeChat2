@@ -63,7 +63,7 @@ public class LocalChatCommand extends BaseCommand {
     } else {
       String finalMessage = Arrays.stream(args).collect(Collectors.joining(" "));
 
-      MessagesService.sendGlobalMessage(sender, finalMessage);
+      MessagesService.sendLocalMessage(sender, finalMessage);
     }
   }
 }
