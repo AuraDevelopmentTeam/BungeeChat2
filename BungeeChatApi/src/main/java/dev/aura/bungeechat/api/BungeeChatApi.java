@@ -34,7 +34,14 @@ public interface BungeeChatApi {
       };
   public static final String[] TRANSLATORS =
       new String[] {
-        "DardBrinza", "Fantasenf", "fjeddy", "Garixer", "gb2233", "Maxime_74", "povsister"
+        "DardBrinza",
+        "Fantasenf",
+        "fjeddy",
+        "Garixer",
+        "gb2233",
+        "Itaquito",
+        "Maxime_74",
+        "povsister"
       };
   public static final String[] DONATORS = new String[] {"Breantique", "NickT"};
   public static final double CONFIG_VERSION = 11.3;
