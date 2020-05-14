@@ -2,6 +2,7 @@ package dev.aura.bungeechat.module;
 
 import com.typesafe.config.Config;
 import dev.aura.bungeechat.BungeeChat;
+import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.task.AutomaticBroadcastTask;
 import java.util.concurrent.TimeUnit;
 import net.md_5.bungee.api.ProxyServer;
@@ -30,7 +31,9 @@ public class AutoBroadcastModule extends Module {
             .schedule(
                 BungeeChat.getInstance(),
                 new AutomaticBroadcastTask(
-                    section.getStringList("messages"), section.getBoolean("random")),
+                    MessagesService.getServerListPredicate(section.getConfig("serverList")),
+                    section.getStringList("messages"),
+                    section.getBoolean("random")),
                 delay,
                 interval,
                 TIME_UNIT);

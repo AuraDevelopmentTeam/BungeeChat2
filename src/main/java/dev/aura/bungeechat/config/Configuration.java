@@ -219,6 +219,15 @@ public class Configuration implements Config {
 
         // Remove config section "Modules.TabCompletion"
         config = config.withoutPath("Modules.TabCompletion");
+      case "11.3":
+        LoggerHelper.info("Performing config migration 11.3 -> 11.4 ...");
+
+        final Config serverList = config.getConfig("Modules.GlobalChat.serverList");
+
+        // Copy over server list from Global to AutoBroadcast if it is enabled
+        if (serverList.getBoolean("enabled")) {
+          config = config.withValue("Modules.AutoBroadcast.serverList", serverList.root());
+        }
 
       default:
         // Unknow Version or old version
@@ -227,7 +236,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.3":
+      case "11.4":
         // Up to date
         // -> No action needed
     }

@@ -361,10 +361,7 @@ public class MessagesService {
                     BungeecordAccountManager.getCommandSender(account).get(), finalMessage));
   }
 
-  public static Predicate<BungeeChatAccount> getGlobalPredicate() {
-    final Config section =
-        BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
-
+  public static Predicate<BungeeChatAccount> getServerListPredicate(Config section) {
     if (!section.getBoolean("enabled")) return account -> true;
     else {
       // TODO: Use wildcard string
@@ -372,6 +369,11 @@ public class MessagesService {
 
       return account -> allowedServers.contains(account.getServerName());
     }
+  }
+
+  public static Predicate<BungeeChatAccount> getGlobalPredicate() {
+    return getServerListPredicate(
+        BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("serverList"));
   }
 
   public static Predicate<BungeeChatAccount> getServerPredicate(List<String> servers) {
