@@ -28,96 +28,100 @@ inherit: en_US
 ####################################################################################################
 # Channel Type Messages
 ####################################################################################################
-enableGlobal: "&eJestes teraz na czacie &bglobalnym&e!"
-enableStaffchat: "&eestes teraz na czacie &aadministracji&e!"
-enableLocal: "&eestes teraz na czacie &clokalnym&e!"
-globalIsDefault: "&eCzat globalny jest ustawiony jako domyslny!"
-backToLocal: "&cCzat, w którym wczesniej byles zostal wylaczony lub odebrano Ci do niego uprawnienia. Od teraz jestes w czacie lokalnym."
-notInGlobalServer: "&cCzat globalny nie jest wlaczony na tym serwerze..."
+enableGlobal: "&eJesteś teraz na czacie &bglobalnym&e!"
+enableStaffchat: "&eJesteś teraz na czacie &aadministracji&e!"
+enableLocal: "&eJesteś teraz na czacie &clokalnym&e!"
+globalIsDefault: "&eChat globalny jest ustawiony jako domyślny!"
+localIsDefault: "&eChat lokalny jest już ustawiony jako domyślny!"
+backToDefault: "&cFunkcja powiązana z kanałem, w którym rozmawiasz, została wyłączona lub Twoje uprawnienia zostały usunięte! Rozmawiasz teraz na domyślnym kanale."
+notInGlobalServer: "&cChat globalny nie jest włączony na tym serwerze..."
+notInLocalServer: "&cChat lokalny nie jest włączony na tym serwerze..."
 
 ####################################################################################################
 # Messenger Messages
 ####################################################################################################
-messageYourself: "&cNie mozesz wysylac wiadomosci prywatnych do samego siebie..."
-enableMessager: "&ePomyslnie &awlaczono&e wiadomosci!"
-disableMessager: "&ePomyslnie &cwylaczono&e wiadomosci"
-noReply: "&cNie masz komu odpowiedziec."
-replyOffline: "&cGracz, z którym pisales nie jest juz dostepny."
-hasMessagerDisabled: "&cGracz %name% ma wylaczone wiadomosci!"
+messageYourself: "&cNie możesz wysyłać wiadomości prywatnych do samego siebie..."
+enableMessager: "&ePomyślnie &awłączono&e wiadomości!"
+disableMessager: "&ePomyślnie &cwyłączono&e wiadomości"
+noReply: "&cNie masz komu odpowiedzieć."
+replyOffline: "&cGracz, z którym pisałeś nie jest już dostępny."
+hasMessagerDisabled: "&cGracz %name% ma wyłączone wiadomości!"
 
 ####################################################################################################
 # Vanish Messages
 ####################################################################################################
-enableVanish: "&ePomyslnie &awlaczono&e tryb ukrycia!"
-disableVanish: "&ePomyslnie &cwylaczono&e tryb ukrycia!"
+enableVanish: "&ePomyślnie &awłączono&e vanisha!"
+disableVanish: "&ePomyślnie &cwyłączono&e vanisha!"
 
 ####################################################################################################
 # Clear Chat Messages
 ####################################################################################################
-clearedLocal: "&eGracz %name% wyczyscil czat lokalny."
-clearedGlobal: "&eGracz %name% wyczyscil czat globalny."
+clearedLocal: "&eGracz %name% wyczyścił Chat lokalny."
+clearedGlobal: "&eGracz %name% wyczyścił Chat globalny."
 
 ####################################################################################################
 # Mute Messages
 ####################################################################################################
-muted: "&cTwoje usta zostaly zaszyte, Twoje wyciszenie minie za %muted_until%!"
+muted: "&cTwoje usta zostały zaszyte, Twoje wyciszenie minie za %muted_until%!"
 unmuteNotMuted: "&cTen gracz nie jest wyciszony!"
-muteIsMuted: "Ten gracz ma juz aktywne wyciszenie!"
-unmute: "&ePomyslnie odciszono gracza &c%name%!"
-mute: "&ePomyslnie wyciszono gracza &c%name%!"
-tempmute: "&eGracz &c%name% &ezostal wyciszony na %muted_until%"
+muteIsMuted: "Ten gracz ma już aktywne wyciszenie!"
+unmute: "&ePomyślnie odciszono gracza &c%name%!"
+mute: "&ePomyślnie wyciszono gracza &c%name%!"
+tempmute: "&eGracz &c%name% &ezostał wyciszony na %muted_until%"
 
 ####################################################################################################
 # Spy Messages
 ####################################################################################################
-enableSocialSpy: "&ePomyslnie &awlaczono &etryb SocialSpy!"
-disableSocialSpy: "&ePomyslnie &cwylaczono &etryb SocialSpy!"
-enableLocalSpy: "&ePomyslnie &awlaczono &etryb LocalSpy!"
-disableLocalSpy: "&ePomyslnie &cwylaczono &etryb LocalSpy!"
+enableSocialSpy: "&ePomyślnie &awłączono &etryb SocialSpy!"
+disableSocialSpy: "&ePomyślnie &cwyłączono &etryb SocialSpy!"
+enableLocalSpy: "&ePomyślnie &awłączono &etryb LocalSpy!"
+disableLocalSpy: "&ePomyślnie &cwyłączono &etryb LocalSpy!"
 
 ####################################################################################################
 # Error Messages
 ####################################################################################################
-notPlayer: "&cMusisz byc graczem, by uzyc tej komendy!"
+notPlayer: "&cMusisz byc graczem, by użyć tej komendy!"
 playerNotFound: "&cNie znaleziono takiego gracza..."
-incorrectUsage: "&cNieprawidlowe uzycie! Spróbuj wpisac: %command%"
-noPermission: "&cNie masz do tego dostepu!"
+incorrectUsage: "&cNieprawidłowe użycie! Spróbuj wpisać: %command%"
+noPermission: "&cNie masz do tego dostępu!"
+messageBlank: "&cWiadomość nie może być pusta!"
+unknownServer: "&cNieznany serwer \"&b%unknown_server%&c\""
 
 ####################################################################################################
 # Ignore Messages
 ####################################################################################################
 hasIgnored: "&cGracz %target_name% ignoruje Cie..."
-addIgnore: "&eZaczales ignorowac gracza %name%!"
-removeIgnore: "&ePrzestales ignorowac gracza %name%!"
-alreadyIgnored: "&eJuz ignorujesz tego gracza!"
-ignoreYourself: "&cNie mozesz zaczac ignorowac samego siebie!"
-unignoreYourself: "&cNie mozesz przestac ignorowac samego siebie!"
+addIgnore: "&eZaczałeś ignorować gracza %name%!"
+removeIgnore: "&ePrzestałeś ignorować gracza %name%!"
+alreadyIgnored: "&eJuż ignorujesz tego gracza!"
+ignoreYourself: "&cNie możesz ignorować samego siebie!"
+unignoreYourself: "&cNie możesz przestać ignorować samego siebie!"
 notIgnored: "&cNie ignorujesz tego gracza!"
-ignoreList: "&eDostepni gracze, których ignorujesz: &b%message%&e."
-ignoreNobody: "&eAktualnie na serwerze nie ma &azadnej osoby&e, która ignroujesz!"
+ignoreList: "&eDostępni gracze, których ignorujesz: &b%message%&e."
+ignoreNobody: "&eAktualnie na serwerze nie ma &ażadnej osoby&e, której ignorujesz!"
 
 ####################################################################################################
 # Filter Messages
 ####################################################################################################
-antiAdvertise: "&cPrzestan zamieszczac reklamy!"
-antiDuplication: "&cPrzestan spamowac!"
+antiAdvertise: "&cPrzestań zamieszczać reklamy!"
+antiDuplication: "&cPrzestań spamować!"
 
 ####################################################################################################
 # ChatLock Messages
 ####################################################################################################
-enableChatlock: "&eCzat zostal wylaczony!"
-disableChatlock: "&eCzat zostal wlaczony!"
-chatIsLocked: "&cCzat zostal wylaczony, nie mozesz nic napisac!"
+enableChatlock: "&eChat został wyłączony!"
+disableChatlock: "&eChat został włączony!"
+chatIsLocked: "&cChat został wyłączony, nie możesz nic napisać!"
 
 ####################################################################################################
 # Prefix/Suffix Messages
 ####################################################################################################
-prefixRemoved: "&eRanga gracza %name% zostala usunieta!"
-prefixSet: "&eRanga gracza %name% zostala ustawiona jako %prefix%."
-suffixRemoved: "&eSuffix gracza %name% zostal usuniety!"
-suffixSet: "&eSuffix gracza %name% zostal ustawiony jako %suffix%."
+prefixRemoved: "&eRanga gracza %name% została usunięta!"
+prefixSet: "&eRanga gracza %name% została ustawiona jako %prefix%."
+suffixRemoved: "&eSuffix gracza %name% został usunięty!"
+suffixSet: "&eSuffix gracza %name% został ustawiony jako %suffix%."
 
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aJest dostepna nowa wersja pluginu Bungee Chats! Wersja: 6%message%&a. Pobierz nowa wersje na &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aJest dostepna nowa wersja pluginu Bungee Chats! Wersja: 6%message%&a. Pobierz nową wersje na &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
