@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -26,6 +27,12 @@ import net.md_5.bungee.api.config.ServerInfo;
 
 @UtilityClass
 public class MessagesService {
+  @Setter private static List<List<String>> multiCastServerGroups = null;
+
+  public static void unsetMultiCastServerGroups() {
+    setMultiCastServerGroups(null);
+  }
+
   public static void sendPrivateMessage(CommandSender sender, CommandSender target, String message)
       throws InvalidContextError {
     sendPrivateMessage(new Context(sender, target, message));
@@ -171,18 +178,6 @@ public class MessagesService {
 
       sendToMatchingPlayers(localSpyMessage, BungeeChatAccount::hasLocalSpyEnabled, isNotLocal);
     }
-  }
-
-  public static void sendMulticastMessage(BungeeChatContext context, List<String> servers)
-      throws InvalidContextError {
-    context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_MESSAGE);
-    Optional<String> finalMessage = preProcessMessage(context, Format.LOCAL_CHAT);
-    String localServerName =
-        context.hasServer() ? context.getServer().get() : context.getSender().get().getServerName();
-    Predicate<BungeeChatAccount> isDestination = getServerPredicate(servers);
-    Predicate<BungeeChatAccount> isNotLocal = getLocalPredicate(localServerName).negate();
-
-    sendToMatchingPlayers(finalMessage, isNotLocal, isDestination);
   }
 
   public static void sendStaffMessage(CommandSender sender, String message)
@@ -381,7 +376,21 @@ public class MessagesService {
   }
 
   public static Predicate<BungeeChatAccount> getLocalPredicate(String serverName) {
-    return account -> serverName.equals(account.getServerName());
+    if (multiCastServerGroups == null) {
+      return account -> serverName.equals(account.getServerName());
+    } else {
+      return account -> {
+        final String accountServerName = account.getServerName();
+
+        for (List<String> group : multiCastServerGroups) {
+          if (group.contains(accountServerName)) {
+            return group.contains(serverName);
+          }
+        }
+
+        return serverName.equals(accountServerName);
+      };
+    }
   }
 
   public static Predicate<BungeeChatAccount> getLocalPredicate() {

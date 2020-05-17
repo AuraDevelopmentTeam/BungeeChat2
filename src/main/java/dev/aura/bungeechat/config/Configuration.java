@@ -222,12 +222,20 @@ public class Configuration implements Config {
       case "11.3":
         LoggerHelper.info("Performing config migration 11.3 -> 11.4 ...");
 
-        final Config serverList = config.getConfig("Modules.GlobalChat.serverList");
+        final Config gloabalServerList = config.getConfig("Modules.GlobalChat.serverList");
 
         // Copy over server list from Global to AutoBroadcast if it is enabled
-        if (serverList.getBoolean("enabled")) {
-          config = config.withValue("Modules.AutoBroadcast.serverList", serverList.root());
+        if (gloabalServerList.getBoolean("enabled")) {
+          config = config.withValue("Modules.AutoBroadcast.serverList", gloabalServerList.root());
         }
+      case "11.4":
+        LoggerHelper.info("Performing config migration 11.4 -> 11.5 ...");
+
+        // Move the server lists section one layer down
+        config =
+            config.withValue(
+                "Modules.MulticastChat.serverLists",
+                config.getValue("Modules.MulticastChat.serverLists.lists"));
 
       default:
         // Unknow Version or old version
@@ -236,7 +244,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.4":
+      case "11.5":
         // Up to date
         // -> No action needed
     }
