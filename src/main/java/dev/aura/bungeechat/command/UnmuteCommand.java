@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 
 public class UnmuteCommand extends BaseCommand {
   public UnmuteCommand(MutingModule mutingModule) {
@@ -42,7 +43,8 @@ public class UnmuteCommand extends BaseCommand {
       }
 
       targetAccount.get().unmute();
-      MessagesService.sendMessage(sender, Messages.UNMUTE.get(targetAccount.get()));
+      AccountManager.saveAccount(targetAccount.get());
+      ProxyServer.getInstance().broadcast(Messages.UNMUTE.get(target));
     }
   }
 
