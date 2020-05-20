@@ -46,7 +46,7 @@ public class MuteCommand extends BaseCommand {
 
     targetAccount.get().mutePermanetly();
     AccountManager.saveAccount(targetAccount.get());
-    ProxyServer.getInstance().broadcast(Messages.MUTE.get(target));
+    ProxyServer.getInstance().broadcast(Messages.MUTE.get(targetAccount.get()));
   }
 
   @Override
