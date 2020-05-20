@@ -44,7 +44,7 @@ public class UnmuteCommand extends BaseCommand {
 
       targetAccount.get().unmute();
       AccountManager.saveAccount(targetAccount.get());
-      ProxyServer.getInstance().broadcast(Messages.UNMUTE.get(target));
+      ProxyServer.getInstance().broadcast(Messages.UNMUTE.get(targetAccount.get()));
     }
   }
 
