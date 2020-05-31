@@ -13,6 +13,7 @@ import net.luckperms.api.context.ContextManager;
 import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.context.MutableContextSet;
 import net.luckperms.api.model.user.User;
+import net.luckperms.api.query.QueryMode;
 import net.luckperms.api.query.QueryOptions;
 
 @RequiredArgsConstructor
@@ -46,21 +47,20 @@ public class LuckPerms5Hook implements BungeeChatHook {
 
   private QueryOptions getQueryOptions(Optional<User> user) {
     final ContextManager contextManager = api.getContextManager();
+    final QueryOptions queryOptions =
+        user.flatMap(contextManager::getQueryOptions)
+            .orElseGet(contextManager::getStaticQueryOptions);
 
-    if (fixContexts) {
-      final MutableContextSet contextSet =
-          user.flatMap(contextManager::getContext)
-              .orElseGet(contextManager::getStaticContext)
-              .mutableCopy();
+    if (fixContexts && (queryOptions.mode() == QueryMode.CONTEXTUAL)) {
+      final MutableContextSet context = queryOptions.context().mutableCopy();
 
-      user.flatMap(contextManager::getContext)
-          .flatMap(context -> context.getAnyValue(DefaultContextKeys.WORLD_KEY))
-          .ifPresent(world -> contextSet.add(DefaultContextKeys.SERVER_KEY, world));
+      context
+          .getValues(DefaultContextKeys.WORLD_KEY)
+          .forEach(world -> context.add(DefaultContextKeys.SERVER_KEY, world));
 
-      return QueryOptions.contextual(contextSet);
+      return queryOptions.toBuilder().context(context).build();
     } else {
-      return user.flatMap(contextManager::getQueryOptions)
-          .orElseGet(contextManager::getStaticQueryOptions);
+      return queryOptions;
     }
   }
 }
