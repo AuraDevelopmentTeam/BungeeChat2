@@ -1,6 +1,7 @@
 package dev.aura.bungeechat.module.perms;
 
 import dev.aura.bungeechat.api.hook.HookManager;
+import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.hook.LuckPerms4Hook;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import dev.aura.bungeechat.util.ClassUtil;
@@ -20,7 +21,10 @@ public class LuckPerms4Module extends PermissionPluginModule {
 
   @Override
   public void onEnable() {
-    HookManager.addHook(getName(), new LuckPerms4Hook());
+    final boolean fixContext =
+        Configuration.get().getBoolean("PrefixSuffixSettings.fixLuckPermsContext");
+
+    HookManager.addHook(getName(), new LuckPerms4Hook(fixContext));
   }
 
   @Override

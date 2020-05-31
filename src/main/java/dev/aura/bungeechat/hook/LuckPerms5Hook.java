@@ -5,19 +5,20 @@ import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
 import java.util.Objects;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.context.ContextManager;
+import net.luckperms.api.context.DefaultContextKeys;
+import net.luckperms.api.context.MutableContextSet;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.query.QueryOptions;
 
+@RequiredArgsConstructor
 public class LuckPerms5Hook implements BungeeChatHook {
-  private final LuckPerms api;
-
-  public LuckPerms5Hook() {
-    api = LuckPermsProvider.get();
-  }
+  private final boolean fixContexts;
+  private final LuckPerms api = LuckPermsProvider.get();
 
   @Override
   public Optional<String> getPrefix(BungeeChatAccount account) {
@@ -46,7 +47,20 @@ public class LuckPerms5Hook implements BungeeChatHook {
   private QueryOptions getQueryOptions(Optional<User> user) {
     final ContextManager contextManager = api.getContextManager();
 
-    return user.flatMap(contextManager::getQueryOptions)
-        .orElseGet(contextManager::getStaticQueryOptions);
+    if (fixContexts) {
+      final MutableContextSet contextSet =
+          user.flatMap(contextManager::getContext)
+              .orElseGet(contextManager::getStaticContext)
+              .mutableCopy();
+
+      user.flatMap(contextManager::getContext)
+          .flatMap(context -> context.getAnyValue(DefaultContextKeys.WORLD_KEY))
+          .ifPresent(world -> contextSet.add(DefaultContextKeys.SERVER_KEY, world));
+
+      return QueryOptions.contextual(contextSet);
+    } else {
+      return user.flatMap(contextManager::getQueryOptions)
+          .orElseGet(contextManager::getStaticQueryOptions);
+    }
   }
 }

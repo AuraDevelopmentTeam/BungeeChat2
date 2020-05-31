@@ -130,18 +130,19 @@ public class Configuration implements Config {
   }
 
   protected void loadConfig() {
-    Config defaultConfig =
+    final Config defaultConfig =
         ConfigFactory.parseReader(
             new InputStreamReader(
                 BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME),
                 StandardCharsets.UTF_8),
             PARSE_OPTIONS);
+    final Config strippedDefautConfig = defaultConfig.withoutPath("ServerAlias");
 
     if (CONFIG_FILE.exists()) {
       try {
         Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
 
-        config = fileConfig.withFallback(defaultConfig.withoutPath("ServerAlias"));
+        config = fileConfig.withFallback(strippedDefautConfig);
       } catch (ConfigException e) {
         LoggerHelper.error("Error while reading config:\n" + e.getLocalizedMessage());
 
@@ -154,6 +155,9 @@ public class Configuration implements Config {
     config = config.resolve();
 
     convertOldConfig();
+    // Reapply default config. By default this does nothing but it can fix the missing config
+    // settings in some cases
+    config = config.withFallback(strippedDefautConfig);
     copyComments(defaultConfig);
 
     saveConfig();
@@ -236,6 +240,14 @@ public class Configuration implements Config {
             config.withValue(
                 "Modules.MulticastChat.serverLists",
                 config.getValue("Modules.MulticastChat.serverLists.lists"));
+      case "11.5":
+        LoggerHelper.info("Performing config migration 11.5 -> 11.6 ...");
+
+        // Rename PrefixDefaults to PrefixSuffixSettings
+        config =
+            config
+                .withoutPath("PrefixDefaults")
+                .withValue("PrefixSuffixSettings", config.getValue("PrefixDefaults"));
 
       default:
         // Unknow Version or old version
@@ -244,7 +256,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.5":
+      case "11.6":
         // Up to date
         // -> No action needed
     }

@@ -140,7 +140,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     ProxyServer.getInstance().getPluginManager().registerListener(this, bungeeChatEventsListener);
     ProxyServer.getInstance().getPluginManager().registerListener(this, commandTabCompleteListener);
 
-    Config prefixDefaults = Configuration.get().getConfig("PrefixDefaults");
+    Config prefixDefaults = Configuration.get().getConfig("PrefixSuffixSettings");
 
     BungeecordModuleManager.registerPluginModules();
     ModuleManager.enableModules();
