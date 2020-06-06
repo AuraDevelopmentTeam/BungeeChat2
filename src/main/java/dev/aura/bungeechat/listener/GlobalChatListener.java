@@ -21,9 +21,10 @@ public class GlobalChatListener implements Listener {
       BungeecordModuleManager.GLOBAL_CHAT_MODULE
           .getModuleSection()
           .getBoolean("passToBackendServer");
-
   private final Config symbolSection =
       BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("symbol");
+  private final Config staffChatSymbolSection =
+      BungeecordModuleManager.STAFF_CHAT_MODULE.getModuleSection().getConfig("symbol");
 
   @EventHandler(priority = EventPriority.HIGH)
   public void onPlayerChat(ChatEvent e) {
@@ -35,6 +36,12 @@ public class GlobalChatListener implements Listener {
     BungeeChatAccount account = BungeecordAccountManager.getAccount(sender).get();
 
     if (ChatUtils.isCommand(message)) return;
+
+    if (staffChatSymbolSection.getBoolean("enabled")) {
+      String symbol = staffChatSymbolSection.getString("symbol");
+
+      if (message.startsWith(symbol) && !symbol.equals("/")) return;
+    }
 
     if (symbolSection.getBoolean("enabled")) {
       String symbol = symbolSection.getString("symbol");
@@ -57,7 +64,7 @@ public class GlobalChatListener implements Listener {
         }
 
         e.setCancelled(!passToBackendServer);
-        MessagesService.sendGlobalMessage(sender, message.replaceFirst(symbol, ""));
+        MessagesService.sendGlobalMessage(sender, message.substring(1));
       }
     }
 
