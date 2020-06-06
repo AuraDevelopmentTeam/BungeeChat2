@@ -70,8 +70,11 @@ public enum Permission {
   COMMAND_LOCALTO("command.localto"),
 
   MESSAGE_JOIN("message.join"),
+  MESSAGE_JOIN_VIEW("message.join.view"),
   MESSAGE_LEAVE("message.leave"),
+  MESSAGE_LEAVE_VIEW("message.leave.view"),
   MESSAGE_SWITCH("message.switch"),
+  MESSAGE_SWITCH_VIEW("message.switch.view"),
   MESSAGE_MOTD("message.motd");
 
   @Getter private final String stringedPermission;

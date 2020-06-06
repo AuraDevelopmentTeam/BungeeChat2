@@ -226,13 +226,14 @@ public class MessagesService {
     context.require(BungeeChatContext.HAS_SENDER);
 
     String finalMessage = Format.JOIN_MESSAGE.get(context);
+    Predicate<BungeeChatAccount> predicate = getPermissionPredicate(Permission.MESSAGE_JOIN_VIEW);
 
     // This condition checks if the player is present and vanished
     if (context.getSender().filter(BungeeChatAccount::isVanished).isPresent()) {
-      sendToMatchingPlayers(finalMessage, getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
-    } else {
-      sendToMatchingPlayers(finalMessage);
+      predicate = predicate.and(getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
     }
+
+    sendToMatchingPlayers(finalMessage, predicate);
 
     context.setMessage(finalMessage);
     ChatLoggingManager.logMessage("JOIN", context);
@@ -246,13 +247,14 @@ public class MessagesService {
     context.require(BungeeChatContext.HAS_SENDER);
 
     String finalMessage = Format.LEAVE_MESSAGE.get(context);
+    Predicate<BungeeChatAccount> predicate = getPermissionPredicate(Permission.MESSAGE_LEAVE_VIEW);
 
     // This condition checks if the player is present and vanished
     if (context.getSender().filter(BungeeChatAccount::isVanished).isPresent()) {
-      sendToMatchingPlayers(finalMessage, getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
-    } else {
-      sendToMatchingPlayers(finalMessage);
+      predicate = predicate.and(getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
     }
+
+    sendToMatchingPlayers(finalMessage, predicate);
 
     context.setMessage(finalMessage);
     ChatLoggingManager.logMessage("LEAVE", context);
@@ -275,13 +277,14 @@ public class MessagesService {
     context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_SERVER);
 
     String finalMessage = Format.SERVER_SWITCH.get(context);
+    Predicate<BungeeChatAccount> predicate = getPermissionPredicate(Permission.MESSAGE_SWITCH_VIEW);
 
     // This condition checks if the player is present and vanished
     if (context.getSender().filter(BungeeChatAccount::isVanished).isPresent()) {
-      sendToMatchingPlayers(finalMessage, getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
-    } else {
-      sendToMatchingPlayers(finalMessage);
+      predicate = predicate.and(getPermissionPredicate(Permission.COMMAND_VANISH_VIEW));
     }
+
+    sendToMatchingPlayers(finalMessage, predicate);
 
     context.setMessage(finalMessage);
     ChatLoggingManager.logMessage("SWITCH", context);
