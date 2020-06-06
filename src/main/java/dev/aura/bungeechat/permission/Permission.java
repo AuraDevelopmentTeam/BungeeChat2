@@ -62,7 +62,9 @@ public enum Permission {
   COMMAND_VANISH("command.vanish"),
   COMMAND_VANISH_VIEW("command.vanish.view"),
   COMMAND_SOCIALSPY("command.socialspy"),
+  COMMAND_SOCIALSPY_EXEMPT("command.socialspy.exempt"),
   COMMAND_LOCALSPY("command.localspy"),
+  COMMAND_LOCALSPY_EXEMPT("command.localspy.exempt"),
   COMMAND_CHAT_LOCK("command.chatlock"),
   COMMAND_CLEAR_CHAT("command.clearchat"),
   COMMAND_LOCALTO("command.localto"),
@@ -84,6 +86,6 @@ public enum Permission {
     this(
         stringedPermission,
         (stringedPermission.startsWith("command.") || stringedPermission.startsWith("admin."))
-            && !stringedPermission.endsWith(".view"));
+            && !(stringedPermission.endsWith(".view") || stringedPermission.endsWith(".exempt")));
   }
 }

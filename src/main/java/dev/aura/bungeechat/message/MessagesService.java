@@ -70,7 +70,8 @@ public class MessagesService {
               .get();
       MessagesService.sendMessage(target, messageTarget);
 
-      if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
+      if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)
+          && !PermissionManager.hasPermission(account.get(), Permission.COMMAND_SOCIALSPY_EXEMPT)) {
         String socialSpyMessage =
             preProcessMessage(context, account, Format.SOCIAL_SPY, false).get();
 
@@ -172,7 +173,8 @@ public class MessagesService {
 
     ChatLoggingManager.logMessage(ChannelType.LOCAL, context);
 
-    if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)) {
+    if (ModuleManager.isModuleActive(BungeecordModuleManager.SPY_MODULE)
+        && !PermissionManager.hasPermission(account.get(), Permission.COMMAND_LOCALSPY_EXEMPT)) {
       String localSpyMessage = preProcessMessage(context, account, Format.LOCAL_SPY, false).get();
       Predicate<BungeeChatAccount> isNotLocal = isLocal.negate();
 
