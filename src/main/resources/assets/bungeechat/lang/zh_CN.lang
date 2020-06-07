@@ -28,98 +28,100 @@ inherit: en_US
 ####################################################################################################
 # Channel Type Messages
 ####################################################################################################
-enableGlobal: "&e你已进入 &b跨服聊天频道&e!"
-enableStaffchat: "&e你已进入 &aStaff聊天频道&e!"
+enableGlobal: "&e你已进入 &b跨服聊天频道&e！"
+enableStaffchat: "&e你已进入 &aStaff聊天频道&e！"
 enableLocal: "&e你已进入 &c本地聊天频道&e!"
-globalIsDefault: "&e跨服聊天频道已经是默认的聊天频道了!"
-localIsDefault: "&e本地聊天平道已经是默认的!"
-backToDefault: "&c聊天频道或者您的允许被删掉了, 所以您被放到默认的聊天频道."
+globalIsDefault: "&e跨服聊天频道已经是默认的聊天频道了！"
+localIsDefault: "&e本地聊天平道已经是默认的！"
+backToDefault: "&c聊天频道或者您的允许被删掉了, 所以您被放到默认的聊天频道。"
 notInGlobalServer: "&c跨服聊天功能未启用, 请联系管理员..."
-notInLocalServer: "&c这个服务器上不允许用本地聊天!"
+notInLocalServer: "&c这个服务器上不允许用本地聊天！"
 
 ####################################################################################################
 # Messenger Messages
 ####################################################################################################
 messageYourself: "&c你不能给自己发送私聊信息..."
-enableMessager: "&e接收私聊信息已设为 &a开启&e!"
-disableMessager: "&e接收私聊信息已设为 &c关闭&e!"
-noReply: "&c404 Not Found. 私聊对象未找到."
-replyOffline: "&c和你私聊的玩家已经下线了."
-hasMessagerDisabled: "&c%name% 不接受私聊信息!"
+enableMessager: "&e接收私聊信息已设为 &a开启&e！"
+disableMessager: "&e接收私聊信息已设为 &c关闭&e！"
+noReply: "&c404 Not Found. 私聊对象未找到。"
+replyOffline: "&c和你私聊的玩家已经下线了。"
+hasMessagerDisabled: "&c%name% 不接受私聊信息！"
 
 ####################################################################################################
 # Vanish Messages
 ####################################################################################################
-enableVanish: "&e你在聊天频道中 &a开启了&e 隐身模式!"
+enableVanish: "&e你在聊天频道中 &a开启了&e 隐身模式！"
 disableVanish: "&e你在聊天频道中 &c关闭了&e 隐身模式!"
 
 ####################################################################################################
 # Clear Chat Messages
 ####################################################################################################
-clearedLocal: "&e%name% 已清除本地聊天内容."
-clearedGlobal: "&e%name% 已清除跨服聊天内容."
+clearedLocal: "&e%name% 已清除本地聊天内容。"
+clearedGlobal: "&e%name% 已清除跨服聊天内容。"
 
 ####################################################################################################
 # Mute Messages
 ####################################################################################################
-muted: "&c你现在不能说话, 你已被禁言至 %muted_until%!"
-unmuteNotMuted: "&c该玩家未被禁言!"
-muteIsMuted: "该玩家已经被禁言了!"
-unmute: "&e玩家 &c%name% &e已被解除禁言!"
-mute: "&e玩家 &c%name% &e已被永久禁言!"
-tempmute: "&e玩家 &c%name% &e已被临时禁止发言, 直至 %muted_until%"
+muted: "&c你现在不能说话, 你已被禁言至 %muted_until%！"
+unmuteNotMuted: "&c该玩家未被禁言！"
+muteIsMuted: "该玩家已经被禁言了！"
+unmute: "&e玩家 &c%name% &e已被解除禁言！"
+mute: "&e玩家 &c%name% &e已被永久禁言！"
+tempmute: "&e玩家 &c%name% &e已被临时禁止发言，直至 %muted_until%"
 
 ####################################################################################################
 # Spy Messages
 ####################################################################################################
-enableSocialSpy: "&eSocialSpy &a已开启&e!"
-disableSocialSpy: "&eSocialSpy &c已关闭&e!"
-enableLocalSpy: "&eLocalSpy &a已开启&e!"
-disableLocalSpy: "&eLocalSpy &c已关闭&e!"
+enableSocialSpy: "&eSocialSpy &a已开启&e！"
+disableSocialSpy: "&eSocialSpy &c已关闭&e！"
+enableLocalSpy: "&eLocalSpy &a已开启&e！"
+disableLocalSpy: "&eLocalSpy &c已关闭&e！"
 
 ####################################################################################################
 # Error Messages
 ####################################################################################################
-notPlayer: "&c只有玩家才能使用该命令!"
+notPlayer: "&c只有玩家才能使用该命令！"
 playerNotFound: "&c无法找到对应玩家..."
-incorrectUsage: "&c命令语法错误! 请参考正确的命令形式: %command%"
-noPermission: "&c你没有相应权限!"
-messageBlank: "&c信息不能是空的!"
-unknownServer: "&c没有叫\"&b%unknown_server%&c\"的服务器!"
+incorrectUsage: "&c命令语法错误！ 请参考正确的命令形式： %command%"
+noPermission: "&c你没有相应权限！"
+messageBlank: "&c信息不能是空的！"
+unknownServer: "&c没有叫\"&b%unknown_server%&c\"的服务器！"
 
 ####################################################################################################
 # Ignore Messages
 ####################################################################################################
 hasIgnored: "&c%target_name% 拒收了你的私聊消息..."
-addIgnore: "&e已将 %name% 加入黑名单! 拒收其私聊消息."
-removeIgnore: "&e已将 %name% 移出黑名单! 现在可以正常接收其私聊信息了."
-alreadyIgnored: "&e该玩家已经在你的拒收黑名单里了!"
-ignoreYourself: "&c你不能把自己加入拒收黑名单!"
-unignoreYourself: "&c你不能把自己移出拒收黑名单!"
-notIgnored: "&c该玩家尚未被你加入过拒收黑名单!"
-ignoreList: "&e拒收黑名单中的在线玩家: &b%message%&e."
-ignoreNobody: "&e在线玩家 &aanyone&e 中没有任何人在你的拒收黑名单上!"
+addIgnore: "&e已将 %name% 加入黑名单! 拒收其私聊消息。"
+removeIgnore: "&e已将 %name% 移出黑名单! 现在可以正常接收其私聊信息了。"
+alreadyIgnored: "&e该玩家已经在你的拒收黑名单里了！"
+ignoreYourself: "&c你不能把自己加入拒收黑名单！"
+unignoreYourself: "&c你不能把自己移出拒收黑名单！"
+notIgnored: "&c该玩家尚未被你加入过拒收黑名单！"
+ignoreList: "&e拒收黑名单中的在线玩家: &b%message%&e。"
+ignoreNobody: "&e在线玩家 &aanyone&e 中没有任何人在你的拒收黑名单上！"
 
 ####################################################################################################
 # Filter Messages
 ####################################################################################################
-antiAdvertise: "&c请勿发布垃圾信息!"
-antiDuplication: "&c请勿快速刷屏!"
+antiAdvertise: "&c请勿发布垃圾信息！"
+antiCapslock: "&c请您不用大写锁定！"
+antiDuplication: "&c请您不重复写信息！"
+antiSpam: "&c请勿快速刷屏！"
 
 ####################################################################################################
 # ChatLock Messages
 ####################################################################################################
-enableChatlock: "&e聊天功能已被禁用!"
-disableChatlock: "&e聊天功能已启用!"
-chatIsLocked: "&c全员禁言中, 只有管理员可以发言!"
+enableChatlock: "&e聊天功能已被禁用！"
+disableChatlock: "&e聊天功能已启用！"
+chatIsLocked: "&c全员禁言中，只有管理员可以发言！"
 
 ####################################################################################################
 # Prefix/Suffix Messages
 ####################################################################################################
-prefixRemoved: "&e已移除 %name% 的前缀!"
-prefixSet: "&e已设置 %name% 的前缀为 %prefix%."
-suffixRemoved: "&e已移除 %name% 的后缀!"
-suffixSet: "&e已设置 %name% 的后缀为 %suffix%."
+prefixRemoved: "&e已移除 %name% 的前缀！"
+prefixSet: "&e已设置 %name% 的前缀为 %prefix%。"
+suffixRemoved: "&e已移除 %name% 的后缀！"
+suffixSet: "&e已设置 %name% 的后缀为 %suffix%。"
 
 ####################################################################################################
 # Update available Message
