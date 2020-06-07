@@ -13,20 +13,24 @@ import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
+import lombok.Value;
 
 public class DuplicationFilter implements BungeeChatFilter {
-  private final ConcurrentMap<UUID, Queue<String>> playerMessagesStorage;
+  private final ConcurrentMap<UUID, Queue<TimePointMessage>> playerMessagesStorage;
   private final int checkPastMessages;
+  private final long expiryTimer;
   private final boolean noPermissions;
 
-  public DuplicationFilter(int checkPastMessages) {
-    this(checkPastMessages, false);
+  public DuplicationFilter(int checkPastMessages, int expireAfter) {
+    this(checkPastMessages, expireAfter, false);
   }
 
   @VisibleForTesting
-  DuplicationFilter(int checkPastMessages, boolean noPermissions) {
+  DuplicationFilter(int checkPastMessages, int expireAfter, boolean noPermissions) {
     playerMessagesStorage = new ConcurrentHashMap<>();
     this.checkPastMessages = checkPastMessages;
+    expiryTimer = TimeUnit.SECONDS.toNanos(expireAfter);
     this.noPermissions = noPermissions;
   }
 
@@ -41,16 +45,22 @@ public class DuplicationFilter implements BungeeChatFilter {
       playerMessagesStorage.put(uuid, new ArrayDeque<>(checkPastMessages));
     }
 
-    Queue<String> playerMessages = playerMessagesStorage.get(uuid);
+    final Queue<TimePointMessage> playerMessages = playerMessagesStorage.get(uuid);
+    final long now = System.nanoTime();
+    final long expiry = now - expiryTimer;
 
-    if (playerMessages.contains(message))
+    while (!playerMessages.isEmpty() && (playerMessages.peek().getTimePoint() < expiry)) {
+      playerMessages.poll();
+    }
+
+    if (playerMessages.stream().map(TimePointMessage::getMessage).anyMatch(message::equals))
       throw new ExtendedBlockMessageException(Messages.ANTI_DUPLICATION, sender, message);
 
     if (playerMessages.size() == checkPastMessages) {
       playerMessages.remove();
     }
 
-    playerMessages.add(message);
+    playerMessages.add(new TimePointMessage(now, message));
 
     return message;
   }
@@ -58,5 +68,16 @@ public class DuplicationFilter implements BungeeChatFilter {
   @Override
   public int getPriority() {
     return FilterManager.DUPLICATION_FILTER_PRIORITY;
+  }
+
+  @VisibleForTesting
+  void clear() {
+    playerMessagesStorage.clear();
+  }
+
+  @Value
+  private static class TimePointMessage {
+    private final long timePoint;
+    private final String message;
   }
 }

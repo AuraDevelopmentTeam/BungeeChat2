@@ -7,7 +7,7 @@ public class LanguageData extends SimplePie {
   public LanguageData() {
     super("languages", LanguageData::getLanguage);
   }
-  
+
   private static String getLanguage() {
     return Configuration.get().getString("Language");
   }

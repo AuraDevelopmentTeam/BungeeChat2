@@ -12,7 +12,10 @@ public class AntiDuplicationModule extends Module {
   @Override
   public void onEnable() {
     FilterManager.addFilter(
-        getName(), new DuplicationFilter(getModuleSection().getInt("checkPastMessages")));
+        getName(),
+        new DuplicationFilter(
+            getModuleSection().getInt("checkPastMessages"),
+            getModuleSection().getInt("expireAfter")));
   }
 
   @Override
