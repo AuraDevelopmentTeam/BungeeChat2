@@ -104,6 +104,7 @@ ignoreNobody: "&eYou are not ignoring &aanyone&e that is online!"
 # Filter Messages
 ####################################################################################################
 antiAdvertise: "&cPlease do not advertise!"
+antiCapslock: "&cPlease do not use CAPSLOCK!"
 antiDuplication: "&cPlease do not spam messages!"
 
 ####################################################################################################

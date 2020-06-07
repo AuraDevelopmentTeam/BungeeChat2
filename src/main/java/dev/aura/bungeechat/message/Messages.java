@@ -70,6 +70,7 @@ public enum Messages implements Message {
 
   // Filter Messages
   ANTI_ADVERTISE("antiAdvertise"),
+  ANTI_CAPSLOCK("antiCapslock"),
   ANTI_DUPLICATION("antiDuplication"),
 
   // ChatLock Messages

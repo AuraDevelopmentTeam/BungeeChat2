@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.filter;
 
+import com.google.common.annotations.VisibleForTesting;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
@@ -22,7 +23,8 @@ public class DuplicationFilter implements BungeeChatFilter {
     this(checkPastMessages, false);
   }
 
-  public DuplicationFilter(int checkPastMessages, boolean noPermissions) {
+  @VisibleForTesting
+  DuplicationFilter(int checkPastMessages, boolean noPermissions) {
     playerMessagesStorage = new ConcurrentHashMap<>();
     this.checkPastMessages = checkPastMessages;
     this.noPermissions = noPermissions;
