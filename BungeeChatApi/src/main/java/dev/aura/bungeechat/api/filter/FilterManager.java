@@ -14,7 +14,8 @@ public class FilterManager {
   public static final int ADVERTISING_FILTER_PRIORITY = 200;
   public static final int CAPSLOCK_FILTER_PRIORITY = 300;
   public static final int DUPLICATION_FILTER_PRIORITY = 400;
-  public static final int LOCK_CHAT_FILTER_PRIORITY = 500;
+  public static final int SPAM_FILTER_PRIORITY = 500;
+  public static final int LOCK_CHAT_FILTER_PRIORITY = 600;
 
   private static Map<String, BungeeChatFilter> filters = new LinkedHashMap<>();
 

@@ -35,7 +35,7 @@ public class DuplicationFilter implements BungeeChatFilter {
     if (!noPermissions && PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_DUPLICATE))
       return message;
 
-    UUID uuid = sender.getUniqueId();
+    final UUID uuid = sender.getUniqueId();
 
     if (!playerMessagesStorage.containsKey(uuid)) {
       playerMessagesStorage.put(uuid, new ArrayDeque<>(checkPastMessages));
@@ -45,13 +45,12 @@ public class DuplicationFilter implements BungeeChatFilter {
 
     if (playerMessages.contains(message))
       throw new ExtendedBlockMessageException(Messages.ANTI_DUPLICATION, sender, message);
-    else {
-      if (playerMessages.size() == checkPastMessages) {
-        playerMessages.remove();
-      }
 
-      playerMessages.add(message);
+    if (playerMessages.size() == checkPastMessages) {
+      playerMessages.remove();
     }
+
+    playerMessages.add(message);
 
     return message;
   }

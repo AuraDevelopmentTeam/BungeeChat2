@@ -105,7 +105,8 @@ ignoreNobody: "&eDu Ignorierst &akeinen&e Online Spieler!"
 ####################################################################################################
 antiAdvertise: "&cBitte mache keine Werbung!"
 antiCapslock: "&cBitte verwende kein CAPSLOCK!"
-antiDuplication: "&cBitte spamme keine Nachrichten!"
+antiDuplication: "&cBitte sende nicht die gleichen Nachrichten!"
+antiSpam: "&cBitte spamme keine Nachrichten!"
 
 ####################################################################################################
 # ChatLock Messages
