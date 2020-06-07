@@ -10,7 +10,7 @@ public class ModuleData extends SimpleBarChart {
     super("modules", ModuleData::getMap);
   }
 
-  public static Map<String, Integer> getMap() {
+  private static Map<String, Integer> getMap() {
     Map<String, Integer> sortedMap = new LinkedHashMap<>();
 
     BungeecordModuleManager.getLocalModules().stream()

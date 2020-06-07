@@ -10,5 +10,6 @@ public class MetricManager {
     Metrics metrics = new Metrics(plugin);
 
     metrics.addCustomChart(new ModuleData());
+    metrics.addCustomChart(new LanguageData());
   }
 }
