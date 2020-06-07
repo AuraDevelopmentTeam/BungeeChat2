@@ -1,3 +1,31 @@
+Version 2.2.3
+-------------
+
+\+ Added nb_NO translation.  
+\+ Added es_ES translation.  
+\+ Added option to "fix" LuckPerms' context on the Bungee for prefixes and suffixes only. This means that per server contexts are respected.  
+\+ Added SocialSpy and LocalSpy exempt permissions.  
+\+ Added permissions to view join, leave and server switch messages.  
+\+ Added symbol for StaffChat.  
+\+ Added AntiCapslock.  
+\+ Added AntiSpam.  
+\+ Added expiry to AntiDuplication.  
+\+ Added configured language to bStats data.  
+\* Fixed compatibility with older BungeeCord versions (including FlameCord) (Fixes [#131](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/131)).  
+\* Filtering out vanished players from tab complete (this includes the `~Console~` player).  
+\* Fixed some spelling issues and improved wordings all throughout the plugin.  
+\* Updated de_DE.  
+\* Updated fr_FR.  
+\* Updated ru_RU.  
+\* Updated zh_CN.  
+\* Performance improvements.  
+\* Fixed MulticastChat.  
+\* Fixed `/local` sending messages to global chat (Fixes [#136](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/136)).  
+\* AutoBroadcast no longer uses the GlobalChat server list.  
+\* Fixed unmute showing the wrong player (Fixes [#138](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/138)).  
+\* Fixed Alerts not containing clickable links under some rare circumstances.  
+
+
 Version 2.2.2
 -------------
 
