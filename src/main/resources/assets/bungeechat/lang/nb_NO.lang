@@ -106,7 +106,7 @@ ignoreNobody: "&eDu ignorerer &aingen&e spillere som er pålogget!"
 antiAdvertise: "&cVennligst ikke reklamer!"
 antiCapslock: "&cVennligst ikke bruk CAPSLOCK!"
 antiDuplication: "&cDu har alt skrevet denne meldingen. Vennligst ikke gjenta deg selv!"
-antiSpam: "&cVennligst ikke spam chatten!"
+antiSpam: "&cVennligst ro ned, du skriver for fort!"
 
 ####################################################################################################
 # ChatLock Messages
