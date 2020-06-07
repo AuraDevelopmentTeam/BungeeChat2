@@ -38,7 +38,9 @@ public enum Permission {
   USE_CHAT_FORMAT_RESET("chat.format.reset"),
 
   BYPASS_ANTI_ADVERTISEMENT("chat.bypass.antiadvertisement"),
+  BYPASS_ANTI_CAPSLOCK("chat.bypass.anticapslock"),
   BYPASS_ANTI_DUPLICATE("chat.bypass.antiduplicate"),
+  BYPASS_ANTI_SPAM("chat.bypass.antispam"),
   BYPASS_ANTI_SWEAR("chat.bypass.antiswear"),
   BYPASS_TOGGLE_MESSAGE("chat.bypass.toggle"),
   BYPASS_CHAT_LOCK("chat.bypass.chatlock"),

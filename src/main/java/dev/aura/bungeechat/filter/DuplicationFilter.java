@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.filter;
 
+import com.google.common.annotations.VisibleForTesting;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.filter.BlockMessageException;
 import dev.aura.bungeechat.api.filter.BungeeChatFilter;
@@ -22,7 +23,8 @@ public class DuplicationFilter implements BungeeChatFilter {
     this(checkPastMessages, false);
   }
 
-  public DuplicationFilter(int checkPastMessages, boolean noPermissions) {
+  @VisibleForTesting
+  DuplicationFilter(int checkPastMessages, boolean noPermissions) {
     playerMessagesStorage = new ConcurrentHashMap<>();
     this.checkPastMessages = checkPastMessages;
     this.noPermissions = noPermissions;
@@ -33,7 +35,7 @@ public class DuplicationFilter implements BungeeChatFilter {
     if (!noPermissions && PermissionManager.hasPermission(sender, Permission.BYPASS_ANTI_DUPLICATE))
       return message;
 
-    UUID uuid = sender.getUniqueId();
+    final UUID uuid = sender.getUniqueId();
 
     if (!playerMessagesStorage.containsKey(uuid)) {
       playerMessagesStorage.put(uuid, new ArrayDeque<>(checkPastMessages));
@@ -43,13 +45,12 @@ public class DuplicationFilter implements BungeeChatFilter {
 
     if (playerMessages.contains(message))
       throw new ExtendedBlockMessageException(Messages.ANTI_DUPLICATION, sender, message);
-    else {
-      if (playerMessages.size() == checkPastMessages) {
-        playerMessages.remove();
-      }
 
-      playerMessages.add(message);
+    if (playerMessages.size() == checkPastMessages) {
+      playerMessages.remove();
     }
+
+    playerMessages.add(message);
 
     return message;
   }

@@ -104,7 +104,9 @@ ignoreNobody: "&eDu Ignorierst &akeinen&e Online Spieler!"
 # Filter Messages
 ####################################################################################################
 antiAdvertise: "&cBitte mache keine Werbung!"
-antiDuplication: "&cBitte spamme keine Nachrichten!"
+antiCapslock: "&cBitte verwende kein CAPSLOCK!"
+antiDuplication: "&cBitte sende nicht die gleichen Nachrichten!"
+antiSpam: "&cBitte sende Nachrichten nicht so schnell!"
 
 ####################################################################################################
 # ChatLock Messages
