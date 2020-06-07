@@ -98,13 +98,15 @@ ignoreYourself: "&c¡No puedes ignorarte a ti mismo!"
 unignoreYourself: "&c¡No puedes dejar de ignorarte a ti mismo!"
 notIgnored: "&c¡No has ignorado a este jugador!"
 ignoreList: "&eJugadores en línea que has ignorado: &b%message%&e."
-ignoreNobody: "&e¡No estás ignorando a &aalguien&e que está en línea!"
+ignoreNobody: "&e¡No estás ignorando a &aalguien&e que este en línea!"
 
 ####################################################################################################
 # Filter Messages
 ####################################################################################################
 antiAdvertise: "&c¡Por favor no publicites!"
-antiDuplication: "&c¡Por favor no envíes mensajes repetitivos!"
+antiCapslock: "&c¡Por favor no uses el bloq mayús!"
+antiDuplication: "&c¡Por favor no envíes el mismo mensaje!"
+antiSpam: "&c¡No enviés mensajes tan rápido!"
 
 ####################################################################################################
 # ChatLock Messages
