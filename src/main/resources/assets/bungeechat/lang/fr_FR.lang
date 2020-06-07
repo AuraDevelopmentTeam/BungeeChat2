@@ -104,9 +104,9 @@ ignoreNobody: "&eVous ignorez personne de connecté !"
 # Filter Messages
 ####################################################################################################
 antiAdvertise: "&cMerci de ne pas avertir !"
-antiCapslock: "&cMerci de ne pas utiliser VERROUILLAGE DES MAJUSCULES"
+antiCapslock: "&cMerci de ne pas utiliser VERROUILLAGE DES MAJUSCULES."
 antiDuplication: "&cMerci de ne pas envoyer le même message plusieurs fois !"
-antiSpam: "&cMerci de ne pas spammer !"
+antiSpam: "&cVous êtes envoyer les textos trop vite !"
 
 ####################################################################################################
 # ChatLock Messages
