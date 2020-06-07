@@ -106,7 +106,7 @@ ignoreNobody: "&e在线玩家 &aanyone&e 中没有任何人在你的拒收黑名
 antiAdvertise: "&c请勿发布垃圾信息！"
 antiCapslock: "&c请您不用大写锁定！"
 antiDuplication: "&c请您不重复写信息！"
-antiSpam: "&c请勿快速刷屏！"
+antiSpam: "&c请您送信息慢一点！"
 
 ####################################################################################################
 # ChatLock Messages
