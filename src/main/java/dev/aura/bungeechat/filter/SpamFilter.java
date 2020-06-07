@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 public class SpamFilter implements BungeeChatFilter {
-  private static final long minutesToNanos = TimeUnit.MINUTES.toNanos(1);
+  @VisibleForTesting static long expiryTimer = TimeUnit.MINUTES.toNanos(1);
 
   private final ConcurrentMap<UUID, Queue<Long>> playerMessageTimepointStorage;
   private final int messagesPerMinute;
@@ -46,7 +46,7 @@ public class SpamFilter implements BungeeChatFilter {
 
     final Queue<Long> timePoints = playerMessageTimepointStorage.get(uuid);
     final long now = System.nanoTime();
-    final long expiry = now - minutesToNanos;
+    final long expiry = now - expiryTimer;
 
     while (!timePoints.isEmpty() && (timePoints.peek() < expiry)) {
       timePoints.poll();
