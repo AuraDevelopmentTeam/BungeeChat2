@@ -22,17 +22,33 @@ public class MessageToggleCommand extends BaseCommand {
   public void execute(CommandSender sender, String[] args) {
     if (!PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE)) return;
 
-    if (!(sender instanceof ProxiedPlayer)) {
-      MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
-    } else {
-      BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
-      player.toggleMessanger();
-
-      if (player.hasMessangerEnabled()) {
-        MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER.get());
+    if (args.length == 0) {
+      if (!(sender instanceof ProxiedPlayer)) {
+        MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
       } else {
-        MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER.get());
+        BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+        player.toggleMessanger();
+
+        if (player.hasMessangerEnabled()) {
+          MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER.get());
+        } else {
+          MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER.get());
+        }
       }
+    }
+    else if(args.length == 1) {
+      if (!PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE_OTHERS)) return;
+      BungeeChatAccount player = BungeecordAccountManager.getAccount(args[0]).get();
+      player.toggleMessanger();
+      if (player.hasMessangerEnabled()) {
+        MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER_OTHERS.get());
+      } else {
+        MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER_OTHERS.get());
+      }
+    }
+    else {
+      MessagesService.sendMessage(
+        sender, Messages.INCORRECT_USAGE.get(sender, "/msgtoggle [player]"));
     }
   }
 }

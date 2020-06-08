@@ -22,7 +22,9 @@ public enum Messages implements Message {
   // Messenger Messages
   MESSAGE_YOURSELF("messageYourself"),
   ENABLE_MESSAGER("enableMessager"),
+  ENABLE_MESSAGER_OTHERS("enableMessagerOthers"),
   DISABLE_MESSAGER("disableMessager"),
+  DISABLE_MESSAGER_OTHERS("disableMessagerOthers"),
   NO_REPLY("noReply"),
   REPLY_OFFLINE("replyOffline"),
   HAS_MESSAGER_DISABLED("hasMessagerDisabled"),
