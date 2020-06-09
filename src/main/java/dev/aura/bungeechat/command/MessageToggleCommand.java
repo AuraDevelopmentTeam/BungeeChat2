@@ -2,6 +2,7 @@ package dev.aura.bungeechat.command;
 
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.AccountType;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MessengerModule;
@@ -9,6 +10,10 @@ import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MessageToggleCommand extends BaseCommand {
   public MessageToggleCommand(MessengerModule messengerModule) {
@@ -41,13 +46,25 @@ public class MessageToggleCommand extends BaseCommand {
       BungeeChatAccount player = BungeecordAccountManager.getAccount(args[0]).get();
       player.toggleMessanger();
       if (player.hasMessangerEnabled()) {
-        MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER_OTHERS.get());
+        MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER_OTHERS.get(player));
       } else {
-        MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER_OTHERS.get());
+        MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER_OTHERS.get(player));
       }
     } else {
       MessagesService.sendMessage(
           sender, Messages.INCORRECT_USAGE.get(sender, "/msgtoggle [player]"));
     }
+  }
+
+  @Override
+  public Collection<String> tabComplete(CommandSender sender, String[] args) {
+    if (args.length == 1) {
+      return BungeecordAccountManager.getAccountsForPartialName(args[0], sender).stream()
+              .filter(account -> account.getAccountType() == AccountType.PLAYER)
+              .map(BungeeChatAccount::getName)
+              .collect(Collectors.toList());
+    }
+
+    return super.tabComplete(sender, args);
   }
 }
