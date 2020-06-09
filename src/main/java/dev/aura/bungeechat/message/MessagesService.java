@@ -274,7 +274,7 @@ public class MessagesService {
   }
 
   public static void sendSwitchMessage(BungeeChatContext context) throws InvalidContextError {
-    context.require(BungeeChatContext.HAS_SENDER, BungeeChatContext.HAS_SERVER);
+    context.require(BungeeChatContext.HAS_SENDER);
 
     String finalMessage = Format.SERVER_SWITCH.get(context);
     Predicate<BungeeChatAccount> predicate = getPermissionPredicate(Permission.MESSAGE_SWITCH_VIEW);
