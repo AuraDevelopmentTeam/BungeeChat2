@@ -35,9 +35,9 @@ public class MessageToggleCommand extends BaseCommand {
           MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER.get());
         }
       }
-    }
-    else if(args.length == 1) {
-      if (!PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE_OTHERS)) return;
+    } else if (args.length == 1) {
+      if (!PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE_OTHERS))
+        return;
       BungeeChatAccount player = BungeecordAccountManager.getAccount(args[0]).get();
       player.toggleMessanger();
       if (player.hasMessangerEnabled()) {
@@ -45,10 +45,9 @@ public class MessageToggleCommand extends BaseCommand {
       } else {
         MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER_OTHERS.get());
       }
-    }
-    else {
+    } else {
       MessagesService.sendMessage(
-        sender, Messages.INCORRECT_USAGE.get(sender, "/msgtoggle [player]"));
+          sender, Messages.INCORRECT_USAGE.get(sender, "/msgtoggle [player]"));
     }
   }
 }
