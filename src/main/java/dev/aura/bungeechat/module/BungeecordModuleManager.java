@@ -27,6 +27,7 @@ public class BungeecordModuleManager extends ModuleManager {
   public static final AntiAdvertisingModule ANTI_ADVERTISING_MODULE = new AntiAdvertisingModule();
   public static final AntiCapslockModule ANTI_CAPSLOCK_MODULE = new AntiCapslockModule();
   public static final AntiDuplicationModule ANTI_DUPLICATION_MODULE = new AntiDuplicationModule();
+  public static final AntiSpamModule ANTI_SPAM_MODULE = new AntiSpamModule();
   public static final AntiSwearModule ANTI_SWEAR_MODULE = new AntiSwearModule();
   public static final AutoBroadcastModule AUTO_BROADCAST_MODULE = new AutoBroadcastModule();
   public static final ChatLockModule CHAT_LOCK_MODULE = new ChatLockModule();
