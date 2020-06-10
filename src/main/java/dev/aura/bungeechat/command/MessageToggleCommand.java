@@ -30,15 +30,16 @@ public class MessageToggleCommand extends BaseCommand {
     if (args.length == 0) {
       if (!(sender instanceof ProxiedPlayer)) {
         MessagesService.sendMessage(sender, Messages.NOT_A_PLAYER.get());
-      } else {
-        BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
-        player.toggleMessanger();
+        return;
+      }
 
-        if (player.hasMessangerEnabled()) {
-          MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER.get());
-        } else {
-          MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER.get());
-        }
+      BungeeChatAccount player = BungeecordAccountManager.getAccount(sender).get();
+      player.toggleMessanger();
+
+      if (player.hasMessangerEnabled()) {
+        MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER.get());
+      } else {
+        MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER.get());
       }
     } else if (args.length == 1) {
       if (!PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE_OTHERS))
