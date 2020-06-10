@@ -61,6 +61,7 @@ public enum Permission {
   COMMAND_TEMPMUTE("command.tempmute"),
   COMMAND_UNMUTE("command.unmute"),
   COMMAND_TOGGLE_MESSAGE("command.toggle"),
+  COMMAND_TOGGLE_MESSAGE_OTHERS("command.toggle.others"),
   COMMAND_VANISH("command.vanish"),
   COMMAND_VANISH_VIEW("command.vanish.view"),
   COMMAND_SOCIALSPY("command.socialspy"),
