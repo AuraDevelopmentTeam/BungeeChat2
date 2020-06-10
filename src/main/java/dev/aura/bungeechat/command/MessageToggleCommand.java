@@ -3,18 +3,16 @@ package dev.aura.bungeechat.command;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
-import dev.aura.bungeechat.api.enums.AccountType;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MessengerModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageToggleCommand extends BaseCommand {
   public MessageToggleCommand(MessengerModule messengerModule) {
@@ -51,9 +49,11 @@ public class MessageToggleCommand extends BaseCommand {
       }
       targetAccount.get().toggleMessanger();
       if (targetAccount.get().hasMessangerEnabled()) {
-        MessagesService.sendMessage(sender, Messages.ENABLE_MESSAGER_OTHERS.get(targetAccount.get()));
+        MessagesService.sendMessage(
+            sender, Messages.ENABLE_MESSAGER_OTHERS.get(targetAccount.get()));
       } else {
-        MessagesService.sendMessage(sender, Messages.DISABLE_MESSAGER_OTHERS.get(targetAccount.get()));
+        MessagesService.sendMessage(
+            sender, Messages.DISABLE_MESSAGER_OTHERS.get(targetAccount.get()));
       }
     } else {
       MessagesService.sendMessage(
@@ -67,9 +67,9 @@ public class MessageToggleCommand extends BaseCommand {
       final BungeeChatAccount senderAccount = BungeecordAccountManager.getAccount(sender).get();
 
       return BungeecordAccountManager.getAccountsForPartialName(args[0], sender).stream()
-              .filter(account -> !senderAccount.equals(account))
-              .map(BungeeChatAccount::getName)
-              .collect(Collectors.toList());
+          .filter(account -> !senderAccount.equals(account))
+          .map(BungeeChatAccount::getName)
+          .collect(Collectors.toList());
     }
 
     return super.tabComplete(sender, args);

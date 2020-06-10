@@ -1,13 +1,12 @@
 package dev.aura.bungeechat.command;
 
-import dev.aura.bungeechat.testhelpers.AccountManagerTest;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
 
+import dev.aura.bungeechat.testhelpers.AccountManagerTest;
 import java.util.Arrays;
 import java.util.Collection;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 public class MessageToggleCommandTest extends AccountManagerTest {
   private static final MessageToggleCommand handler =
