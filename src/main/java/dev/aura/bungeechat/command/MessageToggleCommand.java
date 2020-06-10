@@ -3,6 +3,7 @@ package dev.aura.bungeechat.command;
 import dev.aura.bungeechat.account.BungeecordAccountManager;
 import dev.aura.bungeechat.api.account.AccountManager;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
+import dev.aura.bungeechat.api.enums.AccountType;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.MessengerModule;
@@ -42,12 +43,16 @@ public class MessageToggleCommand extends BaseCommand {
     } else if (args.length == 1) {
       if (!PermissionManager.hasPermission(sender, Permission.COMMAND_TOGGLE_MESSAGE_OTHERS))
         return;
+
       Optional<BungeeChatAccount> targetAccount = AccountManager.getAccount(args[0]);
-      if (!targetAccount.isPresent()) {
+
+      if (targetAccount.map(target -> target.getAccountType() != AccountType.PLAYER).orElse(true)) {
         MessagesService.sendMessage(sender, Messages.PLAYER_NOT_FOUND.get());
         return;
       }
+
       targetAccount.get().toggleMessanger();
+
       if (targetAccount.get().hasMessangerEnabled()) {
         MessagesService.sendMessage(
             sender, Messages.ENABLE_MESSAGER_OTHERS.get(targetAccount.get()));
@@ -67,6 +72,7 @@ public class MessageToggleCommand extends BaseCommand {
       final BungeeChatAccount senderAccount = BungeecordAccountManager.getAccount(sender).get();
 
       return BungeecordAccountManager.getAccountsForPartialName(args[0], sender).stream()
+          .filter(account -> account.getAccountType() == AccountType.PLAYER)
           .filter(account -> !senderAccount.equals(account))
           .map(BungeeChatAccount::getName)
           .collect(Collectors.toList());
