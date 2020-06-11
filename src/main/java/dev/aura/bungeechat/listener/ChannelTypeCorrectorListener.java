@@ -8,6 +8,7 @@ import dev.aura.bungeechat.api.utils.ChatUtils;
 import dev.aura.bungeechat.message.Messages;
 import dev.aura.bungeechat.message.MessagesService;
 import dev.aura.bungeechat.module.BungeecordModuleManager;
+import dev.aura.bungeechat.packet.NamedSoundEffectOutPacket;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -28,6 +29,10 @@ public class ChannelTypeCorrectorListener implements Listener {
     ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
     BungeeChatAccount player = AccountManager.getAccount(sender.getUniqueId()).get();
     ChannelType channel = player.getChannelType();
+
+    sender
+        .unsafe()
+        .sendPacket(new NamedSoundEffectOutPacket("entity.experience_orb.pickup", 0, 70, 0, 1, 1));
 
     if (((channel == ChannelType.GLOBAL)
             && (!ModuleManager.isModuleActive(BungeecordModuleManager.GLOBAL_CHAT_MODULE)
