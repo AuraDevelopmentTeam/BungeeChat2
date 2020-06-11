@@ -27,6 +27,10 @@ public class NamedSoundEffectOutPacket extends OutPacket {
   private final float volume;
   private final float pitch;
 
+  public NamedSoundEffectOutPacket() {
+    this("", 0, 0, 0, 1, 1);
+  }
+
   public NamedSoundEffectOutPacket(
       String name, double x, double y, double z, float volume, float pitch) {
     this(name, SoundCategory.MASTER, x, y, z, volume, pitch);
