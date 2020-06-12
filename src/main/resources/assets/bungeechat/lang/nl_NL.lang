@@ -29,27 +29,31 @@ inherit: en_US
 # Channel Type Messages
 ####################################################################################################
 enableGlobal: "&eJe praat nu in de &bglobale chat&e!"
-enableStaffchat: "&eJe praat nu in de &astaff chat&e!"
+enableStaffchat: "&eJe praat nu in de &astaffchat&e!"
 enableLocal: "&eJe praat nu in de &clokale chat&e!"
 globalIsDefault: "&eGlobale chat is al de standaard chatsoort!"
-backToLocal: "&cHet onderdeel verbonden aan het kanaal waarin je sprak is nu uitgeschakeld of je hebt geen bevoegdheden meer. Je praat nu in de lokale chat."
+localIsDefault: "&eLokale chat is al de standaard chatsoort!"
+backToDefault: "&cHet onderdeel verbonden aan het kanaal waarin je sprak is nu uitgeschakeld of je hebt geen bevoegdheden meer. Je praat nu in de lokale chat."
 notInGlobalServer: "&cGlobale Chat staat niet aan op deze server..."
+notInLocalServer: "&cLokale Chat staat niet aan op deze server..."
 
 ####################################################################################################
 # Messenger Messages
 ####################################################################################################
 messageYourself: "&cJe kunt geen priv?-bericht naar jezelf sturen..."
-enableMessager: "&eJe hebt priv?-berichten nu &aaan&e staan!"
-disableMessager: "&eJe hebt priv?-berichten nu &cuit&e staan!"
+enableMessager: "&eJe hebt priv?-berichten nu &aaingeschakeld&e!"
+enableMessagerOthers: "&eJe hebt privéberichten van %name% nu &aaingeschakeld&e!"
+disableMessager: "&eJe hebt priv?-berichten nu &cuitgeschakeld&e!"
+disableMessagerOthers: "&eJe hebt privéberichten van %name% nu &cuitgeschakeld&e!"
 noReply: "&cEr is niemand om te beantwoorden."
 replyOffline: "&cDe speler waarmee je in gesprek was is nu offline."
-hasMessagerDisabled: "&c%name% heeft priv?-berichten uit staan!"
+hasMessagerDisabled: "&c%name% heeft priv?-berichten uitgeschakeld!"
 
 ####################################################################################################
 # Vanish Messages
 ####################################################################################################
-enableVanish: "&eJe hebt verbergmodus &aaan&e staan!"
-disableVanish: "&eJe hebt verbergmodus &cuit&e staan!"
+enableVanish: "&eJe hebt verbergmodus &aingeschakeld&e!"
+disableVanish: "&eJe hebt verbergmodus &cuitgeschakeld&e!"
 
 ####################################################################################################
 # Clear Chat Messages
@@ -81,7 +85,9 @@ disableLocalSpy: "&eLocalSpy staat nu &cuit&e!"
 notPlayer: "&cJe moet een speler zijn om dit te kunnen doen!"
 playerNotFound: "&cKan speler niet vinden..."
 incorrectUsage: "&cOnjuist gebruik! Gebruik het commando op deze manier: %command%"
-noPermission: "&cJe hebt geen bevoegdheden om dit te doen!"
+noPermission: "&cJe bent niet bevoegd om dit te doen!"
+messageBlank: "&cHet bericht kan niet leeg zijn!"
+unknownServer: "&cOnbekende Server \"&b%unknown_server%&c\""
 
 ####################################################################################################
 # Ignore Messages
@@ -99,8 +105,10 @@ ignoreNobody: "&eJe negeert nu &aniemand&e die online is!"
 ####################################################################################################
 # Filter Messages
 ####################################################################################################
-antiAdvertise: "&cAdverteer niet alstublieft!"
-antiDuplication: "&cSpam geen berichten alstublieft!"
+antiAdvertise: "&cAdverteer alsjeblieft niet!"
+antiCapslock: "&cGebruik alsjeblieft geen CAPSLOCK!"
+antiDuplication: "&cDupliceer alsjeblieft geen berichten!"
+antiSpam: "&cStuur alsjeblieft berichten niet zo snel!"
 
 ####################################################################################################
 # ChatLock Messages
