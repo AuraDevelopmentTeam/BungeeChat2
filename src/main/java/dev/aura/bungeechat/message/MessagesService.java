@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.CommandSender;
@@ -399,15 +400,27 @@ public class MessagesService {
   }
 
   public static Predicate<BungeeChatAccount> getLocalPredicate() {
-    final Config section =
+    final Config serverList =
         BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("serverList");
+    final Config passThruServerList =
+        BungeecordModuleManager.LOCAL_CHAT_MODULE
+            .getModuleSection()
+            .getConfig("passThruServerList");
 
-    if (!section.getBoolean("enabled")) return account -> true;
-    else {
+    return Stream.of(serverList, passThruServerList)
+        .flatMap(MessagesService::serverListToPredicate)
+        .collect(
+            () -> ((Predicate<BungeeChatAccount>) account -> true), Predicate::and, Predicate::and);
+  }
+
+  private static Stream<Predicate<BungeeChatAccount>> serverListToPredicate(Config section) {
+    if (section.getBoolean("enabled")) {
       // TODO: Use wildcard string
       List<String> allowedServers = section.getStringList("list");
 
-      return account -> allowedServers.contains(account.getServerName());
+      return Stream.of(account -> allowedServers.contains(account.getServerName()));
+    } else {
+      return Stream.empty();
     }
   }
 

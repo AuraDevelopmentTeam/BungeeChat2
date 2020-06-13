@@ -53,7 +53,7 @@ public class LocalChatListener implements Listener {
       // Check we send to this server
       e.setCancelled(
           !(passToBackendServer
-              && (serverListDisabled || passthruServers.contains(account.getServerName()))));
+              || (serverListDisabled || passthruServers.contains(account.getServerName()))));
       // Was just cancelled, or we want to process all local chat regardless
       if (e.isCancelled() || !passTransparently) {
         MessagesService.sendLocalMessage(sender, message);
