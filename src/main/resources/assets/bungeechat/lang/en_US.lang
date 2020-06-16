@@ -31,7 +31,7 @@
 enableGlobal: "&eYou are now talking in &bglobal chat&e!"
 enableStaffchat: "&eYou are now talking in &astaff chat&e!"
 enableLocal: "&eYou are now talking in &clocal chat&e!"
-globalIsDefault: "&eGlobal chat is already the default cha tmode!"
+globalIsDefault: "&eGlobal chat is already the default chat mode!"
 localIsDefault: "&eLocal chat is already the default chat mode!"
 backToDefault: "&cThe feature linked to the channel you were talking in has been disabled or your permissions have been removed! You are now talking in the default channel."
 notInGlobalServer: "&cGlobal Chat is not enabled on this server..."
