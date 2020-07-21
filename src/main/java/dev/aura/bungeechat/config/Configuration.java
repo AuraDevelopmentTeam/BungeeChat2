@@ -130,6 +130,7 @@ public class Configuration implements Config {
   }
 
   protected void loadConfig() {
+    boolean saveConfig = true;
     final Config defaultConfig =
         ConfigFactory.parseReader(
             new InputStreamReader(
@@ -144,8 +145,17 @@ public class Configuration implements Config {
 
         config = fileConfig.withFallback(strippedDefautConfig);
       } catch (ConfigException e) {
+        LoggerHelper.error(
+            "====================================================================================================");
         LoggerHelper.error("Error while reading config:\n" + e.getLocalizedMessage());
+        LoggerHelper.error(
+            "The plugin will run with the default config (but the config file has not been changed)!");
+        LoggerHelper.error(
+            "After you fixed the issue, either restart the server or run `/bungeechat reload`.");
+        LoggerHelper.error(
+            "====================================================================================================");
 
+        saveConfig = false;
         config = defaultConfig;
       }
     } else {
@@ -160,7 +170,7 @@ public class Configuration implements Config {
     config = config.withFallback(strippedDefautConfig);
     copyComments(defaultConfig);
 
-    saveConfig();
+    if (saveConfig) saveConfig();
   }
 
   protected void saveConfig() {
