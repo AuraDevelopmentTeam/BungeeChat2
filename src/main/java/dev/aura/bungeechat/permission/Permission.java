@@ -13,6 +13,7 @@ public enum Permission {
   BUNGEECHAT_MODULES("admin.modules"),
   CHECK_VERSION("admin.checkversion", false),
 
+  USE_CHAT_COLOR_RGB("chat.color.rgb"),
   USE_CHAT_COLOR_BLACK("chat.color.black"),
   USE_CHAT_COLOR_DARK_BLUE("chat.color.dark_blue"),
   USE_CHAT_COLOR_DARK_GREEN("chat.color.dark_green"),

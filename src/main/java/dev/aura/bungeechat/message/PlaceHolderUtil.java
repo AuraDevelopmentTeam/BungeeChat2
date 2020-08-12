@@ -1,5 +1,6 @@
 package dev.aura.bungeechat.message;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
 import dev.aura.bungeechat.BungeeChat;
@@ -32,30 +33,49 @@ public class PlaceHolderUtil {
   private static final String altColorString = String.valueOf(altColorChar);
   private static final String colorCodeReplacement = ChatColor.COLOR_CHAR + "$1";
   private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
-  private static final ImmutableMap<Permission, Character> colorCodeMap =
-      ImmutableMap.<Permission, Character>builder()
-          .put(Permission.USE_CHAT_COLOR_BLACK, '0')
-          .put(Permission.USE_CHAT_COLOR_DARK_BLUE, '1')
-          .put(Permission.USE_CHAT_COLOR_DARK_GREEN, '2')
-          .put(Permission.USE_CHAT_COLOR_DARK_AQUA, '3')
-          .put(Permission.USE_CHAT_COLOR_DARK_RED, '4')
-          .put(Permission.USE_CHAT_COLOR_DARK_PURPLE, '5')
-          .put(Permission.USE_CHAT_COLOR_GOLD, '6')
-          .put(Permission.USE_CHAT_COLOR_GRAY, '7')
-          .put(Permission.USE_CHAT_COLOR_DARK_GRAY, '8')
-          .put(Permission.USE_CHAT_COLOR_BLUE, '9')
-          .put(Permission.USE_CHAT_COLOR_GREEN, 'a')
-          .put(Permission.USE_CHAT_COLOR_AQUA, 'b')
-          .put(Permission.USE_CHAT_COLOR_RED, 'c')
-          .put(Permission.USE_CHAT_COLOR_LIGHT_PURPLE, 'd')
-          .put(Permission.USE_CHAT_COLOR_YELLOW, 'e')
-          .put(Permission.USE_CHAT_COLOR_WHITE, 'f')
-          .put(Permission.USE_CHAT_FORMAT_OBFUSCATED, 'k')
-          .put(Permission.USE_CHAT_FORMAT_BOLD, 'l')
-          .put(Permission.USE_CHAT_FORMAT_STRIKETHROUGH, 'm')
-          .put(Permission.USE_CHAT_FORMAT_UNDERLINE, 'n')
-          .put(Permission.USE_CHAT_FORMAT_ITALIC, 'o')
-          .put(Permission.USE_CHAT_FORMAT_RESET, 'r')
+  private static final String baseRgbPattern = "[0-9a-fA-f]";
+  private static final Pattern rgbDetection =
+      Pattern.compile(ChatColor.COLOR_CHAR + "x" + Strings.repeat('(' + baseRgbPattern + ')', 6));
+  private static final String rgbReplacement =
+      ChatColor.COLOR_CHAR
+          + "x"
+          + ChatColor.COLOR_CHAR
+          + "$1"
+          + ChatColor.COLOR_CHAR
+          + "$2"
+          + ChatColor.COLOR_CHAR
+          + "$3"
+          + ChatColor.COLOR_CHAR
+          + "$4"
+          + ChatColor.COLOR_CHAR
+          + "$5"
+          + ChatColor.COLOR_CHAR
+          + "$6";
+  private static final ImmutableMap<Permission, String> colorCodeMap =
+      ImmutableMap.<Permission, String>builder()
+          .put(Permission.USE_CHAT_COLOR_RGB, 'x' + baseRgbPattern + "{6}")
+          .put(Permission.USE_CHAT_COLOR_BLACK, "0")
+          .put(Permission.USE_CHAT_COLOR_DARK_BLUE, "1")
+          .put(Permission.USE_CHAT_COLOR_DARK_GREEN, "2")
+          .put(Permission.USE_CHAT_COLOR_DARK_AQUA, "3")
+          .put(Permission.USE_CHAT_COLOR_DARK_RED, "4")
+          .put(Permission.USE_CHAT_COLOR_DARK_PURPLE, "5")
+          .put(Permission.USE_CHAT_COLOR_GOLD, "6")
+          .put(Permission.USE_CHAT_COLOR_GRAY, "7")
+          .put(Permission.USE_CHAT_COLOR_DARK_GRAY, "8")
+          .put(Permission.USE_CHAT_COLOR_BLUE, "9")
+          .put(Permission.USE_CHAT_COLOR_GREEN, "a")
+          .put(Permission.USE_CHAT_COLOR_AQUA, "b")
+          .put(Permission.USE_CHAT_COLOR_RED, "c")
+          .put(Permission.USE_CHAT_COLOR_LIGHT_PURPLE, "d")
+          .put(Permission.USE_CHAT_COLOR_YELLOW, "e")
+          .put(Permission.USE_CHAT_COLOR_WHITE, "f")
+          .put(Permission.USE_CHAT_FORMAT_OBFUSCATED, "k")
+          .put(Permission.USE_CHAT_FORMAT_BOLD, "l")
+          .put(Permission.USE_CHAT_FORMAT_STRIKETHROUGH, "m")
+          .put(Permission.USE_CHAT_FORMAT_UNDERLINE, "n")
+          .put(Permission.USE_CHAT_FORMAT_ITALIC, "o")
+          .put(Permission.USE_CHAT_FORMAT_RESET, "r")
           .build();
   private static final Map<Integer, Optional<Pattern>> patternCache = new HashMap<>();
   private static final char placeholderChar = PlaceHolderManager.placeholderChar;
@@ -143,10 +163,10 @@ public class PlaceHolderUtil {
             Pattern.compile(
                 colorCodeMap.entrySet().stream()
                     .filter(entry -> PermissionManager.hasPermission(permsAccount, entry.getKey()))
-                    .map(entry -> entry.getValue().toString())
+                    .map(Map.Entry::getValue)
                     .collect(
                         Collectors.joining(
-                            "", "(?<!" + altColorChar + ')' + altColorChar + "([", "])")),
+                            "|", "(?<!" + altColorChar + ')' + altColorChar + "(", ")")),
                 Pattern.CASE_INSENSITIVE);
 
         patternCache.put(key, Optional.of(pattern));
@@ -157,6 +177,7 @@ public class PlaceHolderUtil {
 
     if (pattern.isPresent()) {
       message = pattern.get().matcher(message).replaceAll(colorCodeReplacement);
+      message = rgbDetection.matcher(message).replaceAll(rgbReplacement);
     }
 
     message = duplicateDection.matcher(message).replaceAll(altColorString);
