@@ -29,7 +29,7 @@ public class LocalChatListener implements Listener {
           .getBoolean("logTransparentLocal");
   private final Config serverListSection =
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("passThruServerList");
-  private final boolean serverListDisabled = !serverListSection.getBoolean("enabled");
+  private final boolean serverListEnabled = serverListSection.getBoolean("enabled");
   private final List<String> passthruServers = serverListSection.getStringList("list");
 
   @EventHandler(priority = EventPriority.HIGHEST)
@@ -50,10 +50,11 @@ public class LocalChatListener implements Listener {
         return;
       }
 
-      // Check we send to this server
+      // Cancel event only if we don't want the backend server to receive it
       e.setCancelled(
           !(passToBackendServer
-              || (serverListDisabled || passthruServers.contains(account.getServerName()))));
+              || passTransparently
+              || (serverListEnabled && passthruServers.contains(account.getServerName()))));
       // Was just cancelled, or we want to process all local chat regardless
       if (e.isCancelled() || !passTransparently) {
         MessagesService.sendLocalMessage(sender, message);
