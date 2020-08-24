@@ -1,13 +1,11 @@
 # Bungee Chat API
 
 [![Current Version](https://badge.fury.io/gh/AuraDevelopmentTeam%2FBungeeChat2.svg)](https://www.spigotmc.org/resources/bungee-chat.12592/history)
-[![Build Status](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/badges/master/build.svg)](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines)
+[![Build Status](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/badges/master/pipeline.svg)](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines)
 [![Coverage Report](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/badges/master/coverage.svg)](https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/581b40c0c5ca4ca5a08c83f7076b6d63)](https://www.codacy.com/app/AuraDevelopmentTeam/BungeeChat2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AuraDevelopmentTeam/BungeeChat2&amp;utm_campaign=Badge_Grade)
-[![Issue Stats](https://img.shields.io/issuestats/i/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
-[![Pull Requests Stats](https://img.shields.io/issuestats/p/github/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/pulls)
 [![License](https://img.shields.io/github/license/AuraDevelopmentTeam/BungeeChat2.svg)](https://github.com/AuraDevelopmentTeam/BungeeChat2/blob/master/LICENSE)
-[![Supports Minecraft 1.7 - 1.13](https://img.shields.io/badge/supports_minecraft-1.7_--_1.13-brightgreen.svg)](https://www.spigotmc.org/threads/392/)
+[![Supports Minecraft 1.7 - 1.16](https://img.shields.io/badge/supports_minecraft-1.7_--_1.16-brightgreen.svg)](https://www.spigotmc.org/threads/392/)
 
 [![Bungee Chat Thread](https://proxy.spigotmc.org/e0e5c022701e9b3f55bdfee19e0a5d226f5c53ab?url=http%3A%2F%2Fi.imgur.com%2F9hHniVP.png)](https://www.spigotmc.org/resources/bungee-chat.12592/)
 
@@ -20,6 +18,7 @@ The API for Bungee Chat!
 - [Issue Reporting](#issue-reporting)
 - [Feature Requests](#feature-requests)
 - [Developing with the API](#developing-with-the-api)
+	- [Javadocs](#javadocs)
 	- [Maven](#maven)
 	- [Gradle](#gradle)
 - [Setting up a Workspace/Compiling from Source](#setting-up-a-workspacecompiling-from-source)
@@ -72,6 +71,10 @@ You can also talk to us on [Discord](https://dicord.me/bungeechat).
 
 So you want to add support or even develop an add-on for our plugin then you can easily add our API to your development environment! All releases beginning from
 version `2.0.0_615` get uploaded to our maven repository. (Replace `{version}` with the appropriate version!)
+
+### Javadocs
+
+You can find the Javadocs here: https://auradev.pages.project-creative.net/BungeeChat2/javadoc/BungeeChatApi/
 
 ### Maven
 
