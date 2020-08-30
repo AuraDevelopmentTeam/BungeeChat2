@@ -7,7 +7,7 @@ import org.bstats.bungeecord.Metrics;
 @UtilityClass
 public class MetricManager {
   public static void sendMetrics(BungeeChat plugin) {
-    Metrics metrics = new Metrics(plugin);
+    Metrics metrics = new Metrics(plugin, 927);
 
     metrics.addCustomChart(new ModuleData());
     metrics.addCustomChart(new LanguageData());
