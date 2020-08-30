@@ -47,7 +47,7 @@ public interface BungeeChatApi {
         "povsister"
       };
   public static final String[] DONATORS = new String[] {"Breantique", "NickT"};
-  public static final double CONFIG_VERSION = 11.6;
+  public static final double CONFIG_VERSION = 11.7;
   public static final int PLUGIN_ID = 12592;
 
   /**

@@ -42,7 +42,7 @@ public class MutingModule extends Module {
     muteCommand = new MuteCommand(this);
     tempMuteCommand = new TempMuteCommand(this);
     unmuteCommand = new UnmuteCommand(this);
-    mutingListener = new MutingListener();
+    mutingListener = new MutingListener(this);
 
     ProxyServer.getInstance()
         .getPluginManager()
