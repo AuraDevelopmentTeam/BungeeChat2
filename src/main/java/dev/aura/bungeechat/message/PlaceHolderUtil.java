@@ -33,9 +33,12 @@ public class PlaceHolderUtil {
   private static final String altColorString = String.valueOf(altColorChar);
   private static final String colorCodeReplacement = ChatColor.COLOR_CHAR + "$1";
   private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
-  private static final String baseRgbPattern = "[0-9a-fA-f]";
+  private static final String baseRgbPattern = "[0-9a-f]";
+  private static final String rgbStartPattern = "[x#]";
   private static final Pattern rgbDetection =
-      Pattern.compile(ChatColor.COLOR_CHAR + "x" + Strings.repeat('(' + baseRgbPattern + ')', 6));
+      Pattern.compile(
+          ChatColor.COLOR_CHAR + rgbStartPattern + Strings.repeat('(' + baseRgbPattern + ')', 6),
+          Pattern.CASE_INSENSITIVE);
   private static final String rgbReplacement =
       ChatColor.COLOR_CHAR
           + "x"
@@ -53,7 +56,7 @@ public class PlaceHolderUtil {
           + "$6";
   private static final ImmutableMap<Permission, String> colorCodeMap =
       ImmutableMap.<Permission, String>builder()
-          .put(Permission.USE_CHAT_COLOR_RGB, 'x' + baseRgbPattern + "{6}")
+          .put(Permission.USE_CHAT_COLOR_RGB, rgbStartPattern + baseRgbPattern + "{6}")
           .put(Permission.USE_CHAT_COLOR_BLACK, "0")
           .put(Permission.USE_CHAT_COLOR_DARK_BLUE, "1")
           .put(Permission.USE_CHAT_COLOR_DARK_GREEN, "2")
