@@ -27,10 +27,10 @@ public class LocalChatListener implements Listener {
       BungeecordModuleManager.LOCAL_CHAT_MODULE
           .getModuleSection()
           .getBoolean("logTransparentLocal");
-  private final Config serverListSection =
+  private final Config passThruServerListSection =
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("passThruServerList");
-  private final boolean serverListEnabled = serverListSection.getBoolean("enabled");
-  private final List<String> passthruServers = serverListSection.getStringList("list");
+  private final boolean passThruServerListEnabled = passThruServerListSection.getBoolean("enabled");
+  private final List<String> passThruServers = passThruServerListSection.getStringList("list");
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerChat(ChatEvent e) {
@@ -50,13 +50,13 @@ public class LocalChatListener implements Listener {
         return;
       }
 
+      final boolean passThruServer =
+          (passThruServerListEnabled && passThruServers.contains(account.getServerName()));
+
       // Cancel event only if we don't want the backend server to receive it
-      e.setCancelled(
-          !(passToBackendServer
-              || passTransparently
-              || (serverListEnabled && passthruServers.contains(account.getServerName()))));
+      e.setCancelled(!(passToBackendServer || passTransparently || passThruServer));
       // Was just cancelled, or we want to process all local chat regardless
-      if (e.isCancelled() || !passTransparently) {
+      if (e.isCancelled() || (passToBackendServer && !passThruServer)) {
         MessagesService.sendLocalMessage(sender, message);
       }
       // still log and spy after transparently sent messages
