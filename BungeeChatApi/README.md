@@ -80,7 +80,7 @@ You can find the Javadocs here: https://auradev.pages.project-creative.net/Bunge
 
     <repositories>
         <repository>
-            <id>AuraDevelopmentTeam/id>
+            <id>AuraDevelopmentTeam</id>
             <url>https://maven.aura-dev.team/repository/auradev-releases/</url>
             <!--<url>https://maven.aura-dev.team/repository/auradev-snapshots/</url>-->
         </repository>
