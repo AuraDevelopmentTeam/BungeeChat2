@@ -28,32 +28,32 @@ inherit: en_US
 ####################################################################################################
 # Channel Type Messages
 ####################################################################################################
-enableGlobal: "&eVous parlez maintenant dans le chat &bglobal&e !"
-enableStaffchat: "&eVous parlez maintenant dans le chat &astaff&e !"
-enableLocal: "&eVous parlez maintenant dans le chat &clocal&e !"
-globalIsDefault: "&eLe chat global est déjà le chat par défaut !"
-localIsDefault: "&eLa chat local est déjà la chat défaut!"
-backToDefault: "&cLa chat dans lequel vous parlez a été désactivée ou vos autorisations ont été supprimées! Vous parlez maintenant dans le chat défaut."
-notInGlobalServer: "&cLe chat globaln'est pas activé sur ce serveur..."
-notInLocalServer: "&cLa chat local n'est pas activée sur ce serveur..."
+enableGlobal: "&eVous parlez maintenant dans le chat &bglobal&e!"
+enableStaffchat: "&eVous parlez maintenant dans le chat &astaff&e!"
+enableLocal: "&eVous parlez maintenant dans le chat &clocal&e!"
+globalIsDefault: "&eLe chat global est déjà le chat par défaut!"
+localIsDefault: "&eLe chat local est déjà la chat défaut!"
+backToDefault: "&cLe chat dans lequel vous parliez a été désactivé ou vos autorisations ont été supprimées! Vous parlez maintenant dans le chat défaut."
+notInGlobalServer: "&cLe chat global n'est pas activé sur ce serveur..."
+notInLocalServer: "&cLe chat local n'est pas activé sur ce serveur..."
 
 ####################################################################################################
 # Messenger Messages
 ####################################################################################################
-messageYourself: "&cVous ne pouvez pas envoyer de messages à vous même..."
-enableMessager: "&eVous avez &aactivé&e la messagerie !"
-enableMessagerOthers: "&eVous avez &aactivé&e la messagerie de %name% !"
+messageYourself: "&cVous ne pouvez pas envoyer de message à vous même..."
+enableMessager: "&eVous avez &aactivé&e la messagerie!"
+enableMessagerOthers: "&eVous avez &aactivé&e la messagerie de %name%!"
 disableMessager: "&eVous avez &cdésactivé&e la messagerie."
 disableMessagerOthers: "&eVous avez &cdésactivé&e la messagerie de %name%."
-noReply: "&cIl n'y à personne à qui répondre"
+noReply: "&cIl n'y a personne à qui répondre."
 replyOffline: "&cLe joueur avec qui vous discutiez n'est plus en ligne."
-hasMessagerDisabled: "&c%name% à désactivé la messagerie !"
+hasMessagerDisabled: "&c%name% a désactivé la messagerie!"
 
 ####################################################################################################
 # Vanish Messages
 ####################################################################################################
-enableVanish: "&eVous avez &aactivé&e le mode caché !"
-disableVanish: "&eVous avez &adésactivé&e le mode caché !"
+enableVanish: "&eVous avez &aactivé&e le mode caché!"
+disableVanish: "&eVous avez &adésactivé&e le mode caché!"
 
 ####################################################################################################
 # Clear Chat Messages
@@ -65,11 +65,11 @@ clearedGlobal: "&e%name% à effacé le chat global."
 # Mute Messages
 ####################################################################################################
 muted: "&cDésolé mais vous ne pouvez pas parler, vous êtes muté jusqu'au %muted_until%!"
-unmuteNotMuted: "&cCe joueur n'est pas muté !"
+unmuteNotMuted: "&cCe joueur n'est pas muté!"
 muteIsMuted: "Ce joueur est déjà muté !"
-unmute: "&eLe joueur &c%name% &eà été démuté !"
-mute: "&eLe joueur &c%name% &eà été muté !"
-tempmute: "&eLe joueur &c%name% &eà été muté jusqu'au %muted_until%"
+unmute: "&eLe joueur &c%name% &eà été démuté!"
+mute: "&eLe joueur &c%name% &eà été muté!"
+tempmute: "&eLe joueur &c%name% &eà été muté jusqu'au %muted_until%."
 
 ####################################################################################################
 # Spy Messages
@@ -82,47 +82,47 @@ disableLocalSpy: "&eLocalSpy à été &cdésactivé&e!"
 ####################################################################################################
 # Error Messages
 ####################################################################################################
-notPlayer: "&cVous devez être un joueur pour utiliser cette commande !"
+notPlayer: "&cVous devez être un joueur pour utiliser cette commande!"
 playerNotFound: "&cImpossible de trouver le joueur..."
-incorrectUsage: "&cUtilisation incorrecte ! Utilisez cette syntaxe: %command%"
-noPermission: "&cVous n'avez pas les permissions pour effectuer cette action !"
-messageBlank: "&cLe message ne peut pas être vide !"
-unknownServer: "&cCe serveur \"&b%unknown_server%&c\" n'est pas existant!"
+incorrectUsage: "&cUtilisation incorrecte! Utilisez cette syntaxe: %command%"
+noPermission: "&cVous n'avez pas la permission d'effectuer cette action!"
+messageBlank: "&cLe message ne peut pas être vide!"
+unknownServer: "&cCe serveur \"&b%unknown_server%&c\" n'existe pas."
 
 ####################################################################################################
 # Ignore Messages
 ####################################################################################################
-hasIgnored: "&c%target_name% vous à ignoré..."
+hasIgnored: "&c%target_name% vous a ignoré..."
 addIgnore: "&eVous avez ignoré %name%!"
 removeIgnore: "&eVous n'ignorez plus %name%!"
-alreadyIgnored: "&eVous ignorez déjà cette personne !"
-ignoreYourself: "&cVous ne pouvez pas vous ignorer vous même !"
-unignoreYourself: "&cVous ne pouvez pas ne plus vous ignorer vous même !"
-notIgnored: "&cVous n'avez pas ignoré cette personne !"
+alreadyIgnored: "&eVous ignorez déjà cette personne!"
+ignoreYourself: "&cVous ne pouvez pas vous ignorer vous même!"
+unignoreYourself: "&cVous ne pouvez pas ne plus vous ignorer vous même!"
+notIgnored: "&cVous n'avez pas ignoré cette personne!"
 ignoreList: "&eJoueurs connectés que vous ignorez: &b%message%&e."
-ignoreNobody: "&eVous ignorez personne de connecté !"
+ignoreNobody: "&eVous n'ignorez plus les personnes connectées!"
 
 ####################################################################################################
 # Filter Messages
 ####################################################################################################
-antiAdvertise: "&cMerci de ne pas avertir !"
+antiAdvertise: "&cMerci de ne pas faire de publicité!"
 antiCapslock: "&cMerci de ne pas utiliser VERROUILLAGE DES MAJUSCULES."
-antiDuplication: "&cMerci de ne pas envoyer le même message plusieurs fois !"
-antiSpam: "&cVous êtes envoyer les textos trop vite !"
+antiDuplication: "&cMerci de ne pas envoyer le même message plusieurs fois!"
+antiSpam: "&cVous envoyez vos messages trop vite!"
 
 ####################################################################################################
 # ChatLock Messages
 ####################################################################################################
-enableChatlock: "&eVous avez désactivé le chat !"
-disableChatlock: "&eVous avez activé le chat !"
-chatIsLocked: "&cVous ne pouvez pas parler maintenant, le chat à été désactivé !"
+enableChatlock: "&eVous avez désactivé le chat!"
+disableChatlock: "&eVous avez activé le chat!"
+chatIsLocked: "&cVous ne pouvez pas parler maintenant, le chat à été désactivé!"
 
 ####################################################################################################
 # Prefix/Suffix Messages
 ####################################################################################################
-prefixRemoved: "&ePrefix de %name% à été enlevé !"
+prefixRemoved: "&ePrefix de %name% à été enlevé!"
 prefixSet: "&ePrefix de %name% à été défini en %prefix%."
-suffixRemoved: "&eSuffix de %name% à été enlevé !"
+suffixRemoved: "&eSuffix de %name% à été enlevé!"
 suffixSet: "&eSuffix de %name% à été défini en %suffix%."
 
 ####################################################################################################
