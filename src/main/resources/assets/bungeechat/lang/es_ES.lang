@@ -126,4 +126,4 @@ suffixSet: "&e¡El sufijo de %name% fue establecido a %suffix%."
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&a¡Una actualización para Bungee Chat está disponible! Versión &6%message%&a. Descárgala en: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&a¡Una actualización para Bungee Chat está disponible! Versión &6%message%&a. Descárgala en: &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"

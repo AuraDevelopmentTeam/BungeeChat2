@@ -128,5 +128,5 @@ suffixSet: "&eDe suffix van %name% is nu %suffix%."
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aEr is een update voor Bungee Chat beschikbaar! Versie &6%message%&a. Download hem op: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aEr is een update voor Bungee Chat beschikbaar! Versie &6%message%&a. Download hem op: &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"
 

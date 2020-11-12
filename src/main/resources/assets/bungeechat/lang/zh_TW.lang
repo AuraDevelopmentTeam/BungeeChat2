@@ -126,4 +126,4 @@ suffixSet: "&e已設定 %name% 的後綴為 %suffix%。"
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&a檢測到 Bungee Chat 有新版本! &6%message%&a. 請點選前往下載更新: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&a檢測到 Bungee Chat 有新版本! &6%message%&a. 請點選前往下載更新: &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"

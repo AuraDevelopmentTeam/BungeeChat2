@@ -35,6 +35,7 @@ public interface BungeeChatApi {
   public static final String[] TRANSLATORS =
       new String[] {
         "47429921",
+        "Cantibra",
         "DardBrinza",
         "Fantasenf",
         "fjeddy",

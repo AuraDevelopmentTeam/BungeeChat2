@@ -128,4 +128,4 @@ suffixSet: "&eSuffix de %name% à été défini en %suffix%."
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aUne mise à jour de Bungee Chat est disponible ! Version &6%message%&a. Téléchargez la dernière version ici: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aUne mise à jour de Bungee Chat est disponible ! Version &6%message%&a. Téléchargez la dernière version ici: &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"

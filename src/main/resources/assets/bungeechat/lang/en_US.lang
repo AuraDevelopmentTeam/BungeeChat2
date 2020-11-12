@@ -66,7 +66,7 @@ clearedGlobal: "&e%name% has cleared the chat globally."
 ####################################################################################################
 muted: "&cSorry but you can not talk, you have been muted until %muted_until%!"
 unmuteNotMuted: "&cThis player is not muted!"
-muteIsMuted: "This player is already muted!"
+muteIsMuted: "&cThis player is already muted!"
 unmute: "&eThe player &c%name% &ehas been unmuted!"
 mute: "&eThe player &c%name% &ehas been muted!"
 tempmute: "&eThe player &c%name% &ehas been muted until %muted_until%"
@@ -128,4 +128,4 @@ suffixSet: "&eSuffix of %name% has been set to %suffix%."
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aAn update for Bungee Chat is available! Version &6%message%&a. Download it at: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aAn update for Bungee Chat is available! Version &6%message%&a. Download it at: &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"

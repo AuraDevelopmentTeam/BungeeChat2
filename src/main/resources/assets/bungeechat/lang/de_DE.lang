@@ -28,14 +28,14 @@ inherit: en_US
 ####################################################################################################
 # Channel Type Messages
 ####################################################################################################
-enableGlobal: "&eDu sprichst nun im &bGlobal Chat&e!"
-enableStaffchat: "&eDu sprichst nun im &aTeam Chat&e!"
-enableLocal: "&eDu sprichst nun im &cLocal Chat&e!"
-globalIsDefault: "&eDer Globale Chat ist der Standardchannel!"
-localIsDefault: "&eDer Lokale Chat ist der Standardchannel!"
-backToDefault: "&cDas mit diesem Channel verknüfte Feature wurde entfernt oder deine Berechtigungen wurden entfernt. Du redest jetzt im Standardchannel"
-notInGlobalServer: "&cDer Globale Chat ist auf diesem Server nicht aktiviert..."
-notInLocalServer: "&cDer Lokale Chat ist auf diesem Server nicht aktiviert..."
+enableGlobal: "&eDu befindest dich nun im &bGlobal Chat&e."
+enableStaffchat: "&eDu befindest dich nun im &bTeam Chat&e."
+enableLocal: "&eDu befindest dich nun im &bLocal Chat&e."
+globalIsDefault: "&eDer &bGlobale Chat &eist der Standardchannel!"
+localIsDefault: "&eDer &bLokale Chat &eist der Standardchannel!"
+backToDefault: "&cDas mit diesem Channel verknüfte Feature wurde entfernt oder deine Berechtigungen wurden entfernt. Du befindest dich nun im Standardchannel."
+notInGlobalServer: "&cDer &bGlobale Chat &cist auf diesem Server nicht aktiviert..."
+notInLocalServer: "&cDer &bLokale Chat &cist auf diesem Server nicht aktiviert..."
 
 ####################################################################################################
 # Messenger Messages
@@ -45,15 +45,15 @@ enableMessager: "&eDu hast Private Nachrichten &aaktiviert&e!"
 enableMessagerOthers: "&eDu hast %name%'s Private Nachrichten &aaktiviert&e!"
 disableMessager: "&eDu hast Private Nachrichten &cdeaktiviert&e!"
 disableMessagerOthers: "&eDu hast %name%'s Private Nachrichten &cdeaktiviert&e!"
-noReply: "&cEs gibt niemanden, den du zurückschreiben kannst!"
+noReply: "&cEs gibt niemanden, den du zurückschreiben kannst."
 replyOffline: "&cDer Spieler mit dem du schreibst ist nicht länger online."
-hasMessagerDisabled: "&c%name% hat Private Nachrichten &cdeaktiviert&c!"
+hasMessagerDisabled: "&c%name% hat Private Nachrichten deaktiviert!"
 
 ####################################################################################################
 # Vanish Messages
 ####################################################################################################
-enableVanish: "&eDu hast den Unsichtbar Modus &aaktiviert&e!"
-disableVanish: "&eDu hast den Unsichtbar Modus &cdeaktiviert&e!"
+enableVanish: "&eDu bist ab sofort &aunsichtbar&e!"
+disableVanish: "&eDu bist ab sofort wieder &csichtbar&e!"
 
 ####################################################################################################
 # Clear Chat Messages
@@ -64,12 +64,13 @@ clearedGlobal: "&e%name% hat den Chat Global gelöscht."
 ####################################################################################################
 # Mute Messages
 ####################################################################################################
-muted: "&cSorry du kannst nicht schreiben, du bist bis %muted_until% gemutet!"
 unmuteNotMuted: "&cDieser Spieler ist nicht gemutet!"
-muteIsMuted: "Dieser Spieler ist schon gemutet"
+muted: "&cDu kannst nicht schreiben, da du bist bis &e%muted_until% &cgemutet bist!"
+unmuteNotMuted: "&eDieser Spieler ist nicht gemutet!"
+muteIsMuted: "&cDieser Spieler ist bereits gemutet!"
 unmute: "&eDer Spieler &c%name% &ewurde entmutet!"
 mute: "&eDer Spieler &c%name% &ewurde gemutet!"
-tempmute: "&eDer Spieler &c%name% &ewurde bis %muted_until% gemutet."
+tempmute: "&eDer Spieler &c%name% &ewurde bis %muted_until% gemutet!"
 
 ####################################################################################################
 # Spy Messages
@@ -83,22 +84,22 @@ disableLocalSpy: "&eLocalSpy wurde &cdeaktiviert&e!"
 # Error Messages
 ####################################################################################################
 notPlayer: "&cDu kannst diesen Befehl nur als Spieler ausführen!"
-playerNotFound: "&cKonnte gewünschten Spieler nicht finden..."
-incorrectUsage: "&cFalsche Handhabung! Benutze den Befehl so: %command%"
-noPermission: "&cDu hast nicht das recht um diese Aktion auszuführen!"
-messageBlank: "&cTDie Nachricht darf nicht leer sein!"
+playerNotFound: "&cDer gewünschten Spieler wurde nicht gefunden..."
+incorrectUsage: "&cDer Befehl wurde falsch ausgeführt. Bitte benutze den Befehl so: &e%command%"
+noPermission: "&cDu hast keine Berechtigung um diesen Befehl auszuführen."
+messageBlank: "&cDie Nachricht darf nicht leer sein."
 unknownServer: "&cUnbekannter Server \"&b%unknown_server%&c\""
 
 ####################################################################################################
 # Ignore Messages
 ####################################################################################################
-hasIgnored: "&c%target_name% ignoriert dich..."
-addIgnore: "&eDu Ignorierst nun %name%!"
-removeIgnore: "&eDu Ignorierst %name% nicht mehr!"
-alreadyIgnored: "&eDu Ignorierst diesen Spieler bereits!"
-ignoreYourself: "&cDu kannst dich nicht selbst Ignoreren!"
-unignoreYourself: "&cDu kannst dich nicht selbst nicht mehr Ignorieren!"
-notIgnored: "&cDu Ignorierst diesen Spieler nicht!"
+hasIgnored: "&c%target_name% &cblockiert dich..."
+addIgnore: "&eDu blockierst nun %name%!"
+removeIgnore: "&eDu blockierst %name% nicht mehr!"
+alreadyIgnored: "&eDu blockierst diesen Spieler bereits!"
+ignoreYourself: "&cDu kannst dich nicht selbst blockieren!"
+unignoreYourself: "&!Du kannst dich nicht selbst entblockieren!"
+notIgnored: "&cDu blockierst diesen Spieler nicht!"
 ignoreList: "&eOnline Spieler die du Ignorierst: &b%message%&e."
 ignoreNobody: "&eDu Ignorierst &akeinen&e Online Spieler!"
 
@@ -107,8 +108,8 @@ ignoreNobody: "&eDu Ignorierst &akeinen&e Online Spieler!"
 ####################################################################################################
 antiAdvertise: "&cBitte mache keine Werbung!"
 antiCapslock: "&cBitte verwende kein CAPSLOCK!"
-antiDuplication: "&cBitte sende nicht die gleichen Nachrichten!"
-antiSpam: "&cBitte sende Nachrichten nicht so schnell!"
+antiDuplication: "&cBitte sende keine doppelten Nachrichten!"
+antiSpam: "&cBitte lass mehr Zeit zwischen den Nachrichten vergehen!"
 
 ####################################################################################################
 # ChatLock Messages
@@ -128,4 +129,4 @@ suffixSet: "&eSuffix von %name% wurde auf %suffix% gesetzt."
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aEs ist ein Update für BungeeChat vorhanden! Version &6%message%&a. Bitte Downloade es von: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aEs ist ein Update für BungeeChat vorhanden! Version &6%message%&a. &eBitte Downloade es unter: &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"

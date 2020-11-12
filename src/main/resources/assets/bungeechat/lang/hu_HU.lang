@@ -124,4 +124,4 @@ suffixSet: "%name% utótagja beállítva %suffix%-ra/re."
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aÚj BungeeChat frissítés elérhető! &6%message%&a verzió. Itt letöltheted -> &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aÚj BungeeChat frissítés elérhető! &6%message%&a verzió. Itt letöltheted -> &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"

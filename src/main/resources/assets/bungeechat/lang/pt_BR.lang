@@ -126,4 +126,4 @@ suffixSet: "&eSufixo de %name% alterado para %suffix%."
 ####################################################################################################
 # Update available Message
 ####################################################################################################
-updateAvailable: "&aUma atualização para o Bungee Chat está disponível! Versão &6%message%&a. Baixe-a em: &6https://www.spigotmc.org/resources/bungee-chat.12592/&a"
+updateAvailable: "&aUma atualização para o Bungee Chat está disponível! Versão &6%message%&a. Baixe-a em: &6https://www.spigotmc.org/resources/bungee-chat.12592/ &a"
