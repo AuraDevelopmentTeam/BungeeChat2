@@ -111,8 +111,6 @@ spotbugs:
   needs:
     - job: build
       artifacts: false
-    - job: test
-      artifacts: false
   script:
   - ./gradlew --continue --console=plain spotbugs
   allow_failure: true
