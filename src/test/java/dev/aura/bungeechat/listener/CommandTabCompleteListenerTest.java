@@ -1,7 +1,8 @@
 package dev.aura.bungeechat.listener;
 
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
 
 import dev.aura.bungeechat.command.BaseCommand;
 import dev.aura.bungeechat.util.LoggerHelper;
@@ -222,7 +223,7 @@ public class CommandTabCompleteListenerTest {
     PowerMockito.verifyStatic(LoggerHelper.class);
     LoggerHelper.warning(
         Mockito.eq("Uncaught error during tabcomplete of /exception"), argument.capture());
-    assertTrue(argument.getValue() instanceof NullPointerException);
+    assertThat(argument.getValue(), instanceOf(NullPointerException.class));
     assertEquals("test text YOLO", argument.getValue().getMessage());
   }
 
