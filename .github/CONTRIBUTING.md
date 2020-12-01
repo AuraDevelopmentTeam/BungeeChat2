@@ -18,6 +18,15 @@ are a developer and are interested in helping then please do not hesitate. Just 
 
 ## Cloning and Setting up
 
+### Prerequisites
+
+All my projects currently use Java 8 (as that's what the MC community stuck to).  
+So make sure you have a Java 8 JDK installed!  
+If the `java` command is not stemming from that Java 8 JDK installation, you can set the environment variable `JAVA_HOME` to the path of the JDK installation.
+Gradle will properly pick it up and you will not run into issues.
+
+**If you are running into weird issues while building first verify this!**
+
 ### Cloning
 
 Since this repository has a submodule you'll need to add the `--recursive` flag. So clone it like this:
@@ -39,14 +48,6 @@ To do that juts run the provided gradle task: `./gradlew addGitHooks`.
 
 All it does is copy the hooks from `GradleCommon/hooks` to `.git/hooks`.
 
-### Setting up a Dev Env
-
-Setting up a development environment works essentially like any other Forge project. So just run `./gradlew setupDecompWorkspace`.  
-Or if you want it simpler, I set it up in a way that when you run either the `eclipse` or the `idea` IDE task, that `setupDecompWorkspace` gets run too.
-
-*Note:  
-This is only needed for projects that use Forge or SpongeCommon!*
-
 ## Translating
 
 If you wish to add a translation or expand an existing one, I have another super useful gradle task for you! Just run `./gradlew checkTranslations`. This will
@@ -65,4 +66,4 @@ that will format the code to the precise standard! So please run `./gradlew spot
 ### Adding Resources
 
 When adding PNG files make sure to save them with 24 or 32 bits and run `./gradlew optimizePng` (you'll need to have `optipng` available in your path though).  
-Finally when you add JSOn files be sure to run `./gradlew formatJson` to ensure a clean formatting.  
+Finally when you add JSON files be sure to run `./gradlew formatJson` to ensure a clean formatting.  
