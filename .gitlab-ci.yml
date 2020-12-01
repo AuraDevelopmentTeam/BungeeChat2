@@ -33,7 +33,7 @@ build:
   cache:
     policy: push
   script:
-  - ./gradlew --console=plain assemble
+  - ./gradlew --console=plain assemble compileTest
   - cp $ORIG_ARTIFACTS1 $ORIG_ARTIFACTS2 .
   retry: 2
   when: on_success
