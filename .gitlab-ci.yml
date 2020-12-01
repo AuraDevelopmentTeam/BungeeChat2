@@ -46,6 +46,9 @@ test:
   stage: test
   cache:
     policy: pull-push
+  needs:
+    - job: build
+      artifacts: false
   script:
   - ./gradlew --continue --console=plain test
   retry: 2
@@ -63,15 +66,18 @@ checkFormatting:
   stage: test
   cache:
     policy: pull
+  needs: []
   script:
   - ./gradlew --continue --console=plain spotlessCheck
   allow_failure: true
+  needs: []
   when: on_success
 
 checkTranslations:
   stage: test
   cache:
     policy: pull
+  needs: []
   script:
   - ./gradlew --continue --console=plain checkTranslations
   allow_failure: true
@@ -85,8 +91,9 @@ coverage:
   stage: report
   cache:
     policy: pull
-  dependencies:
-  - test
+  needs:
+    - job: test
+      artifacts: true
   script:
   - ./gradlew --continue --console=plain -x test coverage
   coverage: "/Covered (\\d{1,3}\\.\\d{2}%) of instructions for all projects\\./"
@@ -101,6 +108,11 @@ spotbugs:
   stage: report
   cache:
     policy: pull
+  needs:
+    - job: build
+      artifacts: false
+    - job: test
+      artifacts: false
   script:
   - ./gradlew --continue --console=plain spotbugs
   allow_failure: true
@@ -114,8 +126,9 @@ deploySnapshot:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - build
+  needs:
+    - job: build
+      artifacts: true
   script:
   - ./gradlew --console=plain uploadArchives
   retry: 2
@@ -127,8 +140,9 @@ deploy:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - build
+  needs:
+    - job: build
+      artifacts: true
   script:
   - ./gradlew --console=plain release
   retry: 2
@@ -140,8 +154,9 @@ sendCoverage:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - coverage
+  needs:
+    - job: coverage
+      artifacts: true
   script:
   - ./gradlew --console=plain sendCoverageToCodacy
   retry: 2
@@ -151,11 +166,15 @@ pages:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - build
-  - test
-  - coverage
-  - spotbugs
+  needs:
+    - job: build
+      artifacts: true
+    - job: test
+      artifacts: true
+    - job: coverage
+      artifacts: true
+    - job: spotbugs
+      artifacts: true
   script:
   - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d. -f1 | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
