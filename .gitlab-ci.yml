@@ -5,14 +5,8 @@ variables:
   ARTIFACTS1: "$CI_PROJECT_DIR/*.jar*"
   ARTIFACTS2: "$CI_PROJECT_DIR/*.zip*"
   TEST_REPORTS: "$CI_PROJECT_DIR/*-TestReport.zip"
-#  TEST_DATA: "$CI_PROJECT_DIR/**/build/test-results/*/TEST-*.xml"
-  TEST_DATA1: "$CI_PROJECT_DIR/build/test-results/*/TEST-*.xml"
-  TEST_DATA2: "$CI_PROJECT_DIR/*/build/test-results/*/TEST-*.xml"
-  TEST_DATA3: "$CI_PROJECT_DIR/*/*/build/test-results/*/TEST-*.xml"
-#  JACOCO_DATA: "$CI_PROJECT_DIR/**/build/jacoco/*"
-  JACOCO_DATA1: "$CI_PROJECT_DIR/build/jacoco/*"
-  JACOCO_DATA2: "$CI_PROJECT_DIR/*/build/jacoco/*"
-  JACOCO_DATA3: "$CI_PROJECT_DIR/*/*/build/jacoco/*"
+  TEST_DATA: "$CI_PROJECT_DIR/**/build/test-results/*/TEST-*.xml"
+  JACOCO_DATA: "$CI_PROJECT_DIR/**/build/jacoco/*"
   TRANSLATION_REPORTS: "$CI_PROJECT_DIR/**/*.lang.txt"
   COVERAGE_REPORTS: "$CI_PROJECT_DIR/*-CoverageReport.zip"
   SPOTBUGS_REPORTS: "$CI_PROJECT_DIR/*-SpotbugsReport.zip"
@@ -39,7 +33,7 @@ build:
   cache:
     policy: push
   script:
-  - ./gradlew --console=plain assemble
+  - ./gradlew --console=plain assemble compileTest
   - cp $ORIG_ARTIFACTS1 $ORIG_ARTIFACTS2 .
   retry: 2
   when: on_success
@@ -52,6 +46,9 @@ test:
   stage: test
   cache:
     policy: pull-push
+  needs:
+    - job: build
+      artifacts: false
   script:
   - ./gradlew --continue --console=plain test
   retry: 2
@@ -60,30 +57,27 @@ test:
     when: always
     paths:
     - $TEST_REPORTS
-#    - $JACOCO_DATA
-    - $JACOCO_DATA1
-    - $JACOCO_DATA2
-    - $JACOCO_DATA3
+    - $JACOCO_DATA
     reports:
       junit:
-#      - $TEST_DATA
-      - $TEST_DATA1
-      - $TEST_DATA2
-      - $TEST_DATA3
+      - $TEST_DATA
 
 checkFormatting:
   stage: test
   cache:
     policy: pull
+  needs: []
   script:
   - ./gradlew --continue --console=plain spotlessCheck
   allow_failure: true
+  needs: []
   when: on_success
 
 checkTranslations:
   stage: test
   cache:
     policy: pull
+  needs: []
   script:
   - ./gradlew --continue --console=plain checkTranslations
   allow_failure: true
@@ -97,8 +91,9 @@ coverage:
   stage: report
   cache:
     policy: pull
-  dependencies:
-  - test
+  needs:
+    - job: test
+      artifacts: true
   script:
   - ./gradlew --continue --console=plain -x test coverage
   coverage: "/Covered (\\d{1,3}\\.\\d{2}%) of instructions for all projects\\./"
@@ -113,6 +108,9 @@ spotbugs:
   stage: report
   cache:
     policy: pull
+  needs:
+    - job: build
+      artifacts: false
   script:
   - ./gradlew --continue --console=plain spotbugs
   allow_failure: true
@@ -126,8 +124,9 @@ deploySnapshot:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - build
+  needs:
+    - job: build
+      artifacts: true
   script:
   - ./gradlew --console=plain uploadArchives
   retry: 2
@@ -139,8 +138,9 @@ deploy:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - build
+  needs:
+    - job: build
+      artifacts: true
   script:
   - ./gradlew --console=plain release
   retry: 2
@@ -152,22 +152,27 @@ sendCoverage:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - coverage
+  needs:
+    - job: coverage
+      artifacts: true
   script:
   - ./gradlew --console=plain sendCoverageToCodacy
   retry: 2
-  when: always
+  when: on_success
 
 pages:
   stage: deploy
   cache:
     policy: pull
-  dependencies:
-  - build
-  - test
-  - coverage
-  - spotbugs
+  needs:
+    - job: build
+      artifacts: true
+    - job: test
+      artifacts: true
+    - job: coverage
+      artifacts: true
+    - job: spotbugs
+      artifacts: true
   script:
   - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d. -f1 | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
   - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
