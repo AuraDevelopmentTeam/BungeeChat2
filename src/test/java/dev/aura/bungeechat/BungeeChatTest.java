@@ -1,6 +1,6 @@
 package dev.aura.bungeechat;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -43,6 +43,6 @@ public class BungeeChatTest {
   public void queryTest() {
     String result = bungeeChat.getLatestVersion(true);
 
-    assertFalse("Version should not be \"error\"", "error".equals(result));
+    assertNotEquals("Version should not be \"error\"", "error", result);
   }
 }

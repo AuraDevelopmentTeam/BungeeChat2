@@ -72,7 +72,7 @@ public class TestDatabase {
     }
   }
 
-  @SuppressFBWarnings(value = "DMI_CONSTANT_DB_PASSWORD", justification = "Hardcoding for tests.")
+  @SuppressFBWarnings(value = "DMI_CONSTANT_DB_PASSWORD", justification = "Hard coded for tests.")
   public static Connection getDatabaseInstance() throws SQLException {
     return DriverManager.getConnection("jdbc:mysql://" + host + "/test", "test", "test");
   }

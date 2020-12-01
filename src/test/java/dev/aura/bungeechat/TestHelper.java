@@ -31,13 +31,12 @@ import org.apache.commons.io.FileUtils;
 @UtilityClass
 public class TestHelper {
   private static BungeeChat bungeeChat;
-  private static ProxyServer proxyServer;
   private static boolean hasInitRun = false;
 
   @SneakyThrows
   public static void initBungeeChat() {
     if (!hasInitRun) {
-      proxyServer = new DummyProxyServer();
+      ProxyServer proxyServer = new DummyProxyServer();
       PluginDescription desc = new PluginDescription();
 
       ProxyServer.setInstance(proxyServer);
@@ -66,13 +65,13 @@ public class TestHelper {
   }
 
   public static class DummyProxyServer extends ProxyServer {
-    @Getter private PluginManager pluginManager;
+    @Getter private final PluginManager pluginManager;
 
     @Getter
-    private File pluginsFolder =
+    private final File pluginsFolder =
         new File(System.getProperty("java.io.tmpdir"), "BungeeChatTest/" + UUID.randomUUID());
 
-    @Getter private Logger logger = Logger.getLogger("DummyProxyServer");
+    @Getter private final Logger logger = Logger.getLogger("DummyProxyServer");
 
     protected DummyProxyServer() {
       pluginManager = new PluginManager(this);

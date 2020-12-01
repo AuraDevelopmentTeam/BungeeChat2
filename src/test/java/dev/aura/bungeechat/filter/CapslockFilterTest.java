@@ -8,7 +8,7 @@ import dev.aura.bungeechat.message.Messages;
 import org.junit.Test;
 
 public class CapslockFilterTest {
-  private static BungeeChatFilter FILTER = new CapslockFilter(8, 50, true);
+  private static final BungeeChatFilter FILTER = new CapslockFilter(8, 50, true);
   private static final FilterHelper filterHelper = new FilterHelper(Messages.ANTI_CAPSLOCK);
 
   @Test

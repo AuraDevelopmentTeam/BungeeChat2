@@ -24,7 +24,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-@SuppressFBWarnings(value = "DMI_CONSTANT_DB_PASSWORD", justification = "Hardcoding for tests.")
+@SuppressFBWarnings(value = "DMI_CONSTANT_DB_PASSWORD", justification = "Hard coded for tests.")
 public class AccountSQLStorageTest {
   private static final String database = "test";
   private static final String password = "test";

@@ -11,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SpamFilterTest {
-  private static SpamFilter FILTER = new SpamFilter(3, true);
+  private static final SpamFilter FILTER = new SpamFilter(3, true);
   private static final FilterHelper filterHelper = new FilterHelper(Messages.ANTI_SPAM);
 
   @BeforeClass

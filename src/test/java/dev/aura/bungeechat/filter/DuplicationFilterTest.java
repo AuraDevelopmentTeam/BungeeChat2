@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DuplicationFilterTest {
-  private static DuplicationFilter FILTER = new DuplicationFilter(2, 1, true);
+  private static final DuplicationFilter FILTER = new DuplicationFilter(2, 1, true);
   private static final FilterHelper filterHelper = new FilterHelper(Messages.ANTI_DUPLICATION);
 
   @Before

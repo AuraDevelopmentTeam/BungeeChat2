@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -16,29 +17,29 @@ public class VanishCommandTest {
   }
 
   @Test
-  public void tabCompletefirstArgumentTest() {
+  public void tabCompleteFirstArgumentTest() {
     assertEquals(Arrays.asList("on", "off"), tabComplete(""));
     assertEquals(Arrays.asList("on", "off"), tabComplete("o"));
-    assertEquals(Arrays.asList("on"), tabComplete("on"));
-    assertEquals(Arrays.asList("off"), tabComplete("of"));
-    assertEquals(Arrays.asList("off"), tabComplete("off"));
-    assertEquals(Arrays.asList(), tabComplete("xxx"));
+    assertEquals(Collections.singletonList("on"), tabComplete("on"));
+    assertEquals(Collections.singletonList("off"), tabComplete("of"));
+    assertEquals(Collections.singletonList("off"), tabComplete("off"));
+    assertEquals(Collections.emptyList(), tabComplete("xxx"));
   }
 
   @Test
   public void tabCompleteExtraArgumentsTest() {
-    assertEquals(Arrays.asList(), tabComplete("on", ""));
-    assertEquals(Arrays.asList(), tabComplete("on", "p"));
-    assertEquals(Arrays.asList(), tabComplete("on", "player1"));
-    assertEquals(Arrays.asList(), tabComplete("off", ""));
-    assertEquals(Arrays.asList(), tabComplete("off", "p"));
-    assertEquals(Arrays.asList(), tabComplete("off", "player1"));
+    assertEquals(Collections.emptyList(), tabComplete("on", ""));
+    assertEquals(Collections.emptyList(), tabComplete("on", "p"));
+    assertEquals(Collections.emptyList(), tabComplete("on", "player1"));
+    assertEquals(Collections.emptyList(), tabComplete("off", ""));
+    assertEquals(Collections.emptyList(), tabComplete("off", "p"));
+    assertEquals(Collections.emptyList(), tabComplete("off", "player1"));
 
-    assertEquals(Arrays.asList(), tabComplete("on", "xxx", ""));
-    assertEquals(Arrays.asList(), tabComplete("on", "xxx", "p"));
-    assertEquals(Arrays.asList(), tabComplete("on", "xxx", "player1"));
-    assertEquals(Arrays.asList(), tabComplete("off", "xxx", ""));
-    assertEquals(Arrays.asList(), tabComplete("off", "xxx", "p"));
-    assertEquals(Arrays.asList(), tabComplete("off", "xxx", "player1"));
+    assertEquals(Collections.emptyList(), tabComplete("on", "xxx", ""));
+    assertEquals(Collections.emptyList(), tabComplete("on", "xxx", "p"));
+    assertEquals(Collections.emptyList(), tabComplete("on", "xxx", "player1"));
+    assertEquals(Collections.emptyList(), tabComplete("off", "xxx", ""));
+    assertEquals(Collections.emptyList(), tabComplete("off", "xxx", "p"));
+    assertEquals(Collections.emptyList(), tabComplete("off", "xxx", "player1"));
   }
 }

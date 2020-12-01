@@ -170,7 +170,7 @@ public class CommandTabCompleteListenerTest {
   }
 
   @Test
-  public void playerSpecifcTest() {
+  public void playerSpecificTest() {
     final String command1 = "/player1 test";
     final String command2 = "/player2 test2";
 
@@ -188,10 +188,10 @@ public class CommandTabCompleteListenerTest {
         .tabComplete(Mockito.any(), AdditionalMatchers.aryEq(new String[] {"test"}));
     Mockito.verify(commandPlayer2, Mockito.times(2))
         .tabComplete(Mockito.any(), AdditionalMatchers.aryEq(new String[] {"test2"}));
-    assertEquals(Arrays.asList("test"), event1p1.getSuggestions());
+    assertEquals(Collections.singletonList("test"), event1p1.getSuggestions());
     assertEquals(Collections.emptyList(), event1p2.getSuggestions());
     assertEquals(Collections.emptyList(), event2p1.getSuggestions());
-    assertEquals(Arrays.asList("test2"), event2p2.getSuggestions());
+    assertEquals(Collections.singletonList("test2"), event2p2.getSuggestions());
   }
 
   @Test
@@ -239,6 +239,6 @@ public class CommandTabCompleteListenerTest {
   }
 
   private static interface TabCompleteFunction {
-    public Collection<String> tabComplete(CommandSender sender, String args[]);
+    public Collection<String> tabComplete(CommandSender sender, String[] args);
   }
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import dev.aura.bungeechat.testhelpers.ServerInfoTest;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import org.junit.Test;
 
@@ -35,8 +36,8 @@ public class ServerNameUtilTest extends ServerInfoTest {
         Arrays.asList("main", "hub1", "hub2", "test"), ServerNameUtil.getMatchingServerNames(""));
     assertEquals(Arrays.asList("hub1", "hub2"), ServerNameUtil.getMatchingServerNames("h"));
     assertEquals(Arrays.asList("hub1", "hub2"), ServerNameUtil.getMatchingServerNames("hub"));
-    assertEquals(Arrays.asList("hub1"), ServerNameUtil.getMatchingServerNames("hub1"));
-    assertEquals(Arrays.asList(), ServerNameUtil.getMatchingServerNames("hub3"));
-    assertEquals(Arrays.asList("main"), ServerNameUtil.getMatchingServerNames("main"));
+    assertEquals(Collections.singletonList("hub1"), ServerNameUtil.getMatchingServerNames("hub1"));
+    assertEquals(Collections.emptyList(), ServerNameUtil.getMatchingServerNames("hub3"));
+    assertEquals(Collections.singletonList("main"), ServerNameUtil.getMatchingServerNames("main"));
   }
 }

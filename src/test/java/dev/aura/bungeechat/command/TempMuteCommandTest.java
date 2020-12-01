@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import dev.aura.bungeechat.testhelpers.AccountManagerTest;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -20,10 +21,10 @@ public class TempMuteCommandTest extends AccountManagerTest {
   public void tabCompleteFirstArgumentTest() {
     assertEquals(Arrays.asList("test", "player1", "player2", "hello"), tabComplete(""));
     assertEquals(Arrays.asList("player1", "player2"), tabComplete("p"));
-    assertEquals(Arrays.asList("player1"), tabComplete("player1"));
-    assertEquals(Arrays.asList("hello"), tabComplete("HeLl"));
-    assertEquals(Arrays.asList("test"), tabComplete("tEsT"));
-    assertEquals(Arrays.asList(), tabComplete("xxx"));
+    assertEquals(Collections.singletonList("player1"), tabComplete("player1"));
+    assertEquals(Collections.singletonList("hello"), tabComplete("HeLl"));
+    assertEquals(Collections.singletonList("test"), tabComplete("tEsT"));
+    assertEquals(Collections.emptyList(), tabComplete("xxx"));
   }
 
   @Test
@@ -50,24 +51,24 @@ public class TempMuteCommandTest extends AccountManagerTest {
         Arrays.asList("12.34s", "12.34m", "12.34h", "12.34d", "12.34w", "12.34mo", "12.34y"),
         tabComplete("player1", "12.34"));
     assertEquals(Arrays.asList("1m", "1mo"), tabComplete("player1", "1m"));
-    assertEquals(Arrays.asList("1mo"), tabComplete("player1", "1mo"));
-    assertEquals(Arrays.asList("1y"), tabComplete("player1", "1y"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "1x"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "1xxx"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "s"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "xxx"));
+    assertEquals(Collections.singletonList("1mo"), tabComplete("player1", "1mo"));
+    assertEquals(Collections.singletonList("1y"), tabComplete("player1", "1y"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "1x"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "1xxx"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "s"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "xxx"));
   }
 
   @Test
   public void tabCompleteExtraArgumentsTest() {
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", ""));
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", "p"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", "player1"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", "xxx"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", ""));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", "p"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", "player1"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", "xxx"));
 
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", "xxx", ""));
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", "xxx", "p"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", "xxx", "player1"));
-    assertEquals(Arrays.asList(), tabComplete("player1", "123d", "xxx", "xxx"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", "xxx", ""));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", "xxx", "p"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", "xxx", "player1"));
+    assertEquals(Collections.emptyList(), tabComplete("player1", "123d", "xxx", "xxx"));
   }
 }
