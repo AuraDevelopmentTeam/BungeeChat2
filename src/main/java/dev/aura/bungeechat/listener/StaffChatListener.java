@@ -40,7 +40,7 @@ public class StaffChatListener implements Listener {
 
       if (message.startsWith(symbol) && !symbol.equals("/")) {
         if (!(PermissionManager.hasPermission(sender, Permission.COMMAND_STAFFCHAT))) {
-          e.setCancelled(true);
+          e.setCancelled(!symbolSection.getBoolean("ignoreWithoutPermissions"));
           return;
         }
 

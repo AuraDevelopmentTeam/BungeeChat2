@@ -45,7 +45,8 @@ public interface BungeeChatApi {
         "marzenie",
         "Maxime_74",
         "Misterio77",
-        "povsister"
+        "povsister",
+        "Totten98"
       };
   public static final String[] DONATORS = new String[] {"Breantique", "NickT"};
   public static final double CONFIG_VERSION = 11.7;

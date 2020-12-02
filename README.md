@@ -42,7 +42,7 @@ We have created a wiki for this plugin to help you with various issues and probl
 
 ## [Issue Reporting](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
 
-If you found a bug or are even experiencing a crash please report it so we can fix it. Please first check if a bug report for the issue already
+If you found a bug or are even experiencing a crash please report it, so we can fix it. Please first check if a bug report for the issue already
 [exists](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues). If not just create a
 [new issue](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/new) and fill out the form.
 
