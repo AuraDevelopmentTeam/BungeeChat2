@@ -52,8 +52,12 @@ public class GlobalChatListener implements Listener {
           return;
         }
 
-        if (!(PermissionManager.hasPermission(sender, Permission.COMMAND_GLOBAL))) {
-          e.setCancelled(!symbolSection.getBoolean("ignoreWithoutPermissions"));
+        final boolean ignoreWithoutPermissions =
+            symbolSection.getBoolean("ignoreWithoutPermissions");
+
+        if (!(PermissionManager.hasPermission(
+            sender, Permission.COMMAND_GLOBAL, !ignoreWithoutPermissions))) {
+          e.setCancelled(!ignoreWithoutPermissions);
           return;
         }
 

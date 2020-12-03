@@ -25,14 +25,7 @@ public class PermissionManager {
   }
 
   public static boolean hasPermission(ProxiedPlayer player, Permission permission) {
-    if (hasPermissionNoMessage(player, permission)) return true;
-    else {
-      if (permission.getWarnOnLackingPermission()) {
-        MessagesService.sendMessage(player, Messages.NO_PERMISSION.get(player));
-      }
-
-      return false;
-    }
+    return hasPermission(player, permission, true);
   }
 
   public static boolean hasPermission(CommandSender sender, Permission permission) {
@@ -41,5 +34,29 @@ public class PermissionManager {
 
   public static boolean hasPermission(BungeeChatAccount account, Permission permission) {
     return hasPermission(BungeecordAccountManager.getCommandSender(account).get(), permission);
+  }
+
+  public static boolean hasPermission(
+      ProxiedPlayer player, Permission permission, boolean sendMessage) {
+    if (hasPermissionNoMessage(player, permission)) return true;
+    else {
+      if (sendMessage && permission.getWarnOnLackingPermission()) {
+        MessagesService.sendMessage(player, Messages.NO_PERMISSION.get(player));
+      }
+
+      return false;
+    }
+  }
+
+  public static boolean hasPermission(
+      CommandSender sender, Permission permission, boolean sendMessage) {
+    return !(sender instanceof ProxiedPlayer)
+        || hasPermission((ProxiedPlayer) sender, permission, sendMessage);
+  }
+
+  public static boolean hasPermission(
+      BungeeChatAccount account, Permission permission, boolean sendMessage) {
+    return hasPermission(
+        BungeecordAccountManager.getCommandSender(account).get(), permission, sendMessage);
   }
 }
