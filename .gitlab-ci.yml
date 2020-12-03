@@ -1,5 +1,6 @@
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  CACHE_KEY: "$CI_COMMIT_REF_NAME $CI_COMMIT_SHA"
   ORIG_ARTIFACTS1: "$CI_PROJECT_DIR/**/build/libs/*.jar*"
   ORIG_ARTIFACTS2: "$CI_PROJECT_DIR/**/build/distributions/*.zip*"
   ARTIFACTS1: "$CI_PROJECT_DIR/*.jar*"
@@ -15,7 +16,8 @@ variables:
     -Dorg.gradle.project.branchName="$CI_COMMIT_REF_NAME"
 
 cache:
-  key: "$CI_COMMIT_REF_NAME $CI_COMMIT_SHA"
+  policy: pull
+  key: "$CACHE_KEY"
   untracked: true
 
 before_script:
@@ -32,6 +34,8 @@ build:
   stage: build
   cache:
     policy: push
+    key: "$CACHE_KEY"
+    untracked: true
   script:
   - ./gradlew --console=plain assemble compileTest
   - cp $ORIG_ARTIFACTS1 $ORIG_ARTIFACTS2 .
@@ -46,6 +50,8 @@ test:
   stage: test
   cache:
     policy: pull-push
+    key: "$CACHE_KEY"
+    untracked: true
   needs:
     - job: build
       artifacts: false
@@ -64,8 +70,6 @@ test:
 
 checkFormatting:
   stage: test
-  cache:
-    policy: pull
   needs: []
   script:
   - ./gradlew --continue --console=plain spotlessCheck
@@ -75,8 +79,6 @@ checkFormatting:
 
 checkTranslations:
   stage: test
-  cache:
-    policy: pull
   needs: []
   script:
   - ./gradlew --continue --console=plain checkTranslations
@@ -89,8 +91,6 @@ checkTranslations:
 
 coverage:
   stage: report
-  cache:
-    policy: pull
   needs:
     - job: test
       artifacts: true
@@ -106,8 +106,6 @@ coverage:
 
 spotbugs:
   stage: report
-  cache:
-    policy: pull
   needs:
     - job: build
       artifacts: false
@@ -122,8 +120,6 @@ spotbugs:
 
 deploySnapshot:
   stage: deploy
-  cache:
-    policy: pull
   needs:
     - job: build
       artifacts: true
@@ -136,8 +132,6 @@ deploySnapshot:
 
 deploy:
   stage: deploy
-  cache:
-    policy: pull
   needs:
     - job: build
       artifacts: true
@@ -150,8 +144,6 @@ deploy:
   
 sendCoverage:
   stage: deploy
-  cache:
-    policy: pull
   needs:
     - job: coverage
       artifacts: true
@@ -162,8 +154,6 @@ sendCoverage:
 
 pages:
   stage: deploy
-  cache:
-    policy: pull
   needs:
     - job: build
       artifacts: true
