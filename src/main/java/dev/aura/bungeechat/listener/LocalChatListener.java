@@ -51,10 +51,11 @@ public class LocalChatListener implements Listener {
       }
 
       final boolean passThruServer =
-          (passThruServerListEnabled && passThruServers.contains(account.getServerName()));
+          passTransparently
+              || (passThruServerListEnabled && passThruServers.contains(account.getServerName()));
 
       // Cancel event only if we don't want the backend server to receive it
-      e.setCancelled(!(passToBackendServer || passTransparently || passThruServer));
+      e.setCancelled(!(passToBackendServer || passThruServer));
       // Was just cancelled, or we want to process all local chat regardless
       if (e.isCancelled() || (passToBackendServer && !passThruServer)) {
         MessagesService.sendLocalMessage(sender, message);
