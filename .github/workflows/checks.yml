@@ -70,6 +70,7 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
       - name: Run all Tests
+        id: gradle_tests
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} -x spotlessCheck build
         continue-on-error: true
       - name: Publish Test Reports
@@ -78,3 +79,6 @@ jobs:
           report_paths: '**/build/test-results/test/TEST-*.xml'
           github_token: ${{ secrets.GITHUB_TOKEN }}
           check_name: 'Test Report (OS: ${{ matrix.os }})'
+      - name: Fail Job if Gradle Tests failed
+        run: false
+        if: ${{ steps.gradle_tests.outcome == "failure" }}
