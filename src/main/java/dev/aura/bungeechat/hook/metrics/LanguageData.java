@@ -14,11 +14,11 @@ public class LanguageData extends SimplePie {
   private static String getLanguage() {
     final String configLanguage = Configuration.get().getString("Language");
 
-    return isValidLangauge(configLanguage) ? configLanguage : "custom";
+    return isValidLanguage(configLanguage) ? configLanguage : "custom";
   }
 
   @VisibleForTesting
-  static boolean isValidLangauge(String lang) {
+  static boolean isValidLanguage(String lang) {
     String[] parts = lang.split("_", 3);
 
     if (parts.length != 2) return false;
