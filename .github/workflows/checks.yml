@@ -1,0 +1,51 @@
+name: Checks
+
+on: [push, pull_request]
+
+jobs:
+  spotless:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+          java-package: jdk
+          architecture: x64
+      - name: Check code formatting
+        run: ./gradlew --no-daemon --console=plain spotlessCheck
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+          java-package: jdk
+          architecture: x64
+      - name: Build all files
+        run: ./gradlew --no-daemon --console=plain assemble compileTest
+  test:
+    runs-on: ${{ matrix.os }}
+      strategy:
+        fail-fast: false
+        matrix:
+          os: [ ubuntu-latest, windows-latest, macos-latest ]
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+          java-package: jdk
+          architecture: x64
+      - name: Run all Tests
+        run: ./gradlew --no-daemon --console=plain -x spotlessCheck build
