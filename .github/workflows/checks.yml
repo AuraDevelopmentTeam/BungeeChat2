@@ -5,7 +5,7 @@ on: [push, pull_request]
 env:
   GRADLE_CMD_OPTS: >-
     -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false
-    "-PbranchName=${{ github.ref }}"
+    -PbranchName=${{ github.ref }}
     --no-daemon
     --console=plain
 
