@@ -71,3 +71,8 @@ jobs:
         run: git submodule update --init --recursive
       - name: Run all Tests
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} -x spotlessCheck build
+      - name: Publish Test Reports
+        uses: mikepenz/action-junit-report@v1
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
