@@ -77,3 +77,4 @@ jobs:
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          check_name: 'Test Report (OS: ${{ matrix.os }})'
