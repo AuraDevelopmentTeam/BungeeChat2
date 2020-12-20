@@ -13,7 +13,7 @@ variables:
   SPOTBUGS_REPORTS: "$CI_PROJECT_DIR/*-SpotbugsReport.zip"
   JAVADOCS: "$CI_PROJECT_DIR/*-javadoc.jar"
   GRADLE_OPTS: >
-    -PbranchName="$CI_COMMIT_REF_NAME"
+    -Dorg.gradle.project.branchName="$CI_COMMIT_REF_NAME"
 
 cache:
   policy: pull
