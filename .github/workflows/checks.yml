@@ -27,8 +27,10 @@ jobs:
           architecture: x64
       - name: Checkout submodules
         run: git submodule update --init --recursive
+      - name: Check evaluated branch
+        run: git describe --all
       - name: Check code formatting
-        run: ./gradlew ${GRADLE_CMD_OPTS} spotlessCheck
+        run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} spotlessCheck
   build:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -47,7 +49,7 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
       - name: Build all files
-        run: ./gradlew ${GRADLE_CMD_OPTS} assemble compileTest
+        run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} assemble compileTest
   test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -67,4 +69,4 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
       - name: Run all Tests
-        run: ./gradlew ${GRADLE_CMD_OPTS} -x spotlessCheck build
+        run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} -x spotlessCheck build
