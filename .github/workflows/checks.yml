@@ -3,8 +3,9 @@ name: Checks
 on: [push, pull_request]
 
 env:
-  GRADLE_CMD_OPTS: >-
+  GRADLE_OPTS: >-
     -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false
+  GRADLE_CMD_OPTS: >-
     -PbranchName=${{ github.ref }}
     --no-daemon
     --console=plain
