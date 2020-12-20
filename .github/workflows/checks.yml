@@ -20,12 +20,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: textbook/git-checkout-submodule-action@2.1.1
       - uses: actions/setup-java@v1
         with:
           java-version: 8
           java-package: jdk
           architecture: x64
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       - name: Check code formatting
         run: ./gradlew ${GRADLE_CMD_OPTS} spotlessCheck
   build:
@@ -38,12 +39,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: textbook/git-checkout-submodule-action@2.1.1
       - uses: actions/setup-java@v1
         with:
           java-version: 8
           java-package: jdk
           architecture: x64
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       - name: Build all files
         run: ./gradlew ${GRADLE_CMD_OPTS} assemble compileTest
   test:
@@ -57,11 +59,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: textbook/git-checkout-submodule-action@2.1.1
       - uses: actions/setup-java@v1
         with:
           java-version: 8
           java-package: jdk
           architecture: x64
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       - name: Run all Tests
         run: ./gradlew ${GRADLE_CMD_OPTS} -x spotlessCheck build
