@@ -4,20 +4,18 @@ import com.google.common.collect.MapMaker;
 import dev.aura.bungeechat.event.BungeeChatJoinEvent;
 import dev.aura.bungeechat.event.BungeeChatLeaveEvent;
 import dev.aura.bungeechat.event.BungeeChatServerSwitchEvent;
-
 import java.util.*;
-
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
-import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class BungeeChatEventsListener implements Listener {
-  private static final Map<UUID, ProxiedPlayer> primaryConnections = new MapMaker().weakValues().makeMap();
+  private static final Map<UUID, ProxiedPlayer> primaryConnections =
+      new MapMaker().weakValues().makeMap();
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerServerSwitch(ServerSwitchEvent e) {
@@ -32,7 +30,7 @@ public class BungeeChatEventsListener implements Listener {
         return;
       }
       isServerSwitch = connection != null;
-      if(connection == null)
+      if (connection == null)
         primaryConnections.put(uuid, player); // set current connection as primary for this uuid
     }
 
@@ -52,8 +50,9 @@ public class BungeeChatEventsListener implements Listener {
 
     synchronized (primaryConnections) {
       ProxiedPlayer connection = primaryConnections.getOrDefault(uuid, null);
-      if(connection != player) // call BungeeChatLeaveEvent only when primary connection is disconnected
-        return;
+      if (connection
+          != player) // call BungeeChatLeaveEvent only when primary connection is disconnected
+      return;
       primaryConnections.remove(uuid);
     }
 
