@@ -1,11 +1,12 @@
 package dev.aura.bungeechat.listener;
 
+import com.google.common.collect.MapMaker;
 import dev.aura.bungeechat.event.BungeeChatJoinEvent;
 import dev.aura.bungeechat.event.BungeeChatLeaveEvent;
 import dev.aura.bungeechat.event.BungeeChatServerSwitchEvent;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+
+import java.util.*;
+
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -16,33 +17,31 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 public class BungeeChatEventsListener implements Listener {
-  private static final List<UUID> joinedPlayers = new LinkedList<>();
-  private static final List<UUID> duplicatePlayers = new LinkedList<>();
-
-  @EventHandler(priority = EventPriority.HIGHEST)
-  public void onPlayerJoin(PostLoginEvent e) {
-    UUID uuid = e.getPlayer().getUniqueId();
-
-    if (joinedPlayers.contains(uuid)) {
-      duplicatePlayers.add(uuid);
-    }
-  }
+  private static final Map<UUID, ProxiedPlayer> primaryConnections = new MapMaker().weakValues().makeMap();
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerServerSwitch(ServerSwitchEvent e) {
     ProxiedPlayer player = e.getPlayer();
     UUID uuid = player.getUniqueId();
 
-    if (!duplicatePlayers.contains(uuid)) {
-      if (joinedPlayers.contains(uuid)) {
-        ProxyServer.getInstance()
-            .getPluginManager()
-            .callEvent(new BungeeChatServerSwitchEvent(player, e));
-      } else {
-        joinedPlayers.add(uuid);
-
-        ProxyServer.getInstance().getPluginManager().callEvent(new BungeeChatJoinEvent(player));
+    boolean isServerSwitch;
+    synchronized (primaryConnections) {
+      ProxiedPlayer connection = primaryConnections.getOrDefault(uuid, null);
+      if (connection != null && connection != player) {
+        // player is already connected through another connection and join event was called
+        return;
       }
+      isServerSwitch = connection != null;
+      if(connection == null)
+        primaryConnections.put(uuid, player); // set current connection as primary for this uuid
+    }
+
+    if (isServerSwitch) {
+      ProxyServer.getInstance()
+          .getPluginManager()
+          .callEvent(new BungeeChatServerSwitchEvent(player, e));
+    } else {
+      ProxyServer.getInstance().getPluginManager().callEvent(new BungeeChatJoinEvent(player));
     }
   }
 
@@ -51,14 +50,13 @@ public class BungeeChatEventsListener implements Listener {
     ProxiedPlayer player = e.getPlayer();
     UUID uuid = player.getUniqueId();
 
-    if (!joinedPlayers.contains(uuid)) return;
-
-    if (duplicatePlayers.contains(uuid)) {
-      duplicatePlayers.remove(uuid);
-    } else {
-      joinedPlayers.remove(uuid);
-
-      ProxyServer.getInstance().getPluginManager().callEvent(new BungeeChatLeaveEvent(player));
+    synchronized (primaryConnections) {
+      ProxiedPlayer connection = primaryConnections.getOrDefault(uuid, null);
+      if(connection != player) // call BungeeChatLeaveEvent only when primary connection is disconnected
+        return;
+      primaryConnections.remove(uuid);
     }
+
+    ProxyServer.getInstance().getPluginManager().callEvent(new BungeeChatLeaveEvent(player));
   }
 }
