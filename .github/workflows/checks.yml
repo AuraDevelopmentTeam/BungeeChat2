@@ -81,4 +81,4 @@ jobs:
           check_name: 'Test Report (OS: ${{ matrix.os }})'
       - name: Fail Job if Gradle Tests failed
         run: false
-        if: ${{ steps.gradle_tests.outcome == "failure" }}
+        if: ${{ steps.gradle_tests.outcome == 'failure' }}
