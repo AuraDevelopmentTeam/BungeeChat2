@@ -74,7 +74,6 @@ checkFormatting:
   script:
   - ./gradlew --continue --console=plain spotlessCheck
   allow_failure: true
-  needs: []
   when: on_success
 
 checkTranslations:
@@ -124,7 +123,7 @@ deploySnapshot:
     - job: build
       artifacts: true
   script:
-  - ./gradlew --console=plain uploadArchives
+  - './gradlew --console=plain uploadArchives $(echo "$CI_COMMIT_MESSAGE" | grep -qF "[release]" && echo releaseSnapshot)'
   retry: 2
   when: always
   except:

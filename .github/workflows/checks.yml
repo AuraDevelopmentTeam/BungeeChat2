@@ -1,4 +1,4 @@
-name: Checks
+name: Code Checks
 
 on: [push, pull_request]
 
@@ -7,8 +7,10 @@ env:
     -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false
   GRADLE_CMD_OPTS: >-
     -PbranchName=${{ github.ref }}
-    --no-daemon
     --console=plain
+    --continue
+    --no-daemon
+    --parallel
 
 jobs:
   spotless:
@@ -28,8 +30,6 @@ jobs:
           architecture: x64
       - name: Checkout submodules
         run: git submodule update --init --recursive
-      - name: Check evaluated branch
-        run: git describe --all
       - name: Check code formatting
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} spotlessCheck
   build:
@@ -56,7 +56,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
     needs: [build]
     steps:
       - uses: actions/checkout@v2
@@ -69,16 +69,19 @@ jobs:
           architecture: x64
       - name: Checkout submodules
         run: git submodule update --init --recursive
+      # This is to ensure unit tests with MariaDB4j don't fail
+      - name: Symlinks for MacOS
+        if: ${{ runner.os == 'MacOS' }}
+        run: |
+          sudo ln -s /usr/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
+          sudo ln -s /usr/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
       - name: Run all Tests
         id: gradle_tests
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} -x spotlessCheck build
-        continue-on-error: true
-      - name: Publish Test Reports
+      - name: Publish JUnit Test Reports
+        if: ${{ always() }}
         uses: mikepenz/action-junit-report@v1
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          check_name: 'Test Report (OS: ${{ matrix.os }})'
-      - name: Fail Job if Gradle Tests failed
-        run: false
-        if: ${{ steps.gradle_tests.outcome == 'failure' }}
+          check_name: 'JUnit Test Report (OS: ${{ matrix.os }})'
