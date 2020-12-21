@@ -37,7 +37,7 @@ dependencies {
         transitive = false
     }
     
-    testImplementation "ch.vorburger.mariaDB4j:mariaDB4j:2.3.0"
+    testImplementation "ch.vorburger.mariaDB4j:mariaDB4j:2.4.0"
     testImplementation "commons-io:commons-io:2.6"
     testRuntimeOnly "org.mariadb.jdbc:mariadb-java-client:2.4.1"
     testRuntimeOnly "org.slf4j:slf4j-nop:1.7.30"

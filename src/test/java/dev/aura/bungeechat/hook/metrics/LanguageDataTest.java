@@ -23,7 +23,7 @@ public class LanguageDataTest {
     for (String translationFile : translationFiles) {
       final String translationName = translationFile.replace(".lang", "");
 
-      assertTrue("language: " + translationName, LanguageData.isValidLangauge(translationName));
+      assertTrue("language: " + translationName, LanguageData.isValidLanguage(translationName));
     }
   }
 
@@ -33,7 +33,7 @@ public class LanguageDataTest {
         new String[] {
           "xx", "xx_XX", "en_XX", "xx_US", "xx_XX_XX", "xx_XX_XX_xx_xx_xx", "gfjdhgkdnhjfgjnj", ""
         }) {
-      assertFalse("language: " + lang, LanguageData.isValidLangauge(lang));
+      assertFalse("language: " + lang, LanguageData.isValidLanguage(lang));
     }
   }
 }

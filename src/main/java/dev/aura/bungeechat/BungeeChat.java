@@ -91,7 +91,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     onEnable(true);
   }
 
-  public void onEnable(boolean prinLoadScreen) {
+  public void onEnable(boolean printLoadScreen) {
     Configuration.load();
     PlaceHolderUtil.loadConfigSections();
 
@@ -154,7 +154,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     // Refresh Cache and cache version
     getLatestVersion(true);
 
-    if (prinLoadScreen) {
+    if (printLoadScreen) {
       MetricManager.sendMetrics(this);
 
       loadScreen();
@@ -268,7 +268,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     if (!isLatestVersion()) {
       LoggerHelper.info(
           ChatColor.YELLOW
-              + "There is an update avalible. You can download version "
+              + "There is an update available. You can download version "
               + ChatColor.GREEN
               + getLatestVersion()
               + ChatColor.YELLOW
