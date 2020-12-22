@@ -32,6 +32,9 @@ jobs:
         run: git submodule update --init --recursive
       - name: Check code formatting
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} spotlessCheck
+      - name: Run all Tests
+        id: gradle_tests
+        run: echo ${{ toJson(github) }}
   build:
     runs-on: ${{ matrix.os }}
     strategy:
