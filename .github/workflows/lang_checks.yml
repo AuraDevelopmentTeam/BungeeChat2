@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - '**/resources/assets/*/lang/*.lang'
+  workflow_dispatch:
 
 env:
   GRADLE_OPTS: >-
