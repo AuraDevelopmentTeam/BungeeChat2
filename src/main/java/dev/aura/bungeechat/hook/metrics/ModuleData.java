@@ -15,7 +15,7 @@ public class ModuleData extends SimpleBarChart {
 
     sortedMap.put("Servers", 1);
 
-    BungeecordModuleManager.getLocalModules().stream()
+    BungeecordModuleManager.getLocalModules()
         .forEach(module -> sortedMap.put(module.getName(), module.isEnabled() ? 1 : 0));
 
     return sortedMap;
