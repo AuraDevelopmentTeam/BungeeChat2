@@ -37,11 +37,22 @@ jobs:
           architecture: x64
       - name: Checkout submodules
         run: git submodule update --init --recursive
-      - name: Check code formatting
-        run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} checkTranslations
-      - name: Publish Language File Checks
-        if: (success() || failure()) && (github.event_name != 'pull_request')
-        uses: actions/upload-artifact@v2
+      - name: Detect Changed files
+        id: changedFiles
+        uses: futuratrepadeira/changed-files@v3.3.0
         with:
-          name: checkTranslations
-          path: '**.lang.txt'
+          repo-token: ${{ github.token }}
+          pattern: '/resources/assets/.*/lang/.*\.lang$'
+      - name: Check code formatting
+        run: >-
+          ./gradlew
+          ${{ env.GRADLE_CMD_OPTS }}
+          checkTranslations
+          testTask
+          -PchangedFiles="${{ steps.changedFiles.outputs.files_created }} ${{ steps.changedFiles.outputs.files_changed }}"
+      #- name: Publish Language File Checks
+      #  if: (success() || failure()) && (github.event_name != 'pull_request')
+      #  uses: actions/upload-artifact@v2
+      #  with:
+      #    name: checkTranslations
+      #    path: '**.lang.txt'
