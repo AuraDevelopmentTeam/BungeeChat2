@@ -39,9 +39,12 @@ jobs:
         run: git submodule update --init --recursive
       - name: Check code formatting
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} checkTranslations
-      - name: Publish Language File Checks
-        if: (success() || failure()) && (github.event_name != 'pull_request')
-        uses: actions/upload-artifact@v2
-        with:
-          name: checkTranslations
-          path: '**.lang.txt'
+      - name: Print checkTranslations report files
+        if: failure()
+        run: tail -n +1 *.lang.txt
+      #- name: Publish Language File Checks
+      #  if: (success() || failure()) && (github.event_name != 'pull_request')
+      #  uses: actions/upload-artifact@v2
+      #  with:
+      #    name: checkTranslations
+      #    path: '**.lang.txt'

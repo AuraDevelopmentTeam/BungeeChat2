@@ -52,3 +52,11 @@ jacocoTestCoverageVerification {
         }
     }
 }
+
+task testTask {
+    doLast {
+        println changedFiles
+        println
+        println changedFiles.split(' ')
+    }
+}
