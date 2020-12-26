@@ -35,7 +35,7 @@ public class ReplyCommand extends BaseCommand {
   }
 
   private static CommandSender getReplier(CommandSender player) {
-    return replies.getOrDefault(player, null);
+    return replies.get(player);
   }
 
   @Override
@@ -47,10 +47,13 @@ public class ReplyCommand extends BaseCommand {
       return;
     }
 
-    Optional<BungeeChatAccount> targetAccount =
-        BungeecordAccountManager.getAccount(getReplier(sender));
+    CommandSender initialTarget = getReplier(sender);
+    Optional<BungeeChatAccount> targetAccount = BungeecordAccountManager.getAccount(initialTarget);
 
-    if (!targetAccount.isPresent()
+    if ((initialTarget != null) && !targetAccount.isPresent()) {
+      MessagesService.sendMessage(sender, Messages.REPLY_OFFLINE.get());
+      return;
+    } else if (!targetAccount.isPresent()
         || (targetAccount.get().isVanished()
             && !PermissionManager.hasPermission(sender, Permission.COMMAND_VANISH_VIEW))) {
       MessagesService.sendMessage(sender, Messages.NO_REPLY.get());
