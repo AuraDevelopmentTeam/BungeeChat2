@@ -123,7 +123,7 @@ deploySnapshot:
     - job: build
       artifacts: true
   script:
-  - './gradlew --console=plain uploadArchives $(echo "$CI_COMMIT_MESSAGE" | grep -qF "[release]" && echo releaseSnapshot)'
+  - ./gradlew --console=plain uploadArchives $(echo "$CI_COMMIT_MESSAGE" | grep -qF "[release]" && echo releaseSnapshot)
   retry: 2
   when: always
   except:
@@ -158,17 +158,20 @@ pages:
       artifacts: true
     - job: test
       artifacts: true
+    - job: checkTranslations
+      artifacts: true
     - job: coverage
       artifacts: true
     - job: spotbugs
       artifacts: true
   script:
-  - for file in $JAVADOCS; do dir=public/javadoc/$(basename $file | cut -d. -f1 | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
-  - for file in $TEST_REPORTS; do dir=public/test/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
-  - for file in $COVERAGE_REPORTS; do dir=public/coverage/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
-  - for file in $SPOTBUGS_REPORTS; do dir=public/spotbugs/$(basename $file | rev | cut -d- -f1 --complement | rev); mkdir -p $dir; unzip $file -d $dir; done
+  - for file in $JAVADOCS; do dir="public/javadoc/$(basename "$file" | cut -d. -f1 | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
+  - for file in $TEST_REPORTS; do dir="public/test/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
+  - for file in $TRANSLATION_REPORTS; do dir="public/checkTranslations/$(basename "$(dirname "$file")")"; mkdir -p "$dir"; cp "$file" "$dir"; done
+  - for file in $COVERAGE_REPORTS; do dir="public/coverage/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
+  - for file in $SPOTBUGS_REPORTS; do dir="public/spotbugs/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
   - GradleCommon/scripts/make_directory_listings.sh
-  - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -fk9 {} \;
+  - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\|jpe?g\|png\|gif\)$' -exec gzip -fk9 {} \;
   when: always
   artifacts:
     paths:
