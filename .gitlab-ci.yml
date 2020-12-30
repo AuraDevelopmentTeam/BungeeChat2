@@ -171,7 +171,7 @@ pages:
   - for file in $COVERAGE_REPORTS; do dir="public/coverage/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
   - for file in $SPOTBUGS_REPORTS; do dir="public/spotbugs/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
   - GradleCommon/scripts/make_directory_listings.sh
-  - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\|jpe?g\|png\|gif\)$' -exec gzip -fk9 {} \;
+  - find public -type f -regex '.*\.\(html?\|te?xt\|js\|css\|jpe?g\|png\|gif\)$' -exec gzip -fk9 {} \;
   when: always
   artifacts:
     paths:

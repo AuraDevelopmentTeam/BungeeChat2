@@ -16,6 +16,7 @@ env:
     -PbranchName=${{ github.ref }}
     --console=plain
     --continue
+    --no-build-cache
     --no-daemon
     --parallel
 
@@ -43,7 +44,7 @@ jobs:
         if: failure()
         run: tail -n +1 *.lang.txt
       #- name: Publish Language File Checks
-      #  if: (success() || failure()) && (github.event_name != 'pull_request')
+      #  if: success() || failure()
       #  uses: actions/upload-artifact@v2
       #  with:
       #    name: checkTranslations

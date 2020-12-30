@@ -9,6 +9,7 @@ env:
     -PbranchName=${{ github.ref }}
     --console=plain
     --continue
+    --no-build-cache
     --no-daemon
     --parallel
 
@@ -49,6 +50,17 @@ jobs:
           architecture: x64
       - name: Checkout submodules
         run: git submodule update --init --recursive
+      - uses: burrunan/gradle-cache-action@v1
+        name: Cache .gradle
+        with:
+          # Disable caching of $HOME/.gradle/caches/*.*/generated-gradle-jars
+          save-generated-gradle-jars: false
+          # Disable caching of ~/.gradle/caches/build-cache-*
+          save-local-build-cache: false
+          # Enable caching of ~/.gradle/caches/modules-*
+          save-gradle-dependencies-cache: true
+          # Enable caching of ~/.m2/repository/
+          save-maven-dependencies-cache: true
       - name: Build all files
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} assemble compileTest
   test:
@@ -59,6 +71,12 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     needs: [build]
     steps:
+      - run: |
+          ref="${github_ref////-}"
+          echo "ref=$ref" >> $GITHUB_ENV
+        env:
+          github_ref: ${{ github.ref }}
+        shell: bash
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -75,20 +93,23 @@ jobs:
         run: |
           sudo ln -s /usr/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
           sudo ln -s /usr/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
+      - uses: burrunan/gradle-cache-action@v1
+        name: Cache .gradle
+        with:
+          # Disable caching of $HOME/.gradle/caches/*.*/generated-gradle-jars
+          save-generated-gradle-jars: false
+          # Disable caching of ~/.gradle/caches/build-cache-*
+          save-local-build-cache: false
+          # Enable caching of ~/.gradle/caches/modules-*
+          save-gradle-dependencies-cache: true
+          # Enable caching of ~/.m2/repository/
+          save-maven-dependencies-cache: true
       - name: Run all Tests
         id: gradle_tests
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} -x spotlessCheck build
-      - name: Publish JUnit Test Reports
-        if: (success() || failure()) && (github.event_name != 'pull_request')
-        uses: mikepenz/action-junit-report@v1
+      - uses: actions/upload-artifact@v2
         with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
-          github_token: ${{ github.token }}
-          check_name: 'JUnit Test Report (OS: ${{ matrix.os }})'
-      - name: Publish SpotBugs Reports
-        if: (success() || failure()) && (github.event_name != 'pull_request')
-        uses: jwgmeligmeyling/spotbugs-github-action@v1.2
-        with:
-          path: '**/build/reports/spotbugs/*.xml'
-          token: ${{ github.token }}
-          name: 'SpotBugs Report (OS: ${{ matrix.os }})'
+          name: ${{ env.ref }}_code-checks_${{ matrix.os }}
+          path: |
+            **/build/test-results/test/TEST-*.xml
+            **/build/reports/spotbugs/*.xml

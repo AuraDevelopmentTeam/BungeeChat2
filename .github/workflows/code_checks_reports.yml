@@ -1,0 +1,40 @@
+name: Code Checks Reports
+
+on:
+  workflow_run:
+    workflows: ["Code Checks"]
+    types:
+      - completed
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    steps:
+      - run: |
+          ref="${github_ref////-}"
+          echo "ref=$ref" >> $GITHUB_ENV
+        env:
+          github_ref: ${{ github.ref }}
+        shell: bash
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: code_checks.yml
+          name: ${{ env.ref }}_code-checks_${{ matrix.os }}
+      - name: Publish JUnit Test Reports
+        if: success() || failure()
+        uses: mikepenz/action-junit-report@v1
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+          github_token: ${{ github.token }}
+          check_name: 'JUnit Test Report (OS: ${{ matrix.os }})'
+      - name: Publish SpotBugs Reports
+        if: success() || failure()
+        uses: jwgmeligmeyling/spotbugs-github-action@v1.2
+        with:
+          path: '**/build/reports/spotbugs/*.xml'
+          token: ${{ github.token }}
+          name: 'SpotBugs Report (OS: ${{ matrix.os }})'
