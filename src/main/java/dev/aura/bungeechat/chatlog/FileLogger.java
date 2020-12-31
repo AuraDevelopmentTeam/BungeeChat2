@@ -21,7 +21,6 @@ public class FileLogger implements ChatLogger, AutoCloseable {
 
   private final String logFile;
   private String oldFile = "";
-  private File saveTo;
   private Writer fw;
   private PrintWriter pw;
 
@@ -34,9 +33,12 @@ public class FileLogger implements ChatLogger, AutoCloseable {
   }
 
   @Override
-  public void close() throws Exception {
-    fw.close();
-    pw.close();
+  public void close() throws IOException {
+    if (fw != null) fw.close();
+    fw = null;
+
+    if (pw != null) pw.close();
+    pw = null;
   }
 
   private void initLogFile() {
@@ -45,13 +47,17 @@ public class FileLogger implements ChatLogger, AutoCloseable {
     if (oldFile.equals(newFile)) return;
 
     try {
-      saveTo = new File(pluginDir, newFile);
+      // First close old writers
+      close();
+
+      File saveTo = new File(pluginDir, newFile);
       Optional.ofNullable(saveTo.getParentFile()).ifPresent(File::mkdirs);
 
       if (!saveTo.exists() && !saveTo.createNewFile()) {
         throw new IOException("Could not create " + saveTo);
       }
 
+      oldFile = newFile;
       fw = new OutputStreamWriter(new FileOutputStream(saveTo, true), StandardCharsets.UTF_8);
       pw = new PrintWriter(fw);
     } catch (IOException e) {
