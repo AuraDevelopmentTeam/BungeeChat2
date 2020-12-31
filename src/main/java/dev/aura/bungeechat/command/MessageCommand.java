@@ -45,9 +45,9 @@ public class MessageCommand extends BaseCommand {
         MessagesService.sendMessage(sender, Messages.MESSAGE_YOURSELF.get());
         return;
       }
-      if (!targetAccount.get().hasMessangerEnabled()
+      if (!targetAccount.get().hasMessengerEnabled()
           && !PermissionManager.hasPermission(sender, Permission.BYPASS_TOGGLE_MESSAGE)) {
-        MessagesService.sendMessage(sender, Messages.HAS_MESSAGER_DISABLED.get(target));
+        MessagesService.sendMessage(sender, Messages.HAS_MESSENGER_DISABLED.get(target));
         return;
       }
 

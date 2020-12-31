@@ -14,7 +14,7 @@ import dev.aura.bungeechat.api.module.ModuleManager;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
 import dev.aura.bungeechat.api.placeholder.PlaceHolderManager;
-import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
+import dev.aura.bungeechat.api.utils.BungeeChatInstanceHolder;
 import dev.aura.bungeechat.command.BungeeChatCommand;
 import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.hook.DefaultHook;
@@ -83,7 +83,7 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
   @Override
   public void onLoad() {
     setInstance(this);
-    BungeeChatInstaceHolder.setInstance(instance);
+    BungeeChatInstanceHolder.setInstance(instance);
   }
 
   @Override

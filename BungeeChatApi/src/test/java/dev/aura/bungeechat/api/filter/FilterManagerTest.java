@@ -8,7 +8,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
-import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
+import dev.aura.bungeechat.api.utils.BungeeChatInstanceHolder;
 import java.io.File;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import org.junit.Test;
 public class FilterManagerTest {
   @BeforeClass
   public static void setupApi() {
-    BungeeChatInstaceHolder.setInstance(
+    BungeeChatInstanceHolder.setInstance(
         new BungeeChatApi() {
           @Override
           public void sendPrivateMessage(BungeeChatContext context) throws InvalidContextError {

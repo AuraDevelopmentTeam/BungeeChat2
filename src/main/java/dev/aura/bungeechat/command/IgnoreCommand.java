@@ -17,7 +17,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class IgnoreCommand extends BaseCommand {
-  private static final List<String> arg1Completetions = Arrays.asList("list", "add", "remove");
+  private static final List<String> arg1Completions = Arrays.asList("list", "add", "remove");
 
   public IgnoreCommand(IgnoringModule ignoringModule) {
     super(
@@ -131,7 +131,7 @@ public class IgnoreCommand extends BaseCommand {
     final String param1 = args[0];
 
     if (args.length == 1) {
-      return arg1Completetions.stream()
+      return arg1Completions.stream()
           .filter(completion -> completion.startsWith(param1))
           .collect(Collectors.toList());
     } else if ((args.length == 2) && ("add".equals(param1) || "remove".equals(param1))) {

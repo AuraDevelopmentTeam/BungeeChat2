@@ -4,7 +4,7 @@ import dev.aura.bungeechat.api.enums.BuildType;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.api.placeholder.BungeeChatContext;
 import dev.aura.bungeechat.api.placeholder.InvalidContextError;
-import dev.aura.bungeechat.api.utils.BungeeChatInstaceHolder;
+import dev.aura.bungeechat.api.utils.BungeeChatInstanceHolder;
 import dev.aura.lib.version.Version;
 import java.io.File;
 
@@ -58,7 +58,7 @@ public interface BungeeChatApi {
    * @return The BungeeChatApi instance
    */
   public static BungeeChatApi getInstance() {
-    return BungeeChatInstaceHolder.getInstance();
+    return BungeeChatInstanceHolder.getInstance();
   }
 
   /**

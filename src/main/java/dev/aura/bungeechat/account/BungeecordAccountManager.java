@@ -7,8 +7,8 @@ import dev.aura.bungeechat.event.BungeeChatJoinEvent;
 import dev.aura.bungeechat.event.BungeeChatLeaveEvent;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -176,7 +176,7 @@ public class BungeecordAccountManager extends AccountManager implements Listener
 
     @Override
     public Collection<String> getPermissions() {
-      return Arrays.asList("*");
+      return Collections.singletonList("*");
     }
   }
 }

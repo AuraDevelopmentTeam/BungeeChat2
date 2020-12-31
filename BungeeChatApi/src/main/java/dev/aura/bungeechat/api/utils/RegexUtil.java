@@ -15,14 +15,14 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class RegexUtil {
-  private static Pattern TOKENIZER =
+  private static final Pattern TOKENIZER =
       Pattern.compile(
           "(?<!^\\\\)(?<![^\\\\]\\\\)(?<!\\\\x)(?<!\\\\x\\{)(?<!\\\\x\\{[0-9a-f])(?<!\\\\x\\{[0-9a-f]{2})(?<!\\\\x\\{[0-9a-f]{3})(?<!\\\\x\\{[0-9a-f]{4})",
           Pattern.CASE_INSENSITIVE);
-  private static RegexReplacer REGEX_ESCAPER =
+  private static final RegexReplacer REGEX_ESCAPER =
       new RegexReplacer("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0");
-  private static RegexReplacer WILDCARD_STAR = new RegexReplacer("^\\\\\\*$", ".*?");
-  private static RegexReplacer WILDCARD_QUESTIONMARK = new RegexReplacer("^\\\\\\?$", ".?");
+  private static final RegexReplacer WILDCARD_STAR = new RegexReplacer("^\\\\\\*$", ".*?");
+  private static final RegexReplacer WILDCARD_QUESTION_MARK = new RegexReplacer("^\\\\\\?$", ".?");
 
   /**
    * A map containing all used leet speak alternatives. The key is a string of the uppercase letter.
@@ -59,7 +59,7 @@ public class RegexUtil {
    * </pre>
    */
   public static final Map<String, LeetSpeakPattern> LEET_PATTERNS =
-      Arrays.asList(
+      Stream.of(
               new LeetSpeakPattern("A", "4", "/\\", "@", "/-\\", "^", "aye", "(L", "Д"),
               new LeetSpeakPattern(
                   "B", "I3", "8", "13", "|3", "ß", "!3", "(3", "/3", ")3", "|-]", "j3", "6"),
@@ -117,7 +117,6 @@ public class RegexUtil {
               new LeetSpeakPattern("X", "><", "Ж", "}{", "ecks", "×", "?", ")(", "]["),
               new LeetSpeakPattern("Y", "j", "`/", "Ч", "7", "\\|/", "¥", "\\//"),
               new LeetSpeakPattern("Z", "2", "7_", "-/_", "%", ">_", "s", "~/_", "-\\_", "-|_"))
-          .stream()
           .collect(Collectors.toMap(LeetSpeakPattern::getLetter, pattern -> pattern));
 
   /**
@@ -185,7 +184,7 @@ public class RegexUtil {
    * false)}
    *
    * @param wildcard The string that is to be parsed.
-   * @param flags Regex flags. See: {@link Pattern#compile}
+   * @param flags Regex flags. See: {@link Pattern#compile(String, int)}
    * @return A regex {@link Pattern} that has been compiled from the string and has the flags set.
    * @throws PatternSyntaxException If the regex syntax is invalid.
    * @see RegexUtil#parseWildcardToPattern(String, int, boolean, boolean, boolean, boolean)
@@ -226,7 +225,7 @@ public class RegexUtil {
    * regex.<br>
    *
    * @param wildcard The string that is to be parsed.
-   * @param flags Regex flags. See: {@link Pattern#compile}
+   * @param flags Regex flags. See: {@link Pattern#compile(String, int)}
    * @param freeMatching Determines if the match has to be a free standing word.
    * @param leetSpeak Determines if leet speak also matches. Like a 5 for a S.
    * @param ignoreSpaces Determines if spaces may be ignored.
@@ -235,7 +234,7 @@ public class RegexUtil {
    * @return A regex {@link Pattern} that has been compiled from the string and has the flags set
    *     and options applied if it is not a regex string.
    * @throws PatternSyntaxException If the regex syntax is invalid.
-   * @see Pattern#compile
+   * @see Pattern#compile(String, int)
    */
   public static Pattern parseWildcardToPattern(
       String wildcard,
@@ -274,7 +273,7 @@ public class RegexUtil {
                 });
       }
 
-      stream = stream.map(WILDCARD_STAR::apply).map(WILDCARD_QUESTIONMARK::apply);
+      stream = stream.map(WILDCARD_STAR::apply).map(WILDCARD_QUESTION_MARK::apply);
 
       String delimiter = ignoreSpaces ? "\\s*" : "";
       String start = freeMatching ? "" : "(?<=^|\\s|\\p{Punct})";

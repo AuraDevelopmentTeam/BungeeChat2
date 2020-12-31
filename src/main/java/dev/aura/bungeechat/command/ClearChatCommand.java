@@ -20,7 +20,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ClearChatCommand extends BaseCommand {
   // package because only neighboring class needs it
-  static final List<String> arg1Completetions = Arrays.asList("local", "global");
+  static final List<String> arg1Completions = Arrays.asList("local", "global");
 
   private static final String USAGE = "/clearchat <local [server]|global>";
   private static final String EMPTY_LINE = " ";
@@ -81,7 +81,7 @@ public class ClearChatCommand extends BaseCommand {
     final String location = args[0];
 
     if (args.length == 1) {
-      return arg1Completetions.stream()
+      return arg1Completions.stream()
           .filter(completion -> completion.startsWith(location))
           .collect(Collectors.toList());
     } else if ((args.length == 2) && ("local".equals(location))) {

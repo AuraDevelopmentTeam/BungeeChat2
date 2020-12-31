@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ChatLockFilter implements BungeeChatFilter {
   private boolean globalLock = false;
-  private List<String> lockedServers = new LinkedList<>();
+  private final List<String> lockedServers = new LinkedList<>();
 
   @Override
   public String applyFilter(BungeeChatAccount sender, String message) throws BlockMessageException {

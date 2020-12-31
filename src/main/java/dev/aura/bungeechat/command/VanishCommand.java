@@ -15,7 +15,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class VanishCommand extends BaseCommand {
-  private static final List<String> arg1Completetions = Arrays.asList("on", "off");
+  private static final List<String> arg1Completions = Arrays.asList("on", "off");
 
   public VanishCommand(VanishModule vanisherModule) {
     super(
@@ -59,7 +59,7 @@ public class VanishCommand extends BaseCommand {
     final String param1 = args[0];
 
     if (args.length == 1) {
-      return arg1Completetions.stream()
+      return arg1Completions.stream()
           .filter(completion -> completion.startsWith(param1))
           .collect(Collectors.toList());
     }

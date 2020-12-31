@@ -48,7 +48,7 @@ public class ConsoleAccount implements BungeeChatAccount {
   }
 
   @Override
-  public boolean hasMessangerEnabled() {
+  public boolean hasMessengerEnabled() {
     return true;
   }
 
@@ -113,7 +113,7 @@ public class ConsoleAccount implements BungeeChatAccount {
   }
 
   @Override
-  public void setMessanger(boolean messanger) {
+  public void setMessenger(boolean messenger) {
     // Do nothing
   }
 

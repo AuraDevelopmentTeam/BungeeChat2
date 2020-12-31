@@ -45,9 +45,9 @@ We have created a wiki for this plugin to help you with various issues and probl
 
 ## [Issue Reporting](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues)
 
-If you found a bug or even are experiencing a crash please report it so we can fix it. Please check at first if a bug report for the issue already
-[exits](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues). If not just create a [new issue](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/new) and
-fill out the form.
+If you found a bug or even are experiencing a crash please report it, so we can fix it. Please check at first if a bug report for the issue already
+[exits](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues). If not just create a [new issue](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/new)
+and fill out the form.
 
 Please include the following:
 
@@ -117,7 +117,7 @@ You can find the Javadocs here: https://auradev.pages.project-creative.net/Bunge
   Run [gradle] in the repository root: `./gradlew installLombok <[BungeeChatApi:]eclipse|[BungeeChatApi:]idea>`
 * Build:  
   Run [gradle] in the repository root: `./gradlew [BungeeChatApi:]build`. The build will be in `BungeeChatApi/build/libs`
-* If obscure Gradle issues are found try running `./gradlew cleanCache clean`
+* If obscure Gradle issues are found, try running `./gradlew cleanCache clean`
 
 ## Development builds
 
@@ -126,7 +126,7 @@ features and therefore won't work properly.
 
 You can find the builds here: https://gitlab.aura-dev.team/AuraDev/BungeeChat2/pipelines
 
-On the right is a download symbol, click that a dropdown will open. Select "build". Then you'll download a zip file containing all atrifacts including the API
+On the right is a download symbol, click that a dropdown will open. Select "build". Then you'll download a zip file containing all artifacts including the API
 jar.
 
 ## PGP Signing

@@ -61,7 +61,7 @@ public class PlaceHolderManagerTest {
   }
 
   @Test(timeout = TIMEOUT)
-  public void recusivePlaceholderTest() {
+  public void recursivePlaceholderTest() {
     final String message = "Test %recursive2% Test";
 
     assertEquals(

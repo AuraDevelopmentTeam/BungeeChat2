@@ -55,7 +55,7 @@ public class MessagesService {
 
     if (targetAccount.hasIgnored(senderAccount)
         && !PermissionManager.hasPermission(sender, Permission.BYPASS_IGNORE)) {
-      MessagesService.sendMessage(sender, Messages.HAS_INGORED.get(context));
+      MessagesService.sendMessage(sender, Messages.HAS_IGNORED.get(context));
 
       return;
     }
@@ -409,8 +409,7 @@ public class MessagesService {
 
     return Stream.of(serverList, passThruServerList)
         .flatMap(MessagesService::serverListToPredicate)
-        .collect(
-            () -> ((Predicate<BungeeChatAccount>) account -> true), Predicate::and, Predicate::and);
+        .collect(() -> account -> true, Predicate::and, Predicate::and);
   }
 
   private static Stream<Predicate<BungeeChatAccount>> serverListToPredicate(Config section) {

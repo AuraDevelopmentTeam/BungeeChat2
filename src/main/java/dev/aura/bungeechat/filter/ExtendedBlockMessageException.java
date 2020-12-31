@@ -8,7 +8,7 @@ import lombok.Getter;
 public class ExtendedBlockMessageException extends BlockMessageException {
   private static final long serialVersionUID = 5519820760858610372L;
 
-  @Getter private Messages messageType;
+  @Getter private final Messages messageType;
 
   public ExtendedBlockMessageException(
       Messages messageType, BungeeChatAccount sender, String message) {

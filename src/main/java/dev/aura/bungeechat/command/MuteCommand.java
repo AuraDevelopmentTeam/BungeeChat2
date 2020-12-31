@@ -43,7 +43,7 @@ public class MuteCommand extends BaseCommand {
       return;
     }
 
-    targetAccount.get().mutePermanetly();
+    targetAccount.get().mutePermanently();
     MessagesService.sendMessage(sender, Messages.MUTE.get(targetAccount.get()));
   }
 

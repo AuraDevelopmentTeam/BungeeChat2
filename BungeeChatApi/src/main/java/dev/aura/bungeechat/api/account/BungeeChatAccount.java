@@ -28,7 +28,7 @@ public interface BungeeChatAccount {
 
   public boolean isVanished();
 
-  public boolean hasMessangerEnabled();
+  public boolean hasMessengerEnabled();
 
   public boolean hasSocialSpyEnabled();
 
@@ -77,7 +77,7 @@ public interface BungeeChatAccount {
 
   public void setVanished(boolean vanished);
 
-  public void setMessanger(boolean messanger);
+  public void setMessenger(boolean messenger);
 
   public void setSocialSpy(boolean socialSpy);
 
@@ -87,8 +87,8 @@ public interface BungeeChatAccount {
     setVanished(!isVanished());
   }
 
-  public default void toggleMessanger() {
-    setMessanger(!hasMessangerEnabled());
+  public default void toggleMessenger() {
+    setMessenger(!hasMessengerEnabled());
   }
 
   public default void toggleSocialSpy() {
@@ -117,7 +117,7 @@ public interface BungeeChatAccount {
     setMutedUntil(new Timestamp(mutedUntilMillis));
   }
 
-  default void mutePermanetly() {
+  default void mutePermanently() {
     setMutedUntil(Timestamp.valueOf("9999-12-31 23:59:59"));
   }
 

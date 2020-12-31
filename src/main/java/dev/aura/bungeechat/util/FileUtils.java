@@ -38,12 +38,12 @@ public class FileUtils {
   }
 
   @Generated
-  public static boolean copyFilesRecusively(final File toCopy, final File destDir) {
-    return copyFilesRecusively(toCopy, destDir, true);
+  public static boolean copyFilesRecursively(final File toCopy, final File destDir) {
+    return copyFilesRecursively(toCopy, destDir, true);
   }
 
   @Generated
-  public static boolean copyFilesRecusively(
+  public static boolean copyFilesRecursively(
       final File toCopy, final File destDir, boolean skipFirstDir) {
     assert destDir.isDirectory();
 
@@ -56,7 +56,7 @@ public class FileUtils {
       if ((!newDestDir.exists() && !newDestDir.mkdir()) || (listedFiles == null)) return false;
 
       for (final File child : listedFiles) {
-        if (!FileUtils.copyFilesRecusively(child, newDestDir, false)) return false;
+        if (!FileUtils.copyFilesRecursively(child, newDestDir, false)) return false;
       }
     }
 
@@ -99,7 +99,7 @@ public class FileUtils {
 
       if (urlConnection instanceof JarURLConnection)
         return FileUtils.copyJarResourcesRecursively((JarURLConnection) urlConnection, destination);
-      else return FileUtils.copyFilesRecusively(new File(originUrl.getPath()), destination);
+      else return FileUtils.copyFilesRecursively(new File(originUrl.getPath()), destination);
     } catch (final IOException e) {
       e.printStackTrace();
     }
@@ -122,7 +122,7 @@ public class FileUtils {
   private static boolean copyStream(final InputStream is, final OutputStream os) {
     try {
       final byte[] buf = new byte[1024];
-      int len = 0;
+      int len;
 
       try {
         while ((len = is.read(buf)) > 0) {

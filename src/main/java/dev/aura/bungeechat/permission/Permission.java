@@ -19,7 +19,7 @@ public enum Permission {
   USE_CHAT_COLOR_DARK_GREEN("chat.color.dark_green"),
   USE_CHAT_COLOR_DARK_AQUA("chat.color.dark_aqua"),
   USE_CHAT_COLOR_DARK_RED("chat.color.dark_red"),
-  USE_CHAT_COLOR_DARK_PURPLE("chat.color.dark_pruple"),
+  USE_CHAT_COLOR_DARK_PURPLE("chat.color.dark_purple"),
   USE_CHAT_COLOR_GOLD("chat.color.gold"),
   USE_CHAT_COLOR_GRAY("chat.color.gray"),
   USE_CHAT_COLOR_DARK_GRAY("chat.color.dark_gray"),

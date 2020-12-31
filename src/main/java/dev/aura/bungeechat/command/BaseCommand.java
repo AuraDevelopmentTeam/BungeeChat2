@@ -9,7 +9,7 @@ import net.md_5.bungee.api.plugin.Command;
 
 public abstract class BaseCommand extends Command {
   protected static String[] stringListToArray(List<String> list) {
-    return list.toArray(new String[list.size()]);
+    return list.toArray(new String[0]);
   }
 
   public BaseCommand(String name) {

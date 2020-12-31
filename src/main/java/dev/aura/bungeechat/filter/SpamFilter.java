@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class SpamFilter implements BungeeChatFilter {
   @VisibleForTesting static long expiryTimer = TimeUnit.MINUTES.toNanos(1);
 
-  private final ConcurrentMap<UUID, Queue<Long>> playerMessageTimepointStorage;
+  private final ConcurrentMap<UUID, Queue<Long>> playerMessageTimePointStorage;
   private final int messagesPerMinute;
   private final boolean noPermissions;
 
@@ -28,7 +28,7 @@ public class SpamFilter implements BungeeChatFilter {
 
   @VisibleForTesting
   SpamFilter(int messagesPerMinute, boolean noPermissions) {
-    playerMessageTimepointStorage = new ConcurrentHashMap<>();
+    playerMessageTimePointStorage = new ConcurrentHashMap<>();
     this.messagesPerMinute = messagesPerMinute;
     this.noPermissions = noPermissions;
   }
@@ -40,11 +40,11 @@ public class SpamFilter implements BungeeChatFilter {
 
     final UUID uuid = sender.getUniqueId();
 
-    if (!playerMessageTimepointStorage.containsKey(uuid)) {
-      playerMessageTimepointStorage.put(uuid, new ArrayDeque<>(messagesPerMinute));
+    if (!playerMessageTimePointStorage.containsKey(uuid)) {
+      playerMessageTimePointStorage.put(uuid, new ArrayDeque<>(messagesPerMinute));
     }
 
-    final Queue<Long> timePoints = playerMessageTimepointStorage.get(uuid);
+    final Queue<Long> timePoints = playerMessageTimePointStorage.get(uuid);
     final long now = System.nanoTime();
     final long expiry = now - expiryTimer;
 
@@ -67,6 +67,6 @@ public class SpamFilter implements BungeeChatFilter {
 
   @VisibleForTesting
   void clear() {
-    playerMessageTimepointStorage.clear();
+    playerMessageTimePointStorage.clear();
   }
 }

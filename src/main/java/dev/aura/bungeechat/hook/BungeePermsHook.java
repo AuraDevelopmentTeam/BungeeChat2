@@ -48,7 +48,7 @@ public class BungeePermsHook implements BungeeChatHook {
       return Optional.ofNullable(permissionManager.getUser(account.getUniqueId()));
     } catch (NullPointerException e) {
       LoggerHelper.warning(
-          "BungePerms returned faulty data. This is a bug in BungeePerms. We recommend switching to LuckPerms or another permission manager if this error recurrs.",
+          "BungeePerms returned faulty data. This is a bug in BungeePerms. We recommend switching to LuckPerms or another permission manager if this error recurs.",
           e);
 
       return Optional.empty();

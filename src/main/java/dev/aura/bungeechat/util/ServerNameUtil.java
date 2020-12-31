@@ -40,9 +40,7 @@ public class ServerNameUtil {
   }
 
   public static List<String> getServerNames() {
-    List<String> serverNames = new ArrayList<>(ProxyServer.getInstance().getServers().keySet());
-
-    return serverNames;
+    return new ArrayList<>(ProxyServer.getInstance().getServers().keySet());
   }
 
   public static List<String> getMatchingServerNames(String partialName) {
@@ -56,8 +54,7 @@ public class ServerNameUtil {
   }
 
   public static String getServerAlias(String name) {
-    if (aliasMapping.containsKey(name)) return aliasMapping.get(name);
-    else return name;
+    return aliasMapping.getOrDefault(name, name);
   }
 
   public static void loadAliases() {
@@ -68,6 +65,5 @@ public class ServerNameUtil {
             .collect(
                 Collectors.toMap(
                     Map.Entry::getKey, entry -> entry.getValue().unwrapped().toString()));
-    ;
   }
 }

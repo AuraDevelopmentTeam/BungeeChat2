@@ -8,8 +8,6 @@ import dev.aura.bungeechat.message.PlaceHolderUtil;
 import dev.aura.bungeechat.module.AlertModule;
 import dev.aura.bungeechat.permission.Permission;
 import dev.aura.bungeechat.permission.PermissionManager;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -27,9 +25,7 @@ public class AlertCommand extends BaseCommand {
         MessagesService.sendMessage(
             sender, Messages.INCORRECT_USAGE.get(sender, "/alert <message>"));
       } else {
-        String finalMessage =
-            PlaceHolderUtil.transformAltColorCodes(
-                Arrays.stream(args).collect(Collectors.joining(" ")));
+        String finalMessage = PlaceHolderUtil.transformAltColorCodes(String.join(" ", args));
         String format = Format.ALERT.get(new Context(sender, finalMessage));
 
         ProxyServer.getInstance().broadcast(TextComponent.fromLegacyText(format));

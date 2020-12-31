@@ -32,7 +32,8 @@ public class PlaceHolderUtil {
   private static final char altColorChar = '&';
   private static final String altColorString = String.valueOf(altColorChar);
   private static final String colorCodeReplacement = ChatColor.COLOR_CHAR + "$1";
-  private static final Pattern duplicateDection = Pattern.compile(altColorString + altColorString);
+  private static final Pattern duplicateDetection =
+      Pattern.compile(altColorString + altColorString);
   private static final String baseRgbPattern = "[0-9a-f]";
   private static final String rgbStartPattern = "[x#]";
   private static final Pattern rgbDetection =
@@ -151,15 +152,15 @@ public class PlaceHolderUtil {
   }
 
   public static String transformAltColorCodes(String message, Optional<BungeeChatAccount> account) {
-    BungeeChatAccount permsAccount = account.orElseGet(() -> AccountManager.getConsoleAccount());
+    BungeeChatAccount permsAccount = account.orElseGet(AccountManager::getConsoleAccount);
 
     Integer key =
         colorCodeMap.keySet().stream()
             .map(perm -> PermissionManager.hasPermission(permsAccount, perm))
-            .reduce(0, (in, bool) -> (in << 1) | (bool.booleanValue() ? 1 : 0), (a, b) -> b);
+            .reduce(0, (in, bool) -> (in << 1) | (bool ? 1 : 0), (a, b) -> b);
 
     if (!patternCache.containsKey(key)) {
-      if (key.intValue() == 0) {
+      if (key == 0) {
         patternCache.put(key, Optional.empty());
       } else {
         Pattern pattern =
@@ -183,7 +184,7 @@ public class PlaceHolderUtil {
       message = rgbDetection.matcher(message).replaceAll(rgbReplacement);
     }
 
-    message = duplicateDection.matcher(message).replaceAll(altColorString);
+    message = duplicateDetection.matcher(message).replaceAll(altColorString);
 
     return message;
   }

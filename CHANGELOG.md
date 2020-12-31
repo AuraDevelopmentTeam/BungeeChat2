@@ -12,7 +12,7 @@ Version 2.2.3
 \+ Added expiry to AntiDuplication.  
 \+ Added configured language to bStats data.  
 \* Fixed compatibility with older BungeeCord versions (including FlameCord) (Fixes [#131](https://github.com/AuraDevelopmentTeam/BungeeChat2/issues/131)).  
-\* Filtering out vanished players from tab complete (this includes the `~Console~` player).  
+\* Filtering out vanished players from tabcomplete (this includes the `~Console~` player).  
 \* Fixed some spelling issues and improved wordings all throughout the plugin.  
 \* Updated de_DE.  
 \* Updated fr_FR.  
@@ -38,7 +38,7 @@ Version 2.2.2
 \* Updated hu_HU.  
 \* Updated zh_CN.  
 \* Print unknown server name in unknown server message.  
-\* Prevent console from using `/local`.  
+\* Prevent the console from using `/local`.  
 \* VersionChecker module is disabled if checking for updates is too.  
 \* Commands players don't have permissions to no longer show in tab completion.  
 \* Fixed typos.  
@@ -60,7 +60,7 @@ Version 2.2.0
 
 This update is **HUGE**!  
 So instead of the typical list I'll try to summarize the biggest changes first and then I'll list everything in detail.  
-Also please be aware that with this update support for version 2.1.6 stops right now. If you need my help, update.
+Also, please be aware that with this update support for version 2.1.6 stops right now. If you need my help, update.
 
 ### Huge Changes
 
@@ -68,7 +68,7 @@ Also please be aware that with this update support for version 2.1.6 stops right
    to incorrect formatting (you don't need to worry about indentation, `:` and `=` are interchangeable, etc.) and the config formats itself.  
 \+ New translation system. This includes default translations that are shipped with the plugin, customizable translations, custom languages and few quality of
    life changes compared to the old system. **Be sure to read the README files when editing translations!**  
-\* Reworked the channel system. Local chat now is treated the exact same way as global chat in the sense that it has it's own command and permissions.  
+\* Reworked the channel system. Local chat now is treated the exact same way as global chat in the sense that it has its own command and permissions.  
 \* Fixed several issues with people relogging too quickly.  
 
 ### Full Changelog
@@ -100,7 +100,7 @@ Also please be aware that with this update support for version 2.1.6 stops right
 \* Placeholders may now be recursive.  
 \* Fixed AntiSwear, so all combinations are allowed.  
 \* Allowed changing the startup banner size (try it. `long` looks awesome ;) ).  
-\* `/chatlock` and `/clearchat` allow the local server to be specified (and therefor can now be executed by the console too).  
+\* `/chatlock` and `/clearchat` allow the local server to be specified (and therefore can now be executed by the console too).  
 \* Fixed several issues with people relogging too quickly.  
 \* Updated LuckPerms to v5.  
 \* Updated to BungeeCord 1.15 (backwards compatible with older versions (the new ServerSwitch Message placeholders need 1.15)).  
@@ -122,7 +122,7 @@ Version 2.1.5
 \* Fixed leave message not showing after a reload.  
 \* Added AdvancedBan to list of known mute plugins.  
 \* Fixed no permission message being displayed instead of anti advertise.  
-\* Anti-Advertise is now case insensitive.  
+\* Anti-Advertise is now case-insensitive.  
 \* Fixed blocked PMs being shown in socialSpy.  
 \* Using wildcardStrings for filteredCommands.  
 \* Using better version comparison library.  
@@ -161,7 +161,7 @@ Version 2.1.1
 \* Fixed color codes not working properly.  
 \* Fixed aliases of `/msgtoggle` to registering.  
 \* Fixed `/msgtoggle` not working.  
-\* Fixed staffchat not working from console.  
+\* Fixed staffchat not working from the console.  
 
 
 Version 2.1.0
@@ -204,7 +204,7 @@ Version 2.0.4
 
 \+ Added VersionChecker module.  
 \* Fixed "No permission" message not being displayed.  
-\* Don't display LocalSpy to players that recive the local chat message anyway.  
+\* Don't display LocalSpy to players that receive the local chat message anyway.  
 
 
 Version 2.0.3.2
@@ -224,7 +224,7 @@ Version 2.0.3
 
 \* Fixed update message appearing when already on latest version.  
 \* Fixed Exception when using `/ignore list`.  
-\* JoinMessage now has access to the server (instead of unknow).  
+\* JoinMessage now has access to the server (instead of unknown).  
 \* When a player gets kicked before they join a client server no JoinMessage or LeaveMessage will be displayed.  
 \* Allow passing of the chat messages to the client servers.  
 
@@ -253,7 +253,7 @@ Version 2.0.0
 \+ Ability to list your ignored players by using the '/ignore list' command.  
 \+ Ability to choose between 'local' and 'global' when using the ChatLock feature.  
 \+ Ability to use chat features as the console. (Username ~Console~)  
-\+ Ability to configure how much messages must be saved for the Anti-Duplication filter.  
+\+ Ability to configure how many messages must be saved for the Anti-Duplication filter.  
 \+ Ability to configure if the muting system of BungeeChat should be active on the Bukkit chat as well or not.  
 \+ Ability to configure the Anti-Swear filter even better than before.  
 \+ Ability to 'Spy' local chat messages via Localspy.  
@@ -266,14 +266,14 @@ Version 2.0.0
 
 \* Improved the performance of the plugin.  
 \* Improved the chat filtering system.  
-\* Improved the reloadig feature (/bungeechat reload).  
+\* Improved the reloading feature (/bungeechat reload).  
 \* Improved the BungeeChat API by adding new features.  
 \* Improved the way of saving player data into a file.  
 \* Improved the version checking system.  
 \* Improved the chat logging system: it could now be saved in a file of which the format can be customized.  
 \* Improved the permission plugin hook system. External plugins will now detect automatically!  
 
-\* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the they were talking in.  
+\* Fixed the bug were players got stuck in a 'ghost-chat' when disabling the feature of the channel they were talking in.  
 \* Fixed the bug were the Server Switch Message was called when a player joins the network.  
 \* Fixed a lot other small bugs.  
 
@@ -344,13 +344,13 @@ Version 1.3.0
 -------------
 
 \+ Added support for LuckPerms.  
-\+ Added RedisBungee support for the Messanger Feature.  
-\+ Added new placholders: %suffix%, %ping%, %displayname.  
+\+ Added RedisBungee support for the Messenger Feature.  
+\+ Added new placeholders: %suffix%, %ping%, %displayname%.  
 \+ Added a load screen on plugin load.  
 \+ Added custom aliases for all commands.  
 \+ Added the Ignore feature.  
-\* Changed the placholder format to %<placholder>%.  
-\* Changed the %player like placholders to %name%.  
+\* Changed the placeholder format to %<placholder>%.  
+\* Changed the %player like placeholders to %name%.  
 \* Changed the structure of the configuration file.  
 \* Changed the ##BCHAT special command to the /bungeechat command.  
 \* Changed the behavior of the ChatHandler.  
@@ -358,7 +358,7 @@ Version 1.3.0
 \* Updated the plugin features to Java 8.  
 \* Fixed some typos in messages and variables.  
 \* Fixed the bug when someone leaves the network.  
-\* Fixed the bug when trying to get a version string logner than 7 chars.  
+\* Fixed the bug when trying to get a version string longer than 7 chars.  
 \* Fixed the typo in the helpop view permission.  
 \* Fixed the bug when global chatting with a symbol other than '!'.  
 \* Fixed userdata loading bugs.  
@@ -433,7 +433,7 @@ Version 1.2.1
 Version 1.2.0
 -------------
 
-\+ Added chat cancelation check for compatibility with AutheMeBridge for BungeeCord.  
+\+ Added chat cancellation check for compatibility with AuthMeBridge for BungeeCord.  
 \* Fixed some little bugs.  
 \* Cleared up some code.  
 
@@ -507,16 +507,16 @@ Version 1.1.1
 Version 1.1.0
 -------------
 
-\+ Players now see thier own HelpOp messages.  
+\+ Players now see their own HelpOp messages.  
 \* Fixed the bug with /r not giving the first word.  
 \* Fixed the bug that a 'empty' prefix is not saved.  
-\* Updated the placholders of some messages in the config. (%target was used in messages)  
+\* Updated the placeholders of some messages in the config. (%target was used in messages)  
 
 
 Version 1.1.0 (Beta 2)
 ----------------------
 
-\* Fixed error when disabeling the plugin.  
+\* Fixed error when disabling the plugin.  
 \* Fixed error when player is connecting to the server.  
 
 
@@ -539,7 +539,7 @@ Version 1.0.11
 -------------
 
 \+ Added a /muteall command, to disable chatting on your network.  
-\- Removed the /t aliase for the /msg command (caused problems on towny servers)  
+\- Removed the /t alias for the /msg command (caused problems on towny servers)  
 \* Updated and tested with the newest bungee version 1109  
 \* Fixed bugs when using BungeePerms. (This is tested with the latest BungeePerms version)  
 
@@ -548,8 +548,8 @@ Version 1.0.10
 -------------
 
 \+ Added an option to set the global chat as default chat.  
-\* The reply command now is a part of the messager feature.  
-\* Fixed the cannot find yourself bug.  
+\* The reply command now is a part of the messenger feature.  
+\* Fixed the "cannot find yourself bug".  
 \* Changed the format of the feature loading.  
 \* Removed some unused code.  
 
@@ -565,7 +565,7 @@ Version 1.0.9
 -------------
 
 \+ Hide Mode (Vanish): This will hide you for tabcomplete and the /msg command.  
-\+ Message Toggeling  
+\+ Message Toggling  
 \+ Helpop Command  
 
 
@@ -595,7 +595,7 @@ Version 1.0.6
 Version 1.0.5
 -------------
 
-\+ There now is a prefix module with placeholder!  
+\+ There now is a prefix module with placeholders!  
 \+ There now is a local chat manager feature witch allows you to customise you chat.  
 
 

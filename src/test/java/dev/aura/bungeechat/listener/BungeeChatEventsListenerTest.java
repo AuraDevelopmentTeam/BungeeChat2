@@ -240,6 +240,7 @@ public class BungeeChatEventsListenerTest {
     assertSame(player3, leaveEvents.get(1).getPlayer());
   }
 
+  @SuppressWarnings("EmptyMethod")
   private static class MockEventListener implements Listener {
     @EventHandler
     public void onBungeeChatJoin(BungeeChatJoinEvent e) {}

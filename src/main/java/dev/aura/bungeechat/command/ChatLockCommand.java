@@ -98,10 +98,10 @@ public class ChatLockCommand extends BaseCommand {
     final String location = args[0];
 
     if (args.length == 1) {
-      return ClearChatCommand.arg1Completetions.stream()
+      return ClearChatCommand.arg1Completions.stream()
           .filter(completion -> completion.startsWith(location))
           .collect(Collectors.toList());
-    } else if ((args.length == 2) && ClearChatCommand.arg1Completetions.contains(location)) {
+    } else if ((args.length == 2) && ClearChatCommand.arg1Completions.contains(location)) {
       final String param2 = args[1];
       final List<String> suggestions = new LinkedList<>();
 

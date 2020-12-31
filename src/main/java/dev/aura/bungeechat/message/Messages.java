@@ -21,13 +21,13 @@ public enum Messages implements Message {
 
   // Messenger Messages
   MESSAGE_YOURSELF("messageYourself"),
-  ENABLE_MESSAGER("enableMessager"),
-  ENABLE_MESSAGER_OTHERS("enableMessagerOthers"),
-  DISABLE_MESSAGER("disableMessager"),
-  DISABLE_MESSAGER_OTHERS("disableMessagerOthers"),
+  ENABLE_MESSENGER("enableMessenger"),
+  ENABLE_MESSENGER_OTHERS("enableMessengerOthers"),
+  DISABLE_MESSENGER("disableMessenger"),
+  DISABLE_MESSENGER_OTHERS("disableMessengerOthers"),
   NO_REPLY("noReply"),
   REPLY_OFFLINE("replyOffline"),
-  HAS_MESSAGER_DISABLED("hasMessagerDisabled"),
+  HAS_MESSENGER_DISABLED("hasMessengerDisabled"),
 
   // Clear Chat
   CLEARED_LOCAL("clearedLocal"),
@@ -59,7 +59,7 @@ public enum Messages implements Message {
   UNKNOWN_SERVER("unknownServer"),
 
   // Ignore Messages
-  HAS_INGORED("hasIgnored"),
+  HAS_IGNORED("hasIgnored"),
   ADD_IGNORE("addIgnore"),
   REMOVE_IGNORE("removeIgnore"),
   ALREADY_IGNORED("alreadyIgnored"),

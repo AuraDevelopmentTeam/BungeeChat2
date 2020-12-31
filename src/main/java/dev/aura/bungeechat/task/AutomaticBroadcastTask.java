@@ -15,7 +15,7 @@ public class AutomaticBroadcastTask implements Runnable {
   private final int size;
   private final boolean random;
   private int current;
-  private Random rand;
+  private final Random rand;
 
   public AutomaticBroadcastTask(
       Predicate<BungeeChatAccount> predicate, List<String> messages, boolean random) {

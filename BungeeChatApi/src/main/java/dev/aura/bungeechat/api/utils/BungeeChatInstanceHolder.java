@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 
 /** This class is used to set the instance returned by {@link BungeeChatApi#getInstance()} */
 @UtilityClass
-public class BungeeChatInstaceHolder {
+public class BungeeChatInstanceHolder {
   // @formatter:off
   /**
    * The actual BungeeChatApi instance.<br>

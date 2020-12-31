@@ -43,7 +43,7 @@ public class Account implements BungeeChatAccount {
   private boolean vanished;
 
   @Getter(AccessLevel.NONE)
-  private boolean messanger;
+  private boolean messenger;
 
   @Getter(AccessLevel.NONE)
   private boolean socialSpy;
@@ -64,7 +64,7 @@ public class Account implements BungeeChatAccount {
     this.uuid = uuid;
     channelType = defaultChannelType;
     vanished = false;
-    messanger = true;
+    messenger = true;
     socialSpy = false;
     localSpy = false;
     ignored = new LinkedBlockingQueue<>();
@@ -77,7 +77,7 @@ public class Account implements BungeeChatAccount {
       UUID uuid,
       ChannelType channelType,
       boolean vanished,
-      boolean messanger,
+      boolean messenger,
       boolean socialSpy,
       boolean localSpy,
       BlockingQueue<UUID> ignored,
@@ -87,7 +87,7 @@ public class Account implements BungeeChatAccount {
     this.uuid = uuid;
     this.channelType = channelType;
     this.vanished = vanished;
-    this.messanger = messanger;
+    this.messenger = messenger;
     this.socialSpy = socialSpy;
     this.localSpy = localSpy;
     this.ignored = ignored;
@@ -107,8 +107,8 @@ public class Account implements BungeeChatAccount {
   }
 
   @Override
-  public boolean hasMessangerEnabled() {
-    return messanger;
+  public boolean hasMessengerEnabled() {
+    return messenger;
   }
 
   @Override

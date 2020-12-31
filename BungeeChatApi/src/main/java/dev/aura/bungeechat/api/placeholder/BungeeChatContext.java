@@ -212,11 +212,11 @@ public class BungeeChatContext {
 
   // Fill the requirementsNameCache
   static {
-    final int modifers = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
+    final int modifiers = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
 
     for (Field field : BungeeChatContext.class.getDeclaredFields()) {
       try {
-        if ((field.getModifiers() & modifers) == modifers) {
+        if ((field.getModifiers() & modifiers) == modifiers) {
           @SuppressWarnings("unchecked")
           Predicate<BungeeChatContext> filter = (Predicate<BungeeChatContext>) field.get(null);
 

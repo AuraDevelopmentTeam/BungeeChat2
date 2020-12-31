@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ChatLoggingManager {
-  private static List<ChatLogger> loggers = new LinkedList<>();
+  private static final List<ChatLogger> loggers = new LinkedList<>();
   private static List<Pattern> filteredCommands = new LinkedList<>();
 
   public static void addLogger(ChatLogger logger) {
@@ -58,9 +58,7 @@ public class ChatLoggingManager {
 
   public static void loadFilteredCommands(List<String> commands) {
     filteredCommands =
-        commands.stream()
-            .map(command -> RegexUtil.parseWildcardToPattern(command))
-            .collect(Collectors.toList());
+        commands.stream().map(RegexUtil::parseWildcardToPattern).collect(Collectors.toList());
   }
 
   private static Stream<ChatLogger> getStream() {

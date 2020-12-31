@@ -25,12 +25,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Queue;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
@@ -101,7 +101,7 @@ public class Configuration implements Config {
       do {
         line = reader.readLine();
 
-        if (line == null) throw new IOException("Unexpeted EOF while reading " + CONFIG_FILE_NAME);
+        if (line == null) throw new IOException("Unexpected EOF while reading " + CONFIG_FILE_NAME);
 
         header.append(line).append('\n');
       } while (line.startsWith("#"));
@@ -114,8 +114,7 @@ public class Configuration implements Config {
 
   private static Collection<String> getPaths(ConfigValue config) {
     if (config instanceof ConfigObject) {
-      return ((ConfigObject) config)
-          .entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
+      return new ArrayList<>(((ConfigObject) config).keySet());
     } else {
       return Collections.emptyList();
     }
@@ -137,13 +136,13 @@ public class Configuration implements Config {
                 BungeeChat.getInstance().getResourceAsStream(CONFIG_FILE_NAME),
                 StandardCharsets.UTF_8),
             PARSE_OPTIONS);
-    final Config strippedDefautConfig = defaultConfig.withoutPath("ServerAlias");
+    final Config strippedDefaultConfig = defaultConfig.withoutPath("ServerAlias");
 
     if (CONFIG_FILE.exists()) {
       try {
         Config fileConfig = ConfigFactory.parseFile(CONFIG_FILE, PARSE_OPTIONS);
 
-        config = fileConfig.withFallback(strippedDefautConfig);
+        config = fileConfig.withFallback(strippedDefaultConfig);
       } catch (ConfigException e) {
         LoggerHelper.error(
             "====================================================================================================");
@@ -167,7 +166,7 @@ public class Configuration implements Config {
     convertOldConfig();
     // Reapply default config. By default this does nothing but it can fix the missing config
     // settings in some cases
-    config = config.withFallback(strippedDefautConfig);
+    config = config.withFallback(strippedDefaultConfig);
     copyComments(defaultConfig);
 
     if (saveConfig) saveConfig();
@@ -181,7 +180,7 @@ public class Configuration implements Config {
 
       writer.print(renderedConfig);
     } catch (FileNotFoundException | UnsupportedEncodingException e) {
-      LoggerHelper.error("Something very unexpected happend! Please report this!", e);
+      LoggerHelper.error("Something very unexpected happened! Please report this!", e);
     }
   }
 
@@ -236,11 +235,11 @@ public class Configuration implements Config {
       case "11.3":
         LoggerHelper.info("Performing config migration 11.3 -> 11.4 ...");
 
-        final Config gloabalServerList = config.getConfig("Modules.GlobalChat.serverList");
+        final Config globalServerList = config.getConfig("Modules.GlobalChat.serverList");
 
         // Copy over server list from Global to AutoBroadcast if it is enabled
-        if (gloabalServerList.getBoolean("enabled")) {
-          config = config.withValue("Modules.AutoBroadcast.serverList", gloabalServerList.root());
+        if (globalServerList.getBoolean("enabled")) {
+          config = config.withValue("Modules.AutoBroadcast.serverList", globalServerList.root());
         }
       case "11.4":
         LoggerHelper.info("Performing config migration 11.4 -> 11.5 ...");
@@ -270,7 +269,7 @@ public class Configuration implements Config {
                     config.getValue("Modules.Muting.blockedcommands"));
 
       default:
-        // Unknow Version or old version
+        // Unknown Version or old version
         // -> Update version
         config =
             config.withValue(
@@ -300,7 +299,7 @@ public class Configuration implements Config {
       // Close file
       reader.close();
 
-      // Migrate settigns
+      // Migrate settings
       section = oldConfig.getSection("AccountDataBase");
       final ImmutableMap<String, Object> accountDatabase =
           ImmutableMap.<String, Object>builder()
@@ -329,15 +328,14 @@ public class Configuration implements Config {
               .put("messageTarget", section.getString("messageTarget"))
               .put(
                   "motd",
-                  oldConfig.getStringList("Settings.Modules.MOTD.message").stream()
-                      .collect(Collectors.joining("\n")))
+                  String.join("\n", oldConfig.getStringList("Settings.Modules.MOTD.message")))
               .put("serverSwitch", section.getString("serverSwitch"))
               .put("socialSpy", section.getString("socialSpy"))
               .put("staffChat", section.getString("staffChat"))
               .put(
                   "welcomeMessage",
-                  oldConfig.getStringList("Settings.Modules.WelcomeMessage.message").stream()
-                      .collect(Collectors.joining("\n")))
+                  String.join(
+                      "\n", oldConfig.getStringList("Settings.Modules.WelcomeMessage.message")))
               .build();
 
       final net.md_5.bungee.config.Configuration modulesSection =

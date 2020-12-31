@@ -85,8 +85,6 @@ public class MutingListener implements Listener {
     if (ChatUtils.isCommand(message) && blockedCommandsPredicate.test(message)) {
       MessagesService.sendMessage(sender, Messages.MUTED.get(account));
       e.setCancelled(true);
-
-      return;
     } else {
       final ChannelType channel = account.getChannelType();
 

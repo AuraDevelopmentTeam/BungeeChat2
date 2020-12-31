@@ -44,7 +44,7 @@ public class AccountFileStorage implements BungeeChatAccountStorage {
       save.writeObject(account.getName());
       save.writeObject(account.getChannelType());
       save.writeObject(account.isVanished());
-      save.writeObject(account.hasMessangerEnabled());
+      save.writeObject(account.hasMessengerEnabled());
       save.writeObject(account.hasSocialSpyEnabled());
       save.writeObject(account.hasLocalSpyEnabled());
       save.writeObject(account.getIgnored());

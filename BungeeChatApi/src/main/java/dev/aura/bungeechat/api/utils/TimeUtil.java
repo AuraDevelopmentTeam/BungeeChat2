@@ -54,7 +54,7 @@ public class TimeUtil {
   }
 
   /**
-   * Gets the date in the month formatted to always have two digits. And the zear with four.
+   * Gets the date in the month formatted to always have two digits. And the year with four.
    *
    * @return The date formatted like: <code>"yyyy/MM/dd"</code>
    * @see SimpleDateFormat

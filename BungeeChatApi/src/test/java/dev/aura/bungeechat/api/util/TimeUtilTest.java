@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 import org.junit.Test;
 
 public class TimeUtilTest {
-  private static double DELTA = 0.0;
+  private static final double DELTA = 0.0;
 
   private static void assertCorrectTimeFormat(String timeFormat, Supplier<String> testMethod) {
     SimpleDateFormat sdfDate = new SimpleDateFormat(timeFormat);

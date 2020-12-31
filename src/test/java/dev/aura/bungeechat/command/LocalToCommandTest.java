@@ -21,8 +21,8 @@ public class LocalToCommandTest extends ServerInfoTest {
   public void tabCompleteFirstArgumentTest() {
     assertEquals(Arrays.asList("main", "hub1", "hub2", "test"), tabComplete(""));
     assertEquals(Arrays.asList("hub1", "hub2"), tabComplete("h"));
-    assertEquals(Arrays.asList("test"), tabComplete("tes"));
-    assertEquals(Arrays.asList("main"), tabComplete("main"));
+    assertEquals(Collections.singletonList("test"), tabComplete("tes"));
+    assertEquals(Collections.singletonList("main"), tabComplete("main"));
     assertEquals(Collections.emptyList(), tabComplete("xxx"));
   }
 
