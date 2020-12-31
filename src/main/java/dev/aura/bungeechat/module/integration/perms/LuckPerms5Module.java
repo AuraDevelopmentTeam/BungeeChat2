@@ -1,8 +1,8 @@
-package dev.aura.bungeechat.module.perms;
+package dev.aura.bungeechat.module.integration.perms;
 
 import dev.aura.bungeechat.api.hook.HookManager;
 import dev.aura.bungeechat.config.Configuration;
-import dev.aura.bungeechat.hook.LuckPerms5Hook;
+import dev.aura.bungeechat.hook.perms.LuckPerms5Hook;
 import dev.aura.bungeechat.util.ClassUtil;
 
 public class LuckPerms5Module extends PermissionPluginModule {

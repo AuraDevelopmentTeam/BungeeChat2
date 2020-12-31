@@ -2,12 +2,12 @@ package dev.aura.bungeechat.module;
 
 import dev.aura.bungeechat.api.module.BungeeChatModule;
 import dev.aura.bungeechat.api.module.ModuleManager;
-import dev.aura.bungeechat.module.perms.BungeePermsModule;
-import dev.aura.bungeechat.module.perms.CloudNetPerms2Module;
-import dev.aura.bungeechat.module.perms.CloudNetPerms3Module;
-import dev.aura.bungeechat.module.perms.LuckPerms4Module;
-import dev.aura.bungeechat.module.perms.LuckPerms5Module;
-import dev.aura.bungeechat.module.perms.PowerfulPermsModule;
+import dev.aura.bungeechat.module.integration.perms.BungeePermsModule;
+import dev.aura.bungeechat.module.integration.perms.CloudNetPerms2Module;
+import dev.aura.bungeechat.module.integration.perms.CloudNetPerms3Module;
+import dev.aura.bungeechat.module.integration.perms.LuckPerms4Module;
+import dev.aura.bungeechat.module.integration.perms.LuckPerms5Module;
+import dev.aura.bungeechat.module.integration.perms.PowerfulPermsModule;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

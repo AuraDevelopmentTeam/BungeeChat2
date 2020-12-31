@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.hook.metrics;
+package dev.aura.bungeechat.integration.metrics;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

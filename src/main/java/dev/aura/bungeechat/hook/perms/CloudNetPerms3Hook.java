@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.hook;
+package dev.aura.bungeechat.hook.perms;
 
 import de.dytanic.cloudnet.driver.permission.IPermissionGroup;
 import de.dytanic.cloudnet.driver.permission.IPermissionUser;

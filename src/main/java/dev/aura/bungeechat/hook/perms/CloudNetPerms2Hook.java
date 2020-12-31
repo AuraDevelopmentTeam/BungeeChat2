@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.hook;
+package dev.aura.bungeechat.hook.perms;
 
 import de.dytanic.cloudnet.api.CloudAPI;
 import de.dytanic.cloudnet.lib.player.CloudPlayer;

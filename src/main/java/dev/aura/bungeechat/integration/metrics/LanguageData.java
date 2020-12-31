@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.hook.metrics;
+package dev.aura.bungeechat.integration.metrics;
 
 import com.google.common.annotations.VisibleForTesting;
 import dev.aura.bungeechat.config.Configuration;

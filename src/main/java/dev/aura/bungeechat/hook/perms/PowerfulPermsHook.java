@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.hook;
+package dev.aura.bungeechat.hook.perms;
 
 import com.github.cheesesoftware.PowerfulPermsAPI.PermissionManager;
 import com.github.cheesesoftware.PowerfulPermsAPI.PermissionPlayer;

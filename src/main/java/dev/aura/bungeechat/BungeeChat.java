@@ -19,7 +19,7 @@ import dev.aura.bungeechat.command.BungeeChatCommand;
 import dev.aura.bungeechat.config.Configuration;
 import dev.aura.bungeechat.hook.DefaultHook;
 import dev.aura.bungeechat.hook.StoredDataHook;
-import dev.aura.bungeechat.hook.metrics.MetricManager;
+import dev.aura.bungeechat.integration.metrics.MetricManager;
 import dev.aura.bungeechat.listener.BungeeChatEventsListener;
 import dev.aura.bungeechat.listener.ChannelTypeCorrectorListener;
 import dev.aura.bungeechat.listener.CommandTabCompleteListener;

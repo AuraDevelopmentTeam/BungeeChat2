@@ -1,7 +1,7 @@
-package dev.aura.bungeechat.module.perms;
+package dev.aura.bungeechat.module.integration.perms;
 
 import dev.aura.bungeechat.api.hook.HookManager;
-import dev.aura.bungeechat.hook.PowerfulPermsHook;
+import dev.aura.bungeechat.hook.perms.PowerfulPermsHook;
 
 public class PowerfulPermsModule extends PermissionPluginModule {
   @Override

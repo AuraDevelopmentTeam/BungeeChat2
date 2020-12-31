@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.hook.metrics;
+package dev.aura.bungeechat.integration.metrics;
 
 import dev.aura.bungeechat.module.BungeecordModuleManager;
 import java.util.LinkedHashMap;

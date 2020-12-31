@@ -1,4 +1,4 @@
-package dev.aura.bungeechat.hook;
+package dev.aura.bungeechat.hook.perms;
 
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
