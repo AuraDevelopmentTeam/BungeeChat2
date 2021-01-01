@@ -51,6 +51,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginDescription;
+import net.md_5.bungee.api.plugin.PluginManager;
 
 public class BungeeChat extends Plugin implements BungeeChatApi {
   private static final String storedDataHookName = "storedData";
@@ -170,16 +171,19 @@ public class BungeeChat extends Plugin implements BungeeChatApi {
     HookManager.removeHook(storedDataHookName);
     ModuleManager.disableModules();
 
-    ProxyServer.getInstance().getPluginManager().unregisterListener(bungeecordAccountManager);
-    ProxyServer.getInstance().getPluginManager().unregisterCommand(bungeeChatCommand);
-    ProxyServer.getInstance().getPluginManager().unregisterListener(channelTypeCorrectorListener);
-    ProxyServer.getInstance().getPluginManager().unregisterListener(bungeeChatEventsListener);
+    final ProxyServer proxyServer = ProxyServer.getInstance();
+    final PluginManager pluginManager = proxyServer.getPluginManager();
 
-    ProxyServer.getInstance().getScheduler().cancel(this);
+    pluginManager.unregisterListener(bungeecordAccountManager);
+    pluginManager.unregisterCommand(bungeeChatCommand);
+    pluginManager.unregisterListener(channelTypeCorrectorListener);
+    pluginManager.unregisterListener(bungeeChatEventsListener);
+
+    proxyServer.getScheduler().cancel(this);
 
     // Just to be sure
-    ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
-    ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
+    pluginManager.unregisterListeners(this);
+    pluginManager.unregisterCommands(this);
 
     PlaceHolderManager.clear();
     PlaceHolderUtil.clearConfigSections();
