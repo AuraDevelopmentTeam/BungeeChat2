@@ -13,7 +13,7 @@ env:
   GRADLE_OPTS: >-
     -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false
   GRADLE_CMD_OPTS: >-
-    -PbranchName=${{ github.ref }}
+    -PbranchName="${{ github.ref }}"
     --console=plain
     --continue
     --no-build-cache
