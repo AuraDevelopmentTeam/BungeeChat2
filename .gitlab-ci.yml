@@ -25,29 +25,35 @@ before_script:
   - shopt -s nullglob
 
 stages:
-- build
-- test
-- report
-- deploy
+  - build
+  - test
+  - report
+  - deploy
 
 build:
   stage: build
+  tags:
+    - linux
+    - shell
   cache:
     policy: push
     key: "$CACHE_KEY"
     untracked: true
   script:
-  - ./gradlew --console=plain assemble compileTest
-  - cp $ORIG_ARTIFACTS1 $ORIG_ARTIFACTS2 .
+    - ./gradlew --console=plain assemble compileTest
+    - cp $ORIG_ARTIFACTS1 $ORIG_ARTIFACTS2 .
   retry: 2
   when: on_success
   artifacts:
     paths:
-    - $ARTIFACTS1
-    - $ARTIFACTS2
+      - $ARTIFACTS1
+      - $ARTIFACTS2
 
 test:
   stage: test
+  tags:
+    - linux
+    - shell
   cache:
     policy: pull-push
     key: "$CACHE_KEY"
@@ -56,103 +62,127 @@ test:
     - job: build
       artifacts: false
   script:
-  - ./gradlew --continue --console=plain test
+    - ./gradlew --continue --console=plain test
   retry: 2
   when: on_success
   artifacts:
     when: always
     paths:
-    - $TEST_REPORTS
-    - $JACOCO_DATA
+      - $TEST_REPORTS
+      - $JACOCO_DATA
     reports:
       junit:
-      - $TEST_DATA
+        - $TEST_DATA
 
 checkFormatting:
   stage: test
+  tags:
+    - linux
+    - shell
   needs: []
   script:
-  - ./gradlew --continue --console=plain spotlessCheck
+    - ./gradlew --continue --console=plain spotlessCheck
   allow_failure: true
   when: on_success
 
 checkTranslations:
   stage: test
+  tags:
+    - linux
+    - shell
   needs: []
   script:
-  - ./gradlew --continue --console=plain checkTranslations
+    - ./gradlew --continue --console=plain checkTranslations
   allow_failure: true
   when: on_success
   artifacts:
     when: on_failure
     paths:
-    - $TRANSLATION_REPORTS
+      - $TRANSLATION_REPORTS
 
 coverage:
   stage: report
+  tags:
+    - linux
+    - shell
   needs:
     - job: test
       artifacts: true
   script:
-  - ./gradlew --continue --console=plain -x test coverage
+    - ./gradlew --continue --console=plain -x test coverage
   coverage: "/Covered (\\d{1,3}\\.\\d{2}%) of instructions for all projects\\./"
   allow_failure: true
   when: on_success
   artifacts:
     when: always
     paths:
-    - $COVERAGE_REPORTS
+      - $COVERAGE_REPORTS
 
 spotbugs:
   stage: report
+  tags:
+    - linux
+    - shell
   needs:
     - job: build
       artifacts: false
   script:
-  - ./gradlew --continue --console=plain spotbugs
+    - ./gradlew --continue --console=plain spotbugs
   allow_failure: true
   when: on_success
   artifacts:
     when: always
     paths:
-    - $SPOTBUGS_REPORTS
+      - $SPOTBUGS_REPORTS
 
 deploySnapshot:
   stage: deploy
+  tags:
+    - linux
+    - shell
   needs:
     - job: build
       artifacts: true
   script:
-  - ./gradlew --console=plain uploadArchives $(echo "$CI_COMMIT_MESSAGE" | grep -qF "[release]" && echo releaseSnapshot)
+    - ./gradlew --console=plain uploadArchives $(echo "$CI_COMMIT_MESSAGE" | grep -qF "[release]" && echo releaseSnapshot)
   retry: 2
   when: always
   except:
-  - tags
+    - tags
 
 deploy:
   stage: deploy
+  tags:
+    - linux
+    - shell
   needs:
     - job: build
       artifacts: true
   script:
-  - ./gradlew --console=plain release
+    - ./gradlew --console=plain release
   retry: 2
   when: always
   only:
-  - tags
+    - tags
   
 sendCoverage:
   stage: deploy
+  tags:
+    - linux
+    - shell
   needs:
     - job: coverage
       artifacts: true
   script:
-  - ./gradlew --console=plain sendCoverageToCodacy
+    - ./gradlew --console=plain sendCoverageToCodacy
   retry: 2
   when: on_success
 
 pages:
   stage: deploy
+  tags:
+    - linux
+    - shell
   needs:
     - job: build
       artifacts: true
@@ -165,14 +195,14 @@ pages:
     - job: spotbugs
       artifacts: true
   script:
-  - for file in $JAVADOCS; do dir="public/javadoc/$(basename "$file" | cut -d. -f1 | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
-  - for file in $TEST_REPORTS; do dir="public/test/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
-  - for file in $TRANSLATION_REPORTS; do dir="public/checkTranslations/$(basename "$(dirname "$file")")"; mkdir -p "$dir"; cp "$file" "$dir"; done
-  - for file in $COVERAGE_REPORTS; do dir="public/coverage/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
-  - for file in $SPOTBUGS_REPORTS; do dir="public/spotbugs/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
-  - GradleCommon/scripts/make_directory_listings.sh
-  - find public -type f -regex '.*\.\(html?\|te?xt\|js\|css\|jpe?g\|png\|gif\)$' -exec gzip -fk9 {} \;
+    - for file in $JAVADOCS; do dir="public/javadoc/$(basename "$file" | cut -d. -f1 | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
+    - for file in $TEST_REPORTS; do dir="public/test/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
+    - for file in $TRANSLATION_REPORTS; do dir="public/checkTranslations/$(basename "$(dirname "$file")")"; mkdir -p "$dir"; cp "$file" "$dir"; done
+    - for file in $COVERAGE_REPORTS; do dir="public/coverage/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
+    - for file in $SPOTBUGS_REPORTS; do dir="public/spotbugs/$(basename "$file" | rev | cut -d- -f1 --complement | rev)"; mkdir -p "$dir"; unzip "$file" -d "$dir"; done
+    - GradleCommon/scripts/make_directory_listings.sh
+    - find public -type f -regex '.*\.\(html?\|te?xt\|js\|css\|jpe?g\|png\|gif\)$' -exec gzip -fk9 {} \;
   when: always
   artifacts:
     paths:
-    - public
+      - public
