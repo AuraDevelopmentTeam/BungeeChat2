@@ -31,6 +31,8 @@ public class LocalChatListener implements Listener {
       BungeecordModuleManager.LOCAL_CHAT_MODULE.getModuleSection().getConfig("passThruServerList");
   private final boolean passThruServerListEnabled = passThruServerListSection.getBoolean("enabled");
   private final List<String> passThruServers = passThruServerListSection.getStringList("list");
+  private final Config globalSymbolSection =
+      BungeecordModuleManager.GLOBAL_CHAT_MODULE.getModuleSection().getConfig("symbol");
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerChat(ChatEvent e) {
@@ -42,6 +44,9 @@ public class LocalChatListener implements Listener {
     String message = e.getMessage();
 
     if (ChatUtils.isCommand(message)) return;
+
+    if (globalSymbolSection.getBoolean("enabled"))
+      if (message.startsWith(globalSymbolSection.getString("symbol"))) return;
 
     if (account.getChannelType() == ChannelType.LOCAL) {
       if (!MessagesService.getLocalPredicate().test(account)) {
