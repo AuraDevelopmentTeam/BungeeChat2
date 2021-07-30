@@ -6,7 +6,6 @@ import com.github.cheesesoftware.PowerfulPermsAPI.PowerfulPermsPlugin;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
-import java.util.Objects;
 import java.util.Optional;
 import net.md_5.bungee.api.ProxyServer;
 
@@ -22,12 +21,12 @@ public class PowerfulPermsHook implements BungeeChatHook {
 
   @Override
   public Optional<String> getPrefix(BungeeChatAccount account) {
-    return getPlayer(account).map(PermissionPlayer::getPrefix).filter(Objects::nonNull);
+    return getPlayer(account).map(PermissionPlayer::getPrefix);
   }
 
   @Override
   public Optional<String> getSuffix(BungeeChatAccount account) {
-    return getPlayer(account).map(PermissionPlayer::getSuffix).filter(Objects::nonNull);
+    return getPlayer(account).map(PermissionPlayer::getSuffix);
   }
 
   private Optional<PermissionPlayer> getPlayer(BungeeChatAccount account) {

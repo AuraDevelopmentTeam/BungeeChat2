@@ -3,7 +3,6 @@ package dev.aura.bungeechat.hook;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
-import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import me.lucko.luckperms.LuckPerms;
@@ -22,12 +21,12 @@ public class LuckPerms4Hook implements BungeeChatHook {
 
   @Override
   public Optional<String> getPrefix(BungeeChatAccount account) {
-    return getMetaData(account).map(MetaData::getPrefix).filter(Objects::nonNull);
+    return getMetaData(account).map(MetaData::getPrefix);
   }
 
   @Override
   public Optional<String> getSuffix(BungeeChatAccount account) {
-    return getMetaData(account).map(MetaData::getSuffix).filter(Objects::nonNull);
+    return getMetaData(account).map(MetaData::getSuffix);
   }
 
   private Optional<MetaData> getMetaData(BungeeChatAccount account) {
@@ -35,9 +34,7 @@ public class LuckPerms4Hook implements BungeeChatHook {
     final Contexts contexts =
         user.flatMap(this::getContexts).orElseGet(api.getContextManager()::getStaticContexts);
 
-    return user.map(User::getCachedData)
-        .map(data -> data.getMetaData(contexts))
-        .filter(Objects::nonNull);
+    return user.map(User::getCachedData).map(data -> data.getMetaData(contexts));
   }
 
   @Override
