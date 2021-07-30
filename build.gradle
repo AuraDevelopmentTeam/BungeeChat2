@@ -2,15 +2,14 @@ apply from: "GradleCommon/common.gradle"
 
 allprojects {
     repositories {
-        jcenter()
         mavenCentral()
         maven {
             name "luck-repo"
-            url "https://repo.lucko.me/"
+            url "https://repo.lucko.me"
         }
         maven {
             name "cloudnet-repo"
-            url "https://cloudnetservice.eu/repositories/"
+            url "https://repo.cloudnetservice.eu/repository/releases"
         }
         maven {
             name "jitpack.io"
@@ -23,7 +22,7 @@ dependencies {
     shadow (project(":BungeeChatApi")) {
         exclude module: "lombok"
     }
-    
+
     implementation("net.alpenblock:BungeePerms:${bungeeperms_version}")
     implementation "de.dytanic.cloudnet:cloudnet-api-bridge:${cloudnetapi2_version}"
     implementation "de.dytanic.cloudnet:cloudnet-cloudperms:${cloudnetapi3_version}"
@@ -36,7 +35,7 @@ dependencies {
     shadowRelocate("dev.aura.lib.messagestranslator:MessagesTranslator:${messagesTranslator_version}") {
         transitive = false
     }
-    
+
     testImplementation "ch.vorburger.mariaDB4j:mariaDB4j:2.4.0"
     testImplementation "commons-io:commons-io:2.6"
     testRuntimeOnly "org.mariadb.jdbc:mariadb-java-client:2.4.1"
