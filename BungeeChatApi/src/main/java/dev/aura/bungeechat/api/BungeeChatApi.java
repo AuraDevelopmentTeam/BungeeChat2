@@ -42,6 +42,7 @@ public interface BungeeChatApi {
         "Garixer",
         "gb2233",
         "Itaquito",
+        "LUKISO2",
         "marzenie",
         "Maxime_74",
         "Misterio77",
