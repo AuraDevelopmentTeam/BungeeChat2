@@ -267,6 +267,10 @@ public class Configuration implements Config {
                 .withValue(
                     "Modules.Muting.blockedCommands",
                     config.getValue("Modules.Muting.blockedcommands"));
+      case "11.7":
+        LoggerHelper.info("Performing config migration 11.7 -> 11.8 ...");
+
+        // Only added PrefixSuffixSettings.forceEnable
 
       default:
         // Unknown Version or old version
@@ -275,7 +279,7 @@ public class Configuration implements Config {
             config.withValue(
                 "Version", ConfigValueFactory.fromAnyRef(BungeeChatApi.CONFIG_VERSION));
 
-      case "11.7":
+      case "11.8":
         // Up to date
         // -> No action needed
     }

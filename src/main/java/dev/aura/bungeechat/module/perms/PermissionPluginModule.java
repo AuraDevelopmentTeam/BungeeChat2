@@ -1,15 +1,25 @@
 package dev.aura.bungeechat.module.perms;
 
 import dev.aura.bungeechat.api.module.BungeeChatModule;
+import dev.aura.bungeechat.config.Configuration;
+import java.util.Collection;
 import net.md_5.bungee.api.ProxyServer;
 
 public abstract class PermissionPluginModule implements BungeeChatModule {
   @Override
   public boolean isEnabled() {
-    return isPluginPresent(getName());
+    return forceModule(getName()) || isPluginPresent(getName());
   }
 
-  protected boolean isPluginPresent(String pluginName) {
+  protected static boolean forceModule(String pluginName) {
+    return getForcedPermissionModules().contains(pluginName);
+  }
+
+  protected static boolean isPluginPresent(String pluginName) {
     return ProxyServer.getInstance().getPluginManager().getPlugin(pluginName) != null;
+  }
+
+  protected static Collection<String> getForcedPermissionModules() {
+    return Configuration.get().getConfig("PrefixSuffixSettings").getStringList("forceEnable");
   }
 }
