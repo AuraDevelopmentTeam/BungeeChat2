@@ -12,9 +12,10 @@ public class CloudNetPerms3Module extends PermissionPluginModule {
 
   @Override
   public boolean isEnabled() {
-    return isPluginPresent("CloudNet-CloudPerms")
-        && ClassUtil.doesClassExist(
-            "de.dytanic.cloudnet.ext.cloudperms.CloudPermissionsManagement");
+    return forceModule()
+        || (isPluginPresent("CloudNet-CloudPerms")
+            && ClassUtil.doesClassExist(
+                "de.dytanic.cloudnet.ext.cloudperms.CloudPermissionsManagement"));
   }
 
   @Override

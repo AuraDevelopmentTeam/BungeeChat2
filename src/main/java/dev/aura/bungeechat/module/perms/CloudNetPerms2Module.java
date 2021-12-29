@@ -15,6 +15,7 @@ public class CloudNetPerms2Module extends PermissionPluginModule {
 
   @Override
   public boolean isEnabled() {
+    if (forceModule()) return true;
     if (!isPluginPresent("CloudNetAPI")
         || !ClassUtil.doesClassExist("de.dytanic.cloudnet.api.CloudAPI")
         || BungeecordModuleManager.CLOUD_NET_PERMS3_MODULE.isEnabled()) return false;

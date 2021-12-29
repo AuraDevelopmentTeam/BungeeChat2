@@ -8,11 +8,11 @@ import net.md_5.bungee.api.ProxyServer;
 public abstract class PermissionPluginModule implements BungeeChatModule {
   @Override
   public boolean isEnabled() {
-    return forceModule(getName()) || isPluginPresent(getName());
+    return forceModule() || isPluginPresent(getName());
   }
 
-  protected static boolean forceModule(String pluginName) {
-    return getForcedPermissionModules().contains(pluginName);
+  protected boolean forceModule() {
+    return getForcedPermissionModules().contains(getName());
   }
 
   protected static boolean isPluginPresent(String pluginName) {
