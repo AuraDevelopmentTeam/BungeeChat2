@@ -69,6 +69,7 @@ public class GlobalChatListener implements Listener {
 
         e.setCancelled(!passToBackendServer);
         MessagesService.sendGlobalMessage(sender, message.substring(1));
+        return;
       }
     }
 
