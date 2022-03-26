@@ -107,6 +107,11 @@ public class Account implements BungeeChatAccount {
   }
 
   @Override
+  public boolean isVanished() {
+    return vanished && BungeecordModuleManager.VANISHER_MODULE.isEnabled();
+  }
+
+  @Override
   public boolean hasMessengerEnabled() {
     return messenger;
   }
