@@ -3,7 +3,7 @@ package dev.aura.bungeechat.hook;
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.permission.IPermissionGroup;
 import de.dytanic.cloudnet.driver.permission.IPermissionManagement;
-import de.dytanic.cloudnet.ext.cloudperms.CloudPermissionsManagement;
+import de.dytanic.cloudnet.ext.cloudperms.CloudPermissionsHelper;
 import dev.aura.bungeechat.api.account.BungeeChatAccount;
 import dev.aura.bungeechat.api.hook.BungeeChatHook;
 import dev.aura.bungeechat.api.hook.HookManager;
@@ -12,7 +12,6 @@ import java.util.Optional;
 public class CloudNetPerms3Hook implements BungeeChatHook {
   private final IPermissionManagement api;
 
-  @SuppressWarnings("deprecation")
   public CloudNetPerms3Hook() {
     IPermissionManagement api = null;
     Throwable lastException = null;
@@ -28,8 +27,7 @@ public class CloudNetPerms3Hook implements BungeeChatHook {
     if (api == null) {
       try {
         // This is just a fallback
-        //noinspection UnstableApiUsage
-        api = CloudPermissionsManagement.getInstance();
+        api = CloudPermissionsHelper.getCachedPermissionManagement();
       } catch (LinkageError | NullPointerException e) {
         // Still nothing. At least keep the exception
         lastException = e;
