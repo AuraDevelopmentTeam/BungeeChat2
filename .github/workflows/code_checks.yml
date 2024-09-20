@@ -107,7 +107,7 @@ jobs:
       - name: Run all Tests
         id: gradle_tests
         run: ./gradlew ${{ env.GRADLE_CMD_OPTS }} -x spotlessCheck build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: ${{ env.ref }}_code-checks_${{ matrix.os }}
