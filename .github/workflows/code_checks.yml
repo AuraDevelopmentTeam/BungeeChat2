@@ -90,12 +90,6 @@ jobs:
           distribution: 'temurin'
       - name: Checkout submodules
         run: git submodule update --init --recursive
-      # This is to ensure unit tests with MariaDB4j don't fail
-      - name: Symlinks for MacOS
-        if: ${{ runner.os == 'MacOS' }}
-        run: |
-          sudo ln -s /usr/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
-          sudo ln -s /usr/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
       - uses: burrunan/gradle-cache-action@v1
         name: Cache .gradle
         with:
