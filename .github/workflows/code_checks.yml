@@ -21,14 +21,15 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: 8
+          java-version: 11
           java-package: jdk
           architecture: x64
+          distribution: 'temurin'
       - name: Checkout submodules
         run: git submodule update --init --recursive
       - name: Check code formatting
@@ -40,14 +41,15 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: 8
+          java-version: 11
           java-package: jdk
           architecture: x64
+          distribution: 'temurin'
       - name: Checkout submodules
         run: git submodule update --init --recursive
       - uses: burrunan/gradle-cache-action@v1
@@ -77,14 +79,15 @@ jobs:
         env:
           github_ref: ${{ github.ref }}
         shell: bash
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: 8
+          java-version: 11
           java-package: jdk
           architecture: x64
+          distribution: 'temurin'
       - name: Checkout submodules
         run: git submodule update --init --recursive
       # This is to ensure unit tests with MariaDB4j don't fail
