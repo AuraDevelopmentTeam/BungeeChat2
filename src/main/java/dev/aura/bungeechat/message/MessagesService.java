@@ -22,7 +22,6 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import lombok.Setter;
 import lombok.experimental.UtilityClass;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -446,6 +445,6 @@ public class MessagesService {
   public static void sendMessage(CommandSender recipient, String message) {
     if ((message == null) || message.isEmpty()) return;
 
-    recipient.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', message)));
+    recipient.sendMessage(TextComponent.fromLegacyText(message));
   }
 }
