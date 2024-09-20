@@ -52,7 +52,7 @@ jobs:
           distribution: 'temurin'
       - name: Checkout submodules
         run: git submodule update --init --recursive
-      - uses: burrunan/gradle-cache-action@v1
+      - uses: burrunan/gradle-cache-action@v2
         name: Cache .gradle
         with:
           # Disable caching of $HOME/.gradle/caches/*.*/generated-gradle-jars
@@ -101,7 +101,7 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt-get install -y libncurses5
-      - uses: burrunan/gradle-cache-action@v1
+      - uses: burrunan/gradle-cache-action@v2
         name: Cache .gradle
         with:
           # Disable caching of $HOME/.gradle/caches/*.*/generated-gradle-jars
