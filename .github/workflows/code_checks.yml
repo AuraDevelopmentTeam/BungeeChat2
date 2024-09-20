@@ -94,8 +94,8 @@ jobs:
       - name: Install OpenSSL 1.0.2
         if: ${{ runner.os == 'MacOS' }}
         run: |
-           sudo brew install rbenv/tap/openssl@1.0
-           sudo ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2* /usr/local/opt/openssl
+          brew install rbenv/tap/openssl@1.0
+          sudo ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2* /usr/local/opt/openssl
       # This is to ensure unit tests with MariaDB4j don't fail
       - name: Install libncurses5
         if: ${{ runner.os == 'Linux' }}
