@@ -32,7 +32,7 @@ public class DuplicationFilterTest {
     filterHelper.assertException(FILTER, "test1");
     filterHelper.assertException(FILTER, "test2");
 
-    TimeUnit.SECONDS.sleep(1);
+    TimeUnit.SECONDS.sleep(2);
 
     filterHelper.assertNoException(FILTER, "test1");
     filterHelper.assertNoException(FILTER, "test2");
