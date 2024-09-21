@@ -95,8 +95,7 @@ jobs:
         if: ${{ runner.os == 'MacOS' }}
         run: |
           brew install rbenv/tap/openssl@1.0
-          ls -lA /opt/homebrew/Cellar/openssl@1.0
-          sudo ln -sfnv /opt/homebrew/Cellar/openssl@1.0/1.0.2u /usr/local/opt/openssl
+          sudo ln -sfnv /opt/homebrew/Cellar/openssl@1.0/1.0.2* /usr/local/opt/openssl
           stat /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
       # This is to ensure unit tests with MariaDB4j don't fail
       - name: Install libncurses5
