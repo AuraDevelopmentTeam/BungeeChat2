@@ -94,7 +94,7 @@ jobs:
       - name: Install OpenSSL 1.0.2
         if: ${{ runner.os == 'MacOS' }}
         run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
           export PATH="/usr/local/bin:$PATH"
           arch -x86_64 brew install rbenv/tap/openssl@1.0
           sudo ln -sfnv /usr/local/Cellar/openssl@1.0/1.0.2* /usr/local/opt/openssl
