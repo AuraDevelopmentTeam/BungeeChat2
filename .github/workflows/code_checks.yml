@@ -88,12 +88,11 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
       # This is to ensure unit tests with MariaDB4j don't fail
-      - name: Pretend have we OpenSSL 1.0
+      - name: Install OpenSSL 1.0.2
         if: ${{ runner.os == 'MacOS' }}
         run: |
-          sudo mkdir -pv /usr/local/opt/openssl/lib
-          sudo ln -sv /usr/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
-          sudo ln -sv /usr/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
+          brew install rbenv/tap/openssl@1.0
+          sudo ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2* /usr/local/opt/openssl
           stat /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
       # This is to ensure unit tests with MariaDB4j don't fail
       - name: Install libncurses5
