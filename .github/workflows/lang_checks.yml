@@ -35,7 +35,6 @@ jobs:
         with:
           java-version: 11
           java-package: jdk
-          architecture: x64
           distribution: 'temurin'
       - name: Checkout submodules
         run: git submodule update --init --recursive
