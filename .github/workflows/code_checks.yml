@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest, macos-latest-large ]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest, macos-latest-large ]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -70,7 +70,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest, macos-latest-large ]
     needs: [build]
     steps:
       - run: |
@@ -94,7 +94,7 @@ jobs:
       - name: Install OpenSSL 1.0.2
         if: ${{ runner.os == 'MacOS' }}
         run: |
-          arch -x86_64 brew install rbenv/tap/openssl@1.0
+          brew install rbenv/tap/openssl@1.0
           sudo ln -sfnv /opt/homebrew/Cellar/openssl@1.0/1.0.2* /usr/local/opt/openssl
           stat /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
       # This is to ensure unit tests with MariaDB4j don't fail
