@@ -20,7 +20,7 @@ jobs:
         env:
           github_ref: ${{ github.ref }}
         shell: bash
-      - uses: dawidd6/action-download-artifact@v2
+      - uses: dawidd6/action-download-artifact@v6
         with:
           workflow: code_checks.yml
           name: ${{ env.ref }}_code-checks_${{ matrix.os }}
