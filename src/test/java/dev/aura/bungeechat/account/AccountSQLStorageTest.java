@@ -12,6 +12,7 @@ import dev.aura.bungeechat.api.account.BungeeChatAccountStorage;
 import dev.aura.bungeechat.api.enums.ChannelType;
 import dev.aura.bungeechat.module.Module;
 import dev.aura.bungeechat.testhelpers.TestDatabase;
+import dev.aura.bungeechat.util.LoggerHelper;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,8 +24,15 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 @SuppressFBWarnings(value = "DMI_CONSTANT_DB_PASSWORD", justification = "Hard coded for tests.")
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(LoggerHelper.class)
 public class AccountSQLStorageTest {
   private static final String database = "test";
   private static final String password = "test";
@@ -66,10 +74,10 @@ public class AccountSQLStorageTest {
     modifiedOptions.put("connectTimeout", "10");
 
     assertEquals(
-        "connectTimeout=0&socketTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=utf8",
+        "connectTimeout=0&socketTimeout=0&useUnicode=true&characterEncoding=utf8",
         AccountSQLStorage.optionsMapToString(defaultOptions));
     assertEquals(
-        "connectTimeout=10&socketTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=utf8",
+        "connectTimeout=10&socketTimeout=0&useUnicode=true&characterEncoding=utf8",
         AccountSQLStorage.optionsMapToString(modifiedOptions));
   }
 
@@ -135,5 +143,63 @@ public class AccountSQLStorageTest {
     } catch (SQLException e) {
       fail("No SQL exception expected: " + e.getLocalizedMessage());
     }
+  }
+
+  @SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "It's a mock object")
+  @Test
+  public void reconnectTest() throws SQLException {
+    PowerMockito.mockStatic(LoggerHelper.class);
+
+    AccountSQLStorage accountStorage =
+        new AccountSQLStorage(
+            "localhost",
+            TestDatabase.getPort(),
+            database,
+            username,
+            password,
+            tablePrefix,
+            defaultOptions);
+    UUID testUUID = UUID.randomUUID();
+
+    // Prepare account to ensure working database connection
+    AccountInfo accountInfo = accountStorage.load(testUUID);
+    BungeeChatAccount account = accountInfo.getAccount();
+    accountStorage.save(account);
+
+    accountInfo = accountStorage.load(testUUID);
+    assertFalse("Should not be new account", accountInfo.isNewAccount());
+
+    // Test 1: Simply close the connection
+    accountStorage.connection.close();
+
+    accountInfo = accountStorage.load(testUUID);
+    assertFalse("Should not be new account", accountInfo.isNewAccount());
+
+    // Test 2: Pretend we never connected in the first place
+    accountStorage.connection = null;
+
+    accountInfo = accountStorage.load(testUUID);
+    assertFalse("Should not be new account", accountInfo.isNewAccount());
+
+    // Test 3: Pretend to have an invalid connection (nearly impossible to create by force)
+    Connection mockConn = Mockito.mock(Connection.class);
+
+    // Simulate invalid connection
+    Mockito.when(mockConn.isClosed()).thenReturn(false);
+    Mockito.when(mockConn.isValid(Mockito.anyInt())).thenReturn(false);
+    Mockito.when(mockConn.createStatement()).thenThrow(new SQLException("Connection invalid"));
+    Mockito.when(mockConn.prepareStatement(Mockito.anyString()))
+        .thenThrow(new SQLException("Connection invalid"));
+
+    // Close the real connection then give the class a fake connection which behaves like we want
+    accountStorage.connection.close();
+    accountStorage.connection = mockConn;
+
+    accountInfo = accountStorage.load(testUUID);
+    assertFalse("Should not be new account", accountInfo.isNewAccount());
+    Mockito.verify(mockConn, Mockito.times(1)).close();
+
+    PowerMockito.verifyStatic(LoggerHelper.class, Mockito.times(3));
+    LoggerHelper.info("Connection inactive – reinitializing connection and prepared statements.");
   }
 }

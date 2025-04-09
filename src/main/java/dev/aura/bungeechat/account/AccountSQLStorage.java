@@ -26,12 +26,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 import lombok.Cleanup;
-import lombok.NonNull;
 import lombok.SneakyThrows;
 
 public class AccountSQLStorage implements BungeeChatAccountStorage {
-  private final Connection connection;
   private final String tablePrefix;
+  private final String connectionString;
+  private final String username;
+  private final String password;
+  @VisibleForTesting Connection connection;
 
   private final String tableAccounts;
   private final String tableAccountsColumnUUID;
@@ -48,11 +50,11 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
   private final String tableIgnoresColumnUser;
   private final String tableIgnoresColumnIgnores;
 
-  @NonNull private PreparedStatement saveAccount;
-  @NonNull private PreparedStatement loadAccount;
-  @NonNull private PreparedStatement deleteIgnores;
-  @NonNull private PreparedStatement addIgnore;
-  @NonNull private PreparedStatement getIgnores;
+  private PreparedStatement saveAccount = null;
+  private PreparedStatement loadAccount = null;
+  private PreparedStatement deleteIgnores = null;
+  private PreparedStatement addIgnore = null;
+  private PreparedStatement getIgnores = null;
 
   private static byte[] getBytesFromUUID(UUID uuid) {
     ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
@@ -75,7 +77,6 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     final Map<String, String> allOptions = new LinkedHashMap<>();
     allOptions.put("connectTimeout", "0");
     allOptions.put("socketTimeout", "0");
-    allOptions.put("autoReconnect", "true");
     allOptions.putAll(options);
 
     return allOptions.entrySet().stream()
@@ -126,7 +127,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     tableIgnoresColumnUser = "User";
     tableIgnoresColumnIgnores = "Ignores";
 
-    String host =
+    connectionString =
         "jdbc:mysql://"
             + ip
             + ":"
@@ -134,8 +135,10 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
             + "/"
             + database
             + (options.isEmpty() ? "" : ('?' + options));
+    this.username = username;
+    this.password = password;
 
-    connection = DriverManager.getConnection(host, username, password);
+    connect();
 
     prepareTables();
     prepareStatements();
@@ -144,6 +147,8 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
   @Override
   public void save(BungeeChatAccount account) {
     try {
+      ensureConnection();
+
       byte[] uuidBytes = getBytesFromUUID(account.getUniqueId());
 
       // deleteIgnores
@@ -185,6 +190,8 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
   @Override
   public AccountInfo load(UUID uuid) {
     try {
+      ensureConnection();
+
       byte[] uuidBytes = getBytesFromUUID(uuid);
 
       // loadAccount
@@ -236,23 +243,15 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     return true;
   }
 
-  private boolean isConnectionActive() {
-    try {
-      return (connection != null) && connection.isValid(0);
-    } catch (SQLException e) {
-      e.printStackTrace();
-
-      return false;
-    }
-  }
-
   private Statement getStatement() throws SQLException {
-    if (!isConnectionActive()) throw new SQLException("MySQL-connection is not active!");
+    ensureConnection();
 
     return connection.createStatement();
   }
 
   private PreparedStatement getPreparedStatement(final String statement) throws SQLException {
+    // Intentionally not calling `ensureConnection()` to prevent endless loops
+
     return connection.prepareStatement(statement);
   }
 
@@ -263,6 +262,7 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     return statement.executeQuery(query);
   }
 
+  @SuppressWarnings("UnusedReturnValue")
   private boolean executeStatement(final String query) throws SQLException {
     @Cleanup Statement statement = getStatement();
 
@@ -281,6 +281,25 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     name = '`' + name.replaceAll("`", "``") + '`';
 
     return name;
+  }
+
+  private synchronized void connect() throws SQLException {
+    connection = DriverManager.getConnection(connectionString, username, password);
+  }
+
+  private synchronized void ensureConnection() throws SQLException {
+    if ((connection != null) && !connection.isClosed() && connection.isValid(10)) return;
+
+    LoggerHelper.info("Connection inactive – reinitializing connection and prepared statements.");
+
+    closePreparedStatements();
+
+    if (connection != null && !connection.isClosed()) {
+      connection.close();
+    }
+
+    connect();
+    prepareStatements();
   }
 
   @SuppressFBWarnings(
@@ -354,6 +373,26 @@ public class AccountSQLStorage implements BungeeChatAccountStorage {
     } catch (SQLException e) {
       LoggerHelper.error("Could not create tables!", e);
     }
+  }
+
+  private PreparedStatement safeClose(PreparedStatement stmt) {
+    if (stmt != null) {
+      try {
+        stmt.close();
+      } catch (SQLException e) {
+        // Ignore
+      }
+    }
+
+    return null;
+  }
+
+  private void closePreparedStatements() {
+    saveAccount = safeClose(saveAccount);
+    loadAccount = safeClose(loadAccount);
+    deleteIgnores = safeClose(deleteIgnores);
+    addIgnore = safeClose(addIgnore);
+    getIgnores = safeClose(getIgnores);
   }
 
   @SuppressFBWarnings(
