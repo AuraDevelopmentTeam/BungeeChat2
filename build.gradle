@@ -23,7 +23,7 @@ dependencies {
         exclude module: "lombok"
     }
 
-    compileOnly("net.alpenblock:BungeePerms:${bungeeperms_version}")
+    compileOnly "net.alpenblock:BungeePerms:${bungeeperms_version}"
     compileOnly "de.dytanic.cloudnet:cloudnet-api-bridge:${cloudnetapi2_version}"
     compileOnly "de.dytanic.cloudnet:cloudnet-cloudperms:${cloudnetapi3_version}"
     compileOnly "de.dytanic.cloudnet:cloudnet-driver:${cloudnetapi3_version}"
