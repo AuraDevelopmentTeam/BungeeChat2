@@ -4,7 +4,6 @@ import com.google.common.annotations.VisibleForTesting;
 import dev.aura.bungeechat.config.Configuration;
 import java.util.Locale;
 import java.util.MissingResourceException;
-import org.apache.commons.lang.StringUtils;
 import org.bstats.bungeecord.Metrics.SimplePie;
 
 public class LanguageData extends SimplePie {
@@ -32,7 +31,7 @@ public class LanguageData extends SimplePie {
     if (parts.length < 2 || parts.length > 3) return false;
 
     try {
-      if (parts.length == 3 && !StringUtils.isNumeric(parts[2])) return false;
+      if (parts.length == 3 && !parts[2].chars().allMatch(Character::isDigit)) return false;
 
       final Locale loc = new Locale(parts[0], parts[1]);
 
