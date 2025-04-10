@@ -19,7 +19,7 @@ allprojects {
 }
 
 dependencies {
-    shadow (project(":BungeeChatApi")) {
+    shadow(project(":BungeeChatApi")) {
         exclude module: "lombok"
     }
 
